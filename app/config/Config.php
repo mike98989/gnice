@@ -10,7 +10,7 @@
     define('APP_ROOT',dirname(dirname(__FILE__)));
     
     //URL Root
-    define('APP_URL', 'http://localhost/gnice');
+    define('APP_URLL', 'http://localhost/gnice');
     
     //site Name
     define('SITENAME', 'gnice');
