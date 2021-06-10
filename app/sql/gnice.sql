@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 09, 2021 at 06:18 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.15
+-- Host: localhost:8889
+-- Generation Time: Jun 10, 2021 at 12:18 PM
+-- Server version: 5.7.32
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -42,8 +41,18 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `title` varchar(30) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `click-counts` int(11) NOT NULL
+  `click-counts` int(11) NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `title`, `address`, `click-counts`, `status`) VALUES
+(1, 'Vehicles', 'categories/vehicles', 0, 1),
+(2, 'Property', 'category/property', 0, 1),
+(3, 'Mobile Phones & Tablets', 'category/phones_tablets', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -174,7 +183,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `header-navigation`
@@ -199,7 +208,6 @@ ALTER TABLE `products`
 --
 ALTER TABLE `sub-pages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
