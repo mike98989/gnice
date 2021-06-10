@@ -13,7 +13,7 @@
     define('APP_URL', 'http://'.$_SERVER['HTTP_HOST'].'/'.FOLDER);
     
     //site Name 
-    define('SITENAME', 'gniceeee');
+    define('SITENAME', 'gnice');
     
     //APP version
     define('APP_VERSION', '1.0.0');
