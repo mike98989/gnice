@@ -20,7 +20,7 @@ class Api extends Controller{
         if(isset($header['gnice-Authenticate'])){
             $result = $this->model('Category')->getAllCategory();
             print_r(json_encode($result));
-            var_dump($result);
+            // var_dump($result);
 
        }else{
             print_r('not authorised');
