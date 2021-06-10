@@ -11,6 +11,11 @@ function redirect($page, $code){
 	header('location: ' . URL_ROOT . '/'. $page, $code);
 }
 
+function to_json($data){
+    $data = json_encode($data);
+}
+
+
 function sanitizeData($data){
 	$data = filter_input_array(INPUT_POST,FILTER_SANITIZE_STRING);
 }

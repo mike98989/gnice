@@ -7,19 +7,20 @@
 class Category extends Model{
     public function getAllCategory(){
          $this->db->query("SELECT * 
-                            FROM category WHERE status='1'
+                            FROM category 
+                            WHERE status='1'
                             ORDER BY title DESC
                             ");
         
         if($this->db->resultSet()){
-            $return['data'] = $this->db->resultSet();
-            $return['status']='1';
+            $rows['data'] = $this->db->resultSet();
+            $rows['status']='1';
         }else{
-            $return['data'] = [];
-            $return['status']='0';
+            $rows['data'] = [];
+            $rows['status']='0';
         }
         
-        return $return;
+        return $rows;
     }
 
     public function addCategory($data){
