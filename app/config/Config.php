@@ -9,7 +9,7 @@
     //app Root
     define('APP_ROOT',dirname(dirname(__FILE__)));
     //URL Root
-    define("FOLDER","gnicedd");
+    define("FOLDER","gnice8980890");
     define('APP_URL', 'http://'.$_SERVER['HTTP_HOST'].'/'.FOLDER);
     
     //site Name 
