@@ -10,10 +10,10 @@
     define('APP_ROOT',dirname(dirname(__FILE__)));
     
     //URL Root
-    define('APP_URLL', 'http://localhost/gnice');
+    define('APP_URL', 'http://localhost/gnice');
     
     //site Name
     define('SITENAME', 'gnice');
     
     //APP version
-    define('APP_VERSION', '1.0.0');
+    define('APP_VERSION', '1.0.');
