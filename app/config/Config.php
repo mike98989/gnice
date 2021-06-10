@@ -3,8 +3,8 @@
     
     //DB Params
     define('DB_HOST', 'localhost');
-    define('DB_USER', 'root');
-    define('DB_PASS', 'root');
+    define('DB_USER', 'root');//////CHANGE TO YOUR DB NAME
+    define('DB_PASS', 'root');//////CHANGE YOUR DB PASS
     define('DB_NAME', 'gnice');
     //app Root
     define('APP_ROOT',dirname(dirname(__FILE__)));
@@ -16,4 +16,4 @@
     define('SITENAME', 'gnice');
     
     //APP version
-    define('APP_VERSION', '1.0.0');
+    define('APP_VERSION', '1.0.0asdfasdfa');
