@@ -50,6 +50,10 @@ class Database{
                         $type = PDO::PARAM_BOOL;
                       # code...
                       break;
+                  case is_array($value): 
+                        $type = PDO::PARAM_LOB;
+                      # code...
+                      break;
                   case is_null($value): 
                         $type = PDO::PARAM_NULL;
                         # code...
@@ -65,9 +69,16 @@ class Database{
 
       // execute the prepared statement
       public function execute(){
-          return $this->statement->execute();
+       return  $this->statement->execute();
           //return self::statement->execute();
       }
+
+      // execute array prepared statements
+      public function executeArray(){
+          return $this->statement->execute(array());
+          //return self::statement->execute();
+      }
+
 
       // get result set as array of objects
       public function resultSet(){

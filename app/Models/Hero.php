@@ -1,11 +1,11 @@
 <?php
 
-class Banner extends Model{
-    
-     public function getAllBanner(){     
-         $this->db->query("SELECT title, status
-                            FROM banners
-                            ORDER BY banners.title DESC
+class Hero extends Model{
+
+     public function getAllHero(){     
+         $this->db->query("SELECT title, sub_title, image
+                            FROM hero
+                            ORDER BY hero.title DESC
                             ");
         
         if($this->db->resultSet()){
@@ -20,10 +20,11 @@ class Banner extends Model{
      }
 
 
-     public function AddBanner(){
-        $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $this->db->query('INSERT INTO banners (title) VALUES (:title)');
+     public function AddHero($data){
+        $data = filter_input($data, FILTER_SANITIZE_STRING);
+        $this->db->query('INSERT INTO banner title VALUES :title');
         $this->db->bind(':title', $data['title']);
+          $this->db->bind(':address', $data['address']);
         if($this->db->execute()){
             $result['message'] = 'banner added';
             $result['status'] = 1;
