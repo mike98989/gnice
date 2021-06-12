@@ -6,20 +6,23 @@
  */
 class Category extends Model{
     public function getAllCategory(){
-         $this->db->query("SELECT * 
-                            FROM category WHERE status='1'
-                            ORDER BY title DESC
+     
+         $this->db->query("SELECT category.title, category.address, sub_category.title, sub_category.address,sub_category.parent_id,category.id
+                            FROM category
+                            LEFT JOIN sub_category
+                            ON category.id = sub_category.parent_id
+                            
                             ");
         
         if($this->db->resultSet()){
-            $return['data'] = $this->db->resultSet();
-            $return['status']='1';
+            $rows['data'] = $this->db->resultSet();
+            $rows['status']='1';
         }else{
-            $return['data'] = [];
-            $return['status']='0';
+            $rows['data'] = [];
+            $rows['status']='0';
         }
         
-        return $return;
+        return $rows;
     }
 
     public function addCategory($data){
@@ -28,8 +31,10 @@ class Category extends Model{
         $this->db->bind(':address', $data['address']);
         if($this->db->execute()){
             return true;
+            return $status =[1];
         }else{
             return false;
+            return $status = [0];
         }
     }
     public function updateCategory($data){

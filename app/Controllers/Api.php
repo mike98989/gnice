@@ -16,4 +16,8 @@ class Api extends Controller{
             exit;	
         }
     }
+
+    public function create_category(){
+        
+    }
 }
