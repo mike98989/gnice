@@ -5,13 +5,12 @@
  * 
  */
 class Category extends Model{
-    public function getAllCategory(){
-     
-         $this->db->query("SELECT category.title, category.address, sub_category.title, sub_category.address,sub_category.parent_id,category.id
+    public function getAllCategory(){     
+         $this->db->query("SELECT category.title,
+         category.address, sub_category.title, sub_category.address,sub_category.parent_id,category.id
                             FROM category
                             LEFT JOIN sub_category
                             ON category.id = sub_category.parent_id
-                            
                             ");
         
         if($this->db->resultSet()){

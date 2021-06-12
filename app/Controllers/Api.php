@@ -18,6 +18,9 @@ class Api extends Controller{
     }
 
     public function create_category(){
-        
+        $header = apache_request_headers();
+        if(isset($header['gnice-Authenticate'])){
+            
+        }
     }
 }
