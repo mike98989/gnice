@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Jun 10, 2021 at 12:18 PM
--- Server version: 5.7.32
--- PHP Version: 7.4.12
+-- Host: 127.0.0.1
+-- Generation Time: Jun 12, 2021 at 07:28 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.4.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,8 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `banners` (
   `id` int(11) NOT NULL,
-  `title` varchar(50) NOT NULL
+  `title` varchar(50) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `title`, `status`) VALUES
+(1, 'SELL FASTER, BUY SMARTER', 1),
+(3, 'SELL FASTER, BUY SMARTER', 1),
+(4, 'EVERYTHING YOU NEED IN ONE PLACE', 0),
+(5, 'new banner', 0);
 
 -- --------------------------------------------------------
 
@@ -52,7 +64,10 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`id`, `title`, `address`, `click-counts`, `status`) VALUES
 (1, 'Vehicles', 'categories/vehicles', 0, 1),
 (2, 'Property', 'category/property', 0, 1),
-(3, 'Mobile Phones & Tablets', 'category/phones_tablets', 0, 1);
+(3, 'Mobile Phones & Tablets', 'category/phones_tablets', 0, 1),
+(4, 'Gadgets', 'Products/Gadgets', 0, 1),
+(5, 'Fashion', 'Products/Fashion', 0, 1),
+(6, 'Gadgets', 'Products/Gadgets', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -66,6 +81,28 @@ CREATE TABLE `header-navigation` (
   `address` varchar(100) NOT NULL,
   `click-counts` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hero`
+--
+
+CREATE TABLE `hero` (
+  `id` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `sub_title` varchar(100) NOT NULL,
+  `image` varchar(200) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hero`
+--
+
+INSERT INTO `hero` (`id`, `title`, `sub_title`, `image`, `status`) VALUES
+(1, 'Loreme enim repudiandae veniam.', 'Lorem iadipisicing elit. Facere beatae itaque fugiat perspiciatis v', 'location/image 1', 0),
+(2, ' Expedita, unde necessitatibus cumque ', 'Lorem ipsum dolor sit,ipisicing elit. Facere beatae itaque fugiat perspiciatis v', 'location/image-2', 0);
 
 -- --------------------------------------------------------
 
@@ -88,33 +125,33 @@ CREATE TABLE `pages` (
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `brand` varchar(50) NOT NULL,
-  `title` varchar(50) NOT NULL,
-  `short-description` varchar(50) NOT NULL,
-  `long-description` varchar(1000) NOT NULL,
+  `product_code` varchar(40) NOT NULL,
+  `color` varchar(40) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `short_description` varchar(50) NOT NULL,
+  `long_description` text NOT NULL,
   `category` int(11) NOT NULL,
-  `sub-category` int(11) NOT NULL,
-  `image-1` varchar(255) NOT NULL,
-  `image-2` varchar(255) NOT NULL,
-  `image-3` varchar(255) NOT NULL,
-  `image-4` varchar(255) NOT NULL,
+  `sub_category` int(11) NOT NULL,
+  `image_1` varchar(255) NOT NULL,
+  `image_2` varchar(255) NOT NULL,
+  `image_3` varchar(255) NOT NULL,
+  `image_4` varchar(255) NOT NULL,
   `price` int(11) NOT NULL,
-  `date-added` datetime NOT NULL,
-  `seller-id` int(11) NOT NULL,
-  `click-counts` int(11) NOT NULL
+  `date_added` datetime NOT NULL,
+  `seller_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `sub-category`
+-- Dumping data for table `products`
 --
 
-CREATE TABLE `sub-category` (
-  `id` int(11) NOT NULL,
-  `parent-id` int(11) NOT NULL,
-  `title` varchar(50) NOT NULL,
-  `address` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_description`, `long_description`, `category`, `sub_category`, `image_1`, `image_2`, `image_3`, `image_4`, `price`, `date_added`, `seller_id`) VALUES
+(1, 'Iphone', '12344', 'black', 'iphone 7s', 'Lorem ipsum dolor sit, amet consectetur adipisicin', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 1, 'location/image', 'location/image 2', 'location/image-3', 'location /image-4', 0, '0000-00-00 00:00:00', 676655),
+(2, 'samsung', '665547746', 'silver', 'samsung s20', 'lorem ipsum some description', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 1, 'location-4', 'location-5', 'location-4', 'location-3', 1200, '0000-00-00 00:00:00', 6664764),
+(3, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0),
+(4, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0),
+(5, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0),
+(6, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -128,6 +165,32 @@ CREATE TABLE `sub-pages` (
   `title` varchar(40) NOT NULL,
   `address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sub_category`
+--
+
+CREATE TABLE `sub_category` (
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sub_category`
+--
+
+INSERT INTO `sub_category` (`id`, `parent_id`, `title`, `address`, `status`) VALUES
+(1, 1, 'Kia', 'lorem/lorem/ipsum', 1),
+(2, 1, 'Toyota', 'lorem/lorem/564', 1),
+(3, 3, 'samsung', 'lorem/lorem/mobile', 1),
+(4, 3, 'Iphone', 'lorem/lorem/iphone', 1),
+(5, 3, 'samsung', 'lorem/lorem/mobile', 1),
+(6, 3, 'Iphone', 'lorem/lorem/iphone', 0);
 
 --
 -- Indexes for dumped tables
@@ -152,6 +215,12 @@ ALTER TABLE `header-navigation`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `hero`
+--
+ALTER TABLE `hero`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages`
@@ -170,6 +239,12 @@ ALTER TABLE `sub-pages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sub_category`
+--
+ALTER TABLE `sub_category`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -177,19 +252,25 @@ ALTER TABLE `sub-pages`
 -- AUTO_INCREMENT for table `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `header-navigation`
 --
 ALTER TABLE `header-navigation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `hero`
+--
+ALTER TABLE `hero`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -201,13 +282,20 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sub-pages`
 --
 ALTER TABLE `sub-pages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sub_category`
+--
+ALTER TABLE `sub_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
