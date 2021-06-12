@@ -60,12 +60,12 @@ class Product extends Model{
             $data = $_POST;
             $keys = implode(',', array_keys($data));
             $bind_params = implode(',', array_map(function($value){return ':'. $value;}, array_keys($data)));
-            print_r($data);
-            die;
+            // print_r($data);
+            // die;
            $this->db->query("INSERT INTO products ($keys) VALUES ($bind_params)");
            $this->db->bind($keys, $bind_params);
-            // print_r($bind_params);
-            // die();
+            print_r($bind_params);
+            die();
             if($this->db->execute()){
             $result['message'] = 'product added successfully';
             $result['status'] = 1;
