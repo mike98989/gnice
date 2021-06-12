@@ -18,7 +18,7 @@
         headers:{'gnice-Authenticate':'gnice-web'},
         processData: false,
         success: function (result) {
-       //alert(result);
+        alert(result);
        var response=JSON.stringify(result);
        var parsed = JSON.parse(response);
        var msg=angular.fromJson(parsed);
