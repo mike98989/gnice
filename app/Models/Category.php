@@ -6,11 +6,7 @@
  */
 class Category extends Model{
     public function getAllCategory(){     
-         $this->db->query("SELECT category.title,
-         category.address, sub_category.title, sub_category.address,sub_category.parent_id,category.id
-                            FROM category
-                            LEFT JOIN sub_category
-                            ON category.id = sub_category.parent_id
+         $this->db->query("SELECT * FROM category
                             ");
         
         if($this->db->resultSet()){
@@ -57,8 +53,26 @@ class Category extends Model{
 
     }
 
+    public function getAllSubCategory(){
+        $this->db->query('SELECT DISTINCT sub_category.title,
+                            category.title as parentCategory
+                          FROM sub_category 
+                           JOIN category
+                          WHERE sub_category.parent_id = category.id    
+                        ');
+         if($this->db->resultSet()){
+            $rows['data'] = $this->db->resultSet();
+            $rows['status']='1';
+        }else{
+            $rows['data'] = [];
+            $rows['status']='0';
+        }
+        
+        return $rows;
+    }
+
     public function addSubCategory($data){
-        $this->db->query('INSERT INTO sub-category (title, parent-id, address) VALUES (:title, :parent-id, :address)');
+        $this->db->query('INSERT INTO sub_category (title, parent-id, address) VALUES (:title, :parent-id, :address)');
          $this->db->bind(':title', $data['title']);
          $this->db->bind(':parent-id', $data['category']);
          $this->db->bind(':address', $data['address']);
