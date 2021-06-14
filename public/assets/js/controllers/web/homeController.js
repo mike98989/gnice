@@ -6,7 +6,7 @@
     $scope.dirlocation=datagrab.completeUrlLocation;
     $scope.currentPage = 1;
     $scope.pageSize = 30;
-
+    //alert($scope.dirlocation);
     $scope.fetch_all_category = function(){
       $.ajax({
         url: $scope.dirlocation+'api/fetch_all_category',
@@ -15,7 +15,7 @@
         async: true,
         cache: false,
         contentType: false,
-        headers:{'gnice-Authenticate':'gnice-web'},
+        headers:{'gnice-authenticate':'gnice-web'},
         processData: false,
         success: function (result) {
         alert(result);

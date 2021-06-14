@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 
 class Api extends Controller{
     public function signUpApi(){
@@ -9,9 +10,8 @@ class Api extends Controller{
      * Product apis
      */
      public function fetch_all_product(){
-
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
+         if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getAllProducts();
              print_r(json_encode($result));
          }else {
@@ -22,7 +22,7 @@ class Api extends Controller{
     public function fetch_single_product(){
 
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
+         if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getSingleProducts();
              print_r(json_encode($result));
          }else {
@@ -33,7 +33,7 @@ class Api extends Controller{
 
     public function add_product(){
         $header = apache_request_headers();
-        if(isset($header['gnice-Authenticate'])){
+        if(isset($header['gnice-authenticate'])){
             $this->model('Product')->addProduct();
             
         }else{
