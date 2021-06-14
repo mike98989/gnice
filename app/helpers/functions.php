@@ -7,9 +7,27 @@ function show($stuff)
 	echo "</pre>";
 }
 
-function redirect($page, $code){
-	header('location: ' . URL_ROOT . '/'. $page, $code);
+// function redirect($page, $code){
+// 	header('location: ' . URL_ROOT . '/'. $page, $code);
+// }
+
+//code to generate product code
+function random($length, $chars = '')
+{
+	if (!$chars) {
+		$chars = implode(range('a','z'));
+		$chars .= implode(range('0','9'));
+        $chars .= implode(range('A', 'Z'));
+	}
+	$shuffled = str_shuffle($chars);
+	return substr($shuffled, 0, $length);
 }
+function generateCode()
+{
+	return random(8).random(8);
+}
+
+
 
 function to_json($data){
     $data = json_encode($data);

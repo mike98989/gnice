@@ -59,9 +59,48 @@ class Product extends Model{
     //  }
     
         public function addProduct(){
-
+            $uploader = $this->ImageUploader->uploadProdutImage();
+            echo $uploader[0];
+            exit;
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $product_name = trim($_POST['product_name']);
+            $name = trim($_POST['name']);
+            $brand = trim($_POST['brand']);
+            $product_code = rand(1000000,100000000);
+            $color = trim($_POST['color']);
+            $short_description =trim($_POST['short_description']);
+            $long_description =trim($_POST['long_description']);
+            $category =trim($_POST['category']);
+            $sub_category =trim($_POST['sub_category']);
+            $image = '';
+            $price = trim($_POST['price']); 
+            //seller will be gotten from session()
+            $seller_id = 'AG-'. rand(1000000,100000000);
+
+            $this->db->query('INSERT INTO products (brand, product_code, color, name, short_description, long_description, category, sub_category,image,price,date_added, seller_id) VALUES (:brand, :product_code,:color, :name, :short_description, :long_description, :category, :sub_category,:image,:price, now(), :seller_id)');
+            $this->db->bind(':brand', $brand);
+            $this->db->bind(':product_code', $product_code);
+            $this->db->bind(':color', $color);
+            $this->db->bind(':name', $name);
+            $this->db->bind(':short_description', $short_description);
+            $this->db->bind(':long_description', $long_description);
+            $this->db->bind(':category', $category);
+            $this->db->bind(':sub_category', $sub_category);
+            $this->db->bind(':image', $image);
+            $this->db->bind(':price', $price);
+            $this->db->bind(':seller_id', $seller_id);
+            if($this->db->execute()){
+            $result['message'] = 'product added successfully';
+            $result['status'] = 1;
+            
+            }else{
+
+            $result['message'] = 'product failed';
+            $result['status'] = 0;
+            return false;
+           
+        }
+           return $result;
+            
 
             // $keys = implode(',', array_keys($data));
             //$bind_params = implode(',', array_map(function($value){return ':'. $value;}, array_keys($data)));

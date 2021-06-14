@@ -4,15 +4,11 @@ class Api extends Controller{
     public function index(){
 
     }
-    public function signUpApi(){
-        //$this->
-        $signup = $this->model('Authenticated')->signup();
-    }
+    
     /**
      * Product apis
      */
      public function fetch_all_product(){
-
          $header = apache_request_headers(); 
          if(isset($header['gnice-Authenticate'])){
              $result = $this->model('Product')->getAllProducts();
@@ -23,7 +19,6 @@ class Api extends Controller{
          }
     }
     public function fetch_single_product(){
-
          $header = apache_request_headers(); 
          if(isset($header['gnice-Authenticate'])){
              $result = $this->model('Product')->getSingleProduct();
@@ -37,8 +32,8 @@ class Api extends Controller{
     public function add_product(){
         $header = apache_request_headers();
         if(isset($header['gnice-Authenticate'])){
-            $this->model('Product')->addProduct();
-            
+            $result = $this->model('Product')->addProduct();
+             print_r(json_encode($result));
         }else{
             echo 'invalid response';
             exit;

@@ -18,4 +18,40 @@ class ImageUploader extends Model{
             $query = "INSERT INTO data ";
         } 
     }
+
+    public function uploadProductImage(){
+          $files = $_FILES['file'];
+          $fileName = $files['name'];
+          $fileSize = $files['size'];
+          $fileTmpLocation = $files['tmp_name'];
+          $fileError = $files['error'];
+
+          //allowed only jpeg,jpg, png
+          $fileNameExploded =explode('.', $fileName);
+         
+          $fileExtention = strtolower($fileNameExploded[1]);
+          $allowedExtention = array('jpeg', 'jpg','png', 'webp');
+
+          if(in_array($fileExtention, $allowedExtention)){
+            if($fileSize < 200000){
+                $folder = 'upload/products/';
+
+                if(!file_exists($folder))
+			 	{
+			 		mkdir($folder,0777,true);
+                 }
+                 //generation new name
+                $fileNewName = uniqid('pro_',true);
+                $destination = $folder.$fileNewName.$fileName.$fileExtention;
+                
+                move_uploaded_file($fileTmpLocation,$destination);
+                return array($destination);
+                
+            }else {
+                 print_r($result['error']='file size exceed limit');
+            }
+          }else {
+                print_r($result['error']='file type not supported');
+          }
+    }
 }
