@@ -2,6 +2,9 @@
 header('Access-Control-Allow-Origin: *');
 
 class Api extends Controller{
+    public function index(){
+
+    }
     public function signUpApi(){
         //$this->
         $signup = $this->model('Authenticated')->signup();
@@ -103,5 +106,47 @@ class Api extends Controller{
         if(isset($header['gnice-Authenticate'])){
             
         }
+    }
+
+     public function fetch_all_sub_category(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Category')->getAllSubCategory();
+            print_r(json_encode($result));
+        }else{
+            echo "invalid request";
+            exit;	
+        }
+    }
+    public function fetch_most_view_product(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->mostViewedProduct();
+            print_r(json_encode($result));
+        }else{
+            echo "invalid request";
+            exit;	
+        }
+    }
+     public function fetch_products_by_rating(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->productRating();
+            print_r(json_encode($result));
+        }else{
+            echo "invalid request";
+            exit;	
+        }
+    }
+    public function fetch_all_wishlist(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->wishLists();
+            print_r(json_encode($result));
+        }else{
+            echo "invalid request";
+            exit;	
+        }
+
     }
 }

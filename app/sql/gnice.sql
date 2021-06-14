@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2021 at 07:28 PM
+-- Generation Time: Jun 14, 2021 at 02:51 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -107,6 +107,28 @@ INSERT INTO `hero` (`id`, `title`, `sub_title`, `image`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `most_view`
+--
+
+CREATE TABLE `most_view` (
+  `id` int(11) NOT NULL,
+  `product_code` int(11) NOT NULL,
+  `view_count` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `most_view`
+--
+
+INSERT INTO `most_view` (`id`, `product_code`, `view_count`, `status`) VALUES
+(1, 12344, 100, 1),
+(3, 646376, 6, 1),
+(4, 66554, 200, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pages`
 --
 
@@ -124,15 +146,15 @@ CREATE TABLE `pages` (
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `brand` varchar(50) NOT NULL,
-  `product_code` varchar(40) NOT NULL,
-  `color` varchar(40) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `short_description` varchar(50) NOT NULL,
+  `brand` varchar(255) NOT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `color` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `short_description` varchar(255) NOT NULL,
   `long_description` text NOT NULL,
   `category` int(11) NOT NULL,
   `sub_category` int(11) NOT NULL,
-  `image_1` varchar(255) NOT NULL,
+  `image_1` text NOT NULL,
   `image_2` varchar(255) NOT NULL,
   `image_3` varchar(255) NOT NULL,
   `image_4` varchar(255) NOT NULL,
@@ -146,12 +168,46 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_description`, `long_description`, `category`, `sub_category`, `image_1`, `image_2`, `image_3`, `image_4`, `price`, `date_added`, `seller_id`) VALUES
-(1, 'Iphone', '12344', 'black', 'iphone 7s', 'Lorem ipsum dolor sit, amet consectetur adipisicin', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 1, 'location/image', 'location/image 2', 'location/image-3', 'location /image-4', 0, '0000-00-00 00:00:00', 676655),
-(2, 'samsung', '665547746', 'silver', 'samsung s20', 'lorem ipsum some description', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 1, 'location-4', 'location-5', 'location-4', 'location-3', 1200, '0000-00-00 00:00:00', 6664764),
-(3, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0),
-(4, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0),
-(5, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0),
-(6, '', '', '', '', '', '', 0, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0);
+(1, 'Iphone', '12344', 'black', 'iphone 7s', 'Lorem ipsum dolor sit, amet consectetur adipisicin', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 6, 'location/image', 'location/image 2', 'location/image-3', 'location /image-4', 0, '0000-00-00 00:00:00', 676655),
+(2, 'samsung', '66554', 'silver', 'samsung s20', 'lorem ipsum some description', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 1, 'location-4', 'location-5', 'location-4', 'location-3', 1200, '0000-00-00 00:00:00', 6664764);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_ratings`
+--
+
+CREATE TABLE `product_ratings` (
+  `id` int(11) NOT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `rating_score` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_ratings`
+--
+
+INSERT INTO `product_ratings` (`id`, `product_code`, `customer_id`, `rating_score`, `status`) VALUES
+(1, '66554', '78588', '100', 1),
+(2, '66554', '8646758', '10', 1),
+(3, '66554', '78588', '200', 1),
+(4, '66554', '8646758', '300', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seller_ratings`
+--
+
+CREATE TABLE `seller_ratings` (
+  `id` int(11) NOT NULL,
+  `seller_id` varchar(255) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `rating_score` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -175,8 +231,8 @@ CREATE TABLE `sub-pages` (
 CREATE TABLE `sub_category` (
   `id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL,
-  `title` varchar(50) NOT NULL,
-  `address` varchar(100) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -188,9 +244,29 @@ INSERT INTO `sub_category` (`id`, `parent_id`, `title`, `address`, `status`) VAL
 (1, 1, 'Kia', 'lorem/lorem/ipsum', 1),
 (2, 1, 'Toyota', 'lorem/lorem/564', 1),
 (3, 3, 'samsung', 'lorem/lorem/mobile', 1),
-(4, 3, 'Iphone', 'lorem/lorem/iphone', 1),
-(5, 3, 'samsung', 'lorem/lorem/mobile', 1),
 (6, 3, 'Iphone', 'lorem/lorem/iphone', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlist`
+--
+
+CREATE TABLE `wishlist` (
+  `id` int(11) NOT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `wish_date` date NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `product_code`, `wish_date`, `customer_id`, `status`) VALUES
+(1, '12344', '2021-06-03', '16362635253', 1),
+(2, '66554', '0000-00-00', '734364865', 1);
 
 --
 -- Indexes for dumped tables
@@ -221,6 +297,12 @@ ALTER TABLE `hero`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `most_view`
+--
+ALTER TABLE `most_view`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages`
@@ -233,6 +315,18 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `product_ratings`
+--
+ALTER TABLE `product_ratings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `seller_ratings`
+--
+ALTER TABLE `seller_ratings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sub-pages`
 --
 ALTER TABLE `sub-pages`
@@ -242,6 +336,12 @@ ALTER TABLE `sub-pages`
 -- Indexes for table `sub_category`
 --
 ALTER TABLE `sub_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wishlist`
+--
+ALTER TABLE `wishlist`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -273,6 +373,12 @@ ALTER TABLE `hero`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `most_view`
+--
+ALTER TABLE `most_view`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
@@ -285,6 +391,18 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `product_ratings`
+--
+ALTER TABLE `product_ratings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `seller_ratings`
+--
+ALTER TABLE `seller_ratings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `sub-pages`
 --
 ALTER TABLE `sub-pages`
@@ -295,6 +413,12 @@ ALTER TABLE `sub-pages`
 --
 ALTER TABLE `sub_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
