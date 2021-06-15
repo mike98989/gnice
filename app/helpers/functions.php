@@ -59,3 +59,95 @@ function sanitizeData($data){
          }
      }
  }
+
+//   function uploadProductImage($type,$location){
+//           $files = $_FILES['file'];
+//           $fileName = $files['name'];
+//           $fileSize = $files['size'];
+//           $fileTmpLocation = $files['tmp_name'];
+//           //$fileError = $files['error'];
+
+//           //allowed only jpeg,jpg, png
+//           $fileNameExploded =explode('.', $fileName);
+         
+//           $fileExtention = strtolower($fileNameExploded[1]);
+//           $allowedExtention = array('jpeg', 'jpg','png', 'webp');
+//           $filesImploded = implode(',', $fileName);
+
+//           if(in_array($fileExtention, $allowedExtention)){
+//             if($fileSize < 200000){
+//                 $folder = "upload/$location/";
+
+//                 if(!file_exists($folder)){
+// 			 		mkdir($folder,0777,true);
+//                  }
+
+//                  if(!empty($fileName)){
+//                     foreach ($fileName as $key => $value) {
+
+//                          return print_r("key is $key and value is $value, ");
+//                         exit;
+//                         // move_uploaded_file($_FILES['file']['tmp_name'][$key],));
+//                     }
+//                  }
+//                  //generation new name
+//                 $fileNewName = uniqid($type,false);
+//                 $destination = $folder.$fileNewName.random(100000,10000000).$fileNameExploded[0].'.'.$fileExtention;
+                
+//                 move_uploaded_file($fileTmpLocation,$destination);
+//                 // return array($destination);
+//                 $result['route']= $destination;
+//                 $result['status'] = '1';
+                
+//             }else {
+//                  print_r($result['error']='file size exceed limit');
+//                  $result['status'] = '0';
+//             }
+//           }else {
+//                 print_r($result['error']='file type not supported');
+//                 $result['status'] = '0';
+//           }
+//           return $result;
+//     }
+
+
+    function uploadProductImage($type,$location){
+          $files = $_FILES['file'];
+          $fileName = $files['name'];
+          $fileSize = $files['size'];
+          $fileTmpLocation = $files['tmp_name'];
+          //$fileError = $files['error'];
+
+          //allowed only jpeg,jpg, png
+          $fileNameExploded =explode('.', $fileName);
+         
+          $fileExtention = strtolower($fileNameExploded[1]);
+          $allowedExtention = array('jpeg', 'jpg','png', 'webp');
+
+          if(in_array($fileExtention, $allowedExtention)){
+            if($fileSize < 200000){
+                $folder = "upload/$location/";
+
+                if(!file_exists($folder))
+			 	{
+			 		mkdir($folder,0777,true);
+                 }
+                 //generation new name
+                $fileNewName = uniqid($type,false);
+                $destination = $folder.$fileNewName.random(100000,10000000).$fileNameExploded[0].'.'.$fileExtention;
+                
+                move_uploaded_file($fileTmpLocation,$destination);
+                // return array($destination);
+                $result['route']= $destination;
+                $result['status'] = '1';
+                
+            }else {
+                 print_r($result['error']='file size exceed limit');
+                 $result['status'] = '0';
+            }
+          }else {
+                print_r($result['error']='file type not supported');
+                $result['status'] = '0';
+          }
+          return $result;
+    }

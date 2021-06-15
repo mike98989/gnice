@@ -1,6 +1,7 @@
 <?php
 
 class Product extends Model{
+
     public function getAllProducts(){     
          $this->db->query("SELECT *, 
                         category.title as productCategory,
@@ -59,9 +60,9 @@ class Product extends Model{
     //  }
     
         public function addProduct(){
-            $uploader = $this->ImageUploader->uploadProdutImage();
-            echo $uploader[0];
-            exit;
+            $uploader = uploadProductImage('pro_','products');
+            // print_r($uploader);
+            // exit;
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $name = trim($_POST['name']);
             $brand = trim($_POST['brand']);
@@ -71,7 +72,7 @@ class Product extends Model{
             $long_description =trim($_POST['long_description']);
             $category =trim($_POST['category']);
             $sub_category =trim($_POST['sub_category']);
-            $image = '';
+            $image = $uploader['route'];
             $price = trim($_POST['price']); 
             //seller will be gotten from session()
             $seller_id = 'AG-'. rand(1000000,100000000);
@@ -186,4 +187,40 @@ class Product extends Model{
         }
         return $rows;
     }
+
+    //  public function uploadProductImage(){
+    //       $files = $_FILES['file'];
+    //       $fileName = $files['name'];
+    //       $fileSize = $files['size'];
+    //       $fileTmpLocation = $files['tmp_name'];
+    //       $fileError = $files['error'];
+
+    //       //allowed only jpeg,jpg, png
+    //       $fileNameExploded =explode('.', $fileName);
+         
+    //       $fileExtention = strtolower($fileNameExploded[1]);
+    //       $allowedExtention = array('jpeg', 'jpg','png', 'webp');
+
+    //       if(in_array($fileExtention, $allowedExtention)){
+    //         if($fileSize < 200000){
+    //             $folder = 'upload/products/';
+
+    //             if(!file_exists($folder))
+	// 		 	{
+	// 		 		mkdir($folder,0777,true);
+    //              }
+    //              //generation new name
+    //             $fileNewName = uniqid('pro_',false);
+    //             $destination = $folder.$fileNewName.random(100000,10000000).$fileNameExploded[0].'.'.$fileExtention;
+                
+    //             move_uploaded_file($fileTmpLocation,$destination);
+    //             return array($destination);
+                
+    //         }else {
+    //              print_r($result['error']='file size exceed limit');
+    //         }
+    //       }else {
+    //             print_r($result['error']='file type not supported');
+    //       }
+    // }
 }

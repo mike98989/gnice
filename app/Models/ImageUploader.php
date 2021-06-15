@@ -24,7 +24,7 @@ class ImageUploader extends Model{
           $fileName = $files['name'];
           $fileSize = $files['size'];
           $fileTmpLocation = $files['tmp_name'];
-          $fileError = $files['error'];
+          //$fileError = $files['error'];
 
           //allowed only jpeg,jpg, png
           $fileNameExploded =explode('.', $fileName);
@@ -40,6 +40,9 @@ class ImageUploader extends Model{
 			 	{
 			 		mkdir($folder,0777,true);
                  }
+
+            $fileImplode = implode(',', $fileName);
+            
                  //generation new name
                 $fileNewName = uniqid('pro_',true);
                 $destination = $folder.$fileNewName.$fileName.$fileExtention;
