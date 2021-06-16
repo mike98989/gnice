@@ -1,24 +1,26 @@
 <?php
 
+
+
 class Product extends Model{
 
     public function getAllProducts(){     
-         $this->db->query("SELECT *, 
+         $this->db->query("SELECT brand,name,color, short_description,long_description,seller_id,image,product_code,price,date_added, 
                         category.title as productCategory,
                         sub_category.title as productSubCategory                    
-                            FROM products
-                            INNER JOIN sub_category ON sub_category.id = products.sub_category
-                           INNER JOIN category ON category.id = products.category
+                        FROM products
+                        INNER JOIN sub_category ON sub_category.id = products.sub_category
+                        INNER JOIN category ON category.id = products.category
                             ");
         
         if($this->db->resultSet()){
-            $rows['data'] = $this->db->resultSet();
-            $rows['status']='1';
+            $result['data'] = $this->db->resultSet();
+            $result['status']='1';
         }else{
-            $rows['data'] = [];
-            $rows['status']='0';
+            $result['data'] = [];
+            $resul['status']='0';
         }
-        return $rows;
+        return $result;
      }
 
      public function getSingleProduct($data){     
@@ -26,13 +28,13 @@ class Product extends Model{
          $this->db->bind(':id', $data);
         
         if($this->db->resultSingleSet()){
-            $row['data'] = $this->db->resultSingleSet();
-            $row['status']='1';
+            $result['data'] = $this->db->resultSingleSet();
+            $result['status']='1';
         }else{
-            $row['data'] = [];
-            $row['status']='0';
+            $result['data'] = [];
+            $result['status']='0';
         }
-        return $row;
+        return $result;
      }
 
     //  public function addProduct(){
@@ -60,9 +62,12 @@ class Product extends Model{
     //  }
     
         public function addProduct(){
-            $uploader = uploadProductImage('pro_','products');
-            // print_r($uploader);
+            //$uploader = uploadProductImage('pro_','products');
+            $uploader = uploadMultiple('pro','products');
+            
+            // print_r(json_encode($uploader[1]));
             // exit;
+            
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $name = trim($_POST['name']);
             $brand = trim($_POST['brand']);
@@ -72,7 +77,7 @@ class Product extends Model{
             $long_description =trim($_POST['long_description']);
             $category =trim($_POST['category']);
             $sub_category =trim($_POST['sub_category']);
-            $image = $uploader['route'];
+            $image = $uploader['uploaded'];
             $price = trim($_POST['price']); 
             //seller will be gotten from session()
             $seller_id = 'AG-'. rand(1000000,100000000);
@@ -91,12 +96,13 @@ class Product extends Model{
             $this->db->bind(':seller_id', $seller_id);
             if($this->db->execute()){
             $result['message'] = 'product added successfully';
-            $result['status'] = 1;
+            $result['status'] = '1';
+            $result['errors'] = $uploader['image_error'];
             
             }else{
 
             $result['message'] = 'product failed';
-            $result['status'] = 0;
+            $result['status'] = '0';
             return false;
            
         }
@@ -127,14 +133,14 @@ class Product extends Model{
 
         }
     public function mostViewedProduct(){
-        $this->db->query("SELECT name, brand, price, seller_id,
+        $this->db->query("SELECT name, brand, price, seller_id, product_code, image,
                         sub_category.title as productSubCategory,
                         category.title as productCategory,
                         most_view.view_count as viewCount                   
                             FROM products
                             INNER JOIN sub_category ON sub_category.id = products.sub_category
                             INNER JOIN category ON category.id = products.category
-                           INNER JOIN most_view ON most_view.product_code = products.product_code
+                            INNER JOIN most_view ON most_view.product_code = products.product_code
                             ");
         
         if($this->db->resultSet()){

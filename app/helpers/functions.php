@@ -29,11 +29,7 @@ function generateCode()
 
 
 
-function to_json($data){
-    $data = json_encode($data);
-}
-
-
+// form sanitizations
 function sanitizeData($data){
 	$data = filter_input_array(INPUT_POST,FILTER_SANITIZE_STRING);
 }
@@ -60,56 +56,10 @@ function sanitizeData($data){
      }
  }
 
-//   function uploadProductImage($type,$location){
-//           $files = $_FILES['file'];
-//           $fileName = $files['name'];
-//           $fileSize = $files['size'];
-//           $fileTmpLocation = $files['tmp_name'];
-//           //$fileError = $files['error'];
 
-//           //allowed only jpeg,jpg, png
-//           $fileNameExploded =explode('.', $fileName);
-         
-//           $fileExtention = strtolower($fileNameExploded[1]);
-//           $allowedExtention = array('jpeg', 'jpg','png', 'webp');
-//           $filesImploded = implode(',', $fileName);
-
-//           if(in_array($fileExtention, $allowedExtention)){
-//             if($fileSize < 200000){
-//                 $folder = "upload/$location/";
-
-//                 if(!file_exists($folder)){
-// 			 		mkdir($folder,0777,true);
-//                  }
-
-//                  if(!empty($fileName)){
-//                     foreach ($fileName as $key => $value) {
-
-//                          return print_r("key is $key and value is $value, ");
-//                         exit;
-//                         // move_uploaded_file($_FILES['file']['tmp_name'][$key],));
-//                     }
-//                  }
-//                  //generation new name
-//                 $fileNewName = uniqid($type,false);
-//                 $destination = $folder.$fileNewName.random(100000,10000000).$fileNameExploded[0].'.'.$fileExtention;
-                
-//                 move_uploaded_file($fileTmpLocation,$destination);
-//                 // return array($destination);
-//                 $result['route']= $destination;
-//                 $result['status'] = '1';
-                
-//             }else {
-//                  print_r($result['error']='file size exceed limit');
-//                  $result['status'] = '0';
-//             }
-//           }else {
-//                 print_r($result['error']='file type not supported');
-//                 $result['status'] = '0';
-//           }
-//           return $result;
-//     }
-
+/**
+ * Image uploader function I
+ */
 
     function uploadProductImage($type,$location){
           $files = $_FILES['file'];
@@ -151,3 +101,75 @@ function sanitizeData($data){
           }
           return $result;
     }
+
+/**
+ * upload multiple files
+ * set form to enctype="multipart/form-data"
+ * set input name to name='files[]' multiple
+ * <input type="file" name="files[]" multiple>
+ */
+
+function uploadMultiple($prefix,$location){
+    if(!empty($_FILES['files']['name'][0])){
+        $files = $_FILES['files'];
+
+        $uploaded = array();
+        $failed = array();
+
+        // $data = array();
+
+        $allowedExtention = array('jpeg', 'jpg','png', 'webp');
+
+        foreach ($files['name'] as $position => $fileName) {
+
+            $fileTmp = $files['tmp_name'][$position];
+            $fileSize = $files['size'][$position];
+            $fileError = $files['error'][$position];
+
+            $fileExtention = explode('.', $fileName);
+            $fileExtention = strtolower(end($fileExtention));
+
+
+            if(in_array($fileExtention, $allowedExtention)){
+                if($fileError === 0){
+                    //set upload limit to 2mb
+                        if($fileSize <= 2097152){
+
+                            $folder = "upload/$location/";
+
+                            if(!file_exists($folder)){
+			 		            mkdir($folder,0777,true);
+                            }
+                            // generate new unique name
+                            $fileNewName = uniqid($prefix, false).random(1000000,100000000).'.' . $fileExtention;
+
+                            $fileDestination = $folder.$fileNewName;
+
+                            if(move_uploaded_file($fileTmp, $fileDestination)){
+                                //upload file if all criteria are met
+                                $uploaded[$position] = $fileDestination;
+
+                            }else {
+                                //errors array
+                                $failed[$position] = "{$fileName} failed to uploaded"; 
+                            }
+
+                        }else {
+                            $failed[$position] = "{$fileName} is too large {$fileSize}";
+                        }
+                } else {
+                   $failed[$position] = "{$fileName} errored with code {$fileError}";
+                }
+            }else {
+                $failed[$position] = "{$fileName} file extension '{$fileExtention}' is not allowed";
+            }
+
+        }
+    }
+   
+    // return implode(',',$uploaded);
+     $result['image_error'] = implode(',',$failed);
+     $result['uploaded'] = implode(',', $uploaded);
+     
+     return $result;
+}

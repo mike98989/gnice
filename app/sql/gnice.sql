@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2021 at 06:59 PM
+-- Generation Time: Jun 16, 2021 at 12:43 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -145,7 +145,7 @@ CREATE TABLE `pages` (
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `brand` varchar(255) NOT NULL,
   `product_code` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
@@ -176,14 +176,9 @@ INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_d
 (14, 'iphone', 'XGC5FLOzDrteoPA1', 'white', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:36:22', '774738'),
 (15, 'iphone', 'UchVdp0Qm3ytp5RK', 'gold', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:36:32', '774738'),
 (16, 'iphone', 'leymst08Cf3BOLeD', 'gold', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:36:34', '774738'),
-(17, 'iphone%~)(& alert()', 'YGx1usAKQL2CXoOF', 'gold $IDncn', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:43:13', '774738'),
-(18, 'iphone%~)(& alert()', 'UN32OKDQMtQ6xyU3', 'gold $IDncn', 'iphone X pro max', 'this is a short descrition', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'image-link88', '3000', '2021-06-14 15:47:07', '774738'),
-(19, 'iphone%~)(& alert()', 'Xt2Bpr6Qe9yL5XZQ', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'image-link88', '2000', '2021-06-14 16:20:04', '774738'),
-(20, 'iphone%~)(& alert()', 'l2wHjDZo9cafFW3i', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'image-link88', '2000', '2021-06-14 17:20:01', '774738'),
-(21, 'iphone 7', '8610231', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', '', '1200', '2021-06-14 17:32:39', '774738'),
-(22, 'iphone 6', '8827505', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', '', '1200', '2021-06-14 17:33:08', '774738'),
-(23, 'iphone 6', '21430549', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', '', '1200', '2021-06-14 17:48:27', 'AG-45144851'),
-(24, 'iphone 6', '89109265', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', '', '1200', '2021-06-14 17:54:58', 'AG-90709887');
+(48, 'iphone 4', '6353988', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'upload/multiple/pro60c9d2960075b001000000.jpg,upload/multiple/pro60c9d29600bfd000001000.jpg', '200', '2021-06-16 11:29:42', 'AG-2284478'),
+(49, 'iphone 4', '13451168', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'upload/multiple/pro60c9d47989956000000001.jpg,upload/multiple/pro60c9d47989db9000001000.jpg,upload/multiple/pro60c9d4798a915000000010.png,upload/multiple/pro60c9d4798af40000001000.png', '200', '2021-06-16 11:37:45', 'AG-71211439'),
+(50, 'iphone 4', '29808195', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'upload/multiple/pro60c9d5995052d000001000.jpg,upload/multiple/pro60c9d59950a8c000000001.jpg,upload/multiple/pro60c9d59950f70000000010.png,upload/multiple/pro60c9d599514fb000000010.png', '200', '2021-06-16 11:42:33', 'AG-77619221');
 
 -- --------------------------------------------------------
 
@@ -192,7 +187,7 @@ INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_d
 --
 
 CREATE TABLE `product_ratings` (
-  `id` int(11) NOT NULL,
+  `id` bigint(255) NOT NULL,
   `product_code` varchar(255) NOT NULL,
   `customer_id` varchar(255) NOT NULL,
   `rating_score` varchar(255) NOT NULL,
@@ -403,13 +398,13 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `product_ratings`
 --
 ALTER TABLE `product_ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `seller_ratings`
