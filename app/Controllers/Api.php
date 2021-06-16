@@ -28,7 +28,9 @@ class Api extends Controller{
             exit;
          }
     }
-
+    /**
+     * please set <input type="files" name="files[]" />>
+     */
     public function add_product(){
         $header = apache_request_headers();
         if(isset($header['gnice-Authenticate'])){
@@ -144,4 +146,26 @@ class Api extends Controller{
         }
 
     }
+
+    //add a product to cart
+    public function add_product_to_cart(){
+         $header = apache_request_headers();
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->addProductToCart();
+             print_r(json_encode($result));
+        }else{
+            echo 'invalid response';
+            exit;
+        }
+    }
+    public function fetch_all_product_cart(){
+         $header = apache_request_headers();
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->getAllProductCart();
+             print_r(json_encode($result));
+        }else{
+            echo 'invalid response';
+            exit;
+        }
+    } 
 }

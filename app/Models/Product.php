@@ -36,35 +36,9 @@ class Product extends Model{
         }
         return $result;
      }
-
-    //  public function addProduct(){
-    //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    //     foreach (array_keys($_POST) as $key) {
-    //        $fields[] = "`$key`";
-    //       $values[] = $_POST[$key];
-    //        $fields_imploded = implode(",",$fields);
-    //        $values_imploded = implode(",", $values);
-    //     }
-    //     $this->db->query("INSERT INTO products ($fields_imploded) VALUES ($values_imploded)");
-    //     $this->db->bind(':$values_imploded', $values_imploded);
-    //     if($this->db->executeArray()){
-    //         $result['message'] = 'product added successfully';
-    //         $result['status'] = 1;
-            
-    //     }else{
-
-    //         $result['message'] = 'product failed';
-    //         $result['status'] = 0;
-    //        // return false;
-           
-    //     }
-    //         return $result;
-    //  }
     
         public function addProduct(){
-            //$uploader = uploadProductImage('pro_','products');
             $uploader = uploadMultiple('pro','products');
-            
             // print_r(json_encode($uploader[1]));
             // exit;
             
@@ -109,31 +83,11 @@ class Product extends Model{
            return $result;
             
 
-            // $keys = implode(',', array_keys($data));
-            //$bind_params = implode(',', array_map(function($value){return ':'. $value;}, array_keys($data)));
-            // print_r($data);
-            // die;
-           //$this->db->query("INSERT INTO products ($keys) VALUES ($bind_params)");
-           //$this->db->bind($bind_params, $keys);
-            // print_r($bind_params);
-            // die();
-        //     if($this->db->executeArray()){
-        //     $result['message'] = 'product added successfully';
-        //     $result['status'] = 1;
-            
-        //     }else{
-
-        //     $result['message'] = 'product failed';
-        //     $result['status'] = 0;
-        //    return false;
-           
-        // }
-        //    return $result;
 
 
         }
-    public function mostViewedProduct(){
-        $this->db->query("SELECT name, brand, price, seller_id, product_code, image,
+        public function mostViewedProduct(){
+             $this->db->query("SELECT name, brand, price, seller_id, product_code, image,
                         sub_category.title as productSubCategory,
                         category.title as productCategory,
                         most_view.view_count as viewCount                   
@@ -153,8 +107,8 @@ class Product extends Model{
         return $rows;
     }
 
-    public function productRating(){
-        $this->db->query("SELECT name, price,
+        public function getProductRating(){
+            $this->db->query("SELECT name, price,
                         sub_category.title as productSubCategory,
                         category.title as productCategory,
                         product_ratings.rating_score as rating                  
@@ -173,8 +127,8 @@ class Product extends Model{
         }
         return $rows;
     }
-    public function wishLists(){
-        $this->db->query("SELECT name, price,brand,
+        public function wishLists(){
+            $this->db->query("SELECT name, price,brand,
                         sub_category.title as productSubCategory,
                         category.title as productCategory, 
                         wishlist.wish_date as dateAdded                
@@ -184,49 +138,87 @@ class Product extends Model{
                            INNER JOIN wishlist ON wishlist.product_code = products.product_code
                             ");
         
-        if($this->db->resultSet()){
-            $rows['data'] = $this->db->resultSet();
-            $rows['status']='1';
-        }else{
-            $rows['data'] = [];
-            $rows['status']='0';
+            if($this->db->resultSet()){
+            $result['data'] = $this->db->resultSet();
+            $result['status']='1';
+         }else{
+            $result['data'] = [];
+            $result['status']='0';
+         }
+            return $result;
         }
-        return $rows;
-    }
 
-    //  public function uploadProductImage(){
-    //       $files = $_FILES['file'];
-    //       $fileName = $files['name'];
-    //       $fileSize = $files['size'];
-    //       $fileTmpLocation = $files['tmp_name'];
-    //       $fileError = $files['error'];
+        public function addProductToCart(){
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $product_code = trim($_POST['product_code']);
+            $customer_id = trim($_POST['customer_id']);
 
-    //       //allowed only jpeg,jpg, png
-    //       $fileNameExploded =explode('.', $fileName);
+            $this->db->query('INSERT INTO product_cart (product_code, customer_id, date_added) VALUES (:product_code, :customer_id, now()');
+            $this->db->bind(':product_code', $product_code);
+            $this->db->bind(':customer_id', $customer_id);
+            if($this->db->execute()){
+            $result['message'] = 'product added to cart';
+            $result['status'] = '1';
+            
+            }else{
+            $result['message'] = 'product failed';
+            $result['status'] = '0';
+            return false;
+           
+            }
+           return $result;
+        }
+        public function getAllProductCart(){
+            $this->db->query("SELECT name, price, brand,
+                        products.product_code as productCode,
+                        product_cart.customer_id as customerID,
+                        product_cart.date_added as dateAdded                
+                         FROM products
+                         INNER JOIN product_cart ON product_cart.product_code = products.product_code
+                            ");
+        
+            if($this->db->resultSet()){
+            $result['data'] = $this->db->resultSet();
+            $result['status']='1';
+         }else{
+            $result['data'] = [];
+            $result['status']='0';
+         }
+            return $result;
+        }
+        public function ProductToCart(){
+        // if(isset($_SESSION['product_code'])){
+
+        // } else{
+        //     $item_array = array(
+        //         'product_code' => $_POST['product_code']
+        //     );
+        //}
+        $product_code = $_POST['product_code'];
+
+        $productCart = array(
+            1234,123, 12
+        );
          
-    //       $fileExtention = strtolower($fileNameExploded[1]);
-    //       $allowedExtention = array('jpeg', 'jpg','png', 'webp');
+        if(in_array($product_code, $productCart)){ 
+            $result['status']='0';
+            $result['message'] = 'item already in cart';
+            $result['array'] = $productCart;
+            
+        }else{   
+            $productCart = array(
+                $product_code
+            );
+           
 
-    //       if(in_array($fileExtention, $allowedExtention)){
-    //         if($fileSize < 200000){
-    //             $folder = 'upload/products/';
+            $result['data'] = $product_code;
+            $result['status']='1';
+            $result['message'] = 'item added to cart';
+            
+        }
+        
+        $result['count'] = count($productCart);
 
-    //             if(!file_exists($folder))
-	// 		 	{
-	// 		 		mkdir($folder,0777,true);
-    //              }
-    //              //generation new name
-    //             $fileNewName = uniqid('pro_',false);
-    //             $destination = $folder.$fileNewName.random(100000,10000000).$fileNameExploded[0].'.'.$fileExtention;
-                
-    //             move_uploaded_file($fileTmpLocation,$destination);
-    //             return array($destination);
-                
-    //         }else {
-    //              print_r($result['error']='file size exceed limit');
-    //         }
-    //       }else {
-    //             print_r($result['error']='file type not supported');
-    //       }
-    // }
+        return $result;
+    }
 }
