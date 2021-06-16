@@ -72,8 +72,8 @@ class Authenticate extends Model{
 
     public function updateUserAccountType(){
         $header = apache_request_headers(); 
-        if(isset($header['gnice-authenticate'])){
-			$token = filter_var($header['gnice-authenticate']);
+        if(isset($header['gnice-Authenticate'])){
+			$token = filter_var($header['gnice-Authenticate']);
             $verifyToken = $this->verifyToken($token);
             if($verifyToken){
                 $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id ');

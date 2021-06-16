@@ -47,7 +47,7 @@ class Api extends Controller{
 
     public function update_user_account_type(){
         $header = apache_request_headers(); 
-        if(isset($header['gnice-authenticate'])){
+        if(isset($header['gnice-Authenticate'])){
             $result = $this->model('Authenticate')->updateUserAccountType();
             print_r(json_encode($result));
         }else {
