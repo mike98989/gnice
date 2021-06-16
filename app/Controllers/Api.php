@@ -9,6 +9,12 @@ class Api extends Controller{
         //$this->
         $signup = $this->model('Authenticated')->signup();
     }
+
+    public function user_login(){
+        //$this->
+        $login = $this->model('Authenticate')->login($_POST['username'], $_POST['password']);
+        print_r(json_encode($login));
+    }
     /**
      * Product apis
      */
@@ -23,7 +29,6 @@ class Api extends Controller{
          }
     }
     public function fetch_single_product(){
-
          $header = apache_request_headers(); 
          if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getSingleProducts();
@@ -33,6 +38,18 @@ class Api extends Controller{
             exit;
          }
     }
+
+    public function update_user_account_type(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
+            $result = $this->model('Authenticate')->updateUserAccountType();
+            print_r(json_encode($result));
+        }else {
+            echo "invalid request";
+           exit;
+        }
+   }
+    
 
     public function add_product(){
         $header = apache_request_headers();
