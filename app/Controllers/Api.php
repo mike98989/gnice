@@ -15,6 +15,7 @@ class Api extends Controller{
         $login = $this->model('Authenticate')->login($_POST['username'], $_POST['password']);
         print_r(json_encode($login));
     }
+
     /**
      * Product apis
      */
@@ -53,9 +54,9 @@ class Api extends Controller{
 
     public function add_product(){
         $header = apache_request_headers();
-        if(isset($header['gnice-authenticate'])){
-            $this->model('Product')->addProduct();
-            
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->addProduct();
+             print_r(json_encode($result));
         }else{
             echo 'invalid response';
             exit;
@@ -166,4 +167,26 @@ class Api extends Controller{
         }
 
     }
+
+    //add a product to cart
+    public function add_product_to_cart(){
+         $header = apache_request_headers();
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->addProductToCart();
+             print_r(json_encode($result));
+        }else{
+            echo 'invalid response';
+            exit;
+        }
+    }
+    public function fetch_all_product_cart(){
+         $header = apache_request_headers();
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Product')->getAllProductCart();
+             print_r(json_encode($result));
+        }else{
+            echo 'invalid response';
+            exit;
+        }
+    } 
 }

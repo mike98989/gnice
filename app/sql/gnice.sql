@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2021 at 02:51 PM
+-- Generation Time: Jun 16, 2021 at 12:43 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -145,31 +145,40 @@ CREATE TABLE `pages` (
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `brand` varchar(255) NOT NULL,
   `product_code` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `short_description` varchar(255) NOT NULL,
   `long_description` text NOT NULL,
-  `category` int(11) NOT NULL,
-  `sub_category` int(11) NOT NULL,
-  `image_1` text NOT NULL,
-  `image_2` varchar(255) NOT NULL,
-  `image_3` varchar(255) NOT NULL,
-  `image_4` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `sub_category` varchar(255) NOT NULL,
+  `image` text NOT NULL,
+  `price` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
-  `seller_id` int(11) NOT NULL
+  `seller_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_description`, `long_description`, `category`, `sub_category`, `image_1`, `image_2`, `image_3`, `image_4`, `price`, `date_added`, `seller_id`) VALUES
-(1, 'Iphone', '12344', 'black', 'iphone 7s', 'Lorem ipsum dolor sit, amet consectetur adipisicin', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 6, 'location/image', 'location/image 2', 'location/image-3', 'location /image-4', 0, '0000-00-00 00:00:00', 676655),
-(2, 'samsung', '66554', 'silver', 'samsung s20', 'lorem ipsum some description', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', 3, 1, 'location-4', 'location-5', 'location-4', 'location-3', 1200, '0000-00-00 00:00:00', 6664764);
+INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_description`, `long_description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`) VALUES
+(1, 'Iphone', '12344', 'black', 'iphone 7s', 'Lorem ipsum dolor sit, amet consectetur adipisicin', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', '3', '6', 'location/image', '0', '0000-00-00 00:00:00', '676655'),
+(2, 'samsung', '66554', 'silver', 'samsung s20', 'lorem ipsum some description', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere beatae itaque fugiat perspiciatis vitae in cum libero ea, iste neque? Expedita, unde necessitatibus cumque qui ut, hic, distinctio ullam neque asperiores beatae eum voluptate. Sapiente ad nostrum, id earum magnam maxime deleniti ratione architecto, molestias assumenda nobis ipsum sunt soluta inventore autem repudiandae mollitia tempore distinctio a. Ipsam eveniet labore ex', '3', '1', 'location-4', '1200', '0000-00-00 00:00:00', '6664764'),
+(7, 'Kia', '27466465', 'black', 'kia rio', 'this is a short descrition', 'this is a long description', '4', '2', 'image-link', '1200', '2021-06-14 14:58:15', '774738'),
+(8, 'oukitel', '278744', 'white', 'oukitel u16 max', 'this is a short descrition', 'this is a long description', '3', '4', 'image-link2', '1500', '2021-06-14 15:01:29', '774738'),
+(9, 'iphone', '278748', 'white', 'iphone 12 pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '2000', '2021-06-14 15:03:55', '774738'),
+(11, 'iphone', '9tdlNAJhu4sZ', 'white', 'iphone 12 pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '2000', '2021-06-14 15:30:00', '774738'),
+(12, 'iphone', '2YHeub5jwDJg4oZV', 'white', 'iphone 11 pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '1800', '2021-06-14 15:32:00', '774738'),
+(13, 'iphone', 'QtIeo5p4T8EoyObe', 'white', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:33:29', '774738'),
+(14, 'iphone', 'XGC5FLOzDrteoPA1', 'white', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:36:22', '774738'),
+(15, 'iphone', 'UchVdp0Qm3ytp5RK', 'gold', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:36:32', '774738'),
+(16, 'iphone', 'leymst08Cf3BOLeD', 'gold', 'iphone X pro max', 'this is a short descrition', 'this is a long description', '3', '6', 'image-link88', '3000', '2021-06-14 15:36:34', '774738'),
+(48, 'iphone 4', '6353988', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'upload/multiple/pro60c9d2960075b001000000.jpg,upload/multiple/pro60c9d29600bfd000001000.jpg', '200', '2021-06-16 11:29:42', 'AG-2284478'),
+(49, 'iphone 4', '13451168', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'upload/multiple/pro60c9d47989956000000001.jpg,upload/multiple/pro60c9d47989db9000001000.jpg,upload/multiple/pro60c9d4798a915000000010.png,upload/multiple/pro60c9d4798af40000001000.png', '200', '2021-06-16 11:37:45', 'AG-71211439'),
+(50, 'iphone 4', '29808195', 'gold $IDncn', 'iphone 8', 'this is a short descrition strong text', 'this is a long description alert(); console(&#39;this is console&#39;);', '3', '6', 'upload/multiple/pro60c9d5995052d000001000.jpg,upload/multiple/pro60c9d59950a8c000000001.jpg,upload/multiple/pro60c9d59950f70000000010.png,upload/multiple/pro60c9d599514fb000000010.png', '200', '2021-06-16 11:42:33', 'AG-77619221');
 
 -- --------------------------------------------------------
 
@@ -178,7 +187,7 @@ INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_d
 --
 
 CREATE TABLE `product_ratings` (
-  `id` int(11) NOT NULL,
+  `id` bigint(255) NOT NULL,
   `product_code` varchar(255) NOT NULL,
   `customer_id` varchar(255) NOT NULL,
   `rating_score` varchar(255) NOT NULL,
@@ -312,7 +321,8 @@ ALTER TABLE `pages`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_code` (`product_code`);
 
 --
 -- Indexes for table `product_ratings`
@@ -388,13 +398,13 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `product_ratings`
 --
 ALTER TABLE `product_ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `seller_ratings`
