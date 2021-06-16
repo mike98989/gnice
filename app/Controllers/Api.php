@@ -11,9 +11,14 @@ class Api extends Controller{
     }
 
     public function user_login(){
-        //$this->
+        $header = apache_request_headers(); 
+         if(isset($header['gnice-Authenticate'])){
         $login = $this->model('Authenticate')->login($_POST['username'], $_POST['password']);
         print_r(json_encode($login));
+        }else {
+        echo "invalid request";
+       exit;
+        }
     }
 
     /**
