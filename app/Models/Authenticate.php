@@ -42,7 +42,7 @@ class Authenticate extends Model{
                 $msg['msg']='Email Address not found!';
             }
             return($msg);
-            $return = json_encode($message);
+            $return = json_encode($msg);
             print_r($return);
             exit;
         
@@ -160,5 +160,7 @@ class Authenticate extends Model{
     //     $_SESSION['token'] = $token;
 
     // }
+
+    
 
 }

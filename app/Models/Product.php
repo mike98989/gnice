@@ -18,17 +18,31 @@ class Product extends Model{
             $result['status']='1';
         }else{
             $result['data'] = [];
-            $resul['status']='0';
+            $result['status']='0';
         }
         return $result;
      }
 
-     public function getSingleProduct($data){     
-         $this->db->query("SELECT * FROM products WHERE id = :id");
-         $this->db->bind(':id', $data);
+     public function getSingleProduct($id){ 
         
-        if($this->db->resultSingleSet()){
-            $result['data'] = $this->db->resultSingleSet();
+        // the value is sanitize to an interger
+         $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+        //  print_r($product_code);
+        //  exit('got here');
+         $this->db->query("
+                            SELECT *,
+                            category.title as productCategory,
+                            sub_category.title as productSubCategory
+                            FROM products
+                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN category ON category.id = products.category
+                            WHERE product_code = :product_code
+                        ");
+         $this->db->bind(':product_code', $product_code);
+        
+        if($this->db->singleResult()){
+            $result['data'] = $this->db->singleResult();
             $result['status']='1';
         }else{
             $result['data'] = [];

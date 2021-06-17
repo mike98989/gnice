@@ -93,4 +93,124 @@ class Category extends Model{
         }
         
     }
+
+    public function testCategory(){
+         $this->db->query("SELECT t1.id, t1.name 
+                            CASE WHEN parent_id = 0 THEN
+                                1
+                            ELSE
+                            (SELECT count(id)+1 FROM category t2  WHERE t2.parent_id = t1.id AND t2.id < t1.id)
+                            END AS seq_no
+                FROM category t1
+                            ");
+        
+        if($this->db->resultSet()){
+            $result['data'] = $this->db->resultSet();
+            $result['status']='1';
+        }else{
+            $result['data'] = [];
+            $result['status']='0';
+        }
+        
+        return $result;
+    }
+
+    public function createCategory(){
+        $_POST = filter_var(INPUT_POST, FILTER_SANITIZE_STRING);
+        $category_name = $_POST['category_name'];
+        $this->db->query("INSERT INTO category (name, parent_id) VALUES (:category_name, 0)");
+        $this->db->bind(':category_name', $category_name);
+
+        if($this->db->execute()){
+            $result['message'] = 'category added';
+            $result['status'] = '1';
+        }else {
+            $result['message'] = 'category failed';
+            $result['status'] = '0';
+        }
+
+        return $result;
+        
+    }
+
+    public function createSubCategory(){
+        $_POST = filter_var(INPUT_POST, FILTER_SANITIZE_STRING);
+        $parent_id = filter_var($_POST['category_id'], FILTER_SANITIZE_NUMBER_INT);
+        $subcategory_name = $_POST['subcategory_name'];
+        $this->db->query("INSERT INTO sub_category (name, parent_id) VALUES (:subcategory_name, :parent_id)");
+        $this->db->bind(':subcategory_name', $subcategory_name);
+        $this->db->bind(':parent_id', $parent_id);
+
+        if($this->db->execute()){
+            $result['message'] = ' subcategory added';
+            $result['status'] = '1';
+        }else {
+            $result['message'] = 'category failed';
+            $result['status'] = '0';
+        }
+        return $result;
+        
+    }
+
+    public function getAllCategory2(){
+        $parent_id = 0;
+        $this->db->query("SELECT * FROM category WHERE parent_id = :parent_id");
+        $this->db->bind(':parent_id', $parent_id);
+       
+
+        // $this->db->query("SELECT * FROM category");
+
+        $catData = [];
+        if($this->db->resultSet()){
+            $row = $this->db->resultSet();
+            $data = json_encode($row);
+
+            // print_r($data);
+            // exit('got here');
+            while($row = $this->db->resultSet()){
+                $catData[]=[
+                    'id'=>$row['id'],
+                    'parent_id'=>$row['parent_id'],
+                    'category_name'=>$row['name'],
+                    'subcategory'=>$this->getAllSubCategory2($row['id'])
+                ];
+            }
+
+            
+
+            return $catData;
+
+        }else {
+            return $catData=[];
+        }
+
+        print_r($catData);
+
+    }
+
+    public function getAllSubCategory2($parent_id){
+        $this->db->query("SELECT * FROM sub_category WHERE parent_id = :parent_id");
+        $this->db->bind(':parent_id', $parent_id);
+        $row = $this->db->execute();
+
+        $subCatData = [];
+        if($this->db->resultSet()){
+            if($this->db->rowCount()>0){
+                while ($row) {
+
+                    $subCatData[]=[
+                        'id' => $row['id'],
+                        'parent_id' => $row['parent_id'],
+                        'subcategory' => $row['subcategory'],
+                    ];
+                    # code...
+                }
+                 return $subCatData;
+            }
+            else{
+                return $subCatData = [];
+            }
+        }
+
+    }
 }
