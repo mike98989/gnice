@@ -1,16 +1,32 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 
 class Api extends Controller{
     public function index(){
 
     }
-    
+    public function signUpApi(){
+        //$this->
+        $signup = $this->model('Authenticated')->signup();
+    }
+
+    public function user_login(){
+        $header = apache_request_headers(); 
+         if(isset($header['gnice-Authenticate'])){
+        $login = $this->model('Authenticate')->login($_POST['username'], $_POST['password']);
+        print_r(json_encode($login));
+        }else {
+        echo "invalid request";
+       exit;
+        }
+    }
+
     /**
      * Product apis
      */
      public function fetch_all_product(){
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
+         if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getAllProducts();
              print_r(json_encode($result));
          }else {
@@ -20,17 +36,27 @@ class Api extends Controller{
     }
     public function fetch_single_product(){
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
-             $result = $this->model('Product')->getSingleProduct();
+         if(isset($header['gnice-authenticate'])){
+             $result = $this->model('Product')->getSingleProducts();
              print_r(json_encode($result));
          }else {
              echo "invalid request";
             exit;
          }
     }
-    /**
-     * please set <input type="files" name="files[]" />>
-     */
+
+    public function update_user_account_type(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Authenticate')->updateUserAccountType();
+            print_r(json_encode($result));
+        }else {
+            echo "invalid request";
+           exit;
+        }
+   }
+    
+
     public function add_product(){
         $header = apache_request_headers();
         if(isset($header['gnice-Authenticate'])){
