@@ -1,9 +1,9 @@
 <?php
-
+//header('Access-Control-Allow-Origin: *');
 session_start();
 
 //load config
-require_once 'config/config.php';
+require_once 'config/Config.php';
 
 // load libraries or core files
 
