@@ -73,7 +73,6 @@ class Api extends Controller{
      * Hero apis
      */
      public function fetch_all_hero(){
-
          $header = apache_request_headers(); 
          if(isset($header['gnice-Authenticate'])){
              $result = $this->model('Hero')->getAllHero();
@@ -116,7 +115,7 @@ class Api extends Controller{
     public function fetch_all_category(){
         $header = apache_request_headers(); 
         if(isset($header['gnice-Authenticate'])){
-            $result = $this->model('Category')->getAllCategory2();
+            $result = $this->model('Category')->getAllCategory();
             print_r(json_encode($result));
         }else{
             echo "invalid request";

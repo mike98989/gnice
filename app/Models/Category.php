@@ -4,10 +4,11 @@
  * add, delete, create, update categories and sub categories
  * 
  */
+TODO: // work on category
 class Category extends Model{
     public function getAllCategory(){     
-         $this->db->query("SELECT * FROM category
-                            ");
+         $this->db->query("
+          ");
         
         if($this->db->resultSet()){
             $rows['data'] = $this->db->resultSet();

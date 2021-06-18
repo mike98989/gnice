@@ -32,7 +32,7 @@ class Product extends Model{
         //  exit('got here');
          $this->db->query("
                             SELECT *,
-                            category.title as productCategory,
+                            category.name as productCategory,
                             sub_category.title as productSubCategory
                             FROM products
                             INNER JOIN sub_category ON sub_category.id = products.sub_category
@@ -96,8 +96,6 @@ class Product extends Model{
         }
            return $result;
             
-
-
 
         }
         public function mostViewedProduct(){
