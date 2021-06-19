@@ -21,7 +21,7 @@
         alert(result);
        var response=JSON.stringify(result);
        var parsed = JSON.parse(response);
-       var msg=angular.fromJson(parsed);
+       var msg=angular.fromJson(response);
        $('.loader').hide(); 
        if(msg.status=='1'){  
       
