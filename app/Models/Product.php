@@ -5,13 +5,12 @@
 class Product extends Model{
 
     public function getAllProducts(){     
-         $this->db->query("SELECT brand,name,color, short_description,long_description,seller_id,image,product_code,price,date_added, 
-                        category.title as productCategory,
+         $this->db->query("SELECT *, category.title as productCategory,
                         sub_category.title as productSubCategory                    
                         FROM products
                         INNER JOIN sub_category ON sub_category.id = products.sub_category
                         INNER JOIN category ON category.id = products.category
-                            ");
+                            ORDER BY products.id DESC");
         
         if($this->db->resultSet()){
             $result['data'] = $this->db->resultSet();
