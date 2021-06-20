@@ -55,7 +55,7 @@ class Api extends Controller{
      */
      public function fetch_all_product(){
          $header = apache_request_headers(); 
-         if(isset($header['gnice-authenticate'])){
+         if(isset($header['gnice-Authenticate'])){
              $result = $this->model('Product')->getAllProducts();
              print_r(json_encode($result));
          }else {
@@ -63,10 +63,10 @@ class Api extends Controller{
             exit;
          }
     }
-    public function fetch_single_product(){
+    public function fetch_single_product($id){
          $header = apache_request_headers(); 
-         if(isset($header['gnice-authenticate'])){
-             $result = $this->model('Product')->getSingleProducts();
+         if(isset($header['gnice-Authenticate'])){
+             $result = $this->model('Product')->getSingleProduct($id);
              print_r(json_encode($result));
          }else {
              echo "invalid request";
@@ -113,7 +113,6 @@ class Api extends Controller{
      * Hero apis
      */
      public function fetch_all_hero(){
-
          $header = apache_request_headers(); 
          if(isset($header['gnice-authenticate'])){
              $result = $this->model('Hero')->getAllHero();
@@ -163,6 +162,18 @@ class Api extends Controller{
             exit;	
         }
     }
+
+    public function fetch_all_test_category(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-Authenticate'])){
+            $result = $this->model('Category')->testCategory();
+            print_r(json_encode($result));
+        }else{
+            echo "invalid request";
+            exit;	
+        }
+    }
+
 
     public function create_category(){
         $header = apache_request_headers();
