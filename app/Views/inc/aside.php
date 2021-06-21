@@ -1,42 +1,25 @@
 <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
-<aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar" ng-init="fetch_all_category()">
+<aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar">
     <div class="side-menu-wrapper text-uppercase mb-2 d-none d-lg-block">
         <h2 class="side-menu-title bg-gray ls-n-25">Browse Categories</h2>
 
         <nav class="side-nav">
-            <ul class="menu menu-vertical sf-arrows">
+            <ul class="menu menu-vertical sf-arrows"  ng-init="fetch_all_category()">
             <li ng-repeat="category in categories">
             <a href="#" class="sf-with-ul"><i class="sicon-badge"></i>{{category.title}}</a>
                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <a href="#" class="nolink">VARIATION 1</a>
-                                <ul class="submenu">
-                                    <li><a href="category.html">Fullwidth Banner</a></li>
-                                    <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-                                    <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-                                    <li><a href="category.html">Left Sidebar</a></li>
-                                    <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-                                    <li><a href="category-flex-grid.html">Product Flex Grid</a></li>
-                                    <li><a href="category-horizontal-filter1.html">Horizontal Filter1</a></li>
-                                    <li><a href="category-horizontal-filter2.html">Horizontal Filter2</a></li>
-                                </ul>
+                        <div class="row" >
+                            <div class="col-lg-6" >
+                                <a href="#" class="nolink">{{category.title}}</a>
+                                <ul class="submenu"  ng-init="fetch_all_sub_category()">
+                                    <li  ng-repeat="subcategory in subcategories  | filter: category.title">
+                                        <a href="category.html">{{subcategory.title}} </a></li>
+                                    </ul>
+                                   
                             </div>
-                            <div class="col-lg-4">
-                                <a href="#" class="nolink">VARIATION 2</a>
-                                <ul class="submenu">
-                                    <li><a href="category-list.html">List Types</a></li>
-                                    <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
-                                    <li><a href="category.html">3 Columns Products</a></li>
-                                    <li><a href="category-4col.html">4 Columns Products</a></li>
-                                    <li><a href="category-5col.html">5 Columns Products</a></li>
-                                    <li><a href="category-6col.html">6 Columns Products</a></li>
-                                    <li><a href="category-7col.html">7 Columns Products</a></li>
-                                    <li><a href="category-8col.html">8 Columns Products</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-4 p-0">
+                          
+                            <div class="col-lg-6 p-0">
                                 <img src="assets/images/menu-banner.jpg" alt="Menu banner">
                             </div>
                         </div>

@@ -113,10 +113,15 @@ class Api extends Controller{
     }
 
     public function fetch_all_category(){
-          
+           $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
             $result = $this->model('Category')->getAllCategory();
              header('Content-Type: application/json');
             print_r(json_encode($result));
+             }else{
+            echo "invalid request";
+            exit;   
+        }
             
             
 
@@ -126,7 +131,7 @@ class Api extends Controller{
 
     public function fetch_all_test_category(){
         $header = apache_request_headers(); 
-        if(isset($header['gnice-Authenticate'])){
+        if(isset($header['gnice-authenticate'])){
             $result = $this->model('Category')->testCategory();
             print_r(json_encode($result));
         }else{
@@ -145,8 +150,9 @@ class Api extends Controller{
 
      public function fetch_all_sub_category(){
         $header = apache_request_headers(); 
-        if(isset($header['gnice-Authenticate'])){
+        if(isset($header['gnice-authenticate'])){
             $result = $this->model('Category')->getAllSubCategory();
+            header('Content-Type: application/json');
             print_r(json_encode($result));
         }else{
             echo "invalid request";
