@@ -8,8 +8,42 @@
             <ul class="menu menu-vertical sf-arrows">
             <li ng-repeat="category in categories">
             <a href="#" class="sf-with-ul"><i class="sicon-badge"></i>{{category.title}}</a>
+                    <div class="megamenu megamenu-fixed-width megamenu-3cols">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <a href="#" class="nolink">VARIATION 1</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html">Fullwidth Banner</a></li>
+                                    <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
+                                    <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
+                                    <li><a href="category.html">Left Sidebar</a></li>
+                                    <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
+                                    <li><a href="category-flex-grid.html">Product Flex Grid</a></li>
+                                    <li><a href="category-horizontal-filter1.html">Horizontal Filter1</a></li>
+                                    <li><a href="category-horizontal-filter2.html">Horizontal Filter2</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <a href="#" class="nolink">VARIATION 2</a>
+                                <ul class="submenu">
+                                    <li><a href="category-list.html">List Types</a></li>
+                                    <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
+                                    <li><a href="category.html">3 Columns Products</a></li>
+                                    <li><a href="category-4col.html">4 Columns Products</a></li>
+                                    <li><a href="category-5col.html">5 Columns Products</a></li>
+                                    <li><a href="category-6col.html">6 Columns Products</a></li>
+                                    <li><a href="category-7col.html">7 Columns Products</a></li>
+                                    <li><a href="category-8col.html">8 Columns Products</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 p-0">
+                                <img src="assets/images/menu-banner.jpg" alt="Menu banner">
+                            </div>
+                        </div>
+                    </div><!-- End .megamenu -->
             </li>
             <!-- CATEGORY LOOP ENDS HERE -->
+            <!--
                 <li>
                     <a href="category.html" class="sf-with-ul"><i class="sicon-badge"></i>Vehicles</a>
                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
@@ -44,7 +78,7 @@
                                 <img src="assets/images/menu-banner.jpg" alt="Menu banner">
                             </div>
                         </div>
-                    </div><!-- End .megamenu -->
+                    </div><
                 </li>
                 <li>
                     <a href="product.html" class="sf-with-ul"><i class="sicon-basket"></i>Property</a>
@@ -59,7 +93,7 @@
                                     <li><a href="product-addcart-sticky.html">Addtocart Sticky</a></li>
                                     <li><a href="product-sidebar-left.html">Accordion Tabs</a></li>
                                 </ul>
-                            </div><!-- End .col-lg-4 -->
+                            </div>// End .col-lg-4 
                             <div class="col-lg-3">
                                 <a href="#" class="nolink">Variations 2</a>
                                 <ul class="submenu">
@@ -67,7 +101,7 @@
                                     <li><a href="product-simple.html">Simple Product</a></li>
                                     <li><a href="product-sidebar-left.html">With Left Sidebar</a></li>
                                 </ul>
-                            </div><!-- End .col-lg-4 -->
+                            </div>//End .col-lg-4
                             <div class="col-lg-3">
                                 <a href="#" class="nolink">Product Layout Types</a>
                                 <ul class="submenu">
@@ -78,13 +112,13 @@
                                     <li><a href="product-sticky-both.html">Sticky Both Side Info</a></li>
                                     <li><a href="product-sticky-info.html">Sticky Right Side Info</a></li>
                                 </ul>
-                            </div><!-- End .col-lg-4 -->
+                            </div>//End .col-lg-4
 
                             <div class="col-lg-3 p-0">
                                 <img src="assets/images/menu-bg.png" alt="Menu banner" class="product-promo">
-                            </div><!-- End .col-lg-4 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .megamenu -->
+                            </div>End .col-lg-4 
+                        </div>// End .row 
+                    </div>// End .megamenu
                 </li>
                 <li>
                     <a href="#" class="sf-with-ul"><i class="sicon-envelope"></i>Mobile Phones & Tablets</a>
@@ -160,6 +194,7 @@
                         <li><a href="#">Footer Types</a></li>
                     </ul>
                 </li>
+            -->
                 <li><a href="https://1.envato.market/DdLk5" target="_blank"><i class="sicon-star"></i>Buy Gnice!<span class="tip tip-hot">Hot</span></a></li>
             
             </ul>

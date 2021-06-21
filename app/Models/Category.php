@@ -7,7 +7,8 @@
 TODO: // work on category
 class Category extends Model{
     public function getAllCategory(){     
-         $this->db->query("
+         $this->db->query("SELECT * FROM category
+                            
           ");
         
         if($this->db->resultSet()){

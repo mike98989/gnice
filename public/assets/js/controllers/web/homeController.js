@@ -6,7 +6,7 @@
     $scope.dirlocation=datagrab.completeUrlLocation;
     $scope.currentPage = 1;
     $scope.pageSize = 30;
-    //alert($scope.dirlocation);
+
     $scope.fetch_all_category = function(){
       $.ajax({
         url: $scope.dirlocation+'api/fetch_all_category',
@@ -15,13 +15,14 @@
         async: true,
         cache: false,
         contentType: false,
-        headers:{'gnice-authenticate':'gnice-web'},
+       /* headers:{'gnice-Authenticate':'gnice-web'}, */
         processData: false,
         success: function (result) {
-        alert(result);
+       //alert(result);
        var response=JSON.stringify(result);
        var parsed = JSON.parse(response);
        var msg=angular.fromJson(response);
+     //alert(msg);
        $('.loader').hide(); 
        if(msg.status=='1'){  
       
@@ -33,6 +34,8 @@
         }
       });
     }
+
+
 
     
   }]);

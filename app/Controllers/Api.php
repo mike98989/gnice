@@ -113,15 +113,16 @@ class Api extends Controller{
     }
 
     public function fetch_all_category(){
-        $header = apache_request_headers(); 
-        if(isset($header['gnice-Authenticate'])){
+          
             $result = $this->model('Category')->getAllCategory();
+             header('Content-Type: application/json');
             print_r(json_encode($result));
-        }else{
-            echo "invalid request";
-            exit;	
-        }
+            
+            
+
     }
+
+
 
     public function fetch_all_test_category(){
         $header = apache_request_headers(); 
