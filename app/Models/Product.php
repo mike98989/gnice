@@ -56,8 +56,8 @@ class Product extends Model
     public function addProduct()
     {
 
-        /*
         $uploader = uploadMultiple('pro', 'products');
+        /*
         $image = $uploader['uploaded'];
 
         $data = filter_var_array($_POST);
