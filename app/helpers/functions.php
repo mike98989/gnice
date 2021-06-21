@@ -153,7 +153,7 @@ function uploadMultiple($prefix, $location)
                     //set upload limit to 2mb
                     if ($fileSize <= 2097152) {
 
-                        $folder = "upload/$location/";
+                        $folder = "assets/images/uploads/$location/";
 
                         if (!file_exists($folder)) {
                             mkdir($folder, 0777, true);
@@ -165,7 +165,8 @@ function uploadMultiple($prefix, $location)
 
                         if (move_uploaded_file($fileTmp, $fileDestination)) {
                             //upload file if all criteria are met
-                            $uploaded[$position] = $fileDestination;
+                            // $uploaded[$position] = $fileDestination;
+                            $uploaded[$position] = $fileNewName;
                         } else {
                             //errors array
                             $failed[$position] = "{$fileName} failed to uploaded";
@@ -184,7 +185,9 @@ function uploadMultiple($prefix, $location)
 
     // return implode(',',$uploaded);
     $result['image_error'] = implode(',', $failed);
+    // $result['uploaded'] = implode(',', $uploaded);
     $result['uploaded'] = implode(',', $uploaded);
 
+    // return $result;
     return $result;
 }
