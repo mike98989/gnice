@@ -7,11 +7,11 @@ class Product extends Model
 
     public function getAllProducts()
     {
-        $this->db->query("SELECT brand,name,color, short_description,long_description,seller_id,image,product_code,price,date_added,
+        $this->db->query("SELECT brand,name,color, short_description,long_description,seller_id,products.image,product_code,price,date_added,
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
-                        INNER JOIN sub_category ON sub_category.id = products.sub_category
+                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                         INNER JOIN category ON category.id = products.category
                             ");
 

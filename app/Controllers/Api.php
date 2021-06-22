@@ -55,7 +55,7 @@ class Api extends Controller{
      */
      public function fetch_all_product(){
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
+         if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getAllProducts();
              print_r(json_encode($result));
          }else {
@@ -65,7 +65,7 @@ class Api extends Controller{
     }
     public function fetch_single_product($id){
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
+         if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getSingleProduct($id);
              print_r(json_encode($result));
          }else {
@@ -152,10 +152,10 @@ class Api extends Controller{
         }
     }
 
-    public function fetch_all_category(){
+    public function fetch_all_categories_and_sub_categories(){
         $header = apache_request_headers(); 
         if(isset($header['gnice-authenticate'])){
-            $result = $this->model('Category')->getAllCategory();
+            $result = $this->model('Category')->getAllCategoriesAndSubCategories();
             print_r(json_encode($result));
         }else{
             echo "invalid request";
@@ -165,7 +165,7 @@ class Api extends Controller{
 
     public function fetch_all_test_category(){
         $header = apache_request_headers(); 
-        if(isset($header['gnice-Authenticate'])){
+        if(isset($header['gnice-authenticate'])){
             $result = $this->model('Category')->testCategory();
             print_r(json_encode($result));
         }else{

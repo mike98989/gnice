@@ -158,7 +158,7 @@ class Authenticate extends Model{
                     }   
                     }
                     if($this->db->execute()){   
-                    $msg['msg'] =  "New user account created";
+                    $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
                     $msg['status']='1';  
 
                     }else{
@@ -290,7 +290,7 @@ class Authenticate extends Model{
         $this->db->bind(':email', $email);
         $row = $this->db->singleResult();
         if($this->db->rowCount()> 0){
-            return $row;;
+            return $row;
         }else{
             return false;
         }
@@ -350,10 +350,10 @@ class Authenticate extends Model{
                     $this->db->bind(':email', $email);
                     $this->db->bind(':activated', '1');
                     $this->db->execute();
-                    $msg['msg'] =  "Successfully confirmed your account.";
+                    $msg['msg'] = "Successfully confirmed your account.";
                     $msg['status']='1'; 
                 }else{
-                    $msg['msg'] =  "Invalid CONFIRMATION CODE";
+                    $msg['msg'] = "Invalid CONFIRMATION CODE";
                     $msg['status']='0';   
                 }   
             }else{
