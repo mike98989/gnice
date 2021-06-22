@@ -12,8 +12,15 @@ class Api extends Controller{
 
     public function user_login(){
         $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
-        $login = $this->model('Authenticate')->login($_POST['username'], $_POST['password']);
+         $form_data = json_decode(file_get_contents("php://input"));
+    
+        
+        
+        if(isset($header['gnice-authenticate'])){
+             $username = $form_data->email;
+         $password = $form_data->password;
+          $login = $this->model('Authenticate')->login($username, $password);
+           header('Content-Type: application/json');
         print_r(json_encode($login));
         }else {
         echo "invalid request";
@@ -46,6 +53,25 @@ $form_data = json_decode(file_get_contents("php://input"));
           $form_data = json_decode(file_get_contents("php://input"));
          if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getSingleProduct($form_data);
+               header('Content-Type: application/json');
+             print_r(json_encode($result));
+         }else {
+             echo "invalid request";
+            exit;
+         }
+         
+    }
+
+        public function fetch_selected_product(){
+       
+$form_data = json_decode(file_get_contents("php://input"));
+
+     
+        
+         $header = apache_request_headers(); 
+          $form_data = json_decode(file_get_contents("php://input"));
+         if(isset($header['gnice-authenticate'])){
+             $result = $this->model('Product')->getSelectedProduct($form_data);
                header('Content-Type: application/json');
              print_r(json_encode($result));
          }else {
@@ -169,6 +195,23 @@ $form_data = json_decode(file_get_contents("php://input"));
             exit;	
         }
     }
+
+      public function fetch_selected_sub_category(){
+        $form_data = json_decode(file_get_contents("php://input"));
+               
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
+            $result = $this->model('Category')->getSelectedCategory($form_data);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        }else{
+            echo "invalid request";
+            exit;   
+        }
+        
+    }
+
+    
     public function fetch_most_view_product(){
         $header = apache_request_headers(); 
         if(isset($header['gnice-Authenticate'])){

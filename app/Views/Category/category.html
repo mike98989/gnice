@@ -1,4 +1,4 @@
-<main class="main">
+<main class="main"  ng-controller="homeController">
 			<div class="category-banner-container bg-gray">
 				<div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('assets/images/banners/banner-top.jpg');">
 					<div class="container position-relative">
@@ -18,7 +18,7 @@
 				</div>
 			</div>
 
-			<div class="container">
+			<div class="container"  ng-init="fetch_selected_product()">
 				<nav aria-label="breadcrumb" class="breadcrumb-nav">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
@@ -74,18 +74,18 @@
 						</nav>
 
 						<div class="row pb-4">
-							<div class="col-12 product-default left-details product-list mb-4">
+							<div class="col-12 product-default left-details product-list mb-4" ng-repeat="selectedProduct in selectedProducts">
 								<figure>
-									<a href="product.html">
+									<a href="#" id="pbtn" data-id1="{{selectedProduct.product_code}}">
 										<img src="assets/images/products/product-1.jpg">
 									</a>
 								</figure>
 								<div class="product-details">
 									<div class="category-list">
-										<a href="category.html" class="product-category">category</a>
+										<a href="" class="product-category">{{selectedProduct.productSubCategory}}</a>
 									</div>
 									<h2 class="product-title">
-										<a href="product.html">Product Short Name</a>
+										<a href="">{{selectedProduct.name}}</a>
 									</h2>
 									<div class="ratings-container">
 										<div class="product-ratings">
@@ -93,9 +93,9 @@
 											<span class="tooltiptext tooltip-top"></span>
 										</div><!-- End .product-ratings -->
 									</div><!-- End .product-container -->
-									<p class="product-description">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+									<p class="product-description">{{selectedProduct.short_description}}</p>
 									<div class="price-box">
-										<span class="product-price">$15.00</span>
+										<span class="product-price">${{selectedProduct.price}}</span>
 									</div><!-- End .price-box -->
 									<div class="product-action">
 										<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i>ADD TO CART</button>
@@ -104,156 +104,7 @@
 									</div>
 								</div><!-- End .product-details -->
 							</div>
-							<div class="col-12 product-default left-details product-list mb-4">
-								<figure>
-									<a href="product.html">
-										<img src="assets/images/products/product-2.jpg">
-									</a>
-								</figure>
-								<div class="product-details">
-									<div class="category-list">
-										<a href="category.html" class="product-category">category</a>
-									</div>
-									<h2 class="product-title">
-										<a href="product.html">Product Short Name</a>
-									</h2>
-									<div class="ratings-container">
-										<div class="product-ratings">
-											<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-											<span class="tooltiptext tooltip-top"></span>
-										</div><!-- End .product-ratings -->
-									</div><!-- End .product-container -->
-									<p class="product-description">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-									<div class="price-box">
-										<span class="product-price">$15.00</span>
-									</div><!-- End .price-box -->
-									<div class="product-action">
-										<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i>ADD TO CART</button>
-										<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
-										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a> 
-									</div>
-								</div><!-- End .product-details -->
-							</div>
-							<div class="col-12 product-default left-details product-list mb-4">
-								<figure>
-									<a href="product.html">
-										<img src="assets/images/products/product-3.jpg">
-									</a>
-								</figure>
-								<div class="product-details">
-									<div class="category-list">
-										<a href="category.html" class="product-category">category</a>
-									</div>
-									<h2 class="product-title">
-										<a href="product.html">Product Short Name</a>
-									</h2>
-									<div class="ratings-container">
-										<div class="product-ratings">
-											<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-											<span class="tooltiptext tooltip-top"></span>
-										</div><!-- End .product-ratings -->
-									</div><!-- End .product-container -->
-									<p class="product-description">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-									<div class="price-box">
-										<span class="product-price">$15.00</span>
-									</div><!-- End .price-box -->
-									<div class="product-action">
-										<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i>ADD TO CART</button>
-										<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
-										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a> 
-									</div>
-								</div><!-- End .product-details -->
-							</div>
-							<div class="col-12 product-default left-details product-list mb-4">
-								<figure>
-									<a href="product.html">
-										<img src="assets/images/products/product-4.jpg">
-									</a>
-								</figure>
-								<div class="product-details">
-									<div class="category-list">
-										<a href="category.html" class="product-category">category</a>
-									</div>
-									<h2 class="product-title">
-										<a href="product.html">Product Short Name</a>
-									</h2>
-									<div class="ratings-container">
-										<div class="product-ratings">
-											<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-											<span class="tooltiptext tooltip-top"></span>
-										</div><!-- End .product-ratings -->
-									</div><!-- End .product-container -->
-									<p class="product-description">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-									<div class="price-box">
-										<span class="product-price">$15.00</span>
-									</div><!-- End .price-box -->
-									<div class="product-action">
-										<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i>ADD TO CART</button>
-										<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
-										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a> 
-									</div>
-								</div><!-- End .product-details -->
-							</div>
-							<div class="col-12 product-default left-details product-list mb-4">
-								<figure>
-									<a href="product.html">
-										<img src="assets/images/products/product-5.jpg">
-									</a>
-								</figure>
-								<div class="product-details">
-									<div class="category-list">
-										<a href="category.html" class="product-category">category</a>
-									</div>
-									<h2 class="product-title">
-										<a href="product.html">Product Short Name</a>
-									</h2>
-									<div class="ratings-container">
-										<div class="product-ratings">
-											<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-											<span class="tooltiptext tooltip-top"></span>
-										</div><!-- End .product-ratings -->
-									</div><!-- End .product-container -->
-									<p class="product-description">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-									<div class="price-box">
-										<span class="product-price">$15.00</span>
-									</div><!-- End .price-box -->
-									<div class="product-action">
-										<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i>ADD TO CART</button>
-										<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
-										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a> 
-									</div>
-								</div><!-- End .product-details -->
-							</div>
-							<div class="col-12 product-default left-details product-list mb-4">
-								<figure>
-									<a href="product.html">
-										<img src="assets/images/products/product-6.jpg">
-									</a>
-								</figure>
-								<div class="product-details">
-									<div class="category-list">
-										<a href="category.html" class="product-category">category</a>
-									</div>
-									<h2 class="product-title">
-										<a href="product.html">Product Short Name</a>
-									</h2>
-									<div class="ratings-container">
-										<div class="product-ratings">
-											<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-											<span class="tooltiptext tooltip-top"></span>
-										</div><!-- End .product-ratings -->
-									</div><!-- End .product-container -->
-									<p class="product-description">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-									<div class="price-box">
-										<span class="product-price">$15.00</span>
-									</div><!-- End .price-box -->
-									<div class="product-action">
-										<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i>ADD TO CART</button>
-										<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
-										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a> 
-									</div>
-								</div><!-- End .product-details -->
-							</div>
+						
 						</div>
 
 						<nav class="toolbox toolbox-pagination">
@@ -292,18 +143,17 @@
 					<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 					<aside class="sidebar-shop col-lg-3 mobile-sidebar">
 						<div class="sidebar-wrapper">
-							<div class="widget">
-								<h3 class="widget-title">
-									<a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories</a>
+							<div class="widget"  ng-init="fetch_selected_sub_category()">
+								<h3 class="widget-title"  >
+									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories<br>{{selectcategories.title}}</a>
 								</h3>
 
-								<div class="collapse show" id="widget-body-2">
+								<div class="collapse show" id="widget-body-2"  >
 									<div class="widget-body">
-										<ul class="cat-list">
-											<li><a href="#">Accessories</a></li>
-											<li><a href="#">Watch Fashion</a></li>
-											<li><a href="#">Tees, Knits &amp; Polos</a></li>
-											<li><a href="#">Pants &amp; Denim</a></li>
+										<ul class="cat-list" ng-init="fetch_all_sub_category()">
+											<li ng-repeat="selectcategory in selectcategories">
+											 <a href="#" class="cbtn" data-id2="{{selectcategory.id}}"  data-id3="{{selectcategory.parent_id}}" >{{selectcategory.title}}</a></li>
+											
 										</ul>
 									</div><!-- End .widget-body -->
 								</div><!-- End .collapse -->

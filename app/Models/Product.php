@@ -50,6 +50,34 @@ class Product extends Model{
         }
         return $result;
      }
+
+          public function getSelectedProduct($id){ 
+        
+        // the value is sanitize to an interger
+         $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+        //  print_r($product_code);
+        //  exit('got here');
+         $this->db->query("
+                            SELECT *,
+                            category.title as productCategory,
+                            sub_category.title as productSubCategory
+                            FROM products
+                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN category ON category.id = products.category
+                            WHERE sub_category = :product_code
+                        ");
+         $this->db->bind(':product_code', $product_code);
+        
+         if($this->db->resultSet()){
+            $result['data'] = $this->db->resultSet();
+            $result['status']='1';
+        }else{
+            $result['data'] = [];
+            $result['status']='0';
+        }
+        return $result;
+     }
     
         public function addProduct(){
             $uploader = uploadMultiple('pro','products');

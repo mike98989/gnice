@@ -2,7 +2,7 @@
 
 <!-- End .header -->
 
-<main class="main">
+<main class="main" ng-controller="loginController">
   <nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="container">
       <ol class="breadcrumb">
@@ -23,23 +23,30 @@
       </div>
       <!-- End .heading -->
 
-      <form action="#">
+          <form ng-submit="user_login()"  method="POST" action="">  
         <input
           type="email"
           class="form-control"
+          
           placeholder="Email Address"
-          required
+          name="email"
+         
+           ng-model="loginData.email"
+
+          
         />
         <input
           type="password"
           class="form-control"
           placeholder="Password"
-          required
+          name="password"   ng-model="loginData.password"
         />
+        
 
         <div class="form-footer">
-          <button type="submit" class="btn btn-primary">LOGIN</button>
+          <button type="submit" name="login" class="btn btn-primary">LOGIN</button>
           <a href="#" class="forget-pass"> Forgot your password?</a>
+         
         </div>
         <!-- End .form-footer -->
       </form>

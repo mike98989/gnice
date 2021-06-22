@@ -318,7 +318,7 @@
             <nav class="main-nav w-100">
               <ul class="menu">
                 <li class="active">
-                  <a href="index.html">Home</a>
+                  <a href="Home">Home</a>
                 </li>
                 <li>
                   <a href="category.html">Categories</a>
@@ -523,7 +523,7 @@
                         <li><a href="my-account.html">My Account</a></li>
                       </ul>
                     </li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="About">About Us</a></li>
                     <li>
                       <a href="#">Blog</a>
                       <ul>
