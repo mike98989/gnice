@@ -26,23 +26,33 @@ class Api extends Controller{
      */
      public function fetch_all_product(){
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
+         if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getAllProducts();
-             print_r(json_encode($result));
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
          }else {
              echo "invalid request";
             exit;
          }
     }
-    public function fetch_single_product($id){
+
+    public function fetch_single_product(){
+       
+$form_data = json_decode(file_get_contents("php://input"));
+
+     
+        
          $header = apache_request_headers(); 
-         if(isset($header['gnice-Authenticate'])){
-             $result = $this->model('Product')->getSingleProduct($id);
+          $form_data = json_decode(file_get_contents("php://input"));
+         if(isset($header['gnice-authenticate'])){
+             $result = $this->model('Product')->getSingleProduct($form_data);
+               header('Content-Type: application/json');
              print_r(json_encode($result));
          }else {
              echo "invalid request";
             exit;
          }
+         
     }
 
     public function update_user_account_type(){

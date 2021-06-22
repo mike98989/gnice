@@ -32,7 +32,7 @@ class Product extends Model{
         //  exit('got here');
          $this->db->query("
                             SELECT *,
-                            category.name as productCategory,
+                            category.title as productCategory,
                             sub_category.title as productSubCategory
                             FROM products
                             INNER JOIN sub_category ON sub_category.id = products.sub_category

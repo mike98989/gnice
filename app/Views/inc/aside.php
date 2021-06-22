@@ -14,7 +14,7 @@
                                 <a href="#" class="nolink">{{category.title}}</a>
                                 <ul class="submenu"  ng-init="fetch_all_sub_category()">
                                     <li  ng-repeat="subcategory in subcategories  | filter: category.title">
-                                        <a href="category.html">{{subcategory.title}} </a></li>
+                                        <a href="category">{{subcategory.title}} </a></li>
                                     </ul>
                                    
                             </div>
