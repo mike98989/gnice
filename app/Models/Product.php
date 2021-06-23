@@ -11,7 +11,7 @@ class Product extends Model
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
-                        LEFT JOIN sub_category ON sub_category.id = products.sub_category
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
                             ");
 
@@ -37,7 +37,7 @@ class Product extends Model
                             category.name as productCategory,
                             sub_category.title as productSubCategory
                             FROM products
-                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                             INNER JOIN category ON category.id = products.category
                             WHERE product_code = :product_code
                         ");
@@ -121,7 +121,7 @@ class Product extends Model
                         category.title as productCategory,
                         most_view.view_count as viewCount
                             FROM products
-                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                             INNER JOIN category ON category.id = products.category
                             INNER JOIN most_view ON most_view.product_code = products.product_code
                             ");
@@ -164,7 +164,7 @@ class Product extends Model
                         category.title as productCategory,
                         wishlist.wish_date as dateAdded
                             FROM products
-                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                             INNER JOIN category ON category.id = products.category
                            INNER JOIN wishlist ON wishlist.product_code = products.product_code
                             ");
@@ -257,7 +257,7 @@ class Product extends Model
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
-                        INNER JOIN sub_category ON sub_category.id = products.sub_category
+                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                         INNER JOIN category ON category.id = products.category
                         WHERE products.category = :category_id
                             ");
@@ -278,7 +278,7 @@ class Product extends Model
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
-                        INNER JOIN sub_category ON sub_category.id = products.sub_category
+                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                         INNER JOIN category ON category.id = products.category
                         WHERE products.sub_category = :sub_category_id
                             ");
@@ -300,12 +300,12 @@ class Product extends Model
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $searchTerm = trim($_POST['search']);
 
-        $this->db->query("SELECT *,
-                        category.title AS productCategory,
-                        sub_category.title AS productSubCategory
+        $this->db->query("SELECT *
+                        /* category.title AS productCategory, */
+                        /* sub_category.title AS productSubCategory */
                         FROM products
-                        LEFT JOIN sub_category ON sub_category.id = products.sub_category
-                        LEFT JOIN category ON category.id = products.category
+                        /* LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category */
+                        /* LEFT JOIN category ON category.id = products.category */
                         WHERE name LIKE :search OR brand LIKE :search");
         $this->db->bind(':search', '%' . $searchTerm . '%');
 

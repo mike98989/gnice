@@ -79,9 +79,9 @@ class Category extends Model
 
     public function addSubCategory($data)
     {
-        $this->db->query('INSERT INTO sub_category (title, parent-id, address) VALUES (:title, :parent-id, :address)');
+        $this->db->query('INSERT INTO sub_category (title, parent_id, address) VALUES (:title, :parent_id, :address)');
         $this->db->bind(':title', $data['title']);
-        $this->db->bind(':parent-id', $data['category']);
+        $this->db->bind(':parent_id', $data['category']);
         $this->db->bind(':address', $data['address']);
         if ($this->db->execute()) {
             return true;
@@ -92,7 +92,7 @@ class Category extends Model
 
     public function deleteSubCategory($id)
     {
-        $this->db->query('DELETE * FROM sub-category WHERE id = :id ');
+        $this->db->query('DELETE * FROM sub-category WHERE sub_id = :id ');
         $this->db->bind(':id', $id);
         if ($this->db->execute()) {
             return true;
@@ -158,65 +158,5 @@ class Category extends Model
             $result['status'] = '0';
         }
         return $result;
-    }
-
-    public function getAllCategory2()
-    {
-        $parent_id = 0;
-        $this->db->query("SELECT * FROM category WHERE parent_id = :parent_id");
-        $this->db->bind(':parent_id', $parent_id);
-
-
-        // $this->db->query("SELECT * FROM category");
-
-        $catData = [];
-        if ($this->db->resultSet()) {
-            $row = $this->db->resultSet();
-            $data = json_encode($row);
-
-            // print_r($data);
-            // exit('got here');
-            while ($row = $this->db->resultSet()) {
-                $catData[] = [
-                    'id' => $row['id'],
-                    'parent_id' => $row['parent_id'],
-                    'category_name' => $row['name'],
-                    'subcategory' => $this->getAllSubCategory2($row['id'])
-                ];
-            }
-
-
-
-            return $catData;
-        } else {
-            return $catData = [];
-        }
-
-        print_r($catData);
-    }
-
-    public function getAllSubCategory2($parent_id)
-    {
-        $this->db->query("SELECT * FROM sub_category WHERE parent_id = :parent_id");
-        $this->db->bind(':parent_id', $parent_id);
-        $row = $this->db->execute();
-
-        $subCatData = [];
-        if ($this->db->resultSet()) {
-            if ($this->db->rowCount() > 0) {
-                while ($row) {
-
-                    $subCatData[] = [
-                        'id' => $row['id'],
-                        'parent_id' => $row['parent_id'],
-                        'subcategory' => $row['subcategory'],
-                    ];
-                    # code...
-                }
-                return $subCatData;
-            } else {
-                return $subCatData = [];
-            }
-        }
     }
 }
