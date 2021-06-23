@@ -33,14 +33,8 @@ class Product extends Model
 
         //  print_r($product_code);
         //  exit('got here');
-<<<<<<< HEAD
         $this->db->query(" SELECT *,
                             category.name as productCategory,
-=======
-         $this->db->query("
-                            SELECT *,
-                            category.title as productCategory,
->>>>>>> 2533cc3cb6ba7409c9092426fe787c08c9470d04
                             sub_category.title as productSubCategory
                             FROM products
                             INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
@@ -57,7 +51,6 @@ class Product extends Model
             $result['status'] = '0';
         }
         return $result;
-<<<<<<< HEAD
     }
 
     public function addProduct()
@@ -110,70 +103,6 @@ class Product extends Model
         $this->db->bind(':price', $price);
         $this->db->bind(':seller_id', $seller_id);
         if ($this->db->execute()) {
-=======
-     }
-
-          public function getSelectedProduct($id){ 
-        
-        // the value is sanitize to an interger
-         $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-
-        //  print_r($product_code);
-        //  exit('got here');
-         $this->db->query("
-                            SELECT *,
-                            category.title as productCategory,
-                            sub_category.title as productSubCategory
-                            FROM products
-                            INNER JOIN sub_category ON sub_category.id = products.sub_category
-                            INNER JOIN category ON category.id = products.category
-                            WHERE sub_category = :product_code
-                        ");
-         $this->db->bind(':product_code', $product_code);
-        
-         if($this->db->resultSet()){
-            $result['data'] = $this->db->resultSet();
-            $result['status']='1';
-        }else{
-            $result['data'] = [];
-            $result['status']='0';
-        }
-        return $result;
-     }
-    
-        public function addProduct(){
-            $uploader = uploadMultiple('pro','products');
-            // print_r(json_encode($uploader[1]));
-            // exit;
-            
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $name = trim($_POST['name']);
-            $brand = trim($_POST['brand']);
-            $product_code = rand(1000000,100000000);
-            $color = trim($_POST['color']);
-            $short_description =trim($_POST['short_description']);
-            $long_description =trim($_POST['long_description']);
-            $category =trim($_POST['category']);
-            $sub_category =trim($_POST['sub_category']);
-            $image = $uploader['uploaded'];
-            $price = trim($_POST['price']); 
-            //seller will be gotten from session()
-            $seller_id = 'AG-'. rand(1000000,100000000);
-
-            $this->db->query('INSERT INTO products (brand, product_code, color, name, short_description, long_description, category, sub_category,image,price,date_added, seller_id) VALUES (:brand, :product_code,:color, :name, :short_description, :long_description, :category, :sub_category,:image,:price, now(), :seller_id)');
-            $this->db->bind(':brand', $brand);
-            $this->db->bind(':product_code', $product_code);
-            $this->db->bind(':color', $color);
-            $this->db->bind(':name', $name);
-            $this->db->bind(':short_description', $short_description);
-            $this->db->bind(':long_description', $long_description);
-            $this->db->bind(':category', $category);
-            $this->db->bind(':sub_category', $sub_category);
-            $this->db->bind(':image', $image);
-            $this->db->bind(':price', $price);
-            $this->db->bind(':seller_id', $seller_id);
-            if($this->db->execute()){
->>>>>>> 2533cc3cb6ba7409c9092426fe787c08c9470d04
             $result['message'] = 'product added successfully';
             $result['status'] = '1';
             $result['errors'] = $uploader['image_error'];
