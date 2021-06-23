@@ -5,18 +5,12 @@
  *
  */
 TODO: // work on category
-<<<<<<< HEAD
 class Category extends Model
 {
     public function getAllCategory()
     {
-        $this->db->query("
-=======
-class Category extends Model{
-    public function getAllCategory(){     
-         $this->db->query("SELECT * FROM category
+        $this->db->query("SELECT * FROM category
                             
->>>>>>> 2533cc3cb6ba7409c9092426fe787c08c9470d04
           ");
 
         if ($this->db->resultSet()) {
@@ -65,14 +59,9 @@ class Category extends Model{
         }
     }
 
-<<<<<<< HEAD
     public function getAllSubCategory()
     {
-        $this->db->query('SELECT DISTINCT sub_category.title,
-=======
-    public function getAllSubCategory(){
         $this->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
->>>>>>> 2533cc3cb6ba7409c9092426fe787c08c9470d04
                             category.title as parentCategory
                           FROM sub_category
                            JOIN category
@@ -88,11 +77,12 @@ class Category extends Model{
 
         return $rows;
     }
-    
-     public function getSelectedCategory($id){
-        
+
+    public function getSelectedCategory($id)
+    {
+
         // the value is sanitize to an interger
-         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $this->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
                             category.title as parentCategory
                           FROM sub_category 
@@ -100,14 +90,14 @@ class Category extends Model{
                           WHERE parent_id = :product_code  
                         ');
         $this->db->bind(':product_code', $product_codes);
-         if($this->db->resultSet()){
+        if ($this->db->resultSet()) {
             $rows['data'] = $this->db->resultSet();
-            $rows['status']='1';
-        }else{
+            $rows['status'] = '1';
+        } else {
             $rows['data'] = [];
-            $rows['status']='0';
+            $rows['status'] = '0';
         }
-        
+
         return $rows;
     }
 
