@@ -57,12 +57,11 @@
 									<label>Show:</label>
 
 									<div class="select-custom">
-										<select name="count" class="form-control" ng-model = "listfilter" >
-										<option value="5" selected="">5</option>
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="30">30</option>
-									</select>
+										<select name="count" class="form-control" ng-model= "catfilter">
+											<option value="6">6</option>
+											<option value="9">9</option>
+											<option value="12">12</option>
+										</select>
 									</div><!-- End .select-custom -->
 								</div><!-- End .toolbox-item -->
 
@@ -77,37 +76,46 @@
 							</div><!-- End .toolbox-right -->
 						</nav>
 
-						<div class="row pb-4">
-							<div class="col-12 product-default left-details product-list mb-4" dir-paginate="selectedProduct in selectedProducts  | filter : search | itemsPerPage :listfilter">
-								<figure>
-									<a href="#" id="pbtn" data-id1="{{selectedProduct.product_code}}">
-										<img src="assets/images/products/product-1.jpg">
-									</a>
-								</figure>
-								<div class="product-details">
-									<div class="category-list">
-										<a href="" class="product-category">{{selectedProduct.productSubCategory}}</a>
-									</div>
-									<h2 class="product-title">
-										<a href="">{{selectedProduct.name}}</a>
-									</h2>
-									<div class="ratings-container">
-										<div class="product-ratings">
-											<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-											<span class="tooltiptext tooltip-top"></span>
-										</div><!-- End .product-ratings -->
-									</div><!-- End .product-container -->
-									<p class="product-description">{{selectedProduct.short_description}}</p>
-									<div class="price-box">
-										<span class="product-price">${{selectedProduct.price}}</span>
-									</div><!-- End .price-box -->
-									<div class="product-action">
-										<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i>ADD TO CART</button>
-										<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
-										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a> 
-									</div>
-								</div><!-- End .product-details -->
-							</div>
+						<div class="row">
+						
+								<div class="col-6 col-sm-4" dir-paginate="selectedProduct in selectedProducts | filter : search |  itemsPerPage :catfilter">
+								<div class="product-default inner-quickview inner-icon">
+									<figure>
+										<a href="#" id="pbtn" data-id1="{{selectedProduct.product_code}}">
+											<img src="assets/images/products/product-1.jpg">
+										</a>
+										<div class="label-group">
+											<div class="product-label label-hot">HOT</div>
+											<div class="product-label label-sale">-20%</div>
+										</div>
+										<div class="btn-icon-group">
+											<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
+										</div>
+										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a> 
+									</figure>
+									<div class="product-details">
+										<div class="category-wrap">
+											<div class="category-list">
+												<a href="" class="product-category">{{selectedProduct.productSubCategory}}</a>
+											</div>
+											<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
+										</div>
+										<h2 class="product-title">
+											<a href="">{{selectedProduct.name}}</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="old-price">$90.00</span>
+											<span class="product-price">${{selectedProduct.price}}</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+							</div><!-- End .col-sm-4 -->
 						
 						</div>
 
@@ -116,7 +124,7 @@
 								<label>Show:</label>
 
 								<div class="select-custom">
-									<select name="count" class="form-control" ng-model = "listfilter" >
+									<select name="count" class="form-control" ng-model = "catfilter" >
 										<option value="5" selected="">5</option>
 										<option value="10">10</option>
 										<option value="20">20</option>
@@ -275,12 +283,13 @@
 								</div><!-- End .collapse -->
 							</div><!-- End .widget -->
 
-							<div class="widget widget-featured" ng-init="fetch_feature_product()">
+						
+							<div class="" ng-init="fetch_feature_product()">
 								<h3 class="widget-title">Featured</h3>
 								
-								<div class="widget-body">
-									<div class="owl-carousel widget-featured-products">
-										<div class="featured-col"  ng-repeat="featureProduct in featureProducts">
+								<div >
+									<div class="">
+										<div  dir-paginate="featureProduct in featureProducts | filter : search |  itemsPerPage : 5">
 											<div class="product-default left-details product-widget">
 												<figure>
 													<a href="product.html">
@@ -302,116 +311,18 @@
 													</div><!-- End .price-box -->
 												</div><!-- End .product-details -->
 											</div>
-											<div class="product-default left-details product-widget">
-												<figure>
-													<a href="product.html">
-														<img src="assets/images/products/product-11.jpg">
-													</a>
-												</figure>
-												<div class="product-details">
-													<h2 class="product-title">
-														<a href="product.html">Product Short Name</a>
-													</h2>
-													<div class="ratings-container">
-														<div class="product-ratings">
-															<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-															<span class="tooltiptext tooltip-top"></span>
-														</div><!-- End .product-ratings -->
-													</div><!-- End .product-container -->
-													<div class="price-box">
-														<span class="product-price">$49.00</span>
-													</div><!-- End .price-box -->
-												</div><!-- End .product-details -->
-											</div>
-											<div class="product-default left-details product-widget">
-												<figure>
-													<a href="product.html">
-														<img src="assets/images/products/product-12.jpg">
-													</a>
-												</figure>
-												<div class="product-details">
-													<h2 class="product-title">
-														<a href="product.html">Product Short Name</a>
-													</h2>
-													<div class="ratings-container">
-														<div class="product-ratings">
-															<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-															<span class="tooltiptext tooltip-top"></span>
-														</div><!-- End .product-ratings -->
-													</div><!-- End .product-container -->
-													<div class="price-box">
-														<span class="product-price">$49.00</span>
-													</div><!-- End .price-box -->
-												</div><!-- End .product-details -->
-											</div>
+									
+										
 										</div><!-- End .featured-col -->
 
-										<div class="featured-col">
-											<div class="product-default left-details product-widget">
-												<figure>
-													<a href="product.html">
-														<img src="assets/images/products/product-13.jpg">
-													</a>
-												</figure>
-												<div class="product-details">
-													<h2 class="product-title">
-														<a href="product.html">Product Short Name</a>
-													</h2>
-													<div class="ratings-container">
-														<div class="product-ratings">
-															<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-															<span class="tooltiptext tooltip-top"></span>
-														</div><!-- End .product-ratings -->
-													</div><!-- End .product-container -->
-													<div class="price-box">
-														<span class="product-price">$49.00</span>
-													</div><!-- End .price-box -->
-												</div><!-- End .product-details -->
-											</div>
-											<div class="product-default left-details product-widget">
-												<figure>
-													<a href="product.html">
-														<img src="assets/images/products/product-14.jpg">
-													</a>
-												</figure>
-												<div class="product-details">
-													<h2 class="product-title">
-														<a href="product.html">Product Short Name</a>
-													</h2>
-													<div class="ratings-container">
-														<div class="product-ratings">
-															<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-															<span class="tooltiptext tooltip-top"></span>
-														</div><!-- End .product-ratings -->
-													</div><!-- End .product-container -->
-													<div class="price-box">
-														<span class="product-price">$49.00</span>
-													</div><!-- End .price-box -->
-												</div><!-- End .product-details -->
-											</div>
-											<div class="product-default left-details product-widget">
-												<figure>
-													<a href="product.html">
-														<img src="assets/images/products/product-8.jpg">
-													</a>
-												</figure>
-												<div class="product-details">
-													<h2 class="product-title">
-														<a href="product.html">Product Short Name</a>
-													</h2>
-													<div class="ratings-container">
-														<div class="product-ratings">
-															<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-															<span class="tooltiptext tooltip-top"></span>
-														</div><!-- End .product-ratings -->
-													</div><!-- End .product-container -->
-													<div class="price-box">
-														<span class="product-price">$49.00</span>
-													</div><!-- End .price-box -->
-												</div><!-- End .product-details -->
-											</div>
-										</div><!-- End .featured-col -->
 									</div><!-- End .widget-featured-slider -->
+
+										<dir-pagination-controls>
+								max-size = "5"
+								direction-links = "true"
+								boundary-liks = "true"
+							</dir-pagination-controls>
+
 								</div><!-- End .widget-body -->
 							</div><!-- End .widget -->
 							

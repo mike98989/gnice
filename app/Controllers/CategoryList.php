@@ -1,10 +1,10 @@
 <?php
 
-class Category extends Controller {
+class CategoryList extends Controller {
      public function index(){
         $data = [];
          $js = ['controllers/web/homeController.js'];
-        $this->view('Category/index',$include_header=true,$data,'_type1',$js);
+        $this->view('Category/category',$include_header=true,$data,'_type1',$js);
     }
 
     public function details($url){

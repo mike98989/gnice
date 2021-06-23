@@ -63,15 +63,30 @@ $form_data = json_decode(file_get_contents("php://input"));
     }
 
         public function fetch_selected_product(){
-       
-$form_data = json_decode(file_get_contents("php://input"));
-
-     
-        
+         $form_data = json_decode(file_get_contents("php://input"));
          $header = apache_request_headers(); 
           $form_data = json_decode(file_get_contents("php://input"));
          if(isset($header['gnice-authenticate'])){
              $result = $this->model('Product')->getSelectedProduct($form_data);
+               header('Content-Type: application/json');
+             print_r(json_encode($result));
+         }else {
+             echo "invalid request";
+            exit;
+         }
+    }
+
+         public function fetch_feature_product(){
+         $form_data = json_decode(file_get_contents("php://input"));
+         $sub = $form_data->subid;
+         $cat = $form_data->cid;
+         
+
+        
+         $header = apache_request_headers(); 
+          $form_data = json_decode(file_get_contents("php://input"));
+         if(isset($header['gnice-authenticate'])){
+             $result = $this->model('Product')->getFeatureProduct($cat, $sub);
                header('Content-Type: application/json');
              print_r(json_encode($result));
          }else {
