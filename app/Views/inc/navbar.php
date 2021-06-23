@@ -318,7 +318,7 @@
             <nav class="main-nav w-100">
               <ul class="menu">
                 <li class="active">
-                  <a href="index.html">Home</a>
+                  <a href="Home">Home</a>
                 </li>
                 <li>
                   <a href="category.html">Categories</a>
@@ -523,7 +523,7 @@
                         <li><a href="my-account.html">My Account</a></li>
                       </ul>
                     </li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="About">About Us</a></li>
                     <li>
                       <a href="#">Blog</a>
                       <ul>
@@ -536,15 +536,15 @@
                     <li><a href="forgot-password.html">Forgot Password</a></li>
                   </ul>
                 </li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="About">About Us</a></li>
+                <li><a href="contact">Contact Us</a></li>
                 <li class="float-right">
-                  <a href="https://1.envato.market/DdLk5" target="_blank"
+                  <a href="Home" target="_blank"
                     >Buy Porto!<span class="tip tip-new tip-top">New</span></a
                   >
                 </li>
-                <li class="float-right"><a href="#">Special Offer!</a></li>
+                <li class="float-right"><a href="Home">Special Offer!</a></li>
               </ul>
             </nav>
           </div>

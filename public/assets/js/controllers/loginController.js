@@ -10,28 +10,26 @@
     $scope.pageSize = 30;
 
     $scope.user_login = function(){
+
+
     $('.loader').show();    
     $('.result').hide();
-
+      /*
     var serviceNo = $('#serviceno').val();
     var pwrd = $('#password').val();
     var formData = new FormData($('#user_login')[0]);
     var redirectTo = $('#redirectTo').val();
+    */
+      
     //alert(redirectTo);return;
-    $.ajax({
-         url: $scope.dirlocation+'api/user_login',
-         type: 'POST',
-         //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-         data: formData,
-         async: true,
-         cache: false,
-         contentType: false,
-         enctype: 'multipart/form-data',
-         headers:{'Rhims-Authenticate':serviceNo+':pwrd:'+pwrd},
-         crossDomain: true,
-         processData: false,
-         success: function (answer) {
-         //alert(answer);
+     $http({
+    method: "POST",
+    url: $scope.dirlocation+'api/user_login',
+    data : $scope.loginData,
+     headers:{'gnice-authenticate':'gnice-web'}
+
+  }).success(function(answer) {
+         alert(answer);
          var response=JSON.stringify(answer);
          var parsed = JSON.parse(response);
          var msg=angular.fromJson(parsed);
@@ -55,8 +53,10 @@
         //$('.alert').html(answer);
         }
         
-         }
-       });
+         });
+
+
+      
     }
 
     $scope.clear_storage = function(){

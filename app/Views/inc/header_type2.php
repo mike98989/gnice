@@ -63,12 +63,12 @@
 					<div class="header-right header-dropdowns ml-0 ml-sm-auto">
 						<p class="top-message mb-0 mr-lg-5 pr-3 d-none d-sm-block">Welcome To Gnice Market Place!</p>
 						<div class="header-dropdown dropdown-expanded mr-3">
-							<a href="#">Links</a>
+							<a href="Home">Links</a>
 							<div class="header-menu">
 								<ul>
-									<li><a href="about.html">About Gnice Mkt</a></li>
-									<li><a href="blog.html">Blog</a></li>
-									<li><a href="about.html">Help &amp; FAQs</a></li>
+									<li><a href="About">About Gnice Mkt</a></li>
+									<li><a href="Admin">Blog</a></li>
+									<li><a href="Contact">Help &amp; FAQs</a></li>
 								</ul>
 							</div><!-- End .header-menu -->
 						</div><!-- End .header-dropown -->
@@ -90,36 +90,22 @@
 						<button class="mobile-menu-toggler mr-2" type="button">
 							<i class="icon-menu"></i>
 						</button>
-						<a href="index.html" class="logo">
+						<a href="Home" class="logo">
 							<img src="assets/images/gnicelogo.jpeg" alt="Porto Logo">
 						</a>
 					</div><!-- End .header-left -->
 
-					<div class="header-right w-lg-max pl-2">
-						<div class="header-search header-icon header-search-inline header-search-category w-lg-max mr-lg-4">
+					<div class="header-right w-lg-max pl-2"  ng-controller="homeController">
+						<div class="header-search header-icon header-search-inline header-search-category w-lg-max mr-lg-4"  >
 							<a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
 							<form action="#" method="get">
 								<div class="header-search-wrapper">
 									<input type="search" class="form-control" name="q" id="q" placeholder="Search Products, Brands and Categories" required>
 									<div class="select-custom">
-										<select id="cat" name="cat">
+										<select id="cat" name="cat"  ng-init="fetch_all_category()">
 											<option value="">All Categories</option>
-											<option value="4">Fashion</option>
-											<option value="12">- Women</option>
-											<option value="13">- Men</option>
-											<option value="66">- Jewellery</option>
-											<option value="67">- Kids Fashion</option>
-											<option value="5">Electronics</option>
-											<option value="21">- Smart TVs</option>
-											<option value="22">- Cameras</option>
-											<option value="63">- Games</option>
-											<option value="7">Home &amp; Garden</option>
-											<option value="11">Motors</option>
-											<option value="31">- Cars and Trucks</option>
-											<option value="32">- Motorcycles &amp; Powersports</option>
-											<option value="33">- Parts &amp; Accessories</option>
-											<option value="34">- Boats</option>
-											<option value="57">- Auto Tools &amp; Supplies</option>
+											<option  ng-repeat="category in categories" value="{{category.id}}">{{category.title}}</option>
+											
 										</select>
 									</div><!-- End .select-custom -->
 									<button class="btn p-0 icon-search-3" type="submit"></button>
@@ -128,9 +114,9 @@
 						</div><!-- End .header-search -->
 
 						<div class="d-none d-lg-flex align-items-center">
-							<a href="#">Sign In</a>
-							<a href="#"> &nbsp; | Registration &nbsp; &nbsp;</a>
-							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="#">SELL</a></button>
+							<a href="Login">Sign In</a>
+							<a href="Signup"> &nbsp; | Registration &nbsp; &nbsp;</a>
+							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="Login">SELL</a></button>
 						</div>
 					
 						<!-- End .header-contact -->
