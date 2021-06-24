@@ -171,22 +171,22 @@ class Api extends Controller
         }
     }
 
-    public function fetch_all_product_category($cat_id)
+    public function fetch_all_product_category()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllProductOfaCategory($cat_id);
+            $result = $this->model('Product')->getAllProductOfaCategory($_GET['id']);
             print_r(json_encode($result));
         } else {
             echo "invalid request";
             exit;
         }
     }
-    public function fetch_all_product_sub_category($sub_cat_id)
+    public function fetch_all_product_sub_category()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllProductOfaSubCategory($sub_cat_id);
+            $result = $this->model('Product')->getAllProductOfaSubCategory($_GET['id']);
             print_r(json_encode($result));
         } else {
             echo "invalid request";
@@ -247,6 +247,19 @@ class Api extends Controller
             exit;
         }
     }
+
+    public function fetch_related_products()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getAllRelatedProducts();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
     public function fetch_all_wishlist()
     {
         $header = apache_request_headers();

@@ -235,6 +235,7 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $email = strtolower($_POST['email']);
             $email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
+            
             if ($email_valid == true) {
                 $check_email = $this->findUserByEmail($email);
                 if ($check_email != false) {
@@ -370,7 +371,12 @@ class Authenticate extends Model
                 $msg['msg'] =  "Email address not found!";
                 $msg['status']='0';     
             }
-        } else {
+        }else{
+            $msg['msg'] =  "Invalid email address!";
+            $msg['status']='0'; 
+        }
+     }
+      else {
             $msg['msg'] =  "invalid request";
             $msg['status'] = '0';
         }
@@ -400,17 +406,17 @@ class Authenticate extends Model
         }
     }
 
-    // public function updateToken($email){
-    //     $token = generateToken(50);
-    //     $this->db->query('UPDATE users SET token = :token WHERE email = :email ');
-    //     $this->db->bind(':email', $email);
-    //     $this->db->bind(':token', $token);
-    //     $this->db->execute();
+    public function updateToken($email){
+        $token = generateToken(50);
+        $this->db->query('UPDATE users SET token = :token WHERE email = :email ');
+        $this->db->bind(':email', $email);
+        $this->db->bind(':token', $token);
+        $this->db->execute();
 
-    //     //set session token
-    //     $_SESSION['token'] = $token;
+        //set session token
+        $_SESSION['token'] = $token;
 
-    // }
+    }
 
 
 

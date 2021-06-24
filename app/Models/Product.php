@@ -7,13 +7,13 @@ class Product extends Model
 
     public function getAllProducts()
     {
-        $this->db->query("SELECT products.*,
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
-                        LEFT JOIN sub_category ON sub_category.id = products.sub_category
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                            ");
+                        LEFT JOIN users ON users.seller_id = products.seller_id");
 
         if ($this->db->resultSet()) {
             $result['data'] = $this->db->resultSet();
@@ -157,6 +157,36 @@ class Product extends Model
         }
         return $rows;
     }
+
+
+    /////////////GET ALL RELATED PRODUCTS 
+    public function getAllRelatedProducts()
+    {
+        $sub_category_id = filter_var($_GET['sub_cat_id']);
+        $brand = filter_var($_GET['brand']);
+        $product_code = filter_var($_GET['product_code']);
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
+                        WHERE products.product_code!=:product_code AND products.sub_category = :sub_category_id OR products.brand=:brand");
+
+        $this->db->bind(':sub_category_id', $sub_category_id);
+        $this->db->bind(':brand', $brand);
+        $this->db->bind(':product_code', $product_code);
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
     public function wishLists()
     {
         $this->db->query("SELECT name, price,brand,
@@ -274,14 +304,25 @@ class Product extends Model
     }
     public function getAllProductOfaSubCategory($sub_category_id)
     {
-        $this->db->query("SELECT products.*,
-                        category.title as productCategory,
+        /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY 
+        /////// WHEN A SUB CATEGORY RETURNS 0
+        // $this->db->query("SELECT products.*,
+        //                 category.title as productCategory,
+        //                 sub_category.title as productSubCategory
+        //                 FROM products
+        //                 INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+        //                 INNER JOIN category ON category.id = products.category
+        //                 WHERE products.sub_category = :sub_category_id
+        //                     ");
+
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
                         sub_category.title as productSubCategory
                         FROM products
-                        INNER JOIN sub_category ON sub_category.id = products.sub_category
-                        INNER JOIN category ON category.id = products.category
+                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
                         WHERE products.sub_category = :sub_category_id
                             ");
+
         $this->db->bind(':sub_category_id', $sub_category_id);
 
         if ($this->db->resultSet()) {
