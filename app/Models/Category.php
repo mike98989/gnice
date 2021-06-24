@@ -7,19 +7,26 @@
 #TODO:  // work on category
 class Category extends Model
 {
-    public function getAllCategory()
+    public function getAllCategoriesAndSubCategories()
     {
-        $this->db->query("SELECT * FROM category
-
-          ");
-
-        if ($this->db->resultSet()) {
-            $rows['data'] = $this->db->resultSet();
-            $rows['status'] = '1';
-        } else {
-            $rows['data'] = [];
-            $rows['status'] = '0';
+        $this->db->query(
+            "SELECT * FROM category WHERE status!='0' ORDER BY id ASC"
+        );
+        $category = $this->db->resultSet();
+        $count = $this->db->rowCount();
+        //print_r($this->db->rowCount());exit;
+        $row['category'] = $category;
+        for ($a = 0; $a < $count; $a++) {
+            $this->db->query(
+                "SELECT * FROM sub_category WHERE parent_id = :category_id AND status!='0'"
+            );
+            $this->db->bind(':category_id', $category[$a]->id);
+            $subcategory = $this->db->resultSet();
+            $row['category'][$a]->subcategory = $this->db->resultSet();
         }
+
+        $rows['data'] = $row;
+        $rows['status'] = '1';
 
         return $rows;
     }

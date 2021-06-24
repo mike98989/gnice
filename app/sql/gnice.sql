@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 22, 2021 at 08:50 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.15
+-- Host: localhost:8889
+-- Generation Time: Jun 24, 2021 at 08:08 AM
+-- Server version: 5.7.32
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -30,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `banners` (
   `id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0
+  `status` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -72,7 +71,11 @@ INSERT INTO `category` (`id`, `title`, `address`, `click-counts`, `image`, `stat
 (12, 'Health and Bueaty', '', 0, 'health.png', 1),
 (16, 'Toys, Babies and Kids', '', 0, 'toys-kids.png', 1),
 (17, 'Outdoor and Sports', '', 0, 'soccer.png', 1),
+<<<<<<< HEAD
 (20, 'Animals and Pets', '', 0, 'pets,png', 1);
+=======
+(20, 'Animals and Pets', '', 0, 'pets.png', 1);
+>>>>>>> f15f13677480791ef4b920eee340834fee3baee4
 
 -- --------------------------------------------------------
 
@@ -98,7 +101,7 @@ CREATE TABLE `hero` (
   `title` varchar(50) NOT NULL,
   `sub_title` varchar(100) NOT NULL,
   `image` varchar(200) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0
+  `status` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -334,8 +337,12 @@ INSERT INTO `sub_category` (`sub_id`, `parent_id`, `title`, `address`, `image`, 
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+<<<<<<< HEAD
   `first_name` tinytext NOT NULL,
   `last_name` tinytext NOT NULL,
+=======
+  `fullname` tinytext NOT NULL,
+>>>>>>> f15f13677480791ef4b920eee340834fee3baee4
   `gender` varchar(25) NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(45) NOT NULL,
@@ -344,6 +351,11 @@ CREATE TABLE `users` (
   `country` tinytext NOT NULL,
   `whatsapp` varchar(25) NOT NULL,
   `mobile1` varchar(25) NOT NULL,
+<<<<<<< HEAD
+=======
+  `seller` int(11) NOT NULL DEFAULT '0',
+  `seller_id` varchar(25) NOT NULL,
+>>>>>>> f15f13677480791ef4b920eee340834fee3baee4
   `account_type` int(11) NOT NULL,
   `image` tinytext NOT NULL,
   `password` tinytext NOT NULL,
@@ -360,11 +372,19 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
+<<<<<<< HEAD
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `gender`, `email`, `phone`, `address`, `state`, `country`, `whatsapp`, `mobile1`, `account_type`, `image`, `password`, `token`, `last_login`, `signup_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
 (1, 'Clement', 'Abel', 'Male', 'test2@test.com', '07060678275', 'Karu Abuja ', 'Delta', '', '', '', 2, 'public/images/uploads/profile_images/default_avatar.jpg', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '1c5765a6d563dbef92967a5865beca3b456e675eba4d802bfac93a1e5abaf3c14095fa78255e1629b343ef456dd4c55ca3b3968b94b154f26ba4b16a1d49f578', '2021-04-14 03:09:25', '2019-09-12', '58642', '388967', 1, 1),
 (38, 'John', 'Doe', 'Male', 'test@test.com', '07060678275', 'Karu Abuja', 'Fct', '', '', '', 1, 'public/images/uploads/profile_images/default_avatar.jpg', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'a4f6212765e6a42f595b1cc6e65b5c51779bf4805469952152737e4bb68cc32f9f03d5279dab3edda3862f42c1c314016cd56dc916b32ae9c33a75e8169f97ab', '2021-06-16 21:42:43', '2020-04-29', '63258', '', 1, 1),
 (39, 'Sunday', 'Sunday', 'Male', 'test3@test.com', '0703300000', 'address', '', 'Nigeria', '', '', 3, 'public/images/uploads/profile_images/default_avatar.jpg', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '2021-04-12 15:02:15', '0000-00-00', '', '', 1, 1),
 (40, 'George', 'Friday', '2', 'directorate@test.com', '0703300000', '', '37', '', '', '', 1, 'public/images/uploads/profile_images/default_avatar.jpg', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '2021-04-12 15:35:33', '0000-00-00', '', '', 1, 1);
+=======
+INSERT INTO `users` (`id`, `fullname`, `gender`, `email`, `phone`, `address`, `state`, `country`, `whatsapp`, `mobile1`, `seller`, `seller_id`, `account_type`, `image`, `password`, `token`, `last_login`, `signup_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
+(1, 'Michael Akpobome', 'Male', 'mike98989@gmail.com', '07060678275', 'Karu Abuja ', 'Delta', '', '', '', 1, 'AG-8614937', 2, 'default.png', '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', '4c44184594184df4659f56ca4d1c5e2a43582f3641dfea4214dbe83169050ab03332d9457f66d0ac8c755cf9fe863e1cc586920987fc1bc6fa243e2f99359603', '2021-06-23 22:45:41', '2019-09-12', '58642', '1341', 1, 1),
+(38, 'John Doe', 'Male', 'test@test.com', '08174077714', 'Karu Abuja', 'Fct', '', '', '', 1, 'AG-91933000', 1, 'default2.png', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'a4f6212765e6a42f595b1cc6e65b5c51779bf4805469952152737e4bb68cc32f9f03d5279dab3edda3862f42c1c314016cd56dc916b32ae9c33a75e8169f97ab', '2021-06-16 21:42:43', '2020-04-29', '63258', '', 1, 1),
+(39, 'Sunday', 'Male', 'test3@test.com', '0703300000', 'address', '', 'Nigeria', '', '', 0, '', 3, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '2021-04-12 15:02:15', '0000-00-00', '', '', 1, 1),
+(40, 'George', '2', 'directorate@test.com', '0703300000', '', '37', '', '', '', 0, '', 1, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '2021-04-12 15:35:33', '0000-00-00', '', '', 1, 1);
+>>>>>>> f15f13677480791ef4b920eee340834fee3baee4
 
 -- --------------------------------------------------------
 
@@ -478,7 +498,11 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+>>>>>>> f15f13677480791ef4b920eee340834fee3baee4
 
 --
 -- AUTO_INCREMENT for table `header-navigation`
@@ -545,7 +569,10 @@ ALTER TABLE `users`
 --
 ALTER TABLE `wishlist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+<<<<<<< HEAD
 COMMIT;
+=======
+>>>>>>> f15f13677480791ef4b920eee340834fee3baee4
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
