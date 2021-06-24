@@ -3,7 +3,7 @@
 class TopNavigation extends Model{
     public function getAllNav(){
         $this->db->query('SELECT * FROM header-navigation');
-        $rows = $this->resultSet();
+        $rows = $this->db->resultSet();
         return $rows;
     }
 
