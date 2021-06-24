@@ -1,10 +1,7 @@
 <?php
 
-
-
 class Product extends Model
 {
-
     public function getAllProducts()
     {
         $this->db->query("SELECT products.*,
@@ -27,7 +24,6 @@ class Product extends Model
 
     public function getSingleProduct($id)
     {
-
         // the value is sanitize to an interger
         $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
@@ -55,7 +51,6 @@ class Product extends Model
 
     public function addProduct()
     {
-
         $uploader = uploadMultiple('pro', 'products');
         /*
         $image = $uploader['uploaded'];
@@ -89,8 +84,9 @@ class Product extends Model
         $price = trim($_POST['price']);
         //seller will be gotten from session()
         $seller_id = 'AG-' . rand(1000000, 100000000);
-
-        $this->db->query('INSERT INTO products (brand, product_code, color, name, short_description, long_description, category, sub_category,image,price,date_added, seller_id) VALUES (:brand, :product_code,:color, :name, :short_description, :long_description, :category, :sub_category,:image,:price, now(), :seller_id)');
+        $this->db->query(
+            'INSERT INTO products (brand, product_code, color, name, short_description, long_description, category, sub_category,image,price,date_added, seller_id) VALUES (:brand, :product_code,:color, :name, :short_description, :long_description, :category, :sub_category,:image,:price, now(), :seller_id)'
+        );
         $this->db->bind(':brand', $brand);
         $this->db->bind(':product_code', $product_code);
         $this->db->bind(':color', $color);
@@ -107,7 +103,6 @@ class Product extends Model
             $result['status'] = '1';
             $result['errors'] = $uploader['image_error'];
         } else {
-
             $result['message'] = 'product failed';
             $result['status'] = '0';
             return false;
@@ -116,7 +111,8 @@ class Product extends Model
     }
     public function mostViewedProduct()
     {
-        $this->db->query("SELECT name, brand, price, seller_id, product_code, image,
+        $this->db
+            ->query("SELECT name, brand, price, seller_id, product_code, image,
                         sub_category.title as productSubCategory,
                         category.title as productCategory,
                         most_view.view_count as viewCount
@@ -185,7 +181,9 @@ class Product extends Model
         $product_code = trim($_POST['product_code']);
         $customer_id = trim($_POST['customer_id']);
 
-        $this->db->query('INSERT INTO product_cart (product_code, customer_id, date_added) VALUES (:product_code, :customer_id, now()');
+        $this->db->query(
+            'INSERT INTO product_cart (product_code, customer_id, date_added) VALUES (:product_code, :customer_id, now()'
+        );
         $this->db->bind(':product_code', $product_code);
         $this->db->bind(':customer_id', $customer_id);
         if ($this->db->execute()) {
@@ -240,7 +238,6 @@ class Product extends Model
     //         $productCart = array(
     //             $product_code
     //         );
-
 
     //         $result['data'] = $product_code;
     //         $result['status'] = '1';

@@ -4,13 +4,13 @@
  * add, delete, create, update categories and sub categories
  *
  */
-TODO: // work on category
+#TODO:  // work on category
 class Category extends Model
 {
     public function getAllCategory()
     {
         $this->db->query("SELECT * FROM category
-                            
+
           ");
 
         if ($this->db->resultSet()) {
@@ -26,7 +26,9 @@ class Category extends Model
 
     public function addCategory($data)
     {
-        $this->db->query('INSERT INTO category (title, address) VALUES (:title,:address)');
+        $this->db->query(
+            'INSERT INTO category (title, address) VALUES (:title,:address)'
+        );
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':address', $data['address']);
         if ($this->db->execute()) {
@@ -39,7 +41,9 @@ class Category extends Model
     }
     public function updateCategory($data)
     {
-        $this->db->query('UPDATE category SET title = :title,address = :address WHERE id = :id');
+        $this->db->query(
+            'UPDATE category SET title = :title,address = :address WHERE id = :id'
+        );
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':address', $data['address']);
         if ($this->db->execute()) {
@@ -61,7 +65,8 @@ class Category extends Model
 
     public function getAllSubCategory()
     {
-        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
+        $this->db
+            ->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
                             category.title as parentCategory
                           FROM sub_category
                            JOIN category
@@ -80,14 +85,14 @@ class Category extends Model
 
     public function getSelectedCategory($id)
     {
-
         // the value is sanitize to an interger
         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
+        $this
+            ->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
                             category.title as parentCategory
-                          FROM sub_category 
-                            INNER JOIN category ON  sub_category.parent_id = category.id  
-                          WHERE parent_id = :product_code  
+                          FROM sub_category
+                            INNER JOIN category ON  sub_category.parent_id = category.id
+                          WHERE parent_id = :product_code
                         ');
         $this->db->bind(':product_code', $product_codes);
         if ($this->db->resultSet()) {
@@ -101,10 +106,11 @@ class Category extends Model
         return $rows;
     }
 
-
     public function addSubCategory($data)
     {
-        $this->db->query('INSERT INTO sub_category (title, parent_id, address) VALUES (:title, :parent_id, :address)');
+        $this->db->query(
+            'INSERT INTO sub_category (title, parent_id, address) VALUES (:title, :parent_id, :address)'
+        );
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':parent_id', $data['category']);
         $this->db->bind(':address', $data['address']);
@@ -152,7 +158,9 @@ class Category extends Model
     {
         $_POST = filter_var(INPUT_POST, FILTER_SANITIZE_STRING);
         $category_name = $_POST['category_name'];
-        $this->db->query("INSERT INTO category (name, parent_id) VALUES (:category_name, 0)");
+        $this->db->query(
+            'INSERT INTO category (name, parent_id) VALUES (:category_name, 0)'
+        );
         $this->db->bind(':category_name', $category_name);
 
         if ($this->db->execute()) {
@@ -169,9 +177,14 @@ class Category extends Model
     public function createSubCategory()
     {
         $_POST = filter_var(INPUT_POST, FILTER_SANITIZE_STRING);
-        $parent_id = filter_var($_POST['category_id'], FILTER_SANITIZE_NUMBER_INT);
+        $parent_id = filter_var(
+            $_POST['category_id'],
+            FILTER_SANITIZE_NUMBER_INT
+        );
         $subcategory_name = $_POST['subcategory_name'];
-        $this->db->query("INSERT INTO sub_category (name, parent_id) VALUES (:subcategory_name, :parent_id)");
+        $this->db->query(
+            'INSERT INTO sub_category (name, parent_id) VALUES (:subcategory_name, :parent_id)'
+        );
         $this->db->bind(':subcategory_name', $subcategory_name);
         $this->db->bind(':parent_id', $parent_id);
 
