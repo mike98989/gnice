@@ -1,0 +1,67 @@
+<!-- End .header -->
+
+<main class="main"  ng-controller="loginController">
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html"><i class="icon-home"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Confirm password recover code</li>
+      </ol>
+    </div>
+    <!-- End .container -->
+  </nav>
+    <div class="container">
+    <div class="col-md-6 offset-md-3">
+      <div class="heading">
+        <h2 class="title">Confirm password recovery code</h2>
+        <p></p>
+      </div>
+      <!-- End .heading -->
+
+      <form action="" id="confirm_password_recovery_code" ng-submit="confirm_password_recovery_code()"  method="POST">
+     
+        
+        
+        
+        
+       
+         
+        
+          <input
+            type="text"
+            name="confirm_code"
+            id="confirm_code"
+            class="form-control"
+            placeholder="Confirmation Code"
+            required
+          />
+
+             <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control"
+            placeholder="New Password"
+            required
+          />
+        <div class="form-footer">
+            <button type="submit" class="btn btn-primary" id="">
+              Confirm Account
+            </button>
+          </div>
+
+        
+        <!-- End .form-footer -->
+      </form>
+    </div>
+  </div>
+  <!-- End .container -->
+
+ 
+
+  <div class="mb-5"></div>
+  <!-- margin -->
+</main>
+<!-- End .main -->

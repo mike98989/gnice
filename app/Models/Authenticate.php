@@ -150,7 +150,7 @@ class Authenticate extends Model
                                 $keys_imploded = implode(",", $key_fields);
                             }
                         }
-                    }
+                   
                    
                     $this->db->query('INSERT INTO users ('.$fields_imploded.') VALUES ('.$keys_imploded.')');
                     foreach(array_keys($data) as $key) { 
@@ -159,8 +159,9 @@ class Authenticate extends Model
                     }   
                     }
                     if($this->db->execute()){   
-                    $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
-                    $msg['status']='1';  
+                   
+
+                       /*
 
                         $this->db->query('INSERT INTO users (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
                         foreach (array_keys($data) as $key) {
@@ -173,7 +174,13 @@ class Authenticate extends Model
                             $msg['status'] = '1';
                         } else {
                             return false;
-                        }
+                        } 
+                        */
+                         $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
+                        $msg['status']='1';  
+                      }  else {
+                        return false;
+                      }
                     } else {
                         $msg['msg'] =  "Passwords DO NOT MATCH!";
                         $msg['status'] = '0';
@@ -195,7 +202,9 @@ class Authenticate extends Model
 
     public function send_mail($receiver_email, $receiver_name, $subject, $html_message)
     {
-        require_once(APP_ROOT . '/Libraries/sendinblue-php-library/vendor/autoload.php');
+       require_once(APP_ROOT . '/Libraries/sendinblue-php-library/vendor/autoload.php'); 
+      
+
 
         $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
 

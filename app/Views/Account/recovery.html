@@ -7,7 +7,7 @@
         <li class="breadcrumb-item">
           <a href="index.html"><i class="icon-home"></i></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Login</li>
+        <li class="breadcrumb-item active" aria-current="page">Password Recovery</li>
       </ol>
     </div>
     <!-- End .container -->
@@ -16,16 +16,16 @@
   <div class="container">
     <div class="col-md-6 offset-md-3">
       <div class="heading">
-        <h2 class="title">Login</h2>
-        <p>If you have an account with us, please log in.</p>
+        <h2 class="title">Password Recovery</h2>
+        <p></p>
       </div>
       <!-- End .heading -->
 
-          <form ng-submit="user_login()" id="user_login"  method="POST" action="#">  
+          <form ng-submit="password_recovery()" id="password_recovery"  method="POST" action="">  
         <input
           type="email"
-          name="username"
-          id="username"
+          name="email"
+          id="email"
           class="form-control"
           
           placeholder="Email Address"
@@ -35,19 +35,12 @@
 
           
         />
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form-control"
-          placeholder="Password"
-         
-        />
+     
         
 
         <div class="form-footer">
-          <button type="submit" class="btn btn-primary">LOGIN</button>
-          <a href="Recovery" class="forget-pass"> Forgot your password?</a>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          
          
         </div>
         <!-- End .form-footer -->

@@ -1,5 +1,5 @@
     <div class="page-wrapper">
-      <header class="header"ng-controller="homeController">
+      <header class="header">
         <div class="header-top bg-primary text-uppercase">
           <div class="container">
             <div class="header-left">

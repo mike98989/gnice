@@ -11,6 +11,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $signup = $this->model('Authenticate')->signup();
+             header('Content-Type: application/json'); 
             print_r(json_encode($signup));
         } else {
             echo "invalid request";
@@ -23,18 +24,21 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $login = $this->model('Authenticate')->login($_POST['username'], $_POST['password']);
+            header('Content-Type: application/json'); 
             print_r(json_encode($login));
         } else {
             echo "invalid request";
             exit;
         }
     }
+
 
     public function confirm_user_signup()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $login = $this->model('Authenticate')->confirm_user_signup($_POST['email'], $_POST['confirm_code']);
+             header('Content-Type: application/json'); 
             print_r(json_encode($login));
         } else {
             echo "invalid request";
@@ -42,14 +46,26 @@ class Api extends Controller
         }
     }
 
+      public function password_recovery()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Authenticate')->password_recovery();
+             header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
 
-  
 
-    public function confirm_password_recovery_code()
+  public function confirm_password_recovery_code()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $login = $this->model('Authenticate')->confirm_password_recovery_code();
+            header('Content-Type: application/json');
             print_r(json_encode($login));
         } else {
             echo "invalid request";
@@ -59,9 +75,14 @@ class Api extends Controller
     }
 
 
-    /**
-     * Product apis
-     */
+/*
+  
+
+  
+
+    
+     //////////////////////////// Product apis
+     
      public function fetch_all_product(){
          $header = apache_request_headers(); 
          if(isset($header['gnice-authenticate'])){
@@ -177,9 +198,9 @@ class Api extends Controller
         }
     }
 
-    /**
-     * Hero apis
-     */
+    
+     // Hero apis
+     
     public function fetch_all_hero()
     {
         $header = apache_request_headers();
@@ -191,10 +212,9 @@ class Api extends Controller
             exit;
         }
     }
-
-    /**
-     * Banner apis
-     */
+    
+      //Banner apis
+    
 
     public function fetch_all_banners()
     {
@@ -399,4 +419,5 @@ class Api extends Controller
             exit;
         }
     }
+    */
 }
