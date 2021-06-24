@@ -6,7 +6,7 @@
     $scope.dirlocation=datagrab.completeUrlLocation;
     $scope.currentPage = 1;
     $scope.pageSize = 30;
-    $scope.catfilter = 9;
+    $scope.catfilter = 5;
     $scope.listfilter = 5;
 
 
@@ -101,6 +101,7 @@
     $('body').delegate('#pbtn','click',function(event) {
        event.preventDefault();
        var delid = $(this).attr('data-id1');
+       alert(delid);
        $localStorage.valueToShare = delid;
       window.location.assign(
                     'Product');
@@ -137,6 +138,33 @@
        $('.loader').hide(); 
        if(msg3.status=='1'){  
        $scope.singleProduct = msg3.data;
+       $scope.$apply();
+       //alert(JSON.stringify($scope.categories));
+       }
+        }
+      });
+    }
+       $scope.fetch_related_product = function(){
+      $.ajax({
+        url: $scope.dirlocation+'api/fetch_related_product',
+        type: 'GET',
+        method : "post",
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+       data : JSON.stringify({'coid' : $localStorage.valueToShare, 'cid' : $localStorage.valueToShare3, 'subid' : $localStorage.valueToShare1}),
+        async: true,
+        cache: false,
+        contentType: false,
+        headers:{'gnice-authenticate':'gnice-web'}, 
+        processData: false,
+        success: function (result7) {
+        //alert(result7);
+       var response7=JSON.stringify(result7);
+       var parsed7 = JSON.parse(response7);
+       var msg7=angular.fromJson(response7);
+       console.log(msg7);
+       $('.loader').hide(); 
+       if(msg7.status=='1'){  
+       $scope.relatedProducts = msg7.data;
        $scope.$apply();
        //alert(JSON.stringify($scope.categories));
        }
@@ -186,10 +214,6 @@
         $scope.fetch_feature_product = function(){
        var pid =  $localStorage.valueToShare1;
        var catid = $localStorage.valueToShare3;
-
-
-
-       
         $.ajax({
         url: $scope.dirlocation+'api/fetch_feature_product',
         type: 'GET',

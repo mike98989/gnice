@@ -75,6 +75,40 @@ class Product extends Model{
         }
         return $result;
      }
+      
+
+          public function getrelatedProduct($id,$cat,$sub){ 
+        
+        // the value is sanitize to an interger
+         $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+         $product_cat = filter_var($cat, FILTER_SANITIZE_NUMBER_INT);
+         $product_sub = filter_var($sub, FILTER_SANITIZE_NUMBER_INT);
+
+        //  print_r($product_code);
+        //  exit('got here');
+         $this->db->query("
+                            SELECT *,
+                            category.title as productCategory,
+                            sub_category.title as productSubCategory
+                            FROM products
+                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN category ON category.id = products.category
+                             WHERE product_code != :product_code and  category = :product_cat and sub_category = :product_sub
+                        ");
+         $this->db->bind(':product_code', $product_code);
+         $this->db->bind(':product_cat', $product_cat);
+         $this->db->bind(':product_sub', $product_sub);
+        
+         if($this->db->resultSet()){
+            $result['data'] = $this->db->resultSet();
+            $result['status']='1';
+        }else{
+            $result['data'] = [];
+            $result['status']='0';
+        }
+        return $result;
+     }
+
           public function getFeatureProduct($cat,$sub){ 
         // the value is sanitize to an interger
          $product_cat = filter_var($cat, FILTER_SANITIZE_NUMBER_INT);

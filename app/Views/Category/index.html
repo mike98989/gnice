@@ -111,7 +111,7 @@
 										</div><!-- End .product-container -->
 										<div class="price-box">
 											<span class="old-price">$90.00</span>
-											<span class="product-price">${{selectedProduct.price}}</span>
+											<span class="product-price">{{selectedProduct.price | currency}} </span>
 										</div><!-- End .price-box -->
 									</div><!-- End .product-details -->
 								</div>
@@ -292,7 +292,7 @@
 										<div  dir-paginate="featureProduct in featureProducts | filter : search |  itemsPerPage : 5">
 											<div class="product-default left-details product-widget">
 												<figure>
-													<a href="product.html">
+													<a href="#" id="pbtn" data-id1="{{featureProduct.product_code}}">
 														<img src="assets/images/products/product-10.jpg">
 													</a>
 												</figure>
@@ -307,7 +307,7 @@
 														</div><!-- End .product-ratings -->
 													</div><!-- End .product-container -->
 													<div class="price-box">
-														<span class="product-price">$49.00</span>
+														<span class="product-price">{{featureProduct.price | currency}} </span>
 													</div><!-- End .price-box -->
 												</div><!-- End .product-details -->
 											</div>
