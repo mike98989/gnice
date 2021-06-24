@@ -28,7 +28,6 @@
        var msg=angular.fromJson(response);
        $('.loader').hide(); 
        if(msg.status=='1'){  
-      
        $scope.categories = msg.data;
        $scope.$apply();
        //alert(JSON.stringify($scope.categories));

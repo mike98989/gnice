@@ -17,6 +17,6 @@ require_once "helpers/functions.php";
  * for autoload to work in libraries the class name needs to match the file name -- exactly ie Controller - Controller
  */
 // Autoload Core Libraries
-spl_autoload_register(function($className){ 
+spl_autoload_register(function ($className) {
     require_once 'Core/' . $className . '.php';
 });
