@@ -14,6 +14,7 @@ class Product extends Model
                         LEFT JOIN users ON users.seller_id = products.seller_id");
 
         if ($this->db->resultSet()) {
+            $result['rowCounts'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {
@@ -41,6 +42,7 @@ class Product extends Model
         $this->db->bind(':product_code', $product_code);
 
         if ($this->db->singleResult()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->singleResult();
             $result['status'] = '1';
         } else {
@@ -53,59 +55,50 @@ class Product extends Model
     public function addProduct()
     {
         $uploader = uploadMultiple('pro', 'products');
-        /*
-        $image = $uploader['uploaded'];
+        //Filter sanitize all input as string to remove all unwanted scripts and tags
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+        //get renamed pictures from helper functions
+        $image = $uploader['imageUrl'];
+        // $product_code = rand(1000000, 100000000);
+        $_POST['image'] = $image;
+        $_POST['product_code'] = rand(1000000, 100000000);
         $data = filter_var_array($_POST);
         $data = array_map('trim', array_filter($data));
-        $excluded = array('files');
-        array_push($data, $image);
+        $excluded = ['files'];
+        // print_r($data);
+        // exit();
         foreach (array_keys($data) as $key) {
             if (!in_array($key, $excluded)) {
                 $fields[] = $key;
-                $key_fields[] = ":" . $key;
-                $fields_imploded = implode(",", $fields);
-                $keys_imploded = implode(",", $key_fields);
+                $key_fields[] = ':' . $key;
+                $fields_imploded = implode(',', $fields);
+                $keys_imploded = implode(',', $key_fields);
             }
         }
-        exit(print_r($data));
-*/
-        # TODO: IMPROVE THIS CODE
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $name = trim($_POST['name']);
-        $brand = trim($_POST['brand']);
-
-        $product_code = rand(1000000, 100000000);
-        $color = trim($_POST['color']);
-        $short_description = trim($_POST['short_description']);
-        $long_description = trim($_POST['long_description']);
-        $category = trim($_POST['category']);
-        $sub_category = trim($_POST['sub_category']);
-        $image = $uploader['uploaded'];
-        $price = trim($_POST['price']);
-        //seller will be gotten from session()
-        $seller_id = 'AG-' . rand(1000000, 100000000);
         $this->db->query(
-            'INSERT INTO products (brand, product_code, color, name, short_description, long_description, category, sub_category,image,price,date_added, seller_id) VALUES (:brand, :product_code,:color, :name, :short_description, :long_description, :category, :sub_category,:image,:price, now(), :seller_id)'
+            'INSERT INTO products (' .
+                $fields_imploded .
+                ') VALUES (' .
+                $keys_imploded .
+                ')'
         );
-        $this->db->bind(':brand', $brand);
-        $this->db->bind(':product_code', $product_code);
-        $this->db->bind(':color', $color);
-        $this->db->bind(':name', $name);
-        $this->db->bind(':short_description', $short_description);
-        $this->db->bind(':long_description', $long_description);
-        $this->db->bind(':category', $category);
-        $this->db->bind(':sub_category', $sub_category);
-        $this->db->bind(':image', $image);
-        $this->db->bind(':price', $price);
-        $this->db->bind(':seller_id', $seller_id);
-        if ($this->db->execute()) {
+        foreach (array_keys($data) as $key) {
+            if (!in_array($key, $excluded)) {
+                $this->db->bind(':' . $key, $data[$key]);
+            }
+        }
+        $row = $this->db->singleResult();
+        if ($this->db->rowCount() > 0) {
+            $result['rowCount'] = $this->db->rowCount();
+            $result['data'] = $data;
             $result['message'] = 'product added successfully';
             $result['status'] = '1';
             $result['errors'] = $uploader['image_error'];
         } else {
-            $result['message'] = 'product failed';
+            $result['message'] = 'create product failed';
             $result['status'] = '0';
+            $result['errors'] = $uploader['image_error'];
             return false;
         }
         return $result;
@@ -146,6 +139,7 @@ class Product extends Model
                             ");
 
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $rows['data'] = $this->db->resultSet();
             $rows['status'] = '1';
         } else {
@@ -175,6 +169,7 @@ class Product extends Model
         $this->db->bind(':brand', $brand);
         $this->db->bind(':product_code', $product_code);
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {
@@ -197,6 +192,7 @@ class Product extends Model
                             ");
 
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {
@@ -208,6 +204,7 @@ class Product extends Model
 
     public function addProductToCart()
     {
+        $result['rowCount'] = $this->db->rowCount();
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $product_code = trim($_POST['product_code']);
         $customer_id = trim($_POST['customer_id']);
@@ -227,58 +224,7 @@ class Product extends Model
         }
         return $result;
     }
-    // public function getAllProductCart()
-    // {
-    //     $this->db->query("SELECT name, price, brand,
-    //                     products.product_code as productCode,
-    //                     product_cart.customer_id as customerID,
-    //                     product_cart.date_added as dateAdded
-    //                      FROM products
-    //                      INNER JOIN product_cart ON product_cart.product_code = products.product_code
-    //                         ");
 
-    //     if ($this->db->resultSet()) {
-    //         $result['data'] = $this->db->resultSet();
-    //         $result['status'] = '1';
-    //     } else {
-    //         $result['data'] = [];
-    //         $result['status'] = '0';
-    //     }
-    //     return $result;
-    // }
-    // public function ProductToCart()
-    // {
-    //     // if(isset($_SESSION['product_code'])){
-
-    //     // } else{
-    //     //     $item_array = array(
-    //     //         'product_code' => $_POST['product_code']
-    //     //     );
-    //     //}
-    //     $product_code = $_POST['product_code'];
-
-    //     $productCart = array(
-    //         1234, 123, 12
-    //     );
-
-    //     if (in_array($product_code, $productCart)) {
-    //         $result['status'] = '0';
-    //         $result['message'] = 'item already in cart';
-    //         $result['array'] = $productCart;
-    //     } else {
-    //         $productCart = array(
-    //             $product_code
-    //         );
-
-    //         $result['data'] = $product_code;
-    //         $result['status'] = '1';
-    //         $result['message'] = 'item added to cart';
-    //     }
-
-    //     $result['count'] = count($productCart);
-
-    //     return $result;
-    // }
     public function getAllProductOfaCategory($category_id)
     {
         $this->db->query("SELECT products.*,
@@ -292,6 +238,7 @@ class Product extends Model
         $this->db->bind(':category_id', $category_id);
 
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {
@@ -325,6 +272,7 @@ class Product extends Model
         $this->db->bind(':sub_category_id', $sub_category_id);
 
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {
@@ -350,6 +298,7 @@ class Product extends Model
         $this->db->bind(':search', '%' . $searchTerm . '%');
 
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {

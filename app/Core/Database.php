@@ -1,9 +1,7 @@
 <?php
 
-
 class Database
 {
-
     private $host = DB_HOST;
     private $user = DB_USER;
     private $password = DB_PASS;
@@ -19,16 +17,21 @@ class Database
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName;
 
         // to increase db performance
-        $options = array(
+        $options = [
             PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        );
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        ];
 
         //create PDO instances
 
         try {
             //code...
-            $this->dbHandler = new PDO($dsn, $this->user, $this->password, $options);
+            $this->dbHandler = new PDO(
+                $dsn,
+                $this->user,
+                $this->password,
+                $options
+            );
         } catch (PDOException $e) {
             //throw $th;
             $this->error = $e->getMessage();
@@ -41,7 +44,7 @@ class Database
     {
         $this->statement = $this->dbHandler->prepare($sql);
     }
-    // Bind values 
+    // Bind values
     public function bind($param, $value, $type = null)
     {
         if (is_null($type)) {
@@ -74,17 +77,16 @@ class Database
     // execute the prepared statement
     public function execute()
     {
-        return  $this->statement->execute();
+        return $this->statement->execute();
         //return self::statement->execute();
     }
 
     // execute array prepared statements
     public function executeArray()
     {
-        return $this->statement->execute(array());
+        return $this->statement->execute([]);
         //return self::statement->execute();
     }
-
 
     // get result set as array of objects
     public function resultSet()

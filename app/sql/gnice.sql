@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Jun 24, 2021 at 08:08 AM
--- Server version: 5.7.32
--- PHP Version: 7.4.12
+-- Host: 127.0.0.1
+-- Generation Time: Jun 29, 2021 at 11:16 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.4.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -29,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `banners` (
   `id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0'
+  `status` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -71,11 +72,9 @@ INSERT INTO `category` (`id`, `title`, `address`, `click-counts`, `image`, `stat
 (12, 'Health and Bueaty', '', 0, 'health.png', 1),
 (16, 'Toys, Babies and Kids', '', 0, 'toys-kids.png', 1),
 (17, 'Outdoor and Sports', '', 0, 'soccer.png', 1),
-<<<<<<< HEAD
-(20, 'Animals and Pets', '', 0, 'pets,png', 1);
-=======
-(20, 'Animals and Pets', '', 0, 'pets.png', 1);
->>>>>>> f15f13677480791ef4b920eee340834fee3baee4
+(20, 'Animals and Pets', '', 0, 'pets.png', 1),
+(21, 'Agriculture & Food', '', 0, '', 1),
+(22, 'Commercial Equpiments & Tools', '', 0, '', 1);
 
 -- --------------------------------------------------------
 
@@ -101,7 +100,7 @@ CREATE TABLE `hero` (
   `title` varchar(50) NOT NULL,
   `sub_title` varchar(100) NOT NULL,
   `image` varchar(200) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0'
+  `status` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -158,8 +157,7 @@ CREATE TABLE `products` (
   `product_code` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `short_description` varchar(255) NOT NULL,
-  `long_description` text NOT NULL,
+  `description` text NOT NULL,
   `category` varchar(255) NOT NULL,
   `sub_category` varchar(255) NOT NULL,
   `image` text NOT NULL,
@@ -168,26 +166,56 @@ CREATE TABLE `products` (
   `seller_id` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
   `local_government` varchar(255) NOT NULL,
-  `location` text NOT NULL
+  `location` text NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `conditon` varchar(255) NOT NULL,
+  `ram` smallint(6) NOT NULL,
+  `internal_storage` int(11) NOT NULL,
+  `resolution` varchar(255) NOT NULL,
+  `sim` varchar(255) NOT NULL,
+  `Battery` smallint(6) NOT NULL,
+  `exchange_possible` tinyint(4) NOT NULL DEFAULT 0,
+  `main_camera` varchar(255) NOT NULL,
+  `selfie_camera` varchar(255) NOT NULL,
+  `negotiable` tinyint(4) NOT NULL DEFAULT 0,
+  `delivery_available` int(11) NOT NULL,
+  `second_condition` varchar(255) NOT NULL,
+  `transmission_type_vehicle` varchar(255) NOT NULL,
+  `mileage_vehicle` int(11) NOT NULL,
+  `registered_vehicle` int(11) NOT NULL DEFAULT 0,
+  `vin_vehicle` int(11) NOT NULL,
+  `horse_power_vehicle` varchar(255) NOT NULL,
+  `engine-size` varchar(255) NOT NULL,
+  `year_of_manufacture` int(11) NOT NULL,
+  `operating_system` varchar(255) NOT NULL,
+  `hard_drive_size` varchar(255) NOT NULL,
+  `fuel` varchar(255) NOT NULL,
+  `seats_vehicle` int(11) NOT NULL,
+  `property_size` varchar(255) NOT NULL,
+  `number_of_bedrooms` int(11) NOT NULL,
+  `property_type` varchar(255) NOT NULL,
+  `number_of_bathrooms` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `short_description`, `long_description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `local_government`, `location`) VALUES
-(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-8614937', '', '', ''),
-(5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-91933000', '', '', ''),
-(6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '2021-06-22 12:49:56', 'AG-93843232', '', '', ''),
-(7, 'HP', '19678428', 'silver', 'HP laptop envy', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d058e959f000001000.jpg,pro60d1d058e9aa7000100000.jpg,pro60d1d058e9f8a000001000.jpg', '90000', '2021-06-22 12:58:16', 'AG-60722385', '', '', ''),
-(8, 'Lenovo', '55860887', 'silver', 'Silver m4', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d0843ccb5000010000.jpg,pro60d1d0843d251010000000.jpg,pro60d1d0843d76c000010000.jpg', '70000', '2021-06-22 12:59:00', 'AG-90470554', '', '', ''),
-(9, 'Apple', '36376549', 'silver', 'macbook pro', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d0cf8926e000001000.jpg,pro60d1d0cf89786010000000.jpg,pro60d1d0cf89bd0000100000.jpg', '70000', '2021-06-22 13:00:15', 'AG-42990797', '', '', ''),
-(10, 'Apple', '78518873', 'black', 'Apple desktop', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d12697b21100000000.jpg', '70000', '2021-06-22 13:01:42', 'AG-79974221', '', '', ''),
-(11, 'Xaiomi', '30645954', 'black', 'Xaiomi headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d1cfee06e100000000.jpg', '70000', '2021-06-22 13:04:31', 'AG-19693443', '', '', ''),
-(12, 'Beats by Dre', '83291175', 'black, red', 'Headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d24460ce9000000100.jpg,pro60d1d2446126b001000000.jpg', '8000', '2021-06-22 13:06:28', 'AG-7748728', '', '', ''),
-(13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '2021-06-22 13:07:34', 'AG-79867936', '', '', ''),
-(14, 'Airpods', '57247936', 'white', 'Headset', 'lorem short description', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '2021-06-22 13:19:11', 'AG-67980776', '', '', ''),
-(15, 'Apple', '3875669', 'white', 'airpod max', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '2021-06-22 13:21:18', 'AG-67743888', '', '', '');
+INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `local_government`, `location`, `model`, `conditon`, `ram`, `internal_storage`, `resolution`, `sim`, `Battery`, `exchange_possible`, `main_camera`, `selfie_camera`, `negotiable`, `delivery_available`, `second_condition`, `transmission_type_vehicle`, `mileage_vehicle`, `registered_vehicle`, `vin_vehicle`, `horse_power_vehicle`, `engine-size`, `year_of_manufacture`, `operating_system`, `hard_drive_size`, `fuel`, `seats_vehicle`, `property_size`, `number_of_bedrooms`, `property_type`, `number_of_bathrooms`, `status`) VALUES
+(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-8614937', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-91933000', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '2021-06-22 12:49:56', 'AG-93843232', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(7, 'HP', '19678428', 'silver', 'HP laptop envy', 'lorem ipsum long description long', '8', '12', 'pro60d1d058e959f000001000.jpg,pro60d1d058e9aa7000100000.jpg,pro60d1d058e9f8a000001000.jpg', '90000', '2021-06-22 12:58:16', 'AG-60722385', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(8, 'Lenovo', '55860887', 'silver', 'Silver m4', 'lorem ipsum long description long', '8', '12', 'pro60d1d0843ccb5000010000.jpg,pro60d1d0843d251010000000.jpg,pro60d1d0843d76c000010000.jpg', '70000', '2021-06-22 12:59:00', 'AG-90470554', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(9, 'Apple', '36376549', 'silver', 'macbook pro', 'lorem ipsum long description long', '8', '12', 'pro60d1d0cf8926e000001000.jpg,pro60d1d0cf89786010000000.jpg,pro60d1d0cf89bd0000100000.jpg', '70000', '2021-06-22 13:00:15', 'AG-42990797', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(10, 'Apple', '78518873', 'black', 'Apple desktop', 'lorem ipsum long description long', '8', '12', 'pro60d1d12697b21100000000.jpg', '70000', '2021-06-22 13:01:42', 'AG-79974221', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(11, 'Xaiomi', '30645954', 'black', 'Xaiomi headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d1cfee06e100000000.jpg', '70000', '2021-06-22 13:04:31', 'AG-19693443', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(12, 'Beats by Dre', '83291175', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d24460ce9000000100.jpg,pro60d1d2446126b001000000.jpg', '8000', '2021-06-22 13:06:28', 'AG-7748728', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '2021-06-22 13:07:34', 'AG-79867936', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(14, 'Airpods', '57247936', 'white', 'Headset', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '2021-06-22 13:19:11', 'AG-67980776', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(15, 'Apple', '3875669', 'white', 'airpod max', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '2021-06-22 13:21:18', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(26, 'alert(&#39;helllo&#39;)', '60969158', 'white )  &#34;DELETE * from products&#34;)', 'Toyota camry', 'lorem ipsum long description long', '1', '3', 'pro60d4a65648934010000000.jpg,pro60d4a656493d0010000000.png,pro60d4a65649e4c000001000.jpg,pro60d4a6564a3ee000000001.jpg', '1000', '0000-00-00 00:00:00', '', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -327,7 +355,18 @@ INSERT INTO `sub_category` (`sub_id`, `parent_id`, `title`, `address`, `image`, 
 (80, 16, 'Children\'s Shoes', '', '', 1),
 (81, 16, 'Maternity & Pregnancy', '', '', 1),
 (82, 16, 'Prams & Strollers', '', '', 1),
-(83, 16, 'Toys', '', '', 1);
+(83, 16, 'Toys', '', '', 1),
+(84, 20, 'Birds', '', '', 1),
+(85, 20, 'Cats & Kittens', '', '', 1),
+(86, 20, 'Dogs & Puppies', '', '', 1),
+(87, 20, 'Fish', '', '', 1),
+(88, 20, 'Other Animals', '', '', 1),
+(89, 20, 'Reptiles', '', '', 1),
+(90, 20, 'Pet Food & Accessories', '', '', 1),
+(91, 21, 'Farm Machinery & Equipments', '', '', 1),
+(92, 21, 'Feeds, Supplements & Seeds', '', '', 1),
+(93, 21, 'Livestock & Poultry', '', '', 1),
+(94, 21, 'Meals and Drinks', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -337,12 +376,7 @@ INSERT INTO `sub_category` (`sub_id`, `parent_id`, `title`, `address`, `image`, 
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-<<<<<<< HEAD
-  `first_name` tinytext NOT NULL,
-  `last_name` tinytext NOT NULL,
-=======
   `fullname` tinytext NOT NULL,
->>>>>>> f15f13677480791ef4b920eee340834fee3baee4
   `gender` varchar(25) NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(45) NOT NULL,
@@ -351,11 +385,8 @@ CREATE TABLE `users` (
   `country` tinytext NOT NULL,
   `whatsapp` varchar(25) NOT NULL,
   `mobile1` varchar(25) NOT NULL,
-<<<<<<< HEAD
-=======
-  `seller` int(11) NOT NULL DEFAULT '0',
+  `seller` int(11) NOT NULL DEFAULT 0,
   `seller_id` varchar(25) NOT NULL,
->>>>>>> f15f13677480791ef4b920eee340834fee3baee4
   `account_type` int(11) NOT NULL,
   `image` tinytext NOT NULL,
   `password` tinytext NOT NULL,
@@ -372,19 +403,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-<<<<<<< HEAD
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `gender`, `email`, `phone`, `address`, `state`, `country`, `whatsapp`, `mobile1`, `account_type`, `image`, `password`, `token`, `last_login`, `signup_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
-(1, 'Clement', 'Abel', 'Male', 'test2@test.com', '07060678275', 'Karu Abuja ', 'Delta', '', '', '', 2, 'public/images/uploads/profile_images/default_avatar.jpg', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '1c5765a6d563dbef92967a5865beca3b456e675eba4d802bfac93a1e5abaf3c14095fa78255e1629b343ef456dd4c55ca3b3968b94b154f26ba4b16a1d49f578', '2021-04-14 03:09:25', '2019-09-12', '58642', '388967', 1, 1),
-(38, 'John', 'Doe', 'Male', 'test@test.com', '07060678275', 'Karu Abuja', 'Fct', '', '', '', 1, 'public/images/uploads/profile_images/default_avatar.jpg', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'a4f6212765e6a42f595b1cc6e65b5c51779bf4805469952152737e4bb68cc32f9f03d5279dab3edda3862f42c1c314016cd56dc916b32ae9c33a75e8169f97ab', '2021-06-16 21:42:43', '2020-04-29', '63258', '', 1, 1),
-(39, 'Sunday', 'Sunday', 'Male', 'test3@test.com', '0703300000', 'address', '', 'Nigeria', '', '', 3, 'public/images/uploads/profile_images/default_avatar.jpg', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '2021-04-12 15:02:15', '0000-00-00', '', '', 1, 1),
-(40, 'George', 'Friday', '2', 'directorate@test.com', '0703300000', '', '37', '', '', '', 1, 'public/images/uploads/profile_images/default_avatar.jpg', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '2021-04-12 15:35:33', '0000-00-00', '', '', 1, 1);
-=======
 INSERT INTO `users` (`id`, `fullname`, `gender`, `email`, `phone`, `address`, `state`, `country`, `whatsapp`, `mobile1`, `seller`, `seller_id`, `account_type`, `image`, `password`, `token`, `last_login`, `signup_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
 (1, 'Michael Akpobome', 'Male', 'mike98989@gmail.com', '07060678275', 'Karu Abuja ', 'Delta', '', '', '', 1, 'AG-8614937', 2, 'default.png', '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', '4c44184594184df4659f56ca4d1c5e2a43582f3641dfea4214dbe83169050ab03332d9457f66d0ac8c755cf9fe863e1cc586920987fc1bc6fa243e2f99359603', '2021-06-23 22:45:41', '2019-09-12', '58642', '1341', 1, 1),
 (38, 'John Doe', 'Male', 'test@test.com', '08174077714', 'Karu Abuja', 'Fct', '', '', '', 1, 'AG-91933000', 1, 'default2.png', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'a4f6212765e6a42f595b1cc6e65b5c51779bf4805469952152737e4bb68cc32f9f03d5279dab3edda3862f42c1c314016cd56dc916b32ae9c33a75e8169f97ab', '2021-06-16 21:42:43', '2020-04-29', '63258', '', 1, 1),
 (39, 'Sunday', 'Male', 'test3@test.com', '0703300000', 'address', '', 'Nigeria', '', '', 0, '', 3, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '2021-04-12 15:02:15', '0000-00-00', '', '', 1, 1),
 (40, 'George', '2', 'directorate@test.com', '0703300000', '', '37', '', '', '', 0, '', 1, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '2021-04-12 15:35:33', '0000-00-00', '', '', 1, 1);
->>>>>>> f15f13677480791ef4b920eee340834fee3baee4
 
 -- --------------------------------------------------------
 
@@ -498,11 +521,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-=======
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
->>>>>>> f15f13677480791ef4b920eee340834fee3baee4
 
 --
 -- AUTO_INCREMENT for table `header-navigation`
@@ -532,7 +551,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `product_cart`
@@ -556,7 +575,7 @@ ALTER TABLE `seller_ratings`
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `sub_id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `sub_id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -569,10 +588,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `wishlist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-<<<<<<< HEAD
 COMMIT;
-=======
->>>>>>> f15f13677480791ef4b920eee340834fee3baee4
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

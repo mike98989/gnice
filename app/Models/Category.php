@@ -24,7 +24,7 @@ class Category extends Model
             $subcategory = $this->db->resultSet();
             $row['category'][$a]->subcategory = $this->db->resultSet();
         }
-
+        $rows['rowCount'] = $this->db->rowCount();
         $rows['data'] = $row;
         $rows['status'] = '1';
 
@@ -80,6 +80,7 @@ class Category extends Model
                           WHERE sub_category.parent_id = category.id
                         ');
         if ($this->db->resultSet()) {
+            $rows['rowCount'] = $this->db->rowCount();
             $rows['data'] = $this->db->resultSet();
             $rows['status'] = '1';
         } else {
@@ -151,6 +152,7 @@ class Category extends Model
                             ");
 
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {
@@ -171,6 +173,7 @@ class Category extends Model
         $this->db->bind(':category_name', $category_name);
 
         if ($this->db->execute()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['message'] = 'category added';
             $result['status'] = '1';
         } else {
@@ -196,6 +199,7 @@ class Category extends Model
         $this->db->bind(':parent_id', $parent_id);
 
         if ($this->db->execute()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['message'] = ' subcategory added';
             $result['status'] = '1';
         } else {
