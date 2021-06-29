@@ -1,5 +1,5 @@
     <div class="page-wrapper">
-      <header class="header">
+      <header class="header"  ng-controller="homeController">
         <div class="header-top bg-primary text-uppercase">
           <div class="container">
             <div class="header-left">
@@ -102,49 +102,35 @@
                 <a href="#" class="search-toggle" role="button"
                   ><i class="icon-search-3"></i
                 ></a>
-                <form action="#" method="get" >
+               
                   <div class="header-search-wrapper">
                     <input
                     ng-model="searchText"
-                      type="search"
+                      type="text"
                       class="form-control"
                       name="q"
                       id="q"
                       placeholder="Search..."
                      
                     />
-                    {{ searchAny }}
-                    <div class="select-custom">
-                      <select id="cat" name="cat">
-                        <option value="">All Categories</option>
-                        <option value="4">Fashion</option>
-                        <option value="12">- Women</option>
-                        <option value="13">- Men</option>
-                        <option value="66">- Jewellery</option>
-                        <option value="67">- Kids Fashion</option>
-                        <option value="5">Electronics</option>
-                        <option value="21">- Smart TVs</option>
-                        <option value="22">- Cameras</option>
-                        <option value="63">- Games</option>
-                        <option value="7">Home &amp; Garden</option>
-                        <option value="11">Motors</option>
-                        <option value="31">- Cars and Trucks</option>
-                        <option value="32">
-                          - Motorcycles &amp; Powersports
-                        </option>
-                        <option value="33">- Parts &amp; Accessories</option>
-                        <option value="34">- Boats</option>
-                        <option value="57">- Auto Tools &amp; Supplies</option>
+                    {{ searchText }}
+                    <div class="select-custom" >
+                      <select id="cat" name="cat"  ng-init="fetch_all_categories_and_sub_categories()" >
+                        <option   value="">All Categories</option>
+                        <optgroup  ng-repeat="catSub in catSubs" label=" - {{catSub.title}}">
+                          <option  ng-repeat="sub in catSub.subcategory" value="{{ sub.sub_id }},{{ sub.parent_id }}">{{ sub.title }}</option>
+                        </optgroup>
+                       
                       </select>
                     </div>
                     <!-- End .select-custom -->
                     <button
                       class="btn p-0 icon-search-3"
-                      type="submit"
+                       ng-click="searchCat()"
                     ></button>
                   </div>
                   <!-- End .header-search-wrapper -->
-                </form>
+           
               </div>
               <!-- End .header-search -->
 

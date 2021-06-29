@@ -69,13 +69,11 @@
                 <h1 class="product-title">{{singleProduct.name}}</h1>
 
                 <div class="ratings-container">
-                  <div class="product-ratings">
-                    <span class="ratings" style="width: 60%"></span
-                    ><!-- End .ratings -->
-                  </div>
+                
                   <!-- End .product-ratings -->
+                  <p>{{ singleProduct.state }}, {{ singleProduct.location }}</p>
 
-                  <a href="#" class="rating-link">( 6 Reviews )</a>
+                  
                 </div>
                 <!-- End .ratings-container -->
 
@@ -280,13 +278,7 @@
               >
                 <div class="product-desc-content">
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat.
+                  {{ singleProduct.long_description }}
                   </p>
                 </div>
                 <!-- End .product-desc-content -->
@@ -565,7 +557,7 @@
             
           </div>
 
-          <div class="products-section pt-0" ng-init="fetch_related_product()">
+          <div class="products-section pt-0" ng-init="fetch_related_products()">
             <h2 class="section-title">Related Products</h2>
 
             <div class=" " >

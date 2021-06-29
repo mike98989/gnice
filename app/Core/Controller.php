@@ -21,7 +21,11 @@ class Controller
             }
             require_once '../app/views/' . $view . '.html';
             if ($include_header == true) {
+                if ($type == '_type3') {
+                    require('../app/views/inc/footer1.php');
+                } else {
                 require('../app/views/inc/footer.php');
+            }
             }
         } else {
             //view does not exist

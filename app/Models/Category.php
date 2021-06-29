@@ -67,6 +67,7 @@ class Category extends Model {
 
     public function getAllSubCategory()
     {
+        /*
         $this->db->query('SELECT DISTINCT sub_category.title,
 
                             category.title as parentCategory
@@ -74,6 +75,15 @@ class Category extends Model {
                            JOIN category
                           WHERE sub_category.parent_id = category.id
                         ');
+                        */
+                         $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id, sub_category.parent_id,
+
+                            category.title as parentCategory
+                          FROM sub_category
+                           JOIN category
+                          WHERE sub_category.parent_id = category.id
+                        ');
+
         if ($this->db->resultSet()) {
             $rows['data'] = $this->db->resultSet();
             $rows['status'] = '1';
@@ -89,16 +99,37 @@ class Category extends Model {
         
         // the value is sanitize to an interger
          $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
+        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id,sub_category.parent_id,
                             category.title as parentCategory
                           FROM sub_category 
                             INNER JOIN category ON  sub_category.parent_id = category.id  
                           WHERE parent_id = :product_code  
                         ');
-        $this->db->bind(':product_code', $product_codes);
+        $this->db->bind(':product_code', $id);
          if($this->db->resultSet()){
             $rows['data'] = $this->db->resultSet();
             $rows['status']='1';
+        }else{
+            $rows['data'] = [];
+            $rows['status']='0';
+        }
+        
+        return $rows;
+    }
+         public function getSingleCategory($id){
+        
+        // the value is sanitize to an interger
+         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id,sub_category.parent_id,
+                            category.title as parentCategory
+                          FROM sub_category 
+                            INNER JOIN category ON  sub_category.parent_id = category.id  
+                          WHERE sub_id = :product_code  
+                        ');
+        $this->db->bind(':product_code', $id);
+         if ($this->db->singleResult()) {
+            $rows['data'] = $this->db->singleResult();
+            $rows['status'] = '1';
         }else{
             $rows['data'] = [];
             $rows['status']='0';
@@ -250,6 +281,8 @@ class Category extends Model {
             }
         }
     }
+
+   
 
 }
    

@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+
+
+
+  <!DOCTYPE html>
 <html lang="en">
   <!-- Mirrored from portotheme.com/html/porto_ecommerce/demo_6/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 06 Jun 2021 16:56:10 GMT -->
   <head>
@@ -46,28 +49,24 @@
     <!-- Plugins CSS File -->
     <!--     Fonts and icons     -->
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
-   
-
     <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/css/bootstrap.min.css"
-    />
-      <link
-      rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/css/jquery-ui.css"
+      href="<?php echo APP_URL;?>/assets/reg/css/bootstrap.min.css"
     />
      <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/css/gsdk-bootstrap-wizard.css"
+      href="<?php echo APP_URL;?>/assets/reg/css/gsdk-bootstrap-wizard.css"
     />
   
 
     <!-- Main CSS File -->
+    <!--
     <link
       rel="stylesheet"
       type="text/css"
       href="<?php echo APP_URL;?>/assets/css/style.min.css"
     />
+  -->
     <link
       rel="stylesheet"
       type="text/css"
@@ -76,4 +75,3 @@
   </head>
   <body ng-app="gnice">
   <div class="page-wrapper">
-  <?php require APP_ROOT .'/views/inc/navbar.php'; ?>
