@@ -1,6 +1,6 @@
 <!-- End .header -->
 
-<main class="main">
+<main class="main"  ng-controller="signupController">
   <nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="container">
       <ol class="breadcrumb">
@@ -24,69 +24,61 @@
         </p>
       </div>
     </div>
-    <form action="#" id="signup-id">
+    <div class="result"></div>
+    
+    <form action="" id="user_signup" ng-submit="user_signup()"  method="POST">
       <div class="row">
         <div class="col-md-6">
           <input
             type="text"
-            name="fname"
+            name="fullname"
+            id="fullname"
             class="form-control"
             placeholder="First Name"
             required
           />
-          <input
-            type="text"
-            name="lname"
-            class="form-control"
-            placeholder="Middle Name"
-            required
-          />
-          <input
-            type="text"
-            name="mname"
-            class="form-control"
-            placeholder="Last Name"
-            required
-          />
-        </div>
-        <div class="col-md-6">
-          <input
+           <input
             type="email"
             name="email"
+            id="email"
             class="form-control"
             placeholder="Email Address"
             required
           />
+        
+          <input
+            type="text"
+            name="phone"
+            id="phone"
+            class="form-control"
+            placeholder="Phone"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+         
           <input
             type="password"
             name="password"
+            id="password"
             class="form-control"
             placeholder="Password"
             required
           />
           <input
             type="password"
-            name="cpassword"
+            name="confirm_password"
+            id="confirm_password"
             class="form-control"
             placeholder="Confirm Password"
             required
           />
 
-          <div class="custom-control custom-checkbox">
-            <input
-              name="newsletter"
-              type="checkbox"
-              class="custom-control-input"
-              id="newsletter-signup"
-            />
-            <label class="custom-control-label" for="newsletter-signup"
-              >Sing up our Newsletter</label
-            >
-          </div>
+         
           <!-- End .custom-checkbox -->
 
           <div class="form-footer">
-            <button type="submit" class="btn btn-primary" id="signup-btn">
+            <button type="submit" class="btn btn-primary" id="">
               Create Account
             </button>
           </div>

@@ -4,9 +4,17 @@
  * add, delete, create, update categories and sub categories
  *
  */
+<<<<<<< HEAD
 #TODO:  // work on category
 class Category extends Model
 {
+=======
+TODO: // work on category
+
+
+class Category extends Model {
+                                
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
     public function getAllCategoriesAndSubCategories()
     {
         $this->db->query(
@@ -70,15 +78,33 @@ class Category extends Model
         }
     }
 
+<<<<<<< HEAD
     public function getAllSubCategory()
     {
         $this->db
             ->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
+=======
+
+    public function getAllSubCategory()
+    {
+        /*
+        $this->db->query('SELECT DISTINCT sub_category.title,
+
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
                             category.title as parentCategory
                           FROM sub_category
                            JOIN category
                           WHERE sub_category.parent_id = category.id
                         ');
+                        */
+                         $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id, sub_category.parent_id,
+
+                            category.title as parentCategory
+                          FROM sub_category
+                           JOIN category
+                          WHERE sub_category.parent_id = category.id
+                        ');
+
         if ($this->db->resultSet()) {
             $rows['rowCount'] = $this->db->rowCount();
             $rows['data'] = $this->db->resultSet();
@@ -94,16 +120,26 @@ class Category extends Model
     public function getSelectedCategory($id)
     {
         // the value is sanitize to an interger
+<<<<<<< HEAD
         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $this
             ->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
+=======
+         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id,sub_category.parent_id,
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
                             category.title as parentCategory
                           FROM sub_category
                             INNER JOIN category ON  sub_category.parent_id = category.id
                           WHERE parent_id = :product_code
                         ');
+<<<<<<< HEAD
         $this->db->bind(':product_code', $product_codes);
         if ($this->db->resultSet()) {
+=======
+        $this->db->bind(':product_code', $id);
+         if($this->db->resultSet()){
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
             $rows['data'] = $this->db->resultSet();
             $rows['status'] = '1';
         } else {
@@ -111,6 +147,27 @@ class Category extends Model
             $rows['status'] = '0';
         }
 
+        return $rows;
+    }
+         public function getSingleCategory($id){
+        
+        // the value is sanitize to an interger
+         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id,sub_category.parent_id,
+                            category.title as parentCategory
+                          FROM sub_category 
+                            INNER JOIN category ON  sub_category.parent_id = category.id  
+                          WHERE sub_id = :product_code  
+                        ');
+        $this->db->bind(':product_code', $id);
+         if ($this->db->singleResult()) {
+            $rows['data'] = $this->db->singleResult();
+            $rows['status'] = '1';
+        }else{
+            $rows['data'] = [];
+            $rows['status']='0';
+        }
+        
         return $rows;
     }
 
@@ -208,4 +265,73 @@ class Category extends Model
         }
         return $result;
     }
+<<<<<<< HEAD
 }
+=======
+
+    public function getAllCategory2()
+    {
+        $parent_id = 0;
+        $this->db->query("SELECT * FROM category WHERE parent_id = :parent_id");
+        $this->db->bind(':parent_id', $parent_id);
+
+
+        // $this->db->query("SELECT * FROM category");
+
+        $catData = [];
+        if ($this->db->resultSet()) {
+            $row = $this->db->resultSet();
+            $data = json_encode($row);
+
+            // print_r($data);
+            // exit('got here');
+            while ($row = $this->db->resultSet()) {
+                $catData[] = [
+                    'id' => $row['id'],
+                    'parent_id' => $row['parent_id'],
+                    'category_name' => $row['name'],
+                    'subcategory' => $this->getAllSubCategory2($row['id'])
+                ];
+            }
+
+
+
+            return $catData;
+        } else {
+            return $catData = [];
+        }
+
+        print_r($catData);
+    }
+
+    public function getAllSubCategory2($parent_id)
+    {
+        $this->db->query("SELECT * FROM sub_category WHERE parent_id = :parent_id");
+        $this->db->bind(':parent_id', $parent_id);
+        $row = $this->db->execute();
+
+        $subCatData = [];
+        if ($this->db->resultSet()) {
+            if ($this->db->rowCount() > 0) {
+                while ($row) {
+
+                    $subCatData[] = [
+                        'id' => $row['id'],
+                        'parent_id' => $row['parent_id'],
+                        'subcategory' => $row['subcategory'],
+                    ];
+                    # code...
+                }
+                return $subCatData;
+            } else {
+                return $subCatData = [];
+            }
+        }
+    }
+
+   
+
+}
+   
+
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6

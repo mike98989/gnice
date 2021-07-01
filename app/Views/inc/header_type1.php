@@ -8,6 +8,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
 
     <title>Porto - signup-id</title>
 
@@ -42,10 +44,23 @@
     </script>
 
     <!-- Plugins CSS File -->
+    <!--     Fonts and icons     -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
+   
+
     <link
       rel="stylesheet"
       href="<?php echo APP_URL;?>/assets/css/bootstrap.min.css"
     />
+      <link
+      rel="stylesheet"
+      href="<?php echo APP_URL;?>/assets/css/jquery-ui.css"
+    />
+     <link
+      rel="stylesheet"
+      href="<?php echo APP_URL;?>/assets/css/gsdk-bootstrap-wizard.css"
+    />
+  
 
     <!-- Main CSS File -->
     <link

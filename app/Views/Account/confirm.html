@@ -1,0 +1,65 @@
+<!-- End .header -->
+
+<main class="main"  ng-controller="signupController">
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html"><i class="icon-home"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Confirm Account</li>
+      </ol>
+    </div>
+    <!-- End .container -->
+  </nav>
+    <div class="container">
+    <div class="col-md-6 offset-md-3">
+      <div class="heading">
+        <h2 class="title">Confirm Account</h2>
+        <p></p>
+      </div>
+      <!-- End .heading -->
+
+      <form action="" id="confirm_user_signup" ng-submit="confirm_user_signup()"  method="POST">
+     
+        
+           <input
+            type="email"
+            name="email"
+            id="email"
+            class="form-control"
+            placeholder="Email Address"
+            required
+          />
+        
+        
+       
+         
+        
+          <input
+            type="text"
+            name="confirm_code"
+            id="confirm_code"
+            class="form-control"
+            placeholder="Confirmation Code"
+            required
+          />
+        <div class="form-footer">
+            <button type="submit" class="btn btn-primary" id="">
+              Confirm Account
+            </button>
+          </div>
+
+        
+        <!-- End .form-footer -->
+      </form>
+    </div>
+  </div>
+  <!-- End .container -->
+
+ 
+
+  <div class="mb-5"></div>
+  <!-- margin -->
+</main>
+<!-- End .main -->

@@ -31,6 +31,7 @@
 
 	<!-- Plugins CSS File -->
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	
 
 	<!-- Main CSS File -->
 	<link rel="stylesheet" href="assets/css/style.min.css">
@@ -98,22 +99,26 @@
 					<div class="header-right w-lg-max pl-2"  ng-controller="homeController">
 						<div class="header-search header-icon header-search-inline header-search-category w-lg-max mr-lg-4"  >
 							<a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
-							<form action="#" method="get">
+							
 								<div class="header-search-wrapper">
-									<input type="search" class="form-control" name="q" id="q" placeholder="Search Products, Brands and Categories" required>
+									
 									<div class="select-custom">
-										<select id="cat" name="cat"  ng-init="fetch_all_category()">
-											<option value="">All Categories</option>
-											<option  ng-repeat="category in categories" value="{{category.id}}">{{category.title}}</option>
-											
-										</select>
+										 <select id="cat" name="cat"  ng-init="fetch_all_categories_and_sub_categories()" >
+                        <option   value="">All Categories</option>
+                        <optgroup  ng-repeat="catSub in catSubs" label=" - {{catSub.title}}">
+                          <option  ng-repeat="sub in catSub.subcategory" value="{{ sub.sub_id }},{{ sub.parent_id }}">{{ sub.title }}</option>
+                        </optgroup>
+                       
+                      </select>
 									</div><!-- End .select-custom -->
-									<button class="btn p-0 icon-search-3" type="submit"></button>
+									<button class="btn p-0 icon-search-3"  ng-click="searchCat()"></button>
 								</div><!-- End .header-search-wrapper -->
-							</form>
+							
 						</div><!-- End .header-search -->
 
 						<div class="d-none d-lg-flex align-items-center">
+
+
 							<a href="Login">Sign In</a>
 							<a href="Signup"> &nbsp; | Registration &nbsp; &nbsp;</a>
 							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="Login">SELL</a></button>

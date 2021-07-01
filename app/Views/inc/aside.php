@@ -5,16 +5,16 @@
         <h2 class="side-menu-title bg-gray ls-n-25">Browse Categories</h2>
 
         <nav class="side-nav">
-            <ul class="menu menu-vertical sf-arrows"  ng-init="fetch_all_category()">
-            <li ng-repeat="category in categories">
-            <a href="#" class="sf-with-ul"><i class="sicon-badge"></i>{{category.title}}</a>
+            <ul class="menu menu-vertical sf-arrows"  ng-init="fetch_all_categories_and_sub_categories()">
+            <li ng-repeat="catSub in catSubs">
+            <a href="#" class="sf-with-ul"><i class="sicon-badge"></i>{{catSub.title}}</a>
                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
                         <div class="row" >
                             <div class="col-lg-6" >
-                                <a href="#" class="nolink">{{category.title}}</a>
-                                <ul class="submenu"  ng-init="fetch_all_sub_category()">
-                                    <li  ng-repeat="subcategory in subcategories  | filter: category.title">
-                                        <a href="#" class="cbtn" data-id2="{{subcategory.id}}"  data-id3="{{subcategory.parent_id}}" >{{subcategory.title}} </a></li>
+                                <a href="#" class="nolink">{{catSub.title}}</a>
+                                <ul class="submenu" >
+                                    <li  ng-repeat="sub in catSub.subcategory ">
+                                        <a href="#" class="cbtn" data-id4="{{sub.sub_id}}"  data-id5="{{sub.parent_id}}" >{{ sub.title }} </a></li>
                                     </ul>
                                    
                             </div>
