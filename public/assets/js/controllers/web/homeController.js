@@ -8,6 +8,7 @@
     $scope.pageSize = 30;
     $scope.catfilter = 5;
     $scope.listfilter = 5;
+     $('.result').hide(); 
     
 
    
@@ -77,12 +78,14 @@
    
         //alert($scope.dirlocation);
 
+
               $scope.add_product = function(){
 
   $('.loader').show();    
-         $('.result').hide(); 
+         
           var sub = $('#sub_category').val();
           alert($('#category').val());
+          alert(sub);
           var formData = new FormData($('#add_product')[0]);
           $.ajax({
                 url: $scope.dirlocation+'api/add_product',
@@ -106,16 +109,13 @@
                var msg=angular.fromJson(response);
                 $('.loader').hide();  
           if(msg.status=='1'){
-        //alert(msg);
-        //alert(JSON.stringify($localStorage.recovery_token));
-        window.location.href=datagrab.completeUrlLocation+'ConfirmRecovery'
-        }else{
-              $('.loader').hide();    
+             $('.loader').hide();    
               $('.result').html(msg.msg);  
               $('.result').show();
-               
-              //$('.signup_loader').hide();
-              //$('.alert').html(answer);
+        }else{
+               $('.loader').hide();    
+              $('.result').html(msg.msg);  
+              $('.result').show();
               }
               
                }

@@ -1,4 +1,4 @@
-<?php?>
+
 	<aside class="sidebar col-lg-3">
 						<div class="widget widget-dashboard">
 							<h3 class="widget-title">My Account</h3>

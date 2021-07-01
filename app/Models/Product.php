@@ -50,6 +50,8 @@ class Product extends Model
         $price = trim($_POST['price']);
         //seller will be gotten from session()
         $seller_id = 'AG-' . rand(1000000, 100000000);
+                 $path = 'assets/images/uploads/products/'.$_FILES['file']['name'];
+     if (move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
 
         $this->db->query('INSERT INTO products (brand, product_code, color, name, short_description, long_description, category, sub_category,image,price,date_added, seller_id) VALUES (:brand, :product_code,:color, :name, :short_description, :long_description, :category, :sub_category,:image,:price, now(), :seller_id)');
         $this->db->bind(':brand', $brand);
@@ -74,6 +76,14 @@ class Product extends Model
             $result['status'] = '0';
             return false;
         }
+    } else {
+
+            $result['message'] = 'Location not Found';
+            $result['status'] = '0';
+            return false;
+    }
+
+
         return $result;
     }
 

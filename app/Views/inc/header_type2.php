@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -116,14 +119,26 @@
 							
 						</div><!-- End .header-search -->
 
-						<div class="d-none d-lg-flex align-items-center">
+						<div class="d-none d-lg-flex align-items-center" ng-controller="loginController">
 
+                             <?php
+                            if (isset($_SESSION['user_name'])) {
+                            	?>
+                            	<a href=""  ng-click="logout()">Logout  &nbsp; &nbsp;</a>
+							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="AddProduct">SELL</a></button>
+                            	<?php
+                            } else {
 
+                              ?>
 							<a href="Login">Sign In</a>
 							<a href="Signup"> &nbsp; | Registration &nbsp; &nbsp;</a>
 							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="Login">SELL</a></button>
+								<?php
+					}
+
+					?>
 						</div>
-					
+				
 						<!-- End .header-contact -->
 
 					</div><!-- End .header-right -->

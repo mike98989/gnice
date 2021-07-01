@@ -2,6 +2,7 @@
 
     <!-- Plugins JS File -->
     <script src="<?php echo APP_URL;?>/assets/js/jquery.min.js"></script>
+     <script src="<?php echo APP_URL;?>/assets/js/jquery-ui.min.js"></script>
     <script src="<?php echo APP_URL;?>/assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo APP_URL;?>/assets/js/jquery.bootstrap.wizard.js"></script>
     <script src="<?php echo APP_URL;?>/assets/js/gsdk-bootstrap-wizard.js"></script>

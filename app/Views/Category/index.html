@@ -1,26 +1,23 @@
 <main class="main"  ng-controller="homeController">
 			<div class="category-banner-container bg-gray">
 				<div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('assets/images/banners/banner-top.jpg');">
-					<div class="container position-relative">
+					<div class="container position-relative"  ng-init="fetch_single_sub_category()" >
 						<div class="row">
 							<div class="pl-lg-5 pb-5 pb-md-0 col-md-5 col-xl-4 col-lg-4 offset-1">
-								<h3 class="ml-lg-5 mb-2 ls-10">Electronic<br>Deals</h3>
+								<h3 class="ml-lg-5 mb-2 ls-10">{{ singleSubCats.title }}<br>Deals</h3>
 								 <input
                     ng-model="searchText"
                       type="text"
                       class="form-control"
                       name="q"
                       id="q"
-                      placeholder="Search..."
+                      placeholder="Search for Color, Brand, Price and name:"
                      
                     />
-								<a href="#" class="ml-lg-5 btn btn-dark btn-black ls-10">Get Yours!</a>
+								<a href="Login" class="ml-lg-5 btn btn-dark btn-black ls-10">Get Yours!</a>
 							</div>
 							<div class="pl-lg-5 col-md-4 offset-md-0 offset-1 pt-4">
-								<div class="coupon-sale-content">
-									<h4 class="m-b-2 coupon-sale-text bg-white ls-10 text-transform-none">Exclusive COUPON</h4>
-									<h5 class="mb-2 coupon-sale-text d-block ls-10 p-0"><i class="ls-0">UP TO</i><b class="text-dark">$100</b> OFF</h5>
-								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -31,7 +28,7 @@
 				<nav aria-label="breadcrumb" class="breadcrumb-nav">
 					<ol class="breadcrumb" ng-init="fetch_single_sub_category()" >
 						<li  class="breadcrumb-item"><a href="Home"><i class="icon-home"></i></a></li>
-						<li class="breadcrumb-item"><a href="#">{{ singleSubCats.parentCategory }}</a></li>
+						<li class="breadcrumb-item"><a href="">{{ singleSubCats.parentCategory }}</a></li>
 						<li class="breadcrumb-item active" aria-current="page">{{ singleSubCats.title }}</li>
 					</ol>
 				</nav>
@@ -40,25 +37,7 @@
 					<div class="col-lg-9 order-lg-1">
 						<nav class="toolbox">
 							<div class="toolbox-left">
-								<div class="toolbox-item toolbox-sort">
-									<label>Sort By Color, Brand, Price and name:</label>
-
-									<div class="select-custom">
-										<input class="form-control" ng-model="searchText" type="text">
-										<!--
-										<select name="orderby" class="form-control" ng-model="searchText">
-											<option value="menu_order" selected="selected">Default sorting</option>
-											<option value="name">Sort by popularity</option>
-											<option value="price">Sort by average rating</option>
-											<option value="brand">Sort by newness</option>
-											<option value="price">Sort by price: low to high</option>
-											<option value="price-desc">Sort by price: high to low</option>
-										</select>
-									-->
-									</div><!-- End .select-custom -->
-{{searchText}}
-									
-								</div><!-- End .toolbox-item -->
+							
 							</div><!-- End .toolbox-left -->
 
 							<div class="toolbox-right">

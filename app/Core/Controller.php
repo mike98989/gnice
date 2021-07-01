@@ -23,8 +23,12 @@ class Controller
             if ($include_header == true) {
                 if ($type == '_type3') {
                     require('../app/views/inc/footer1.php');
-                } else {
-                require('../app/views/inc/footer.php');
+                } else if ($type =='_type2') {
+                     require('../app/views/inc/footer.php');
+                }
+
+                else {
+                require('../app/views/inc/footer2.php');
             }
             }
         } else {

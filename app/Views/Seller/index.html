@@ -21,13 +21,14 @@
                  
                     	<div class="wizard-header">
                         	<h3>
-                        	   <b>CREATE </b> YOUR ACCOUNT <br>
-                        	   <small>Please register your account with us to take the benefits of our Online Banking facilities.</small>
+                        	   <b>ADD </b> YOUR PRODUCT <br>
+                        	   <small>Please register your product with us to take the benefits of our Online Market facilities.</small>
                         	</h3>
                     	</div>
                         <br>
 
-                       <div style='padding:20px;background-color:#dce8f7;color:black'> $msg</div class='btn btn-success'><br><br>;  
+
+                       <div class="result" style='padding:20px;background-color:#dce8f7;color:black' > </div class='btn btn-success result'><br><br>;
 
                         <br>
 
@@ -50,7 +51,7 @@
                                      <div class="picture-container">
                                           <div class="picture">
                                               <img src="reg/img/default-avatar.png" class="picture-src" id="wizardPicturePreview" title=""/>
-                                              <input type="file"  name="file"  id="wizard-picture" />
+                                              <input type="file"  name="file" required=""  id="wizard-picture" />
                                           </div>
                                           <h6>Choose Picture</h6>
                                       </div>
@@ -58,7 +59,7 @@
                                   <div class="col-sm-6" >
                                   	 	 <div class="form-group"  ng-hide="cate">
                                             <label> Categories</label><br>
-                                             <select required name="utype" class="form-control" ng-model="cate"  ng-init="fetch_all_categories_and_sub_categories()" name="category" id="category">
+                                             <select required=""  class="form-control" ng-model="cate"  ng-init="fetch_all_categories_and_sub_categories()" name="category" id="category">
 											 <option  ng-repeat="catSub in catSubs"  value="{{ catSub.id }}"> {{ catSub.title }}
                                              
 											 </option>
@@ -68,7 +69,7 @@
                                   	
                                   	        <div class="form-group"   ng-show="cate">
                                             <label> Sub Category</label><br>
-                                             <select required name="stype" class="form-control" ng-init="fetch_all_sub_category()"  ng-model="ct" name="sub_category" id="sub_category">
+                                             <select required  class="form-control" ng-init="fetch_all_sub_category()"  ng-model="ct" name="sub_category" id="sub_category">
 											 <option ng-repeat="subcategory in subcategories | filter : cate"   value="{{ subcategory.sub_id }}"> {{ subcategory.title }}
                                              
 											 </option>
@@ -161,7 +162,7 @@
                         <!--========================End of Wizard Footer ============================-->
 
                     </form>
-                     <div style="margin-left:10%"><a href="Home"><button style="width:40%" class="btn btn-primary">Back To Home</button></a> &nbsp;&nbsp; <a href="index.php"><button style="width:20%" class="btn btn-primary">Login</button></a></div>
+                     <div style="margin-left:10%"><a href="Home"><button style="width:40%" class="btn btn-primary">Back To Home</button></a> &nbsp;&nbsp; <a href="Dashboard"><button style="width:20%" class="btn btn-primary">Profile</button></a></div>
                 </div>
             </div> <!-- wizard container -->
         </div>

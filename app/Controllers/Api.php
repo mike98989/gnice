@@ -74,6 +74,19 @@ class Api extends Controller
         }
     }
 
+       public function add_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->addProduct();
+              header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
+
     public function fetch_all_categories_and_sub_categories(){
         $header = apache_request_headers(); 
         if(isset($header['gnice-authenticate'])){
@@ -114,6 +127,7 @@ class Api extends Controller
 
        public function add_product()
     {
+    
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Product')->addProduct();
@@ -123,6 +137,7 @@ class Api extends Controller
             echo 'invalid response';
             exit;
         }
+
     }
 
       public function fetch_all_product(){
