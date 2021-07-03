@@ -11,11 +11,11 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $signup = $this->model('Authenticate')->signup();
-             header('Content-Type: application/json'); 
+            header('Content-Type: application/json');
             print_r(json_encode($signup));
         } else {
-            echo "invalid request";
-            exit;
+            echo 'invalid request';
+            exit();
         }
     }
 
@@ -23,56 +23,49 @@ class Api extends Controller
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $login = $this->model('Authenticate')->login($_POST['username'], $_POST['password']);
-            header('Content-Type: application/json'); 
+            $login = $this->model('Authenticate')->login(
+                $_POST['username'],
+                $_POST['password']
+            );
+            header('Content-Type: application/json');
             print_r(json_encode($login));
         } else {
-            echo "invalid request";
-            exit;
+            echo 'invalid request';
+            exit();
         }
     }
-
 
     public function confirm_user_signup()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $login = $this->model('Authenticate')->confirm_user_signup($_POST['email'], $_POST['confirm_code']);
-             header('Content-Type: application/json'); 
-            print_r(json_encode($login));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
-
-      public function password_recovery()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Authenticate')->password_recovery();
-             header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
-
-
-  public function confirm_password_recovery_code()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $login = $this->model('Authenticate')->confirm_password_recovery_code();
+            $login = $this->model('Authenticate')->confirm_user_signup(
+                $_POST['email'],
+                $_POST['confirm_code']
+            );
             header('Content-Type: application/json');
             print_r(json_encode($login));
         } else {
-            echo "invalid request";
-            exit;
-
+            echo 'invalid request';
+            exit();
         }
     }
+
+    public function confirm_password_recovery_code()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $login = $this->model(
+                'Authenticate'
+            )->confirm_password_recovery_code();
+            header('Content-Type: application/json');
+            print_r(json_encode($login));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
 
        public function add_category()
     {
@@ -94,23 +87,23 @@ class Api extends Controller
              header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
-            echo "invalid request";
-            exit;
+            echo 'invalid request';
+            exit();
         }
     }
 
-      public function fetch_all_category(){
-           $header = apache_request_headers(); 
-        if(isset($header['gnice-authenticate'])){
+    public function fetch_all_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Category')->getAllCategory2();
-             header('Content-Type: application/json');
+            header('Content-Type: application/json');
             print_r(json_encode($result));
-             }else{
-            echo "invalid request";
-            exit;   
+        } else {
+            echo 'invalid request';
+            exit();
         }
     }
-
 
     public function fetch_all_sub_category()
     {
@@ -120,153 +113,102 @@ class Api extends Controller
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
-            echo "invalid request";
-            exit;
+            echo 'invalid request';
+            exit();
         }
     }
 
-       public function add_product()
+    public function add_product()
     {
     
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Product')->addProduct();
-              header('Content-Type: application/json');
+            header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
             echo 'invalid response';
-            exit;
+            exit();
         }
 
     }
 
-      public function fetch_all_product(){
-         $header = apache_request_headers(); 
-         if(isset($header['gnice-authenticate'])){
-             $result = $this->model('Product')->getAllProducts();
+    public function fetch_all_product()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getAllProducts();
             header('Content-Type: application/json');
             print_r(json_encode($result));
-         }else {
-             echo "invalid request";
-            exit;
-         }
+        } else {
+            echo 'invalid request';
+            exit();
+        }
     }
-       public function fetch_single_product(){
-        
-         $header = apache_request_headers(); 
-         if(isset($header['gnice-authenticate'])){
-             $result = $this->model('Product')->getSingleProduct($_GET['param']);
-              header('Content-Type: application/json');
-             print_r(json_encode($result));
-         }else {
-             echo "invalid request";
-            exit;
-         } 
-    }
-
-    public function fetch_related_products()
+    public function fetch_single_product()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllRelatedProducts();
-             header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
-
-        public function fetch_all_product_sub_category()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllProductOfaSubCategory($_GET['id']);
-             header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-
-    }
-      public function fetch_all_product_category()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllProductOfaCategory($_GET['id']);
-             header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
-        public function fetch_all_product_brand()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllBrand($_GET['id']);
-             header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
-
-        public function fetch_all_product_color()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllColor($_GET['id']);
-             header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
-
-         public function fetch_selected_sub_category(){  
-        $header = apache_request_headers(); 
-        if(isset($header['gnice-authenticate'])){
-            $result = $this->model('Category')->getSelectedCategory($_GET['id']);
+            $result = $this->model('Product')->getSingleProduct($_GET['param']);
             header('Content-Type: application/json');
             print_r(json_encode($result));
-        }else{
-            echo "invalid request";
-            exit;   
+        } else {
+            echo 'invalid request';
+            exit();
         }
     }
-          public function fetch_single_sub_category(){    
-        $header = apache_request_headers(); 
-        if(isset($header['gnice-authenticate'])){
+    // public function fetch_single_product()
+    // {
+    //     $header = apache_request_headers();
+    //     if (isset($header['gnice-authenticate'])) {
+    //         $result = $this->model('Product')->getSingleProduct($_GET['id']);
+    //         print_r(json_encode($result));
+    //     } else {
+    //         echo 'invalid request';
+    //         exit();
+    //     }
+    // }
+
+    public function fetch_selected_sub_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Category')->getSelectedCategory(
+                $_GET['id']
+            );
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+    public function fetch_single_sub_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Category')->getSingleCategory($_GET['id']);
             header('Content-Type: application/json');
             print_r(json_encode($result));
-        }else{
-            echo "invalid request";
-            exit;   
+        } else {
+            echo 'invalid request';
+            exit();
         }
     }
-              public function filter_price(){    
-       $header = apache_request_headers();
+    public function filter_price()
+    {
+        $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Product')->getAllPriceOfaSubCategory();
-            
+
             print_r(json_encode($result));
         } else {
-            echo "invalid request";
-            exit;
+            echo 'invalid request';
+            exit();
         }
     }
-    
 
-
-    
-
-/*
+    /*
   
 
   
@@ -369,9 +311,6 @@ class Api extends Controller
             echo "invalid request";
             exit;
         }
-            
-            
-
     }
 
 
@@ -424,7 +363,6 @@ class Api extends Controller
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-
             $result = $this->model('Product')->mostViewedProduct();
             print_r(json_encode($result));
         } else {

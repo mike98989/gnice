@@ -4,34 +4,46 @@
  * add, delete, create, update categories and sub categories
  *
  */
+<<<<<<< HEAD
+#TODO:  // work on category
+class Category extends Model
+{
+=======
 TODO: // work on category
 
 
 class Category extends Model {
                                 
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
     public function getAllCategoriesAndSubCategories()
     {
-        $this->db->query("SELECT * FROM category WHERE status!='0' ORDER BY id ASC");
+        $this->db->query(
+            "SELECT * FROM category WHERE status!='0' ORDER BY id ASC"
+        );
         $category = $this->db->resultSet();
         $count = $this->db->rowCount();
         //print_r($this->db->rowCount());exit;
         $row['category'] = $category;
-        for($a=0;$a<$count;$a++){
-            $this->db->query("SELECT * FROM sub_category WHERE parent_id = :category_id AND status!='0'");
+        for ($a = 0; $a < $count; $a++) {
+            $this->db->query(
+                "SELECT * FROM sub_category WHERE parent_id = :category_id AND status!='0'"
+            );
             $this->db->bind(':category_id', $category[$a]->id);
-            $subcategory =  $this->db->resultSet();
+            $subcategory = $this->db->resultSet();
             $row['category'][$a]->subcategory = $this->db->resultSet();
         }
-       
-            $rows['data'] = $row;
-            $rows['status'] = '1';
-        
+        $rows['rowCount'] = $this->db->rowCount();
+        $rows['data'] = $row;
+        $rows['status'] = '1';
+
         return $rows;
     }
 
     public function addCategory($data)
     {
-        $this->db->query('INSERT INTO category (title, address) VALUES (:title,:address)');
+        $this->db->query(
+            'INSERT INTO category (title, address) VALUES (:title,:address)'
+        );
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':address', $data['address']);
         if ($this->db->execute()) {
@@ -44,7 +56,9 @@ class Category extends Model {
     }
     public function updateCategory($data)
     {
-        $this->db->query('UPDATE category SET title = :title,address = :address WHERE id = :id');
+        $this->db->query(
+            'UPDATE category SET title = :title,address = :address WHERE id = :id'
+        );
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':address', $data['address']);
         if ($this->db->execute()) {
@@ -64,12 +78,19 @@ class Category extends Model {
         }
     }
 
+<<<<<<< HEAD
+    public function getAllSubCategory()
+    {
+        $this->db
+            ->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
+=======
 
     public function getAllSubCategory()
     {
         /*
         $this->db->query('SELECT DISTINCT sub_category.title,
 
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
                             category.title as parentCategory
                           FROM sub_category
                            JOIN category
@@ -85,6 +106,7 @@ class Category extends Model {
                         ');
 
         if ($this->db->resultSet()) {
+            $rows['rowCount'] = $this->db->rowCount();
             $rows['data'] = $this->db->resultSet();
             $rows['status'] = '1';
         } else {
@@ -94,26 +116,37 @@ class Category extends Model {
 
         return $rows;
     }
-    
-     public function getSelectedCategory($id){
-        
+
+    public function getSelectedCategory($id)
+    {
         // the value is sanitize to an interger
+<<<<<<< HEAD
+        $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this
+            ->db->query('SELECT DISTINCT sub_category.title,sub_category.id,sub_category.parent_id,
+=======
          $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id,sub_category.parent_id,
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
                             category.title as parentCategory
-                          FROM sub_category 
-                            INNER JOIN category ON  sub_category.parent_id = category.id  
-                          WHERE parent_id = :product_code  
+                          FROM sub_category
+                            INNER JOIN category ON  sub_category.parent_id = category.id
+                          WHERE parent_id = :product_code
                         ');
+<<<<<<< HEAD
+        $this->db->bind(':product_code', $product_codes);
+        if ($this->db->resultSet()) {
+=======
         $this->db->bind(':product_code', $id);
          if($this->db->resultSet()){
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
             $rows['data'] = $this->db->resultSet();
-            $rows['status']='1';
-        }else{
+            $rows['status'] = '1';
+        } else {
             $rows['data'] = [];
-            $rows['status']='0';
+            $rows['status'] = '0';
         }
-        
+
         return $rows;
     }
          public function getSingleCategory($id){
@@ -138,12 +171,13 @@ class Category extends Model {
         return $rows;
     }
 
-
     public function addSubCategory($data)
     {
-        $this->db->query('INSERT INTO sub_category (title, parent-id, address) VALUES (:title, :parent-id, :address)');
+        $this->db->query(
+            'INSERT INTO sub_category (title, parent_id, address) VALUES (:title, :parent_id, :address)'
+        );
         $this->db->bind(':title', $data['title']);
-        $this->db->bind(':parent-id', $data['category']);
+        $this->db->bind(':parent_id', $data['category']);
         $this->db->bind(':address', $data['address']);
         if ($this->db->execute()) {
             return true;
@@ -154,7 +188,7 @@ class Category extends Model {
 
     public function deleteSubCategory($id)
     {
-        $this->db->query('DELETE * FROM sub-category WHERE id = :id ');
+        $this->db->query('DELETE * FROM sub-category WHERE sub_id = :id ');
         $this->db->bind(':id', $id);
         if ($this->db->execute()) {
             return true;
@@ -175,6 +209,7 @@ class Category extends Model {
                             ");
 
         if ($this->db->resultSet()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['data'] = $this->db->resultSet();
             $result['status'] = '1';
         } else {
@@ -189,10 +224,13 @@ class Category extends Model {
     {
         $_POST = filter_var(INPUT_POST, FILTER_SANITIZE_STRING);
         $category_name = $_POST['category_name'];
-        $this->db->query("INSERT INTO category (name, parent_id) VALUES (:category_name, 0)");
+        $this->db->query(
+            'INSERT INTO category (name, parent_id) VALUES (:category_name, 0)'
+        );
         $this->db->bind(':category_name', $category_name);
 
         if ($this->db->execute()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['message'] = 'category added';
             $result['status'] = '1';
         } else {
@@ -206,13 +244,19 @@ class Category extends Model {
     public function createSubCategory()
     {
         $_POST = filter_var(INPUT_POST, FILTER_SANITIZE_STRING);
-        $parent_id = filter_var($_POST['category_id'], FILTER_SANITIZE_NUMBER_INT);
+        $parent_id = filter_var(
+            $_POST['category_id'],
+            FILTER_SANITIZE_NUMBER_INT
+        );
         $subcategory_name = $_POST['subcategory_name'];
-        $this->db->query("INSERT INTO sub_category (name, parent_id) VALUES (:subcategory_name, :parent_id)");
+        $this->db->query(
+            'INSERT INTO sub_category (name, parent_id) VALUES (:subcategory_name, :parent_id)'
+        );
         $this->db->bind(':subcategory_name', $subcategory_name);
         $this->db->bind(':parent_id', $parent_id);
 
         if ($this->db->execute()) {
+            $result['rowCount'] = $this->db->rowCount();
             $result['message'] = ' subcategory added';
             $result['status'] = '1';
         } else {
@@ -221,6 +265,9 @@ class Category extends Model {
         }
         return $result;
     }
+<<<<<<< HEAD
+}
+=======
 
     public function getAllCategory2()
     {
@@ -287,3 +334,4 @@ class Category extends Model {
 }
    
 
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
