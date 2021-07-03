@@ -1,7 +1,7 @@
 <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 <aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar">
-    <div class="side-menu-wrapper text-uppercase mb-2 d-none d-lg-block">
+    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none">
         <h2 class="side-menu-title bg-gray ls-n-25">Browse Categories</h2>
 
         <nav class="side-nav">

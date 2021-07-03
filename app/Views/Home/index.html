@@ -1,6 +1,6 @@
 
 
-<main class="main" ng-controller="homeController">
+<main class="main" ng-controller="homeController" >
 			<div class="container mb-2">
 				<div class="row">
 					<div class="col-lg-9">
@@ -18,7 +18,7 @@
 									<h2 class="text-white mb-0">Summer Sale</h2>
 									<h3 class="text-white text-uppercase m-b-3">70% Off</h3>
 									<h5 class="text-white text-uppercase d-inline-block mb-0 ls-n-20 align-text-bottom">Starting At <b class="coupon-sale-text bg-secondary text-white d-inline-block">$<em class="align-text-top">199</em>99</b></h5>
-									<a href="category.html" class="btn btn-dark btn-md ls-10">Shop Now!</a>
+									<a href="Signup" class="btn btn-dark btn-md ls-10">Sell Now!</a>
 								</div><!-- End .banner-layer -->
 
 							</div><!-- End .home-slide -->
@@ -30,7 +30,7 @@
 									<input type="text" class="form-control"  placeholder="Search Products, Brands and Categories" ng-model="all">
 									<h2 class="m-b-3">Great Deals</h2>
 									<h5 class="d-inline-block mb-0 align-top mr-5">Starting At <b>$<em>299</em>99</b></h5>
-									<a href="category.html" class="btn btn-dark btn-md ls-10">Get Yours!</a>
+									<a href="Signup" class="btn btn-dark btn-md ls-10">Start Now!</a>
 								</div><!-- End .banner-layer -->
 							</div><!-- End .home-slide -->
 
@@ -41,7 +41,7 @@
 									<input type="text" class="form-control"  placeholder="Search Products, Brands and Categories" ng-model="all">
 									<h2 class="m-b-3">Great Deals</h2>
 									<h5 class="d-inline-block mb-0 align-top mr-5">Starting At <b>$<em>299</em>99</b></h5>
-									<a href="category.html" class="btn btn-dark btn-md ls-10">Get Yours!</a>
+									<a href="Login" class="btn btn-dark btn-md ls-10">Explore!</a>
 								</div><!-- End .banner-layer -->
 							</div><!-- End .home-slide -->
 						</div>
@@ -57,21 +57,20 @@
 								<div class="product-default inner-quickview inner-icon">
 									<figure>
 										<a href="#" class="pbtn" data-id1="{{product.product_code}}" data-id2="{{product.brand}}" data-id3="{{product.sub_category}}">
-											<img src="assets/images/uploads/products/{{ product.image }}">
+											<img  style="width: 200px!important; height: 150px!important;" src="assets/images/uploads/products/{{ product.image }}">
 										</a>
 										<div class="label-group">
 											<div class="product-label label-hot">10X VIP TOP+</div>
-										
 										</div>
-										<a href="#" data-id1="{{product.product_code}}" data-id2="{{product.brand}}" data-id3="{{product.sub_category}}" class="btn-quickview pbtn" title="Quick View">Quick View</a> 
+										<div class="btn-icon-group">
+											<button class="btn-icon btn-add-cart" title="Like" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
+										</div>
 									</figure>
 									<div class="product-details">
+
 										<div class="category-wrap">
-											<div class="category-list">
-												<a href="category.html" class="product-category">{{product.productSubCategory}}</a>
-											</div>
-											<button  data-p="{{product.seller_phone}}"  class="btn btn-primary btn-sm" ><i class="icon-phone-2"></i>Show Number</button> 
-											 
+											<a href="#" title="like" class="btn-icon-wish"><i class="icon-heart"></i></a>
+											
 											
 											
 										</div>

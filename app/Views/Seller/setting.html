@@ -1,21 +1,25 @@
-<div class="about-section"  ng-controller="homeController">
+
+
+<main class="main">
+			<nav aria-label="breadcrumb" class="breadcrumb-nav">
 				<div class="container">
-					<h1 class="subtitle"style="font-size:25px; font-weight: bold;">Gnice Market Place is the best place <br>to sell anything to real people.</h1>
-					<p style="font-size: 16px;">
-					It is the biggest free online classified with an advanced security system. We provide a simple hassle-free solution to sell and buy almost anything.
-					</p>
-					
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="Home"><i class="icon-home"></i></a></li>
+						<li class="breadcrumb-item active" aria-current="page">Settings</li>
+					</ol>
 				</div><!-- End .container -->
-			</div><!-- End .about-section -->
+			</nav>
+
+	
 
 
-<div class="container">
-  <h1 class="subtitle"style="font-size:25px; font-weight: bold;"> Table of Contents</h1>
+<div class="container"  ng-controller="homeController">
+  <h1 class="subtitle"style="font-size:25px; font-weight: bold;"> Settings</h1>
   <div id="accordion">
     <div class="card">
       <div class="card-header">
         <a class="card-link" data-toggle="collapse" href="#collapseOne">
-          How to sell on Gnice Market Place?
+          Personal Details
         </a>
       </div>
       <div id="collapseOne" class="collapse show" data-parent="#accordion">
@@ -39,7 +43,7 @@
     <div class="card">
       <div class="card-header">
         <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-        How to buy on Gnice Market Place?
+        Business Information
       </a>
       </div>
       <div id="collapseTwo" class="collapse" data-parent="#accordion">
@@ -63,7 +67,7 @@
     <div class="card">
       <div class="card-header">
         <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-          Safety
+          Changes Phone Number
         </a>
       </div>
       <div id="collapseThree" class="collapse" data-parent="#accordion">
@@ -92,7 +96,30 @@
 	    <div class="card">
       <div class="card-header">
         <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-          Sell like a pro!
+         Change Password
+        </a>
+      </div>
+      <div id="collapseThree" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <h5> 1. Pay attention to the details.</h5>
+         <p style="font-size: 15px;"> Make good photos of your goods, write clear and detailed description</p>
+		 
+		 <h5> 2. Answer quickly.</h5>
+         <p style="font-size: 15px;"> 
+			Don’t make your buyer wait for your message for days. Be online or get SMS notifications on your messages.
+		 </p>
+		 
+		 <h5> 3. Use Premium Services to get 15x more customers!</h5>
+         <p style="font-size: 15px;"> 
+		Your adverts will appear at the top of the page and you will sell faster! How does it work?
+		 </p>
+        </div>
+      </div>
+    </div>
+        <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+         Delete My Account Forver
         </a>
       </div>
       <div id="collapseThree" class="collapse" data-parent="#accordion">
@@ -114,3 +141,6 @@
     </div>
   </div>
 </div>
+
+			<div class="mb-5"></div><!-- margin -->
+		</main><!-- End .main -->
