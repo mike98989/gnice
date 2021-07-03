@@ -9,6 +9,62 @@
     $scope.catfilter = 5;
     $scope.listfilter = 5;
      $('.result').hide(); 
+         //alert($scope.dirlocation);
+    $scope.getAllHero = function(){
+      $.ajax({
+        url: $scope.dirlocation+'Api/getAllHero',
+        type: 'GET',
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers:{'gnice-authenticate':'gnice-web'}, 
+        processData: false,
+        success: function (result) {
+        //alert(result);
+       var response=JSON.stringify(result);
+       var parsed = JSON.parse(response);
+       var msg=angular.fromJson(response);
+       $('.loader').hide(); 
+       if(msg.status=='1'){  
+       $scope.heros = msg.data;
+       $scope.$apply();
+       $scope.rowCount = msg.rowCount;
+       alert( $scope.rowCount);
+       //alert(JSON.stringify($scope.categories));
+       }
+       
+        }
+      });
+    }
+
+     $scope.getAllBanner = function(){
+      $.ajax({
+        url: $scope.dirlocation+'Api/getAllBanner',
+        type: 'GET',
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers:{'gnice-authenticate':'gnice-web'}, 
+        processData: false,
+        success: function (result) {
+       //alert(result);
+       var response=JSON.stringify(result);
+       var parsed = JSON.parse(response);
+       var msg=angular.fromJson(response);
+       $('.loader').hide(); 
+       if(msg.status=='1'){  
+       $scope.banners = msg.data;
+       $scope.$apply();
+       //alert(JSON.stringify($scope.categories));
+       }
+       
+        }
+      });
+    }
+
+    
     
 
    

@@ -45,10 +45,10 @@
 <body ng-app="gnice">
 
 <div class="page-wrapper">
-		<div class="top-notice text-white bg-dark">
-			<div class="container text-center">
+		<div class="top-notice text-white bg-dark"  ng-controller="homeController">
+			<div class="container text-center" ng-init="getAllBanner()">
 				<h5 class="d-inline-block mb-0">
-				SELL FASTER, BUY SMARTER</h5>
+				{{ banners.title }}</h5>
 				
 			</div><!-- End .container -->
 		</div><!-- End .top-notice -->

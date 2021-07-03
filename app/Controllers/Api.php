@@ -6,6 +6,61 @@ class Api extends Controller
     public function index()
     {
     }
+        public function getAllHero()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Hero')->getAllHero();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+    
+       public function AddHero()
+    {
+    
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Hero')->AddHero();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit();
+        }
+
+    }
+
+          public function getAllBanner()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Banner')->getAllBanner();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+        public function AddBanner()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $login = $this->model('Banner')->AddBanner();
+            header('Content-Type: application/json');
+            print_r(json_encode($login));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+    
+
     public function user_signup()
     {
         $header = apache_request_headers();

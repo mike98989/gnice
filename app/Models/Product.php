@@ -2,10 +2,7 @@
 class Product extends Model
 {
 
-<<<<<<< HEAD
-class Product extends Model
-{
-=======
+
     public function addProduct()
     {
 
@@ -92,8 +89,6 @@ class Product extends Model
     }
 
 
-
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
     public function getAllProducts()
     {
         $header = apache_request_headers();
@@ -121,7 +116,7 @@ class Product extends Model
 
 public function getSingleProduct($id)
     {
-<<<<<<< HEAD
+
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // the value is sanitize to an interger
@@ -129,28 +124,21 @@ public function getSingleProduct($id)
 
             //  print_r($product_code);
             //  exit('got here');
-            $this->db->query(" SELECT *,
-                            category.name as productCategory,
-=======
-
-        // the value is sanitize to an interger
-        $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-
-        //  print_r($product_code);
-        //  exit('got here');
+          
 
         $this->db->query(" SELECT *,
                             category.title as productCategory,
 
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
+
                             sub_category.title as productSubCategory
                             FROM products
                             INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                             INNER JOIN category ON category.id = products.category
                             WHERE product_code = :product_code
                         ");
-<<<<<<< HEAD
             $this->db->bind(':product_code', $product_code);
+
+
 
             if ($this->db->singleResult()) {
                 $result['rowCount'] = $this->db->rowCount();
@@ -163,7 +151,7 @@ public function getSingleProduct($id)
             return $result;
         }
     }
-
+/*
     public function addProduct()
     {
         $header = apache_request_headers();
@@ -218,19 +206,8 @@ public function getSingleProduct($id)
             return $result;
         }
     }
-=======
-        $this->db->bind(':product_code', $product_code);
 
-        if ($this->db->singleResult()) {
-            $result['data'] = $this->db->singleResult();
-            $result['status'] = '1';
-        } else {
-            $result['data'] = [];
-            $result['status'] = '0';
-        }
-        return $result;
-
-     }
+     */
 
          public function getAllRelatedProducts()
     {
@@ -389,12 +366,11 @@ public function getSingleProduct($id)
 
 
 
-    }
+    
+
+
 
 /*
-
-class Product extends Model
-{
 
     public function getAllProducts()
     {
@@ -415,6 +391,8 @@ class Product extends Model
         }
         return $result;
     }
+
+    */
 
     
 
@@ -507,7 +485,7 @@ class Product extends Model
 
  
 
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
+
     public function mostViewedProduct()
     {
         $header = apache_request_headers();
@@ -560,8 +538,9 @@ class Product extends Model
         }
     }
 
-<<<<<<< HEAD
+
     /////////////GET ALL RELATED PRODUCTS
+    /*
     public function getAllRelatedProducts()
     {
         $header = apache_request_headers();
@@ -593,11 +572,12 @@ class Product extends Model
             return $result;
         }
     }
-=======
+
+    */
+
 
     /////////////GET ALL RELATED PRODUCTS 
 
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
 
     public function wishLists()
     {
@@ -651,7 +631,7 @@ class Product extends Model
         }
     }
 
-<<<<<<< HEAD
+/*
     public function getAllProductOfaCategory($category_id)
     {
         $header = apache_request_headers();
@@ -677,6 +657,8 @@ class Product extends Model
             return $result;
         }
     }
+    */
+    /*
     public function getAllProductOfaSubCategory($sub_category_id)
     {
         /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY
@@ -713,7 +695,8 @@ class Product extends Model
             return $result;
         }
     }
-=======
+    */
+
     //     $productCart = array(
     //         1234, 123, 12
     //     );
@@ -739,9 +722,7 @@ class Product extends Model
     // }
    
    
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
 
-    # TODO: search a product using search term
     public function searchForProduct()
     {
         $header = apache_request_headers();
@@ -769,9 +750,9 @@ class Product extends Model
             return $result;
         }
     }
-<<<<<<< HEAD
+
+
+
 }
-=======
-}
-*/
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
+
+
