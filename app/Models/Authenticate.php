@@ -150,18 +150,18 @@ class Authenticate extends Model
                                 $keys_imploded = implode(",", $key_fields);
                             }
                         }
-                   
-                   
-                    $this->db->query('INSERT INTO users ('.$fields_imploded.') VALUES ('.$keys_imploded.')');
-                    foreach(array_keys($data) as $key) { 
-                    if(!in_array($key, $exclude) ) {    
-                    $this->db->bind(":".$key, $data[$key]);
-                    }   
-                    }
-                    if($this->db->execute()){   
-                   
 
-                       /*
+
+                        $this->db->query('INSERT INTO users (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
+                        foreach (array_keys($data) as $key) {
+                            if (!in_array($key, $exclude)) {
+                                $this->db->bind(":" . $key, $data[$key]);
+                            }
+                        }
+                        if ($this->db->execute()) {
+
+
+                            /*
 
                         $this->db->query('INSERT INTO users (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
                         foreach (array_keys($data) as $key) {
@@ -176,11 +176,11 @@ class Authenticate extends Model
                             return false;
                         } 
                         */
-                         $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
-                        $msg['status']='1';  
-                      }  else {
-                        return false;
-                      }
+                            $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
+                            $msg['status'] = '1';
+                        } else {
+                            return false;
+                        }
                     } else {
                         $msg['msg'] =  "Passwords DO NOT MATCH!";
                         $msg['status'] = '0';
@@ -202,8 +202,8 @@ class Authenticate extends Model
 
     public function send_mail($receiver_email, $receiver_name, $subject, $html_message)
     {
-       require_once(APP_ROOT . '/Libraries/sendinblue-php-library/vendor/autoload.php'); 
-      
+        require_once(APP_ROOT . '/Libraries/sendinblue-php-library/vendor/autoload.php');
+
 
 
         $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
@@ -244,7 +244,7 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $email = strtolower($_POST['email']);
             $email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
-            
+
             if ($email_valid == true) {
                 $check_email = $this->findUserByEmail($email);
                 if ($check_email != false) {
@@ -350,42 +350,41 @@ class Authenticate extends Model
         return $msg;
     }
 
-    public function confirm_user_signup($email, $confirm_code){
-        $header = apache_request_headers(); 
-        if(isset($header['gnice-authenticate'])){
-        $email = filter_var(strtolower($email), FILTER_VALIDATE_EMAIL);
-        if($email==true){
-        $confirm_code = filter_var($confirm_code);
-        $check_email = $this->findUserByEmail($email);
-            if($check_email!=false){
-            /////////MATCH THE CONFIRMATION CODE
-            if($check_email->activated=='0'){
-                if($check_email->user_confirm_id==$confirm_code){
-                    $this->db->query('UPDATE users SET activated = :activated WHERE email = :email');
-                    $this->db->bind(':email', $email);
-                    $this->db->bind(':activated', '1');
-                    $this->db->execute();
-                    $msg['msg'] = "Successfully confirmed your account.";
-                    $msg['status']='1'; 
-                }else{
-                    $msg['msg'] = "Invalid CONFIRMATION CODE";
-                    $msg['status']='0';   
-                }   
-            }else{
-                $msg['msg'] =  "Account already activated. Please login.";
-                $msg['status']='0';   
-            }   
-               
-            }else{
-                $msg['msg'] =  "Email address not found!";
-                $msg['status']='0';     
+    public function confirm_user_signup($email, $confirm_code)
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $email = filter_var(strtolower($email), FILTER_VALIDATE_EMAIL);
+            if ($email == true) {
+                $confirm_code = filter_var($confirm_code);
+                $check_email = $this->findUserByEmail($email);
+                if ($check_email != false) {
+                    /////////MATCH THE CONFIRMATION CODE
+                    if ($check_email->activated == '0') {
+                        if ($check_email->user_confirm_id == $confirm_code) {
+                            $this->db->query('UPDATE users SET activated = :activated WHERE email = :email');
+                            $this->db->bind(':email', $email);
+                            $this->db->bind(':activated', '1');
+                            $this->db->execute();
+                            $msg['msg'] = "Successfully confirmed your account.";
+                            $msg['status'] = '1';
+                        } else {
+                            $msg['msg'] = "Invalid CONFIRMATION CODE";
+                            $msg['status'] = '0';
+                        }
+                    } else {
+                        $msg['msg'] =  "Account already activated. Please login.";
+                        $msg['status'] = '0';
+                    }
+                } else {
+                    $msg['msg'] =  "Email address not found!";
+                    $msg['status'] = '0';
+                }
+            } else {
+                $msg['msg'] =  "Invalid email address!";
+                $msg['status'] = '0';
             }
-        }else{
-            $msg['msg'] =  "Invalid email address!";
-            $msg['status']='0'; 
-        }
-     }
-      else {
+        } else {
             $msg['msg'] =  "invalid request";
             $msg['status'] = '0';
         }
@@ -415,7 +414,8 @@ class Authenticate extends Model
         }
     }
 
-    public function updateToken($email){
+    public function updateToken($email)
+    {
         $token = generateToken(50);
         $this->db->query('UPDATE users SET token = :token WHERE email = :email ');
         $this->db->bind(':email', $email);
@@ -424,9 +424,5 @@ class Authenticate extends Model
 
         //set session token
         $_SESSION['token'] = $token;
-
     }
-
-
-
 }
