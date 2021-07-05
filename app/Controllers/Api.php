@@ -300,11 +300,40 @@ class Api extends Controller
         }
     }
 
+     public function fetch_required_table(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
+            $result = $this->model('Category')->getAllRequiredTables();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    
 
-
-
-  
-
+    public function fetch_all_product_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getAllProductOfaCategory($_GET['id']);
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function fetch_all_product_sub_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getAllProductOfaSubCategory($_GET['id']);
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function fetch_product_by_term()
     {
         $header = apache_request_headers();

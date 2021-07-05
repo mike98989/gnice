@@ -18,16 +18,36 @@ class Category extends Model
         $category = $this->db->resultSet();
         $count = $this->db->rowCount();
         //print_r($this->db->rowCount());exit;
-        $row['category'] = $category;
+        //$row['category'] = $category;
         for ($a = 0; $a < $count; $a++) {
-            $this->db->query(
-                "SELECT * FROM sub_category WHERE parent_id = :category_id AND status!='0'"
-            );
+            $this->db->query("SELECT * FROM sub_category WHERE parent_id = :category_id AND status!='0'");
             $this->db->bind(':category_id', $category[$a]->id);
-            $subcategory = $this->db->resultSet();
-            $row['category'][$a]->subcategory = $this->db->resultSet();
+            $subcategory =  $this->db->resultSet();
+            $category[$a]->subcategory = $this->db->resultSet();
         }
-        $rows['rowCount'] = $this->db->rowCount();
+
+        $rows['data'] = $category;
+        $rows['status'] = '1';
+
+        return $rows;
+    }
+
+
+    public function getAllRequiredTables()
+    {
+        $query = $this->db;
+        $car_makes = $query->query("SELECT * FROM car_makes WHERE status!='0' ORDER BY make DESC");
+        $row['car_makes'] = $query->resultSet();
+        $count = $this->db->rowCount();
+        for ($a = 0; $a < $count; $a++) {
+            $this->db->query("SELECT * FROM car_models WHERE make_id = :make_id AND status!='0'");
+            $this->db->bind(':make_id', $row['car_makes'][$a]->make_id);
+            $car_model =  $this->db->resultSet();
+            $row['car_makes'][$a]->car_models = $this->db->resultSet();
+        }
+        $property_type = $query->query("SELECT * FROM property_types WHERE status!='0' ORDER BY type DESC");
+        $row['property_types'] = $query->resultSet();
+
         $rows['data'] = $row;
         $rows['status'] = '1';
 
