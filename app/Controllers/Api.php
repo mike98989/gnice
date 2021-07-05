@@ -171,6 +171,18 @@ class Api extends Controller
         }
     }
 
+     public function fetch_required_table(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
+            $result = $this->model('Category')->getAllRequiredTables();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    
+
     public function fetch_all_product_category()
     {
         $header = apache_request_headers();
