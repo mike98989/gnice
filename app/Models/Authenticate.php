@@ -71,19 +71,25 @@ class Authenticate extends Model
             return false;
         }
     }
+    
 
 
     public function updateUserAccountType()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
-            if ($verifyToken) {
-                $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id ');
-                $this->db->bind(':account_type', filter_var($_POST['selectedOption']));
-                $this->db->bind(':id', $verifyToken->id);
+            $email = filter_var(strtolower($_POST['email_to_be_activated']), FILTER_VALIDATE_EMAIL);
+            $selectedOption = filter_var($_POST['selectedOption']);
+            $check_email = $this->findUserByEmail($email);
+            if ($check_email!==false) {
+                $seller_id = 'AG-'.rand(1000000,10000000);
+                $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
+                $this->db->bind(':account_type',$selectedOption);
+                $this->db->bind(':seller_id', $seller_id);
+                $this->db->bind(':id', $check_email->id);
                 if ($this->db->execute()) {
+                    $check_email_again = $this->findUserByEmail($email);
+                    $msg['data'] = $check_email_again;
                     $msg['msg'] = "Successfully updated user account type!";
                     $msg['status'] = '1';
                 } else {
@@ -100,6 +106,110 @@ class Authenticate extends Model
 
         return $msg;
     }
+
+
+
+    /////////GENERATE PAYSTACK CHECKOUT
+    public function generate_paystack_checkout()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token);
+            if ($verifyToken) {
+                $email = filter_var(strtolower($_POST['email']), FILTER_VALIDATE_EMAIL);
+                $amount = filter_var($_POST['amount']);
+                $url = "https://api.paystack.co/transaction/initialize";
+                $fields = [
+                    'email' => $email,
+                    'amount' => $amount,
+                ];
+                $fields_string = http_build_query($fields);
+                //open connection
+                $ch = curl_init();
+                
+                //set the url, number of POST vars, POST data
+                curl_setopt($ch,CURLOPT_URL, $url);
+                curl_setopt($ch,CURLOPT_POST, true);
+                curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    "Authorization: Bearer ".PAYSTACK_SECRETE_KEY,
+                    "Cache-Control: no-cache",
+                ));
+                
+                //So that curl_exec returns the contents of the cURL; rather than echoing it
+                curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+                
+                //execute post
+                $result = curl_exec($ch);
+                //echo $result;
+
+                $msg['data']=json_decode($result);
+                $msg['status']='1';
+
+            } else {
+                $msg['msg'] =  "invalid token";
+                $msg['status'] = '0';
+            }
+        } else {
+            $msg['msg'] =  "invalid request";
+            $msg['status'] = '0';
+        }
+
+        return $msg;
+    }
+
+    public function verify_transaction(){
+        
+        $curl = curl_init();
+        $reference = $_GET['reference'];
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.paystack.co/transaction/verify/".$reference,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer ".PAYSTACK_SECRETE_KEY,
+            "Cache-Control: no-cache",
+            ),
+        ));
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        
+        if ($err) {
+            //echo "cURL Error #:" . $err;
+        } else {
+            $result = json_decode($response,true);
+            $email = $result['data']['customer']['email'];
+           
+            if($result['data']['status']=='success'){
+            $check_email = $this->findUserByEmail($email);
+            if($check_email!=false){
+                $this->db->query("INSERT INTO transactions (trans_reference,amount,currency,user_email,trans_date,trans_status) VALUES (:reference,:amount,:currency,:email,:trans_date,:status)");
+                $this->db->bind(':reference', $result['data']['reference']);
+                $this->db->bind(':amount', $result['data']['amount']);
+                $this->db->bind(':currency', $result['data']['currency']);
+                $this->db->bind(':email', $email);
+                $this->db->bind(':trans_date', $result['data']['transaction_date']);
+                $this->db->bind(':status', $result['data']['reference']);
+                if ($this->db->execute()) {
+                    //$update = $this->updateUserAccountType($email,'2');
+                } 
+                header('location:http://localhost/gnice/transactionstatus?ref='.$result['data']['reference']);
+
+            }
+            }
+            //header('Location:http://localhost/gnice/transactionstatus');
+        }
+
+    }
+
+
     // register user
     public function signup()
     {
@@ -142,6 +252,7 @@ class Authenticate extends Model
                      </div>
                      </div>";
                         $send_mail = $this->send_mail($email, $data['fullname'], $subject, $html_message);
+
                         foreach (array_keys($data) as $key) {
                             if (!in_array($key, $exclude)) {
                                 $fields[] = $key;
@@ -150,8 +261,7 @@ class Authenticate extends Model
                                 $keys_imploded = implode(",", $key_fields);
                             }
                         }
-                    }
-                   
+                    
                     $this->db->query('INSERT INTO users ('.$fields_imploded.') VALUES ('.$keys_imploded.')');
                     foreach(array_keys($data) as $key) { 
                     if(!in_array($key, $exclude) ) {    
@@ -161,22 +271,14 @@ class Authenticate extends Model
                     if($this->db->execute()){   
                     $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
                     $msg['status']='1';  
-
-                        $this->db->query('INSERT INTO users (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
-                        foreach (array_keys($data) as $key) {
-                            if (!in_array($key, $exclude)) {
-                                $this->db->bind(":" . $key, $data[$key]);
-                            }
-                        }
-                        if ($this->db->execute()) {
-                            $msg['msg'] =  "New user account created";
-                            $msg['status'] = '1';
-                        } else {
-                            return false;
-                        }
                     } else {
-                        $msg['msg'] =  "Passwords DO NOT MATCH!";
-                        $msg['status'] = '0';
+                    return false;
+                    }
+
+                    
+                    }else {
+                            $msg['msg'] =  "Passwords DO NOT MATCH!";
+                            $msg['status'] = '0';
                     }
                 } else {
                     $msg['msg'] =  "Email address already exist";
@@ -197,7 +299,7 @@ class Authenticate extends Model
     {
         require_once(APP_ROOT . '/Libraries/sendinblue-php-library/vendor/autoload.php');
 
-        $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
+        $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', SENDINBLUE_API_KEY);
 
         $apiInstance = new SendinBlue\Client\Api\TransactionalEmailsApi(
             new GuzzleHttp\Client(),
@@ -297,7 +399,7 @@ class Authenticate extends Model
         $this->db->bind(':email', $email);
         $row = $this->db->singleResult();
         if ($this->db->rowCount() > 0) {
-            return $row;;
+            return $row;
         } else {
             return false;
         }

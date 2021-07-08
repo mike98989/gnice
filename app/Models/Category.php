@@ -7,6 +7,129 @@
 TODO: // work on category
 class Category extends Model
 {
+    public function save_json(){
+
+        $CSVfp = fopen(__DIR__."/apple_phones.csv", "r");
+        if($CSVfp !== FALSE) {    
+        while(! feof($CSVfp)) {
+        $data = fgetcsv($CSVfp, 1000, ",");
+        if(isset($data[0])){
+        $model=$data[0];    
+        $this->db->query('SELECT model FROM phone_models WHERE model = :model');
+        $this->db->bind(':model', $model);
+        if (!$this->db->singleResult()) {
+            $this->db->query("INSERT INTO phone_models (make_id,model,status) VALUES ('6',:model,'1')");
+            $this->db->bind(':model', $model);
+            $this->db->execute();     
+        print_r($data[0]);
+        }
+        }
+        }
+        }
+        fclose($CSVfp);
+
+        //$json = file_get_contents(__DIR__.'/car_model_list.json');
+
+        //Decode JSON
+        // $json_data = json_decode($json,true);
+    
+        // foreach ($json_data as $key => $value) {
+        //     for($a=1;$a<count($json_data[$key]);$a++){
+        //     $type = $json_data[$key][$a]['Category'];    
+        //     $this->db->query('SELECT type FROM car_types WHERE type = :type');
+        //     $this->db->bind(':type', $type);
+        //     if (!$this->db->singleResult()) {
+        //         $row = $this->db->singleResult();
+        //         $this->db->query("INSERT INTO car_types (type,status) VALUES (:type,'1')");
+        //         $this->db->bind(':type', $type);
+        //         $this->db->execute();    
+        //         echo $type.'<br/>';
+        //         // $this->db->query("INSERT INTO car_models (make,status) VALUES (:make,'1')");
+        //         // $this->db->bind(':make', $make);
+        //         // $this->db->execute();
+        //         // echo $json_data[$key][$a]['Make'].'<br/>';
+    
+        //     } else {
+               
+        //     }
+            
+        //         }
+            
+        //     }
+
+
+        // foreach ($json_data as $key => $value) {
+        // for($a=1;$a<count($json_data[$key]);$a++){
+        // $make = $json_data[$key][$a]['Make']; 
+        // $model = $json_data[$key][$a]['Model'];  
+        // $type = $json_data[$key][$a]['Category'];    
+        // $this->db->query('SELECT make,make_id FROM car_makes WHERE make = :make');
+        // $this->db->bind(':make', $make);
+        // if ($this->db->singleResult()==true) {
+        //     $row = $this->db->singleResult();
+        //     $this->db->query('SELECT model FROM car_models WHERE model = :model AND make_id= :make_id');
+        //     $this->db->bind(':model', $model);
+        //     $this->db->bind(':make_id', $row->make_id);
+        //     if (!$this->db->resultSet()) {
+        //     $this->db->query("INSERT INTO car_models (make_id,model,type,status) VALUES (:make_id,:model,:type,'1')");
+        //     $this->db->bind(':make_id', $row->make_id);
+        //     $this->db->bind(':model', $model);
+        //     $this->db->bind(':type', $type);
+        //     $this->db->execute();    
+        //     echo $model.'@'.$make.'<br/>';
+        //     }
+
+        //     // $this->db->query("INSERT INTO car_models (make,status) VALUES (:make,'1')");
+        //     // $this->db->bind(':make', $make);
+        //     // $this->db->execute();
+        //     // echo $json_data[$key][$a]['Make'].'<br/>';
+
+        // } else {
+           
+        // }
+        
+        //     }
+        
+        // }
+
+
+    // $model = [
+    //     "Spark Plus",
+    //     "Camon CX Air",
+    //     "Spark Pro",
+    //     "Camon CX Manchester City LE",
+    //     "Phantom 6",
+    //     "Camon CX",
+    //     "Pop 1 Lite",
+    //     "Pouvoir 2",
+    //     "Pouvoir 2 Pro",
+    //     "Pop 1 Pro",
+    //     "Phantom 6 Plus",
+    //     "Pop 1s",
+    //     "Pouvoir 1",
+    //     "Camon X",
+    //     "Pop 1",
+    //     "Spark 2",
+    //     "Spark CM",
+    //     "Camon X Pro",
+    //     "Spark",
+    //     "Phantom 8",
+    //     "Camon CM",
+    //     "Camon 11",
+    //     "F2 LTE",
+    //     "F2",
+    //     "Camon 11 Pro"
+    // ];
+
+    //   for($a=0;$a<count($model);$a++){
+    //     $this->db->query("INSERT INTO phone_models (make_id,model,status) VALUES ('95',:model,'1')");
+    //     $this->db->bind(':model', $model[$a]);
+    //     if ($this->db->execute()) {
+    //     echo $model[$a].'<br/>';    
+    //     }
+    //   }
+    }
+    
     public function getAllCategoriesAndSubCategories()
     {
         $this->db->query("SELECT * FROM category WHERE status!='0' ORDER BY id ASC");
@@ -27,7 +150,7 @@ class Category extends Model
         return $rows;
     }
 
-
+    
      public function getAllRequiredTables()
     {
         $query =$this->db;
@@ -42,7 +165,26 @@ class Category extends Model
         }
         $property_type = $query->query("SELECT * FROM property_types WHERE status!='0' ORDER BY type DESC");
         $row['property_types'] = $query->resultSet();
-        
+        $phone_makes = $query->query("SELECT * FROM phone_makes WHERE status!='0' ORDER BY make DESC");
+        $row['phone_makes'] = $query->resultSet();
+        $count2 = $this->db->rowCount();
+        for($a=0;$a<$count2;$a++){
+            $this->db->query("SELECT * FROM phone_models WHERE make_id = :make_id AND status!='0'");
+            $this->db->bind(':make_id', $row['phone_makes'][$a]->phone_make_id);
+            $phone_model =  $this->db->resultSet();
+            $row['phone_makes'][$a]->phone_models = $this->db->resultSet();
+        }
+
+        $states = $query->query("SELECT * FROM states ORDER BY state DESC");
+        $row['states'] = $query->resultSet();
+        $count3 = $this->db->rowCount();
+        for($a=0;$a<$count3;$a++){
+            $this->db->query("SELECT * FROM lga WHERE State = :state");
+            $this->db->bind(':state', strtoupper($row['states'][$a]->state));
+            $lgas =  $this->db->resultSet();
+            $row['states'][$a]->lgas = $this->db->resultSet();
+        }
+
         $rows['data'] = $row;
         $rows['status'] = '1';
         
