@@ -1,7 +1,6 @@
 <?php
-class Product extends Model
-{
 
+<<<<<<< HEAD
 
     public function addProduct()
     {
@@ -89,6 +88,10 @@ class Product extends Model
     }
 
 
+=======
+class Product extends Model
+{
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
     public function getAllProducts()
     {
         $header = apache_request_headers();
@@ -114,9 +117,12 @@ class Product extends Model
         }
     }
 
-public function getSingleProduct($id)
+    public function getSingleProduct($id)
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // the value is sanitize to an interger
@@ -124,6 +130,7 @@ public function getSingleProduct($id)
 
             //  print_r($product_code);
             //  exit('got here');
+<<<<<<< HEAD
           
 
         $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as signup_date,
@@ -133,6 +140,14 @@ public function getSingleProduct($id)
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
                         LEFT JOIN users ON users.seller_id = products.seller_id
+=======
+            $this->db->query(" SELECT *,
+                            category.name as productCategory,
+                            sub_category.title as productSubCategory
+                            FROM products
+                            INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+                            INNER JOIN category ON category.id = products.category
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
                             WHERE product_code = :product_code
                         ");
             $this->db->bind(':product_code', $product_code);
@@ -205,6 +220,7 @@ public function getSingleProduct($id)
             return $result;
         }
     }
+<<<<<<< HEAD
 
      */
 
@@ -485,6 +501,8 @@ public function getSingleProduct($id)
  
 
 
+=======
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
     public function mostViewedProduct()
     {
         $header = apache_request_headers();
@@ -537,7 +555,10 @@ public function getSingleProduct($id)
         }
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
     /////////////GET ALL RELATED PRODUCTS
     /*
     public function getAllRelatedProducts()
@@ -571,12 +592,15 @@ public function getSingleProduct($id)
             return $result;
         }
     }
+<<<<<<< HEAD
 
     */
 
 
     /////////////GET ALL RELATED PRODUCTS 
 
+=======
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
 
     public function wishLists()
     {
@@ -630,7 +654,10 @@ public function getSingleProduct($id)
         }
     }
 
+<<<<<<< HEAD
 /*
+=======
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
     public function getAllProductOfaCategory($category_id)
     {
         $header = apache_request_headers();
@@ -694,6 +721,7 @@ public function getSingleProduct($id)
             return $result;
         }
     }
+<<<<<<< HEAD
     */
 
     //     $productCart = array(
@@ -721,6 +749,8 @@ public function getSingleProduct($id)
     // }
    
    
+=======
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189
 
     public function searchForProduct()
     {
@@ -749,9 +779,13 @@ public function getSingleProduct($id)
             return $result;
         }
     }
+<<<<<<< HEAD
 
 
 
 }
 
 
+=======
+}
+>>>>>>> e06b5a6c908bd66dbfa3825a7445b4615a35d189

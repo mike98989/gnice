@@ -5,6 +5,8 @@
         <h2 class="side-menu-title bg-gray ls-n-25">Browse Categories</h2>
 
         <nav class="side-nav">
+
+<!--
             <ul class="menu menu-vertical sf-arrows"  ng-init="fetch_all_categories_and_sub_categories()">
             <li ng-repeat="catSub in catSubs">
             <a href="#"  class="sf-with-ul"><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{catSub.image}}">{{catSub.title}} <span>({{ catSub.subcategory.length | number}} ad)</span></a>
@@ -18,17 +20,32 @@
                                     <li  ng-repeat="sub in catSub.subcategory ">
                                         <a href="#" class="cbtn" data-id4="{{sub.sub_id}}"  data-id5="{{sub.parent_id}}" ><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{sub.image}}">{{$index + 1}} {{ sub.title }} </a></li>
                                     </ul>
+                                -->
                                    
+            <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
+                <li ng-repeat="catSub in catSubs">
+                    <a href="#" class="sf-with-ul"><i class="sicon-badge"></i>{{catSub.title}}</a>
+                    <div class="megamenu megamenu-fixed-width megamenu-3cols">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="#" class="nolink">{{catSub.title}}</a>
+                                <ul class="submenu">
+                                    <li ng-repeat="sub in catSub.subcategory ">
+                                        <a href="#" class="cbtn" data-id4="{{sub.sub_id}}" data-id5="{{sub.parent_id}}">{{ sub.title }} </a>
+                                    </li>
+                                </ul>
+
+
                             </div>
-                          
+
                             <div class="col-lg-6 p-0">
                                 <img src="assets/images/menu-banner.jpg" alt="Menu banner">
                             </div>
                         </div>
                     </div><!-- End .megamenu -->
-            </li>
-            <!-- CATEGORY LOOP ENDS HERE -->
-            <!--
+                </li>
+                <!-- CATEGORY LOOP ENDS HERE -->
+                <!--
                 <li>
                     <a href="category.html" class="sf-with-ul"><i class="sicon-badge"></i>Vehicles</a>
                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
@@ -181,7 +198,7 @@
                 </li>
             -->
                 <li><a href="https://1.envato.market/DdLk5" target="_blank"><i class="sicon-star"></i>Buy Gnice!<span class="tip tip-hot">Hot</span></a></li>
-            
+
             </ul>
         </nav>
     </div><!-- End .side-menu-container -->
@@ -189,7 +206,7 @@
     <div class="widget widget-banners px-5 pb-3 text-center">
         <div class="owl-carousel owl-theme">
             <div class="banner d-flex flex-column align-items-center">
-            <h4 class="sale-text font1 text-uppercase m-b-3" style="font-size: 20px; padding-top:55px;">Got Something to</h4>
+                <h4 class="sale-text font1 text-uppercase m-b-3" style="font-size: 20px; padding-top:55px;">Got Something to</h4>
                 <h3 class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase"><em class="pt-3 ls-0">Sale</em></h3>
                 <p>Post an advert for free!</p>
             </div><!-- End .banner -->

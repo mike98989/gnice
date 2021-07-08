@@ -6,6 +6,7 @@ class Api extends Controller
     public function index()
     {
     }
+
         public function getAllHero()
     {
         $header = apache_request_headers();
@@ -61,6 +62,11 @@ class Api extends Controller
     }
     
 
+
+    public function save_json(){
+        $save = $this->model('Category')->save_json();    
+    }
+    
     public function user_signup()
     {
         $header = apache_request_headers();
@@ -358,6 +364,23 @@ class Api extends Controller
         }
     }
 
+    public function generate_paystack_checkout(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
+            $result = $this->model('Authenticate')->generate_paystack_checkout();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    
+    public function verify_transaction(){
+            $result = $this->model('Authenticate')->verify_transaction();
+            //print_r(json_encode($result));
+        
+    }
+
     public function password_recovery()
     {
         $header = apache_request_headers();
@@ -440,11 +463,40 @@ class Api extends Controller
         }
     }
 
-
-
-
-  
-
+     public function fetch_required_table(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
+            $result = $this->model('Category')->getAllRequiredTables();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    
+    
+    public function fetch_all_product_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getAllProductOfaCategory($_GET['id']);
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function fetch_all_product_sub_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getAllProductOfaSubCategory($_GET['id']);
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function fetch_product_by_term()
     {
         $header = apache_request_headers();
