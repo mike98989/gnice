@@ -107,7 +107,6 @@ class Product extends Model
             $result['status'] = '1';
             $result['errors'] = $uploader['image_error'];
         } else {
-
             $result['message'] = 'product failed';
             $result['status'] = '0';
             return false;
