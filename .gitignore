@@ -2,5 +2,6 @@
 Config.php
 test.json
 test.txt
-
+upload
+images
 sendinblue-php-library
