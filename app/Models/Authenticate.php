@@ -196,7 +196,7 @@ class Authenticate extends Model
                 $this->db->bind(':currency', $result['data']['currency']);
                 $this->db->bind(':email', $email);
                 $this->db->bind(':trans_date', $result['data']['transaction_date']);
-                $this->db->bind(':status', $result['data']['reference']);
+                $this->db->bind(':status', $result['data']['status']);
                 if ($this->db->execute()) {
                     //$update = $this->updateUserAccountType($email,'2');
                 } 
