@@ -3,14 +3,14 @@
 						<div class="sidebar-wrapper">
 							<div class="widget"  ng-init="fetch_single_sub_category()">
 								<h3 class="widget-title"  >
-									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">{{ singleSubCats.parentCategory }}</a>
+									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2"><img style="width: 40px!important; height: 40px!important;" src="assets/images/uploads/category/{{singleSubCats.image}}">{{ singleSubCats.parentCategory }}</a>
 								</h3>
 
 								<div class="collapse show" id="widget-body-2"  >
 									<div class="widget-body">
 										<ul class="cat-list" ng-init="fetch_selected_sub_category()">
 											<li ng-repeat="relSubCat in relSubCats">
-											 <a href="#" class="cbtn" data-id4="{{relSubCat.sub_id}}"  data-id5="{{relSubCat.parent_id}}" >{{relSubCat.title}}</a></li>
+											 <a href="#" class="cbtn" data-id4="{{relSubCat.sub_id}}"  data-id5="{{relSubCat.parent_id}}" ><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{relSubCat.image}}">{{relSubCat.title}}</a></li>
 											
 										</ul>
 									</div><!-- End .widget-body -->

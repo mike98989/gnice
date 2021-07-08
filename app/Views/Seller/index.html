@@ -60,16 +60,19 @@
                                   	 	 <div class="form-group"  ng-hide="cate">
                                             <label> Categories</label><br>
                                              <select required=""  class="form-control" ng-model="cate"  ng-init="fetch_all_categories_and_sub_categories()" name="category" id="category">
+                                              <option selected="" value="">Choose Categories</option>
 											 <option  ng-repeat="catSub in catSubs"  value="{{ catSub.id }}"> {{ catSub.title }}
                                              
 											 </option>
                 
                                             </select>
                                           </div>
+
                                   	
                                   	        <div class="form-group"   ng-show="cate">
                                             <label> Sub Category</label><br>
                                              <select required  class="form-control" ng-init="fetch_all_sub_category()"  ng-model="ct" name="sub_category" id="sub_category">
+                                               <option selected="" value="">Choose Sub Categories</option>
 											 <option ng-repeat="subcategory in subcategories | filter : cate"   value="{{ subcategory.sub_id }}"> {{ subcategory.title }}
                                              
 											 </option>
@@ -77,6 +80,416 @@
                                                 
                                             </select>
                                           </div>
+
+
+                                                  <div class="row"  ng-hide="1 != cate">
+                                                      <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Title*</label>
+                                            <input required name="year_of_manufacture" id="name" type="text"  class="form-control" placeholder="Title">
+                                          </div>
+                                    </div>
+                                                  <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Make*</label>
+                                            <input required name="make" id="make" type="text"  class="form-control" placeholder="Make">
+                                          </div>
+                                    </div>
+                                             <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Model*</label>
+                                            <input  name="model" id="model" type="text"  class="form-control" placeholder="Model">
+                                          </div>
+                                    </div>
+                                      <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Year of Manufacture</label>
+                                            <input  name="year_of_manufacture" id="name" type="text"  class="form-control" placeholder="Year of Manufacture">
+                                          </div>
+                                    </div>
+                                     <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Color</label>
+                                            <input  name="color" id="color" type="text"  class="form-control" placeholder="Color">
+                                          </div>
+                                    </div>
+                                        <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Year*</label>
+                                            <input required name="year" id="year" type="text"  class="form-control" placeholder="Year">
+                                          </div>
+                                    </div>
+                                  
+                                       <div class="col-sm-12">
+                                      <label>Condition</label><br>
+                                             <select required  class="form-control" name="condition" id="condition">
+                                               <option selected="" value="">Choose Condition</option>
+                                                <option  value="Brand New"> Brand New
+                                               </option>
+                                               <option  value="Foreign Used"> Foreign Used
+                                               </option>
+                                               <option  value="Nigeria Used"> Nigeria Used
+                                               </option>
+                                              
+                                                
+                                            </select>
+                                    </div>
+                                      <div class="col-sm-12">
+                                      <label>Condition</label><br>
+                                             <select required  class="form-control" name="condition" id="condition">
+                                              <input type="checkbox" name="" value="After">
+                                              <input type="checkbox" name="" value="After">
+                                              <input type="checkbox" name="" value="After">
+                                              <input type="checkbox" name="" value="After">
+                                             
+                                              
+                                                
+                                            </select>
+                                    </div>
+                                        <div class="col-sm-12">
+                                      <label>Transmission</label><br>
+                                             <select required  class="form-control" name="condition" id="condition">
+                                               <option selected="" value="">Choose Condition</option>
+                                                <option  value="Brand New"> Automatic
+                                               </option>
+                                               <option  value="Manual"> Manual
+                                               </option>
+                                               <option  value="Semi-automatic"> Semi-automatic
+                                               </option>
+                                                <option  value="Tiptronic"> Tiptronic
+                                               </option>
+                                              
+                                                
+                                            </select>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Year of Manufacture</label>
+                                            <input required name="year_of_manufacture" id="name" type="text"  class="form-control" placeholder="Year of Manufacture">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Number of Seats </label>
+                                            <input required name="seats_vehicle" id="seats_vehicle" type="text" class="form-control" placeholder="Number of Seats ">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Mileage(KM)</label>
+                                            <input required name="fuel" type="text" id="fuel"   class="form-control" placeholder="Fuel">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>VIN Number</label>
+                                            <input required name="vin_number" id="vin_number" type="text" class="form-control" placeholder="VIN Number">
+                                          </div>
+                                    </div>
+                                </div>
+                                  
+                                </div>
+
+                                              <div class="row"  ng-hide="3 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+
+                                              <div class="row"  ng-hide="5 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="8 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="9 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="1 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-16">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="17 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="20 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="21 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="1 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
+
+                                              <div class="row"  ng-hide="22 != cate">
+                                    <div class="col-sm-12">
+                                      
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
+                                          </div>
+                                    </div>
+                                   <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Brand </label>
+                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Price</label>
+                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
+                                          </div>
+                                    </div>
+                                    <div  class="col-sm-12">
+                                         <div class="form-group">
+                                            <label>Product Color</label>
+                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
+                                          </div>
+                                    </div>
+                                </div>
 
                                   
                                  

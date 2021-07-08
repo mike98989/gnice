@@ -8,6 +8,7 @@
     $scope.pageSize = 30;
     $scope.catfilter = 5;
     $scope.listfilter = 5;
+    $scope.hide = true;
      $('.result').hide(); 
          //alert($scope.dirlocation);
     $scope.getAllHero = function(){
@@ -29,8 +30,7 @@
        if(msg.status=='1'){  
        $scope.heros = msg.data;
        $scope.$apply();
-       $scope.rowCount = msg.rowCount;
-       alert( $scope.rowCount);
+       
        //alert(JSON.stringify($scope.categories));
        }
        
@@ -336,7 +336,7 @@
     
     
      $scope.fetch_single_product = function(){
-      var id = 
+      
       $.ajax({
         url: $scope.dirlocation+'api/fetch_single_product?param='+$localStorage.valueToShare1,
         type: 'GET',

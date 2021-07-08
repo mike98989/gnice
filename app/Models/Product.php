@@ -126,14 +126,13 @@ public function getSingleProduct($id)
             //  exit('got here');
           
 
-        $this->db->query(" SELECT *,
-                            category.title as productCategory,
-
-
-                            sub_category.title as productSubCategory
-                            FROM products
-                            INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
-                            INNER JOIN category ON category.id = products.category
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as signup_date,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
                             WHERE product_code = :product_code
                         ");
             $this->db->bind(':product_code', $product_code);
