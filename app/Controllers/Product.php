@@ -3,7 +3,7 @@
 class Product extends Controller {
      public function index(){
         $data = [];
-        $js=[];
+         $js = ['controllers/web/homeController.js'];
         $this->view('Product/product',$include_header=true,$data,'_type1',$js);
     }
 

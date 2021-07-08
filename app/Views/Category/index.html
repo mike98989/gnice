@@ -1,0 +1,247 @@
+<main class="main"  ng-controller="homeController">
+			<div class="category-banner-container bg-gray">
+				<div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('assets/images/banners/banner-top.jpg');">
+					<div class="container position-relative">
+						<div class="row">
+							<div class="pl-lg-5 pb-5 pb-md-0 col-md-5 col-xl-4 col-lg-4 offset-1">
+								<h3 class="ml-lg-5 mb-2 ls-10">Electronic<br>Deals</h3>
+								 <input
+                    ng-model="searchText"
+                      type="text"
+                      class="form-control"
+                      name="q"
+                      id="q"
+                      placeholder="Search..."
+                     
+                    />
+								<a href="#" class="ml-lg-5 btn btn-dark btn-black ls-10">Get Yours!</a>
+							</div>
+							<div class="pl-lg-5 col-md-4 offset-md-0 offset-1 pt-4">
+								<div class="coupon-sale-content">
+									<h4 class="m-b-2 coupon-sale-text bg-white ls-10 text-transform-none">Exclusive COUPON</h4>
+									<h5 class="mb-2 coupon-sale-text d-block ls-10 p-0"><i class="ls-0">UP TO</i><b class="text-dark">$100</b> OFF</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container" >
+				<nav aria-label="breadcrumb" class="breadcrumb-nav">
+					<ol class="breadcrumb" ng-init="fetch_single_sub_category()" >
+						<li  class="breadcrumb-item"><a href="Home"><i class="icon-home"></i></a></li>
+						<li class="breadcrumb-item"><a href="#">{{ singleSubCats.parentCategory }}</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{{ singleSubCats.title }}</li>
+					</ol>
+				</nav>
+
+				<div class="row">
+					<div class="col-lg-9 order-lg-1">
+						<nav class="toolbox">
+							<div class="toolbox-left">
+								<div class="toolbox-item toolbox-sort">
+									<label>Sort By Color, Brand, Price and name:</label>
+
+									<div class="select-custom">
+										<input class="form-control" ng-model="searchText" type="text">
+										<!--
+										<select name="orderby" class="form-control" ng-model="searchText">
+											<option value="menu_order" selected="selected">Default sorting</option>
+											<option value="name">Sort by popularity</option>
+											<option value="price">Sort by average rating</option>
+											<option value="brand">Sort by newness</option>
+											<option value="price">Sort by price: low to high</option>
+											<option value="price-desc">Sort by price: high to low</option>
+										</select>
+									-->
+									</div><!-- End .select-custom -->
+{{searchText}}
+									
+								</div><!-- End .toolbox-item -->
+							</div><!-- End .toolbox-left -->
+
+							<div class="toolbox-right">
+								<div class="toolbox-item toolbox-show">
+									<label>Show:</label>
+
+									<div class="select-custom">
+										<select name="count" class="form-control" ng-model= "catfilter">
+											<option value="6">6</option>
+											<option value="9">9</option>
+											<option value="12">12</option>
+										</select>
+									</div><!-- End .select-custom -->
+								</div><!-- End .toolbox-item -->
+
+								<div class="toolbox-item layout-modes">
+									<a href="Category" class="layout-btn btn-grid active" title="Grid">
+										<i class="icon-mode-grid"></i>
+									</a>
+									<a href="CategoryList" class="layout-btn btn-list" title="List">
+										<i class="icon-mode-list"></i>
+									</a>
+								</div><!-- End .layout-modes -->
+							</div><!-- End .toolbox-right -->
+						</nav>
+
+						<div class="row" ng-init="fetch_all_product_sub_category()">
+						
+								<div class="col-6 col-sm-4" dir-paginate="allSubProduct in allSubProducts | filter : search |  itemsPerPage :catfilter">
+								<div class="product-default inner-quickview inner-icon">
+									<figure>
+										<a href="#" class="pbtn" data-id1="{{allSubProduct.product_code}}">
+											<img src="assets/images/products/product-1.jpg">
+										</a>
+										<div class="label-group">
+											<div class="product-label label-hot">HOT</div>
+											<div class="product-label label-sale">-20%</div>
+										</div>
+										<div class="btn-icon-group">
+											<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
+										</div>
+										<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a> 
+									</figure>
+									<div class="product-details">
+										<div class="category-wrap">
+											<div class="category-list">
+												<a href="" class="product-category">{{allSubProduct.productSubCategory}}</a>
+											</div>
+											<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
+										</div>
+										<h2 class="product-title">
+											<a href="">{{allSubProduct.name}}</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="old-price">$90.00</span>
+											<span class="product-price">{{allSubProduct.price | currency}} </span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+							</div><!-- End .col-sm-4 -->
+						
+						</div>
+
+						<nav class="toolbox toolbox-pagination">
+							<div class="toolbox-item toolbox-show">
+								<label>Show:</label>
+
+								<div class="select-custom">
+									<select name="count" class="form-control" ng-model = "catfilter" >
+										<option value="5" selected="">5</option>
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="30">30</option>
+									</select>
+
+								</div><!-- End .select-custom -->
+							</div><!-- End .toolbox-item -->
+							<dir-pagination-controls>
+								max-size = "5"
+								direction-links = "true"
+								boundary-liks = "true"
+							</dir-pagination-controls>
+                             <!--
+							<ul class="pagination toolbox-item">
+								<li class="page-item disabled">
+									<a class="page-link page-link-btn" href="#"><i class="icon-angle-left"></i></a>
+								</li>
+								<li class="page-item active">
+									<a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">4</a></li>
+								<li class="page-item"><a class="page-link" href="#">5</a></li>
+								<li class="page-item"><span class="page-link">...</span></li>
+								<li class="page-item">
+									<a class="page-link page-link-btn" href="#"><i class="icon-angle-right"></i></a>
+								</li>
+							</ul>
+						-->
+						</nav>
+                         <div class="products-section pt-0" ng-init="fetch_all_product_category()">
+            <h2 class="section-title">Related Products</h2>
+
+            <div class=" " >
+              <div class="row">
+                <div class="col-md-3" dir-paginate="allCatProduct in allCatProducts | filter : searchBrand |  itemsPerPage : 8">
+                     <div class="product-default inner-quickview inner-icon" >
+                <figure>
+                 <a href="#" id="pbtn" data-id1="{{relatedProduct.product_code}}">
+                    <img src="<?php echo APP_URL;?>/assets/images/products/product-14.jpg" />
+                  </a>
+                  <div class="label-group">
+                    <span class="product-label label-sale">-20%</span>
+                  </div>
+                  <div class="btn-icon-group">
+                    <button
+                      class="btn-icon btn-add-cart"
+                      data-toggle="modal"
+                      data-target="#addCartModal"
+                    >
+                      <i class="icon-shopping-cart"></i>
+                    </button>
+                  </div>
+                  <a
+                    href="ajax/product-quick-view.html"
+                    class="btn-quickview"
+                    title="Quick View"
+                    >Quick View</a
+                  >
+                </figure>
+                <div class="product-details">
+                  <div class="category-wrap">
+                    <div class="category-list">
+                      <a href="category.html" class="product-category"
+                        >category</a
+                      >
+                    </div>
+                  </div>
+                  <h3 class="product-title">
+                    <a href="product.html">{{ relatedProduct.name }}</a>
+                  </h3>
+                  <div class="ratings-container">
+                    <div class="product-ratings">
+                      <span class="ratings" style="width: 100%"></span
+                      ><!-- End .ratings -->
+                      <span class="tooltiptext tooltip-top"></span>
+                    </div>
+                    <!-- End .product-ratings -->
+                  </div>
+                  <!-- End .ratings-container -->
+                  <div class="price-box">
+                    <span class="old-price">$59.00</span>
+                    <span class="product-price">$49.00</span>
+                  </div>
+                  <!-- End .price-box -->
+                </div>
+                <!-- End .product-details -->
+              </div>
+             
+                </div>
+
+              </div>
+               <dir-pagination-controls></dir-pagination-controls>
+           
+                </div>
+                <!-- End .product-details -->
+              </div>
+
+					</div><!-- End .col-lg-9 -->
+
+					<div class="sidebar-overlay"></div>
+					<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
+				<?php require_once '../app/views/inc/aside2.php';?>
+				</div><!-- End .row -->
+			</div><!-- End .container -->
+
+			<div class="mb-3"></div><!-- margin -->
+		</main><!-- End .main -->
+			

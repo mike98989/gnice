@@ -335,12 +335,14 @@
       role="dialog"
       aria-labelledby="addCartModal"
       aria-hidden="true"
+      ng-controller="homeController"
+
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog" role="document" >
         <div class="modal-content">
           <div class="modal-body add-cart-box text-center">
             <p>You've just added this product to the<br />cart:</p>
-            <h4 id="productTitle"></h4>
+            <h4 id="productTitle">{{ num }}</h4>
             <img
               src="#"
               id="productImage"
@@ -348,6 +350,7 @@
               height="100"
               alt="adding cart image"
             />
+            
             <div class="btn-actions">
               <a href="cart.html"
                 ><button class="btn-primary">Go to cart page</button></a
@@ -369,7 +372,12 @@
 
     <!-- Plugins JS File -->
     <script src="<?php echo APP_URL;?>/assets/js/jquery.min.js"></script>
+    <script src="<?php echo APP_URL;?>/assets/js/jquery-ui.min.js"></script>
     <script src="<?php echo APP_URL;?>/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo APP_URL;?>/assets/js/jquery.bootstrap.wizard.js"></script>
+    <script src="<?php echo APP_URL;?>/assets/js/gsdk-bootstrap-wizard.js"></script>
+     <script src="<?php echo APP_URL;?>/assets/js/jquery.validate.min.js"></script>
+     
     <script src="<?php echo APP_URL;?>/assets/js/plugins.min.js"></script>
 
     <!-- Main JS File -->
@@ -398,6 +406,9 @@
   }
 ?>
 <script src="<?php echo APP_URL.'/assets//js/controllers/directives.js';?>"></script>
+<script type="text/javascript">
+   
+</script>
 
   </body>
 

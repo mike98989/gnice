@@ -6,7 +6,7 @@ class Login extends Controller{
 
     public function index(){
         $data = [];
-        $js = [];
+        $js = ['controllers/loginController.js'];
         $this->view('Account/login',$include_header=true,$data,'_type1',$js);
     }
 }

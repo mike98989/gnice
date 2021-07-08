@@ -1,6 +1,6 @@
 <!-- End .header -->
 
-<main class="main">
+<main class="main" ng-controller="loginController">
   <nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="container">
       <ol class="breadcrumb">
@@ -21,23 +21,52 @@
       </div>
       <!-- End .heading -->
 
-      <form action="#">
+<<<<<<< HEAD
+      <form ng-submit="user_login()" method="POST" action="">
+=======
+          <form ng-submit="user_login()" id="user_login"  method="POST" action="#">  
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
         <input
           type="email"
+          name="username"
+          id="username"
           class="form-control"
           placeholder="Email Address"
-          required
+          name="email"
+<<<<<<< HEAD
+          ng-model="loginData.email"
+=======
+         
+           
+
+          
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
         />
         <input
           type="password"
+          name="password"
+          id="password"
           class="form-control"
           placeholder="Password"
-          required
+<<<<<<< HEAD
+          name="password"
+          ng-model="loginData.password"
+=======
+         
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
         />
 
         <div class="form-footer">
-          <button type="submit" class="btn btn-primary">LOGIN</button>
+<<<<<<< HEAD
+          <button type="submit" name="login" class="btn btn-primary">
+            LOGIN
+          </button>
           <a href="#" class="forget-pass"> Forgot your password?</a>
+=======
+          <button type="submit" class="btn btn-primary">LOGIN</button>
+          <a href="Recovery" class="forget-pass"> Forgot your password?</a>
+         
+>>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
         </div>
         <!-- End .form-footer -->
       </form>

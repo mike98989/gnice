@@ -1,0 +1,55 @@
+<!-- End .header -->
+
+<main class="main" ng-controller="loginController">
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html"><i class="icon-home"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Password Recovery</li>
+      </ol>
+    </div>
+    <!-- End .container -->
+  </nav>
+
+  <div class="container">
+    <div class="col-md-6 offset-md-3">
+      <div class="heading">
+        <h2 class="title">Password Recovery</h2>
+        <p></p>
+      </div>
+      <!-- End .heading -->
+
+          <form ng-submit="password_recovery()" id="password_recovery"  method="POST" action="">  
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
+          
+          placeholder="Email Address"
+          name="email"
+         
+           
+
+          
+        />
+     
+        
+
+        <div class="form-footer">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          
+         
+        </div>
+        <!-- End .form-footer -->
+      </form>
+    </div>
+  </div>
+  <!-- End .container -->
+
+  <div class="mb-5"></div>
+  <!-- margin -->
+</main>
+<!-- End .main -->
