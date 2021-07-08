@@ -9,7 +9,310 @@ TODO: // work on category
 
 class Category extends Model
 {
+<<<<<<< HEAD
 
+=======
+    public function save_json(){
+
+        // $CSVfp = fopen(__DIR__."/apple_phones.csv", "r");
+        // if($CSVfp !== FALSE) {    
+        // while(! feof($CSVfp)) {
+        // $data = fgetcsv($CSVfp, 1000, ",");
+        // if(isset($data[0])){
+        // $model=$data[0];    
+        // $this->db->query('SELECT model FROM phone_models WHERE model = :model');
+        // $this->db->bind(':model', $model);
+        // if (!$this->db->singleResult()) {
+        //     $this->db->query("INSERT INTO phone_models (make_id,model,status) VALUES ('6',:model,'1')");
+        //     $this->db->bind(':model', $model);
+        //     $this->db->execute();     
+        // print_r($data[0]);
+        // }
+        // }
+        // }
+        // }
+        // fclose($CSVfp);
+
+        //$json = file_get_contents(__DIR__.'/car_model_list.json');
+
+        //Decode JSON
+        // $json_data = json_decode($json,true);
+    
+        // foreach ($json_data as $key => $value) {
+        //     for($a=1;$a<count($json_data[$key]);$a++){
+        //     $type = $json_data[$key][$a]['Category'];    
+        //     $this->db->query('SELECT type FROM car_types WHERE type = :type');
+        //     $this->db->bind(':type', $type);
+        //     if (!$this->db->singleResult()) {
+        //         $row = $this->db->singleResult();
+        //         $this->db->query("INSERT INTO car_types (type,status) VALUES (:type,'1')");
+        //         $this->db->bind(':type', $type);
+        //         $this->db->execute();    
+        //         echo $type.'<br/>';
+        //         // $this->db->query("INSERT INTO car_models (make,status) VALUES (:make,'1')");
+        //         // $this->db->bind(':make', $make);
+        //         // $this->db->execute();
+        //         // echo $json_data[$key][$a]['Make'].'<br/>';
+    
+        //     } else {
+               
+        //     }
+            
+        //         }
+            
+        //     }
+
+
+        // foreach ($json_data as $key => $value) {
+        // for($a=1;$a<count($json_data[$key]);$a++){
+        // $make = $json_data[$key][$a]['Make']; 
+        // $model = $json_data[$key][$a]['Model'];  
+        // $type = $json_data[$key][$a]['Category'];    
+        // $this->db->query('SELECT make,make_id FROM car_makes WHERE make = :make');
+        // $this->db->bind(':make', $make);
+        // if ($this->db->singleResult()==true) {
+        //     $row = $this->db->singleResult();
+        //     $this->db->query('SELECT model FROM car_models WHERE model = :model AND make_id= :make_id');
+        //     $this->db->bind(':model', $model);
+        //     $this->db->bind(':make_id', $row->make_id);
+        //     if (!$this->db->resultSet()) {
+        //     $this->db->query("INSERT INTO car_models (make_id,model,type,status) VALUES (:make_id,:model,:type,'1')");
+        //     $this->db->bind(':make_id', $row->make_id);
+        //     $this->db->bind(':model', $model);
+        //     $this->db->bind(':type', $type);
+        //     $this->db->execute();    
+        //     echo $model.'@'.$make.'<br/>';
+        //     }
+
+        //     // $this->db->query("INSERT INTO car_models (make,status) VALUES (:make,'1')");
+        //     // $this->db->bind(':make', $make);
+        //     // $this->db->execute();
+        //     // echo $json_data[$key][$a]['Make'].'<br/>';
+
+        // } else {
+           
+        // }
+        
+        //     }
+        
+        // }
+
+
+    $model = ["Redmi Note 10 Pro (China)",
+	"Redmi Note 8 2021",
+	"Poco M3 Pro 5G",
+	"Redmi K40 Gaming",
+	"Mi 11X Pro",
+	"Mi 11X",
+	"Poco M2 Reloaded",
+	"Mi Mix Fold",
+	"Mi 11 Ultra",
+	"Mi 11 Pro",
+	"Mi 11i",
+	"Mi 11 Lite 5G",
+	"Mi 11 Lite",
+	"Black Shark 4 Pro",
+	"Black Shark 4",
+	"Poco X3 Pro",
+	"Poco F3",
+	"Mi 10S",
+	"Redmi Note 10 Pro",
+	"Redmi Note 10 5G",
+	"Redmi Note 10S",
+	"Redmi Note 10",
+	"Redmi Note 10 Pro Max",
+	"Redmi Note 10 Pro (India)",
+	"Redmi K40 Pro+",
+	"Redmi K40 Pro",
+	"Redmi K40",
+	"Redmi Note 9T",
+	"Redmi 9T",
+	"Mi 10i 5G",
+	"Mi 11",
+	"Redmi 9 Power",
+	"Mi Watch Lite",
+	"Redmi Note 9 Pro 5G",
+	"Redmi Note 9 5G",
+	"Redmi Note 9 4G",
+	"Redmi Watch",
+	"Poco M3",
+	"Redmi K30S",
+	"Poco C3",
+	"Mi 10T Pro 5G",
+	"Mi 10T 5G",
+	"Mi 10T Lite 5G",
+	"Redmi 9AT",
+	"Redmi 9i",
+	"Poco M2",
+	"Poco X3",
+	"Poco X3 NFC",
+	"Redmi 9 (India)",
+	"Mi 10 Ultra",
+	"Redmi K30 Ultra",
+	"Redmi 9 Prime",
+	"Black Shark 3S",
+	"Poco M2 Pro",
+	"Redmi 9A",
+	"Redmi 9C NFC",
+	"Redmi 9C",
+	"Redmi 9",
+	"Redmi 10X Pro 5G",
+	"Redmi 10X 5G",
+	"Redmi 10X 4G",
+	"Redmi K30i 5G",
+	"Poco F2 Pro",
+	"Redmi K30 5G Racing",
+	"Redmi Note 9 Pro",
+	"Redmi Note 9",
+	"Mi Note 10 Lite",
+	"Mi 10 Youth 5G",
+	"Mi 10 Lite 5G",
+	"Redmi K30 Pro Zoom",
+	"Redmi K30 Pro",
+	"Redmi Note 9S",
+	"Redmi Note 9 Pro Max",
+	"Redmi Note 9 Pro (India)",
+	"Black Shark 3 Pro",
+	"Black Shark 3",
+	"Mi 10 Pro 5G",
+	"Mi 10 5G",
+	"Redmi 8A Pro",
+	"Redmi 8A Dual",
+	"Poco X2",
+	"Redmi K30",
+	"Redmi K30 5G",
+	"Redmi Note 8T",
+	"Mi Note 10 Pro",
+	"Mi Note 10",
+	"Mi CC9 Pro",
+	"Redmi 8",
+	"Redmi 8A",
+	"Mi Mix Alpha",
+	"Mi 9 Pro 5G",
+	"Mi 9 Pro",
+	"Redmi K20 Pro Premium",
+	"Mi 9 Lite",
+	"Redmi Note 8 Pro",
+	"Black Shark 2 Pro",
+	"Mi A3",
+	"Redmi 7A",
+	"Mi CC9",
+	"Mi CC9e",
+	"Redmi Note 8",
+	"Mi 9T Pro",
+	"Mi 9T",
+	"Redmi K20",
+	"Redmi K20 Pro",
+	"Redmi Note 7S",
+	"Redmi Y3",
+	"Black Shark 2",
+	"Redmi 7",
+	"Redmi Note 7 Pro",
+	"Mi Mix 3 5G",
+	"Mi 9 Explorer",
+	"Mi 9 SE",
+	"Mi 9",
+	"Redmi Go",
+	"Redmi Note 7",
+	"Mi Play",
+	"Black Shark Helo",
+	"Mi Mix 3",
+	"Redmi Note 6 Pro",
+	"Mi 8 Pro",
+	"Mi 8 Lite",
+	"Pocophone F1",
+	"Mi A2 (Mi 6X)",
+	"Mi A2 Lite (Redmi 6 Pro)",
+	"Mi Max 3",
+	"Mi Pad 4 Plus",
+	"Mi Pad 4",
+	"Redmi 6",
+	"Redmi 6A",
+	"Mi 8 Explorer",
+	"Mi 8",
+	"Mi 8 SE",
+	"Redmi S2 (Redmi Y2)",
+	"Mi Mix 2S",
+	"Redmi Note 5 AI Dual Camera",
+	"Redmi Note 5 Pro",
+	"Black Shark",
+	"Redmi 5 Plus (Redmi Note 5)",
+	"Redmi 5",
+	"Redmi 5A",
+	"Redmi Y1 (Note 5A)",
+	"Redmi Y1 Lite",
+	"Mi Note 3",
+	"Mi Mix 2",
+	"Mi A1 (Mi 5X)",
+	"Mi Max 2",
+	"Redmi 4 (4X)",
+	"Mi 6",
+	"Mi Pad 3",
+	"Mi 5c",
+	"Redmi Note 4X",
+	"Redmi Note 4",
+	"Redmi 4 (China)",
+	"Mi 6 Plus",
+	"Redmi 4 Prime",
+	"Mi Mix",
+	"Mi Note 2",
+	"Mi 5s Plus",
+	"Mi 5s",
+	"Redmi Note 4 (MediaTek)",
+	"Redmi Pro",
+	"Redmi 3x",
+	"Redmi 3s Prime",
+	"Redmi 3s",
+	"Redmi 3 Pro",
+	"Mi Max",
+	"Mi 5",
+	"Mi 4s",
+	"Redmi Note 3",
+	"Redmi 3",
+	"Redmi Note Prime",
+	"Mi Pad 2",
+	"Redmi Note 3 (MediaTek)",
+	"Mi 4c",
+	"Redmi Note 2",
+	"Redmi 2 Pro",
+	"Redmi 2 Prime",
+	"Mi 4i",
+	"Mi Note Pro",
+	"Mi Note",
+	"Redmi 2A",
+	"Redmi 2",
+	"Mi 4 LTE",
+	"Redmi Note 4G",
+	"Mi 4",
+	"Mi Pad 7.9",
+	"Redmi Note",
+	"Mi 3",
+	"Redmi 1S",
+	"Redmi",
+	"Mi 2A",
+	"Mi 2S",
+	"Mi 2",
+	"Mi 1S",
+	"Poco M3 Pro",
+	"Mi 10 Lite Zoom",
+	"Mi 9X",
+	"Mi Max 4 Pro",
+	"Mi Max 4",
+	"Mi 6c",
+	"Redmi Pro 2",
+	"Mi Note Plus"
+];
+
+      for($a=0;$a<count($model);$a++){
+        $this->db->query("INSERT INTO phone_models (make_id,model,status) VALUES ('111',:model,'1')");
+        $this->db->bind(':model', $model[$a]);
+        if ($this->db->execute()) {
+        echo $model[$a].'<br/>';    
+        }
+      }
+    }
+    
+>>>>>>> f7dc6903c6a714c89330a9a4a335d1c11ac4ebfc
     public function getAllCategoriesAndSubCategories()
     {
         $this->db->query(
@@ -32,8 +335,13 @@ class Category extends Model
         return $rows;
     }
 
+<<<<<<< HEAD
 
     public function getAllRequiredTables()
+=======
+    
+     public function getAllRequiredTables()
+>>>>>>> f7dc6903c6a714c89330a9a4a335d1c11ac4ebfc
     {
         $query = $this->db;
         $car_makes = $query->query("SELECT * FROM car_makes WHERE status!='0' ORDER BY make DESC");
@@ -47,6 +355,28 @@ class Category extends Model
         }
         $property_type = $query->query("SELECT * FROM property_types WHERE status!='0' ORDER BY type DESC");
         $row['property_types'] = $query->resultSet();
+<<<<<<< HEAD
+=======
+        $phone_makes = $query->query("SELECT * FROM phone_makes WHERE status!='0' ORDER BY make DESC");
+        $row['phone_makes'] = $query->resultSet();
+        $count2 = $this->db->rowCount();
+        for($a=0;$a<$count2;$a++){
+            $this->db->query("SELECT * FROM phone_models WHERE make_id = :make_id AND status!='0'");
+            $this->db->bind(':make_id', $row['phone_makes'][$a]->phone_make_id);
+            $phone_model =  $this->db->resultSet();
+            $row['phone_makes'][$a]->phone_models = $this->db->resultSet();
+        }
+
+        $states = $query->query("SELECT * FROM states ORDER BY state DESC");
+        $row['states'] = $query->resultSet();
+        $count3 = $this->db->rowCount();
+        for($a=0;$a<$count3;$a++){
+            $this->db->query("SELECT * FROM lga WHERE State = :state");
+            $this->db->bind(':state', strtoupper($row['states'][$a]->state));
+            $lgas =  $this->db->resultSet();
+            $row['states'][$a]->lgas = $this->db->resultSet();
+        }
+>>>>>>> f7dc6903c6a714c89330a9a4a335d1c11ac4ebfc
 
         $rows['data'] = $row;
         $rows['status'] = '1';
