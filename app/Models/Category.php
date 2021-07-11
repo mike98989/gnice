@@ -38,7 +38,7 @@ class Category extends Model
 
         // foreach ($json_data as $key => $value) {
         //     for($a=1;$a<count($json_data[$key]);$a++){
-        //     $type = $json_data[$key][$a]['Category'];    
+        //     $type = $json_data[$key][$a]['Category'];
         //     $this->db->query('SELECT type FROM car_types WHERE type = :type');
         //     $this->db->bind(':type', $type);
         //     if (!$this->db->singleResult()) {

@@ -73,7 +73,6 @@ class Authenticate extends Model
     }
 
 
-
     public function updateUserAccountType()
     {
         $header = apache_request_headers();
