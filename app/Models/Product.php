@@ -98,11 +98,8 @@ class Product extends Model
                     $this->db->bind(':' . $key, $data[$key]);
                 }
             }
-            
-            //$row = $this->db->singleResult();
+            // $row = $this->db->singleResult();
             if ($this->db->execute()) {
-                //$result['rowCount'] = $this->db->rowCount();
-                $result['data'] = $data;
                 $result['message'] = 'product added successfully';
                 $result['status'] = '1';
                 $result['errors'] = $uploader['image_error'];
@@ -340,6 +337,113 @@ class Product extends Model
                 $result['status'] = '0';
             }
             return $result;
+        }
+    }
+
+    public function getAllProductOfASeller($seller_id)
+    {
+        $header = apache_request_headers();
+        $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
+
+        if (isset($header['gnice-authenticate'])) {
+            $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id");
+            $this->db->bind(':seller_id', $seller_id);
+
+            if ($this->db->resultSet()) {
+                $result['rowCounts'] = $this->db->rowCount();
+                $result['data'] = $this->db->resultSet();
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+            }
+            return $result;
+        }
+    }
+
+    public function messageProductSeller()
+    {
+        $header = apache_request_headers();
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $sender_name = trim($_POST['sender_name']);
+        $sender_tel = trim($_POST['sender_tel']);
+        $sender_email = trim($_POST['sender_email']);
+        $message = trim($_POST['message']);
+        $date = date("Y-m-d H:i:s");
+        $_POST['date'] = $date;
+        $product_code = $_POST['product_code'];
+        $seller_id = $_POST['seller_id'];
+        if (isset($header['gnice-authenticate'])) {
+
+            if (!(empty($sender_tel) || empty($sender_name) || empty($sender_name) || empty($message) || empty($product_code) || empty($seller_id))) {
+                $is_email_valid = filter_var($sender_email, FILTER_VALIDATE_EMAIL);
+                $data = array_map('trim', array_filter($_POST));
+                if ($is_email_valid == true) {
+                    foreach (array_keys($data) as $key) {
+                        $fields[] = $key;
+                        $key_fields[] = ':' . $key;
+                        $fields_imploded = implode(',', $fields);
+                        $keys_imploded = implode(',', $key_fields);
+                    }
+                    $this->db->query(
+                        'INSERT INTO messages (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')'
+                    );
+                    foreach (array_keys($data) as $key) {
+                        $this->db->bind(':' . $key, $data[$key]);
+                    }
+                    if ($this->db->execute()) {
+                        $result['message'] = 'product added successfully';
+                        $result['status'] = '1';
+                    } else {
+                        $result['message'] = 'create product failed';
+                        $result['status'] = '0';
+                    }
+                } else {
+                    $result['error_email'] = 'please enter valid email';
+                }
+            } else {
+                $result['error'] = 'all field are required';
+            }
+            return $result;
+        }
+    }
+
+    public function getAllMessagesToSeller($seller_id){
+        $header = apache_request_headers();
+        $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
+        if(isset($header['gnice-authenticate'])){
+
+            $this->db->query("SELECT * FROM messages WHERE seller_id = :seller_id ORDER BY date DESC");
+            $this->db->bind(':seller_id', $seller_id);
+
+            if ($this->db->resultSet()) {
+                $result['rowCounts'] = $this->db->rowCount();
+                $result['data'] = $this->db->resultSet();
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+            }
+            return $result;
+
+        }
+    }
+    public function getAllMessages(){
+        $header = apache_request_headers();
+        if(isset($header['gnice-authenticate'])){
+
+            $this->db->query("SELECT * FROM messages ORDER BY date DESC");
+
+            if ($this->db->resultSet()) {
+                $result['rowCounts'] = $this->db->rowCount();
+                $result['data'] = $this->db->resultSet();
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+            }
+            return $result;
+
         }
     }
 }
