@@ -13,7 +13,7 @@ class Product extends Model
                         FROM products
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                        LEFT JOIN users ON users.seller_id = products.seller_id");
+                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.id DESC");
 
             if ($this->db->resultSet()) {
                 $result['rowCounts'] = $this->db->rowCount();
@@ -62,10 +62,12 @@ class Product extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
+            //print_r($_POST);return;
+            //print_r($_FILES['files']['name'][0]);return;
             $uploader = uploadMultiple('pro', 'products');
             //Filter sanitize all input as string to remove all unwanted scripts and tags
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
+            
             //get renamed pictures from helper functions
             $image = $uploader['imageUrl'];
             // $product_code = rand(1000000, 100000000);
@@ -96,9 +98,10 @@ class Product extends Model
                     $this->db->bind(':' . $key, $data[$key]);
                 }
             }
-            $row = $this->db->singleResult();
-            if ($this->db->rowCount() > 0) {
-                $result['rowCount'] = $this->db->rowCount();
+            
+            //$row = $this->db->singleResult();
+            if ($this->db->execute()) {
+                //$result['rowCount'] = $this->db->rowCount();
                 $result['data'] = $data;
                 $result['message'] = 'product added successfully';
                 $result['status'] = '1';
@@ -107,7 +110,7 @@ class Product extends Model
                 $result['message'] = 'create product failed';
                 $result['status'] = '0';
                 $result['errors'] = $uploader['image_error'];
-                return false;
+                //return false;
             }
             return $result;
         }
