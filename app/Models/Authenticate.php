@@ -482,10 +482,14 @@ class Authenticate extends Model
     //get user by ID
     public function getUserById($id)
     {
-        $this->db->query('SELECT * FROM users WHERE id = :id');
-        $this->db->bind(':id', $id);
+        $this->db->query('SELECT * FROM users WHERE seller_id = :seller_id LIMIT 1');
+        $this->db->bind(':seller_id', $id);
         $row = $this->db->singleResult();
-        return $row;
+        if ($this->db->rowCount() > 0) {
+            return $row;
+        } else {
+            return false;
+        }
     }
 
     //verify user token

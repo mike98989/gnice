@@ -62,7 +62,7 @@ class Product extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $uploader = uploadMultiple('pro', 'products');
+            $uploader = uploadMultiple('pro', 'products',2);
             //Filter sanitize all input as string to remove all unwanted scripts and tags
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -398,9 +398,11 @@ class Product extends Model
                     }
                 } else {
                     $result['error_email'] = 'please enter valid email';
+                    $result['status'] = '0';
                 }
             } else {
                 $result['error'] = 'all field are required';
+                $result['status'] = '0';
             }
             return $result;
         }
@@ -444,4 +446,34 @@ class Product extends Model
 
         }
     }
+    // TODO: update a product
+    public function updateProduct(){
+
+    }
+    public function uploadImages(){
+        $uploader = uploadMultiple('pro', 'products',2);
+            $image = $uploader['imageUrl'];
+            $_POST['image'] = $image;
+            $product_code = trim($_POST['product_code']);
+            $seller_id = trim($_POST['$seller_id']);
+            $this->db->query("INSERT INTO products (image) VALUES (:image) WHERE product_code = :product_code AND seller_id = :seller_id");
+            $this->db->bind(':image', $image);
+            $this->db->bind(':product_code', $product_code);
+            $this->db->bind(':seller_id', $seller_id);
+             if ($this->db->resultSet()) {
+                $result['rowCounts'] = $this->db->rowCount();
+                $result['data'] = $this->db->resultSet();
+                $result['errors'] = $uploader['image_error'];
+                $result['message'] = 'images uploaded';
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+                $result['errors'] = $uploader['image_error'];
+            }
+            return $result;
+
+    }
+    // TODO: delete image
+    public function deleteImage(){}
 }

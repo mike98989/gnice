@@ -1,35 +1,105 @@
 <?php
+include_once('Authenticate.php');
 
 class Profile extends Model
 {
-    public function addProfileData()
+    public function updateUserProfile()
+    {
+        $header = apache_request_headers();
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $email = trim($_POST['email']);
+        $seller_id = trim($_POST['seller_id']);
+        $mobile = trim($_POST['mobile']); 
+        $fullname = trim($_POST['fullname']);
+        $phone = trim($_POST['phone']);
+        $state = trim($_POST['state']);
+        $country = trim($_POST['country']);
+        if (isset($header['gnice-authenticate'])) {
+            if (!(empty($email) || empty($seller_id) || empty($fullname) || empty($phone) || empty($state))) {
+                $is_email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+                if ($is_email_valid == true) {
+                    //upload new profile picture
+                    $uploader = uploadMultiple('user', 'users', 2);
+                    $image = $uploader['imageUrl'];
+                    $_POST['image'] = $image;
+                    //data to frontend
+                    $data = array_map('trim', array_filter($_POST));
+                    
+                    $this->db->query("UPDATE users SET fullname = :fullname, phone = :phone, state = :state, image = :image, country = :country, mobile = :mobile WHERE email = :email AND seller_id = :seller_id AND activated = 1");
+
+                    //bind the values
+                    $this->db->bind(':fullname', $fullname);
+                    $this->db->bind(':phone', $phone);
+                    $this->db->bind(':state', $state);
+                    $this->db->bind(':image', $image);
+                    $this->db->bind(':country', $country);
+                    $this->db->bind(':mobile', $mobile);
+                    $this->db->bind(':seller_id', $seller_id);
+                    $this->db->bind(':email', $email);
+
+                    $row = $this->db->singleResult();
+                    if ($this->db->rowCount() > 0) {
+                        $result['data'] = $data;
+                        $result['message'] = 'profile updated successfully';
+                        $result['errors'] = $uploader['image_error'];
+                        $result['status'] = '1';
+                    } else {
+                        $result['message'] = 'profile updated failed';
+                        $result['errors'] = $uploader['image_error'];
+                        $result['status'] = '0';
+                    }
+                } else {
+                    $result['error_email'] = 'please enter valid email';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['error'] = ' all * fields are required';
+                $result['status'] = '0';
+            }
+        }
+        return $result;
+
+        /**
+         
+         $data = array_map('trim', array_filter($_POST));
+                    //array of values
+                    $excluded = ['files'];
+
+                    foreach (array_keys($data) as $key) {
+                        if (!in_array($key, $excluded)) {
+
+                            $fields[] = $key;
+                            $key_fields[] = ':' . $key;
+                            $fields_imploded = implode(',', $fields);
+                            $keys_imploded = implode(',', $key_fields);
+                        }
+                    }
+                    // FIXME:  Uncaught PDOException: SQLSTATE[     42000
+                    print_r(json_encode($data));
+                    print_r(json_encode($fields_imploded));
+                    print_r(json_encode($keys_imploded));
+                    // die;
+
+                    $this->db->query("UPDATE users SET  $fields_imploded = $keys_imploded WHERE  activated = 1 AND status = 1 LIMIT 1");
+
+                    //bind the values 
+                    foreach (array_keys($data) as $key) {
+                        if (!in_array($key, $excluded)) {
+                            $this->db->bind(':' . $key, $data[$key]);
+                            // $this->db->bind(':seller_id',$seller_id);
+                        }
+                    }
+                    $this->db->bind(':seller_id', $seller_id);
+                    $row = $this->db->singleResult();
+         */
+    }
+
+    public function deleteImage()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            // $email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-            // if ($email_valid == true) {
-            //     $check_email = $this->findUserByEmail($email);
-            //     if ($check_email != false) {
-            //         $uploader = uploadMultiple('user', 'profiles');
-            //         $_POST = filter_input_array(
-            //             INPUT_POST,
-            //             FILTER_SANITIZE_STRING
-            //         );
-            //         $image = $uploader['imageUrl'];
-            //         $_POST['image'] = $image;
-
-            //         if (
-            //             $_POST['image'] != '' &&
-            //             $user_email != '' &&
-            //             $user_id != ''
-            //         ) {
-            //             $this->db->query(
-            //                 'INSERT INTO users (image) VALUES (:image) WHERE users.id = :user_id AND users.email = :user_email AND users.activaded = 1 AND users.status = 1 LIMIT 1'
-            //             );
-            //         }
-            //     }
-            // }
         }
     }
 }

@@ -197,15 +197,17 @@ function uploadProductImage($type, $location)
  * <input type="file" name="files[]" multiple>
  */
 
-function uploadMultiple($prefix, $location)
+function uploadMultiple($prefix, $location, $size)
 {
+    $uploaded = [];
+    $failed = [];
     if (!empty($_FILES['files']['name'][0])) {
         $files = $_FILES['files'];
 
-        $uploaded = [];
-        $failed = [];
-
         // $data = array();
+
+        //convert file  size from mb to kb
+        $sizeLimit = round($size / 1024 / 1024, 4);
 
         $allowedExtention = ['jpeg', 'jpg', 'png', 'webp'];
 
@@ -220,7 +222,8 @@ function uploadMultiple($prefix, $location)
             if (in_array($fileExtention, $allowedExtention)) {
                 if ($fileError === 0) {
                     //set upload limit to 2mb
-                    if ($fileSize <= 2097152) {
+                    // if ($fileSize <= 2097152) {
+                    if ($fileSize <= $sizeLimit) {
                         $folder = "assets/images/uploads/$location/";
 
                         if (!file_exists($folder)) {
@@ -229,9 +232,7 @@ function uploadMultiple($prefix, $location)
                         // generate new unique name
                         $fileNewName =
                             uniqid($prefix, false) .
-                            random(1000000, 100000000) .
-                            '.' .
-                            $fileExtention;
+                            random(1000000, 100000000) . '.' . $fileExtention;
 
                         $fileDestination = $folder . $fileNewName;
 
@@ -241,33 +242,47 @@ function uploadMultiple($prefix, $location)
                             $uploaded[$position] = $fileNewName;
                         } else {
                             //errors array
-                            $failed[
-                                $position
-                            ] = "{$fileName} failed to uploaded";
+                            $failed[$position] = "{$fileName} failed to uploaded";
                         }
                     } else {
-                        $failed[
-                            $position
-                        ] = "{$fileName} is too large {$fileSize}";
+                        $failed[$position] = "{$fileName} exceeds {$size}mb";
                     }
                 } else {
-                    $failed[
-                        $position
-                    ] = "{$fileName} errored with code {$fileError}";
+                    $failed[$position] = "{$fileName} errored with code {$fileError}";
                 }
             } else {
-                $failed[
-                    $position
-                ] = "{$fileName} file extension '{$fileExtention}' is not allowed";
+                $failed[$position] = "{$fileName} file extension '{$fileExtention}' is not allowed";
             }
         }
     }
+        // return implode(',',$uploaded);
+        $result['image_error'] = implode(',', $failed);
+        $result['imageUrl'] = implode(',', $uploaded);
+        
+        // return $result;
+        return $result;
+}
 
-    // return implode(',',$uploaded);
-    $result['image_error'] = implode(',', $failed);
-    // $result['uploaded'] = implode(',', $uploaded);
-    $result['imageUrl'] = implode(',', $uploaded);
+function deleteFile($itemName, $location)
+{
+    $path = "assets/images/uploads/$location/";
+    foreach (glob($path . $itemName) as $toDelete) {
+        unlink($toDelete);
+        echo $toDelete . " was deleted!";
+    }
 
-    // return $result;
-    return $result;
+    /**
+     * 
+     * 4. Delete all text files in a directory using an easy way!
+        <?php 
+
+            $filePath = "file/path/if/any/";
+            $wildcard = "*.png"
+
+            //will delete all png files
+            array_map( "unlink", glob( $filePath.$wildcard ));
+        ?>
+     * 
+     * 
+     */
 }
