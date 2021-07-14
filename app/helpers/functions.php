@@ -106,11 +106,6 @@ function generateToken($length)
     return $code;
 }
 
-// form sanitizations
-function sanitizeData($data)
-{
-    $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-}
 
 function flash($name = '', $message = '', $class = 'alert alert-success')
 {
@@ -205,7 +200,6 @@ function uploadMultiple($prefix, $location, $size)
         $files = $_FILES['files'];
 
         // $data = array();
-
         //convert file  size from mb to kb
         $sizeLimit = round($size / 1024 / 1024, 4);
 
@@ -234,7 +228,7 @@ function uploadMultiple($prefix, $location, $size)
                             uniqid($prefix, false) .
                             random(1000000, 100000000) . '.' . $fileExtention;
 
-                        $fileDestination = $folder . $fileNewName;
+                        $fileDestination = $folder . trim($fileNewName);
 
                         if (move_uploaded_file($fileTmp, $fileDestination)) {
                             //upload file if all criteria are met

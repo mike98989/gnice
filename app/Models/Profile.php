@@ -5,6 +5,81 @@ class Profile extends Model
 {
     public function updateUserProfile()
     {
+
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $seller_id = $_POST['seller_id'];
+            $email = trim($_POST['email']);
+            $mobile = trim($_POST['mobile']);
+            $fullname = trim($_POST['fullname']);
+            $phone = trim($_POST['phone']);
+            $state = trim($_POST['state']);
+            $uploader = uploadMultiple('pro', 'products', 2);
+            //Filter sanitize all input as string to remove all unwanted scripts and tags
+
+            if (!(empty($email) || empty($seller_id) || empty($fullname) || empty($phone) || empty($state))) {
+                $is_email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
+                if ($is_email_valid == true) {
+
+                    //get renamed pictures from helper functions
+                    $image = $uploader['imageUrl'];
+
+                    // $product_code = rand(1000000, 100000000);
+                    $_POST['image'] = $image;
+                    // $_POST['product_code'] = rand(1000000, 100000000);
+                    $data = filter_var_array($_POST);
+                    $data = array_map('trim', array_filter($data));
+                    $excluded = ['files'];
+                    $excluded = ['id'];
+                    // print_r($data);
+                    // exit();
+                    $updateString = "";
+                    $params = [];
+                    foreach (array_keys($data) as $key) {
+                        if (!in_array($key, $excluded)) {
+
+                            $updateString .= "`$key` = :$key,";
+                            $params[$key] = "$data[$key]";
+                        }
+                    }
+                    $updateString = rtrim($updateString, ",");
+
+                    $this->db->query(
+                        "UPDATE users SET $updateString WHERE seller_id = :seller_id"
+                    );
+                    foreach (array_keys($data) as $key) {
+                        if (!in_array($key, $excluded)) {
+                            $this->db->bind(':' . $key, $data[$key]);
+                        }
+                    }
+                    $this->db->bind(':seller_id', $seller_id);
+                    if ($this->db->execute()) {
+                        $result['message'] = 'profile update successfully';
+                        $result['status'] = '1';
+                        $result['errors'] = $uploader['image_error'];
+                    } else {
+                        $result['message'] = 'profile update failed';
+                        $result['status'] = '0';
+                        $result['errors'] = $uploader['image_error'];
+                        return false;
+                    }
+                } else {
+                    $result['error_email'] = 'please enter valid email';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['error'] = ' all * fields are required';
+                $result['status'] = '0';
+            }
+        }
+        return $result;
+    }
+
+    /*
+    public function updateUserProfile()
+    {
         $header = apache_request_headers();
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $email = trim($_POST['email']);
@@ -59,47 +134,12 @@ class Profile extends Model
             }
         }
         return $result;
-
-        /**
-         
-         $data = array_map('trim', array_filter($_POST));
-                    //array of values
-                    $excluded = ['files'];
-
-                    foreach (array_keys($data) as $key) {
-                        if (!in_array($key, $excluded)) {
-
-                            $fields[] = $key;
-                            $key_fields[] = ':' . $key;
-                            $fields_imploded = implode(',', $fields);
-                            $keys_imploded = implode(',', $key_fields);
-                        }
-                    }
-                    // FIXME:  Uncaught PDOException: SQLSTATE[     42000
-                    print_r(json_encode($data));
-                    print_r(json_encode($fields_imploded));
-                    print_r(json_encode($keys_imploded));
-                    // die;
-
-                    $this->db->query("UPDATE users SET  $fields_imploded = $keys_imploded WHERE  activated = 1 AND status = 1 LIMIT 1");
-
-                    //bind the values 
-                    foreach (array_keys($data) as $key) {
-                        if (!in_array($key, $excluded)) {
-                            $this->db->bind(':' . $key, $data[$key]);
-                            // $this->db->bind(':seller_id',$seller_id);
-                        }
-                    }
-                    $this->db->bind(':seller_id', $seller_id);
-                    $row = $this->db->singleResult();
-         */
     }
-
+*/
     public function deleteImage()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-
         }
     }
 }

@@ -54,6 +54,8 @@
 
   1. uploadImages(POST)
 
+  1. update_product
+
 - ### User
 
   1. user_signup

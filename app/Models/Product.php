@@ -62,7 +62,7 @@ class Product extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $uploader = uploadMultiple('pro', 'products',2);
+            $uploader = uploadMultiple('pro', 'products', 2);
             //Filter sanitize all input as string to remove all unwanted scripts and tags
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -408,10 +408,11 @@ class Product extends Model
         }
     }
 
-    public function getAllMessagesToSeller($seller_id){
+    public function getAllMessagesToSeller($seller_id)
+    {
         $header = apache_request_headers();
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
-        if(isset($header['gnice-authenticate'])){
+        if (isset($header['gnice-authenticate'])) {
 
             $this->db->query("SELECT * FROM messages WHERE seller_id = :seller_id ORDER BY date DESC");
             $this->db->bind(':seller_id', $seller_id);
@@ -425,12 +426,12 @@ class Product extends Model
                 $result['status'] = '0';
             }
             return $result;
-
         }
     }
-    public function getAllMessages(){
+    public function getAllMessages()
+    {
         $header = apache_request_headers();
-        if(isset($header['gnice-authenticate'])){
+        if (isset($header['gnice-authenticate'])) {
 
             $this->db->query("SELECT * FROM messages ORDER BY date DESC");
 
@@ -443,37 +444,88 @@ class Product extends Model
                 $result['status'] = '0';
             }
             return $result;
-
         }
     }
     // TODO: update a product
-    public function updateProduct(){
+    public function updateProduct()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
 
-    }
-    public function uploadImages(){
-        $uploader = uploadMultiple('pro', 'products',2);
-            $image = $uploader['imageUrl'];
-            $_POST['image'] = $image;
-            $product_code = trim($_POST['product_code']);
-            $seller_id = trim($_POST['$seller_id']);
-            $this->db->query("INSERT INTO products (image) VALUES (:image) WHERE product_code = :product_code AND seller_id = :seller_id");
-            $this->db->bind(':image', $image);
-            $this->db->bind(':product_code', $product_code);
-            $this->db->bind(':seller_id', $seller_id);
-             if ($this->db->resultSet()) {
-                $result['rowCounts'] = $this->db->rowCount();
-                $result['data'] = $this->db->resultSet();
-                $result['errors'] = $uploader['image_error'];
-                $result['message'] = 'images uploaded';
-                $result['status'] = '1';
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $seller_id = $_POST['seller_id'];
+            $product_code = $_POST['product_code'];
+            //Filter sanitize all input as string to remove all unwanted scripts and tags
+
+            if (!(empty($seller_id) || empty($product_code))) {
+
+                //get renamed pictures from helper functions
+                $uploader = uploadMultiple('pro', 'products', 2);
+                $image = $uploader['imageUrl'];
+
+                // $product_code = rand(1000000, 100000000);
+                $_POST['image'] = $image;
+                // $_POST['product_code'] = rand(1000000, 100000000);
+                $data = filter_var_array($_POST);
+                $data = array_map('trim', array_filter($data));
+                $excluded = ['files'];
+                $excluded = ['id'];
+                // print_r($data);
+                // exit();
+                $updateString = "";
+                $params = [];
+                foreach (array_keys($data) as $key) {
+                    if (!in_array($key, $excluded)) {
+
+                        $updateString .= "`$key` = :$key,";
+                        $params[$key] = "$data[$key]";
+                    }
+                }
+                $updateString = rtrim($updateString, ",");
+
+                $this->db->query(
+                    "UPDATE users SET $updateString WHERE seller_id = :seller_id AND product_code = :product_code"
+                );
+                foreach (array_keys($data) as $key) {
+                    if (!in_array($key, $excluded)) {
+                        $this->db->bind(':' . $key, $data[$key]);
+                    }
+                }
+                $this->db->bind(':seller_id', $seller_id);
+                $this->db->bind(':product_code', $product_code);
+                if ($this->db->execute()) {
+                    $result['message'] = 'product update successfully';
+                    $result['status'] = '1';
+                    $result['errors'] = $uploader['image_error'];
+                } else {
+                    $result['message'] = 'product update failed';
+                    $result['status'] = '0';
+                    $result['errors'] = $uploader['image_error'];
+                    return false;
+                }
             } else {
-                $result['data'] = [];
+                $result['error'] = ' all * fields are required';
                 $result['status'] = '0';
-                $result['errors'] = $uploader['image_error'];
             }
-            return $result;
-
+        }
+        return $result;
     }
     // TODO: delete image
-    public function deleteImage(){}
+    public function deleteImage()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $deleteImage = [];
+            
+
+        }
+    }
+
+    public function uploadImages()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+        }
+    }
 }

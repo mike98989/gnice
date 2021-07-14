@@ -397,11 +397,33 @@ class Api extends Controller
             exit;
         }
     }
+    public function update_product(){
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            // exit('got here');
+            $result = $this->model('Profile')->updateProduct();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function upload_product_image(){
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
             $result = $this->model('Profile')->uploadImages();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function delete_image(){
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            // exit('got here');
+            $result = $this->model('Profile')->deleteImage($_GET['product_code']);
             print_r(json_encode($result));
         } else {
             echo "invalid request";
