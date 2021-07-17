@@ -50,6 +50,12 @@
 
   1. fetch_all_messages
 
+  1. update_profile(POST)
+
+  1. uploadImages(POST)
+
+  1. update_product
+
 - ### User
 
   1. user_signup

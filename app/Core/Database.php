@@ -107,4 +107,20 @@ class Database
     {
         return $this->statement->rowCount();
     }
+    
+    public function sanitize($param)
+    {
+        if (isset($param)) {
+            switch (true) {
+                case is_int($param):
+                    $param = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
+                    break;
+                        
+                default:
+                    $param = filter_var($param, FILTER_SANITIZE_STRING);
+                   
+            }
+        }
+        return $param;
+    }
 }

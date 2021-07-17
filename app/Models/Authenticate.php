@@ -27,8 +27,7 @@ class Authenticate extends Model
                         if(($row->seller=='1')&&($row->account_type!='0')){
                         $row->seller_account_details = $this->getUserAccountType($row->account_type);
                         }
-
-                        $updated_token = $this->updateUserToken($row->id);
+                        $updated_token = $this->updateUserToken($row->id, 'users');
                         if ((isset($_POST['source'])) && ($_POST['source'] == 'browser')) {
                             @session_start();
                             Session::init();
@@ -64,7 +63,7 @@ class Authenticate extends Model
     }
 
     /////UPDATE TOKEN AND LAST LOGIN
-    public function updateUserToken($id)
+    public function updateUserToken($id, $location)
     {
         $token = bin2hex(openssl_random_pseudo_bytes(64));
         $date = new DateTime();
@@ -72,7 +71,7 @@ class Authenticate extends Model
         $date->format('Y-m-d H:i:s');
         $date = json_encode($date, true);
         $date = json_decode($date, true);
-        $this->db->query('UPDATE users SET token = :token,last_login = :last_login WHERE id = :id');
+        $this->db->query("UPDATE $location SET token = :token,last_login = :last_login WHERE id = :id");
         $this->db->bind(':token', $token);
         $this->db->bind(':last_login', date($date['date']));
         $this->db->bind(':id', $id);
@@ -90,7 +89,7 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $email = filter_var(strtolower($_POST['email_to_be_activated']), FILTER_VALIDATE_EMAIL);
             $selectedOption = filter_var($_POST['selectedOption']);
-            $check_email = $this->findUserByEmail($email);
+            $check_email = $this->findUserByEmail($email, 'users');
             if ($check_email !== false) {
                 $seller_id = 'AG-' . rand(1000000, 10000000);
                 $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
@@ -98,7 +97,7 @@ class Authenticate extends Model
                 $this->db->bind(':seller_id', $seller_id);
                 $this->db->bind(':id', $check_email->id);
                 if ($this->db->execute()) {
-                    $check_email_again = $this->findUserByEmail($email);
+                    $check_email_again = $this->findUserByEmail($email, 'users');
                     $check_email_again->seller_account_details = $this->getUserAccountType($check_email_again->account_type);
                     $msg['data'] = $check_email_again;
                     $msg['msg'] = "Successfully updated user account type!";
@@ -234,7 +233,7 @@ class Authenticate extends Model
             $email = $result['data']['customer']['email'];
 
             if ($result['data']['status'] == 'success') {
-                $check_email = $this->findUserByEmail($email);
+                $check_email = $this->findUserByEmail($email, 'users');
                 if ($check_email != false) {
                     $this->db->query("INSERT INTO transactions (trans_reference,amount,currency,user_email,trans_date,trans_status) VALUES (:reference,:amount,:currency,:email,:trans_date,:status)");
                     $this->db->bind(':reference', $result['data']['reference']);
@@ -263,7 +262,7 @@ class Authenticate extends Model
             $email = filter_var(strtolower($data['email']), FILTER_VALIDATE_EMAIL);
             if ($email == true) {
                 $data['email']  = $email;
-                $check_email = $this->findUserByEmail($email);
+                $check_email = $this->findUserByEmail($email, 'users');
                 if ($check_email == false) {
                     if ($data['password'] === $data['confirm_password']) {
                         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -381,7 +380,7 @@ class Authenticate extends Model
             $email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
 
             if ($email_valid == true) {
-                $check_email = $this->findUserByEmail($email);
+                $check_email = $this->findUserByEmail($email, 'users');
                 if ($check_email != false) {
                     $rand = rand(1000, 10000);
                     $this->db->query('UPDATE users SET user_recover_id = :recovery_code WHERE email = :email');
@@ -435,9 +434,9 @@ class Authenticate extends Model
         return $msg;
     }
     //find user by email
-    public function findUserByEmail($email)
+    public function findUserByEmail($email, $table)
     {
-        $this->db->query('SELECT * FROM users WHERE email = :email');
+        $this->db->query("SELECT * FROM $table WHERE email = :email");
         $this->db->bind(':email', $email);
         $row = $this->db->singleResult();
         if ($this->db->rowCount() > 0) {
@@ -528,7 +527,7 @@ class Authenticate extends Model
             $email = filter_var(strtolower($email), FILTER_VALIDATE_EMAIL);
             if ($email == true) {
                 $confirm_code = filter_var($confirm_code);
-                $check_email = $this->findUserByEmail($email);
+                $check_email = $this->findUserByEmail($email, 'users');
                 if ($check_email != false) {
                     /////////MATCH THE CONFIRMATION CODE
                     if ($check_email->activated == '0') {
@@ -565,10 +564,14 @@ class Authenticate extends Model
     //get user by ID
     public function getUserById($id)
     {
-        $this->db->query('SELECT * FROM users WHERE id = :id');
-        $this->db->bind(':id', $id);
+        $this->db->query('SELECT * FROM users WHERE seller_id = :seller_id LIMIT 1');
+        $this->db->bind(':seller_id', $id);
         $row = $this->db->singleResult();
-        return $row;
+        if ($this->db->rowCount() > 0) {
+            return $row;
+        } else {
+            return false;
+        }
     }
 
     //verify user token
@@ -595,5 +598,51 @@ class Authenticate extends Model
 
         //set session token
         $_SESSION['token'] = $token;
+    }
+
+     public function adminLogin()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $email = strtolower(trim($_POST['email']));
+            $password = trim($_POST['password']);
+
+                if (!(empty($email) || empty($password))) {
+                    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+                    $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+                    if($email == true){
+
+                        $this->db->query('SELECT * FROM admins WHERE email= :email');
+                        $this->db->bind(':email', $email);
+                        $row = $this->db->singleResult();
+                        if($row == true){
+                            $hashedPassword = $row->password;
+                            if (password_verify($password, $hashedPassword)) {
+
+                            $updated_token = $this->updateUserToken($row->id, 'admins');
+                                $result['status'] = '1';
+                                $result['token'] = $updated_token;
+                                $result['data'] = $row;
+                            }else{
+                                
+                                $result['message'] = 'enter valid password or email';
+                                $result['status'] = '0';
+                            }
+                        }else{
+
+                            $result['message'] = 'Please contact admin';
+                        }
+                        
+                    }else{
+                        $result['message'] = 'Please a provide email ';
+                        $result['status'] = '0';
+                    }
+
+                } else {
+                    $result['message'] = 'Please provide email and password';
+                    $result['status'] = '0';
+                }
+            return $result;
+        }
     }
 }
