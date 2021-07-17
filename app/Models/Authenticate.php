@@ -91,10 +91,15 @@ class Authenticate extends Model
             $selectedOption = filter_var($_POST['selectedOption']);
             $check_email = $this->findUserByEmail($email, 'users');
             if ($check_email !== false) {
-                $seller_id = 'AG-' . rand(1000000, 10000000);
-                $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
+                if($check_email->seller_id==null){
+                $seller_id = 'AG-' . rand(1000000, 10000000); 
+                $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id '); 
+                $this->db->bind(':seller_id', $seller_id);  
+                }else{
+                $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id '); 
+                }
                 $this->db->bind(':account_type', $selectedOption);
-                $this->db->bind(':seller_id', $seller_id);
+                
                 $this->db->bind(':id', $check_email->id);
                 if ($this->db->execute()) {
                     $check_email_again = $this->findUserByEmail($email, 'users');
