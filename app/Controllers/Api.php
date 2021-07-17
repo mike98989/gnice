@@ -60,6 +60,18 @@ class Api extends Controller
         }
     }
 
+    public function change_password()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $change = $this->model('Authenticate')->change_password();
+            print_r(json_encode($change));
+        } else {
+            echo 'invalid request';
+            exit;
+        }
+    }
+
     public function fetch_all_categories_and_sub_categories()
     {
         $header = apache_request_headers();
@@ -134,7 +146,6 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Product')->getAllProductOfASeller($_GET['seller_id']);
-            header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
             echo 'invalid request';
@@ -157,6 +168,17 @@ class Api extends Controller
         $header = apache_request_headers(); 
         if(isset($header['gnice-authenticate'])){
             $result = $this->model('Authenticate')->updateUserAccountType();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
+    public function update_user_profile(){
+        $header = apache_request_headers(); 
+        if(isset($header['gnice-authenticate'])){
+            $result = $this->model('Authenticate')->updateUserData();
             print_r(json_encode($result));
         } else {
             echo "invalid request";
