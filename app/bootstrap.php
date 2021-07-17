@@ -1,6 +1,5 @@
 <?php
 //header('Access-Control-Allow-Origin: *');
-session_start();
 
 //load config
 require_once 'config/Config.php';
