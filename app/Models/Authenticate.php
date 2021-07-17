@@ -23,7 +23,7 @@ class Authenticate extends Model
                         $msg['status'] = "0";
                         $msg['msg'] = "Your account is not yet active. Please click on the validation link sent to your email or contact administrator!";
                     } else {
-
+                        $row->password = null;
                         if(($row->seller=='1')&&($row->account_type!='0')){
                         $row->seller_account_details = $this->getUserAccountType($row->account_type);
                         }
@@ -87,6 +87,9 @@ class Authenticate extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token);
+            if ($verifyToken) {
             $email = filter_var(strtolower($_POST['email_to_be_activated']), FILTER_VALIDATE_EMAIL);
             $selectedOption = filter_var($_POST['selectedOption']);
             $check_email = $this->findUserByEmail($email, 'users');
@@ -107,13 +110,18 @@ class Authenticate extends Model
                     $msg['data'] = $check_email_again;
                     $msg['msg'] = "Successfully updated user account type!";
                     $msg['status'] = '1';
+                    } else {
+                        return false;
+                    }
                 } else {
-                    return false;
+                    $msg['msg'] =  "invalid email address";
+                    $msg['status'] = '0';
                 }
-            } else {
+            }else {
                 $msg['msg'] =  "invalid token";
                 $msg['status'] = '0';
             }
+            
         } else {
             $msg['msg'] =  "invalid request";
             $msg['status'] = '0';
@@ -137,7 +145,7 @@ class Authenticate extends Model
                 $this->db->bind(':whatsapp', $data['whatsapp']);
                 $this->db->bind(':id', $verifyToken->id);
                 if ($this->db->execute()) {
-                    $check_data = $this->findUserByEmail($verifyToken->email);
+                    $check_data = $this->findUserByEmail($verifyToken->email, 'users');
                     $msg['data'] = $check_data;
                     $msg['msg'] = "Successfully updated user details!";
                     $msg['status'] = '1';

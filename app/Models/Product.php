@@ -342,11 +342,8 @@ class Product extends Model
     {
         $header = apache_request_headers();
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
-
-        if (isset($header['gnice-authenticate'])) {
-            $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id");
+            $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1");
             $this->db->bind(':seller_id', $seller_id);
-
             if ($this->db->resultSet()) {
                 $result['rowCounts'] = $this->db->rowCount();
                 $result['data'] = $this->db->resultSet();
@@ -356,7 +353,7 @@ class Product extends Model
                 $result['status'] = '0';
             }
             return $result;
-        }
+        
     }
 
     public function messageProductSeller()
