@@ -43,6 +43,7 @@ class Product extends Model
                             INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                             INNER JOIN category ON category.id = products.category
                             WHERE product_code = :product_code
+                            AND status = 1
                         ");
             $this->db->bind(':product_code', $product_code);
 
@@ -123,6 +124,7 @@ class Product extends Model
                             INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                             INNER JOIN category ON category.id = products.category
                             INNER JOIN most_view ON most_view.product_code = products.product_code
+                            WHERE products.status = 1
                             ");
 
             if ($this->db->resultSet()) {
@@ -257,7 +259,7 @@ class Product extends Model
                         FROM products
                         INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                         INNER JOIN category ON category.id = products.category
-                        WHERE products.category = :category_id
+                        WHERE products.category = :category_id AND products.status = 1
                             ");
             $this->db->bind(':category_id', $category_id);
 
@@ -514,7 +516,6 @@ class Product extends Model
         if (isset($header['gnice-authenticate'])) {
 
             $deleteImage = [];
-            
 
         }
     }

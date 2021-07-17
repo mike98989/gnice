@@ -280,3 +280,7 @@ function deleteFile($itemName, $location)
      * 
      */
 }
+
+function redirect($location){
+	header('location: ' . APP_URL . '/'. $location);
+}

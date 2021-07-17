@@ -1,29 +1,22 @@
 <?php
 
+header('Content-type: application/json');
 class AdminLogin extends Controller{
-    // public function __construct(){
-    //     $this->auth = $this->model('Authenticate');
-    // }
-   public function index(){
-     $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            
-            $result = $this->model('Authenticate')->adminLogin();
-            print_r($result);
+    public function __construct(){
+    
+        if(isset($_SESSION['isLoggedIn']) || $_SESSION['type'] === 'admin' ){
+            redirect('admin/dashboard');
         }
-        $data = [];
-        $js = ['controllers/loginController.js'];
-        $this->view('Admin/login',$include_header=false,$data,'_type1',$js);
     }
-
-    // public function login(){
-    //     $header = apache_request_headers();
-    //     if (isset($header['gnice-authenticate'])) {
-    //         echo 'invalid request';
-    //         $result = $this->model('Authenticate')->adminLogin();
-    //         print_r(json_encode($result));
-    //     }
-    // }
+   public function index(){
+    //    print_r($_SESSION);
+    }
+    
+    public function login(){
+        $result = $this->model('Authenticate')->adminLogin();
+        print_r(json_encode($_SESSION));
+        // redirect('admin/dashboad');
+    }
 }
 
 

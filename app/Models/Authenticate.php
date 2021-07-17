@@ -601,17 +601,14 @@ class Authenticate extends Model
         }
     }
 
-    public function updateToken($email)
-    {
-        $token = generateToken(50);
-        $this->db->query('UPDATE users SET token = :token WHERE email = :email ');
-        $this->db->bind(':email', $email);
-        $this->db->bind(':token', $token);
-        $this->db->execute();
+    // public function createUserSession($user){
+    //     session_start();
+    //     $_SESSION['user_id'] = $user->id;
+    //     $_SESSION['user_email'] = $user->email;
+    //     $_SESSION['user_name'] = $user->name;
+    //     $_SESSION['token'] = $user->token;
+    // }
 
-        //set session token
-        $_SESSION['token'] = $token;
-    }
 
      public function adminLogin()
     {
@@ -620,40 +617,50 @@ class Authenticate extends Model
             $email = strtolower(trim($_POST['email']));
             $password = trim($_POST['password']);
 
-                if (!(empty($email) || empty($password))) {
+                if(!(empty($email) || empty($password))) {
                     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
                     $email = filter_var($email, FILTER_VALIDATE_EMAIL);
                     if($email == true){
 
-                        $this->db->query('SELECT * FROM admins WHERE email= :email');
+                        $this->db->query('SELECT id,name, email ,phone, last_login, password FROM admins WHERE email= :email AND status = 1');
                         $this->db->bind(':email', $email);
                         $row = $this->db->singleResult();
                         if($row == true){
                             $hashedPassword = $row->password;
-                            if (password_verify($password, $hashedPassword)) {
-
-                            $updated_token = $this->updateUserToken($row->id, 'admins');
-                                $result['status'] = '1';
-                                $result['token'] = $updated_token;
-                                $result['data'] = $row;
-                            }else{
+                            // if (password_verify($password, $hashedPassword)) {
+                            if($password === $hashedPassword){
                                 
+                                $updated_token = $this->updateUserToken($row->id, 'admins');
+
+                                session_start();
+                                $_SESSION['token'] = $updated_token;
+                                $_SESSION['isLoggedIn'] = true;
+                                $_SESSION['type'] = 'admin';
+
+                                $_SESSION['data'] = $row;
+                                $result['status'] = '1';
+                                //$result['data'] = $row;
+
+                            }else{
                                 $result['message'] = 'enter valid password or email';
                                 $result['status'] = '0';
                             }
                         }else{
-
+                            
                             $result['message'] = 'Please contact admin';
+                            $result['status'] = '0';
                         }
                         
                     }else{
                         $result['message'] = 'Please a provide email ';
                         $result['status'] = '0';
+                        $result['token'] = '';
                     }
-
+                    
                 } else {
                     $result['message'] = 'Please provide email and password';
                     $result['status'] = '0';
+                    $result['token'] = '';
                 }
             return $result;
         }
