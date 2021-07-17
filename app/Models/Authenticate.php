@@ -24,6 +24,9 @@ class Authenticate extends Model
                         $msg['msg'] = "Your account is not yet active. Please click on the validation link sent to your email or contact administrator!";
                     } else {
 
+                        if(($row->seller=='1')&&($row->account_type!='0')){
+                        $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                        }
                         $updated_token = $this->updateUserToken($row->id, 'users');
                         if ((isset($_POST['source'])) && ($_POST['source'] == 'browser')) {
                             @session_start();
@@ -50,6 +53,13 @@ class Authenticate extends Model
             $msg['status'] = '0';
         }
         return $msg;
+    }
+
+    public function getUserAccountType($account_type){
+        $this->db->query('SELECT title FROM seller_account_packages WHERE package_id= :id');
+        $this->db->bind(':id', $account_type);
+        $row = $this->db->singleResult();
+        return $row;
     }
 
     /////UPDATE TOKEN AND LAST LOGIN
@@ -81,13 +91,19 @@ class Authenticate extends Model
             $selectedOption = filter_var($_POST['selectedOption']);
             $check_email = $this->findUserByEmail($email, 'users');
             if ($check_email !== false) {
-                $seller_id = 'AG-' . rand(1000000, 10000000);
-                $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
+                if($check_email->seller_id==null){
+                $seller_id = 'AG-' . rand(1000000, 10000000); 
+                $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id '); 
+                $this->db->bind(':seller_id', $seller_id);  
+                }else{
+                $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id '); 
+                }
                 $this->db->bind(':account_type', $selectedOption);
-                $this->db->bind(':seller_id', $seller_id);
+                
                 $this->db->bind(':id', $check_email->id);
                 if ($this->db->execute()) {
                     $check_email_again = $this->findUserByEmail($email, 'users');
+                    $check_email_again->seller_account_details = $this->getUserAccountType($check_email_again->account_type);
                     $msg['data'] = $check_email_again;
                     $msg['msg'] = "Successfully updated user account type!";
                     $msg['status'] = '1';
@@ -106,6 +122,41 @@ class Authenticate extends Model
         return $msg;
     }
 
+
+    public function updateUserData()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $data = filter_var_array($_POST);
+            $verifyToken = $this->verifyToken($token);
+            if ($verifyToken) {
+                $this->db->query('UPDATE users SET fullname = :fullname, phone=:phone, whatsapp=:whatsapp WHERE id = :id ');
+                $this->db->bind(':fullname', $data['fullname']);
+                $this->db->bind(':phone', $data['phone']);
+                $this->db->bind(':whatsapp', $data['whatsapp']);
+                $this->db->bind(':id', $verifyToken->id);
+                if ($this->db->execute()) {
+                    $check_data = $this->findUserByEmail($verifyToken->email, 'users');
+                    $msg['data'] = $check_data;
+                    $msg['msg'] = "Successfully updated user details!";
+                    $msg['status'] = '1';
+                    $_SESSION['data'] = $check_data;
+
+                } else {
+                    return false;
+                }
+            } else {
+                $msg['msg'] =  "invalid token";
+                $msg['status'] = '0';
+            }
+        } else {
+            $msg['msg'] =  "invalid request";
+            $msg['status'] = '0';
+        }
+
+        return $msg;
+    }
 
 
     /////////GENERATE PAYSTACK CHECKOUT
@@ -438,6 +489,42 @@ class Authenticate extends Model
         return $msg;
     }
 
+    public function change_password()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $data = filter_var_array($_POST);
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token);
+            if ($verifyToken) {
+                if ($verifyToken->activated != '0') {
+                        if($data['password']==$data['confirm_password']){
+                        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+                        $this->db->query('UPDATE users SET password = :password WHERE token = :token');
+                        $this->db->bind(':token', $token);
+                        $this->db->bind(':password', $hashedPassword);
+                        $this->db->execute();
+                        $msg['msg'] =  "Successfully changed your account password.";
+                        $msg['status'] = '1';
+                        }else{
+                        $msg['msg'] =  "Passwords do not match! Please try again.";
+                        $msg['status'] = '0';    
+                        }
+                } else {
+                    $msg['msg'] =  "Your account is not activated yet. Please use the 'I have a confirmation code' or 'Resend confirmation code' link.";
+                    $msg['status'] = '0';
+                }
+            } else {
+                $msg['msg'] =  "Invalid token";
+                $msg['status'] = '-1';
+            }
+        } else {
+            $msg['msg'] =  "invalid request";
+            $msg['status'] = '0';
+        }
+        return $msg;
+    }
+
     public function confirm_user_signup($email, $confirm_code)
     {
         $header = apache_request_headers();
@@ -495,7 +582,7 @@ class Authenticate extends Model
     //verify user token
     public function verifyToken($token)
     {
-        $this->db->query('SELECT id,token,activated,user_recover_id FROM users WHERE token = :token');
+        $this->db->query('SELECT id,token,email,activated,user_recover_id FROM users WHERE token = :token');
         $this->db->bind(':token', $token);
         $row = $this->db->singleResult();
         // check row

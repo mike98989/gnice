@@ -13,7 +13,7 @@ class Product extends Model
                         FROM products
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                        LEFT JOIN users ON users.seller_id = products.seller_id ");
+                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.id DESC");
 
             if ($this->db->resultSet()) {
                 $result['rowCounts'] = $this->db->rowCount();
@@ -66,7 +66,7 @@ class Product extends Model
             $uploader = uploadMultiple('pro', 'products', 2);
             //Filter sanitize all input as string to remove all unwanted scripts and tags
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
+            
             //get renamed pictures from helper functions
             $image = $uploader['imageUrl'];
             // $product_code = rand(1000000, 100000000);
@@ -106,7 +106,7 @@ class Product extends Model
                 $result['message'] = 'create product failed';
                 $result['status'] = '0';
                 $result['errors'] = $uploader['image_error'];
-                return false;
+                //return false;
             }
             return $result;
         }

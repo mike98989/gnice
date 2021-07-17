@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 11, 2021 at 05:39 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.15
+-- Host: localhost:8889
+-- Generation Time: Jul 13, 2021 at 01:26 AM
+-- Server version: 5.7.32
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -30,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `banners` (
   `id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0
+  `status` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -1585,7 +1584,7 @@ CREATE TABLE `hero` (
   `title` varchar(50) NOT NULL,
   `sub_title` varchar(100) NOT NULL,
   `image` varchar(200) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0
+  `status` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -2436,36 +2435,6 @@ INSERT INTO `lga` (`State`, `Lga`, `Lgaid`) VALUES
 ('RIVERS', 'Onelga', 824),
 ('BORNO', 'Maiduguri .M.C', 826),
 ('F.C.T.', 'AMAC', 827);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `messages`
---
-
-CREATE TABLE `messages` (
-  `message_id` bigint(20) NOT NULL,
-  `sender_name` varchar(255) NOT NULL,
-  `sender_tel` varchar(255) NOT NULL,
-  `sender_email` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `date` datetime NOT NULL,
-  `product_code` bigint(20) NOT NULL,
-  `seller_id` varchar(255) NOT NULL,
-  `status` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`message_id`, `sender_name`, `sender_tel`, `sender_email`, `message`, `date`, `product_code`, `seller_id`, `status`) VALUES
-(1, 'collins', '9549859486', 'collin@email.com', 'this is a test message', '2021-07-11 16:54:53', 88230249, 'AG-8614937', 0),
-(2, 'mark', '0908465766', 'collin@email.com', 'this is a test message', '2021-07-11 17:02:22', 88230249, 'AG-8614937', 0),
-(3, 'mark', '0908465766', 'collin@email.com', 'this is a test message', '2021-07-11 17:15:56', 55598537, 'AG-91933000', 0),
-(4, 'mark', '07086483449', 'collin@email.com', 'this is a test message', '2021-07-11 17:21:34', 55598537, 'AG-91933000', 0),
-(5, 'mark', '07086483449', 'collin@email.com', 'this is a test message another test message', '2021-07-11 17:34:36', 55598537, 'AG-91933000', 0),
-(6, 'mark', '07086483449', 'collin@email.com', 'this is a test message another test message', '2021-07-11 17:36:04', 55598537, 'AG-91933000', 0);
 
 -- --------------------------------------------------------
 
@@ -6204,28 +6173,28 @@ CREATE TABLE `products` (
   `product_code` varchar(255) NOT NULL,
   `color` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `category` varchar(255) DEFAULT NULL,
   `sub_category` varchar(255) DEFAULT NULL,
-  `image` text DEFAULT NULL,
+  `image` text,
   `price` varchar(255) DEFAULT NULL,
   `date_added` datetime DEFAULT NULL,
   `seller_id` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
   `lga` varchar(255) DEFAULT NULL,
-  `landmark` text NOT NULL,
+  `land_mark` tinytext,
   `model` varchar(255) DEFAULT NULL,
-  `conditon` varchar(255) DEFAULT NULL,
+  `condition_state` varchar(255) DEFAULT NULL,
   `ram` smallint(6) DEFAULT NULL,
   `internal_storage` int(11) DEFAULT NULL,
   `resolution` varchar(255) DEFAULT NULL,
   `sim` varchar(255) DEFAULT NULL,
   `battery` smallint(6) DEFAULT NULL,
-  `exchange_possible` tinyint(4) NOT NULL DEFAULT 0,
+  `exchange_possible` tinyint(4) NOT NULL DEFAULT '0',
   `main_camera` varchar(255) DEFAULT NULL,
   `selfie_camera` varchar(255) DEFAULT NULL,
-  `negotiable` tinyint(1) DEFAULT 0,
-  `delivery_available` int(11) DEFAULT 0,
+  `negotiable` tinyint(1) DEFAULT '0',
+  `delivery_available` int(11) DEFAULT '0',
   `second_condition` varchar(255) DEFAULT NULL,
   `transmission_type_vehicle` varchar(255) DEFAULT NULL,
   `mileage_vehicle` int(11) DEFAULT NULL,
@@ -6242,14 +6211,14 @@ CREATE TABLE `products` (
   `number_of_bedrooms` int(11) DEFAULT NULL,
   `property_type` varchar(255) DEFAULT NULL,
   `number_of_bathrooms` int(11) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT 1
+  `status` tinyint(4) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `lga`, `landmark`, `model`, `conditon`, `ram`, `internal_storage`, `resolution`, `sim`, `battery`, `exchange_possible`, `main_camera`, `selfie_camera`, `negotiable`, `delivery_available`, `second_condition`, `transmission_type_vehicle`, `mileage_vehicle`, `registered_vehicle`, `vin_vehicle`, `horse_power_vehicle`, `engine-size`, `year_of_manufacture`, `operating_system`, `hard_drive_size`, `fuel`, `seats_vehicle`, `property_size`, `number_of_bedrooms`, `property_type`, `number_of_bathrooms`, `status`) VALUES
+INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `lga`, `land_mark`, `model`, `condition_state`, `ram`, `internal_storage`, `resolution`, `sim`, `battery`, `exchange_possible`, `main_camera`, `selfie_camera`, `negotiable`, `delivery_available`, `second_condition`, `transmission_type_vehicle`, `mileage_vehicle`, `registered_vehicle`, `vin_vehicle`, `horse_power_vehicle`, `engine-size`, `year_of_manufacture`, `operating_system`, `hard_drive_size`, `fuel`, `seats_vehicle`, `property_size`, `number_of_bedrooms`, `property_type`, `number_of_bathrooms`, `status`) VALUES
 (4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-8614937', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-91933000', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '2021-06-22 12:49:56', 'AG-93843232', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
@@ -6262,7 +6231,55 @@ INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `descrip
 (13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '2021-06-22 13:07:34', 'AG-79867936', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (14, 'Airpods', '57247936', 'white', 'Headset', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '2021-06-22 13:19:11', 'AG-67980776', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (15, 'Apple', '3875669', 'white', 'airpod max', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '2021-06-22 13:21:18', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
-(26, 'alert(&#39;helllo&#39;)', '60969158', 'white )  &#34;DELETE * from products&#34;)', 'Toyota camry', 'lorem ipsum long description long', '1', '3', 'pro60d4a65648934010000000.jpg,pro60d4a656493d0010000000.png,pro60d4a65649e4c000001000.jpg,pro60d4a6564a3ee000000001.jpg', '1000', '0000-00-00 00:00:00', '', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 0);
+(28, NULL, '59344874', NULL, 'Xaomi Phone', NULL, '2', NULL, 'pro60e9aea659bfb001000000.jpg', '12000', NULL, 'AG-3195923', '27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(29, NULL, '34605763', NULL, 'Land for Sale in Jos', NULL, '1', '2', 'pro60e9b050529ae000010000.jpg,pro60e9b05052b9f000000100.jpg', '13000000', NULL, 'AG-3195923', '5', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(30, NULL, '77954049', NULL, 'Land For Sale', NULL, '1', NULL, 'pro60e9cd38db2f1001000000.jpg,pro60e9cd38db6cd000000010.jpg', '200000', NULL, 'AG-3195923', '6', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'undefined', NULL, '2', NULL, 1),
+(31, NULL, '4926210', NULL, 'New gold Ring', NULL, '5', '38', 'pro60ebfa5392ec9000000100.jpg,pro60ebfa5393013000000001.jpg', '12000', NULL, 'AG-3195923', '6', '4', 'undefined', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(32, NULL, '66452675', NULL, 'This  is the Title', NULL, '5', '39', 'pro60eca73b194d8000000001.jpg,pro60eca73b19b50000000001.jpg', '2200', NULL, 'AG-3195923', NULL, NULL, 'undefined', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(33, NULL, '20262119', NULL, 'Free ADs placement', NULL, '3', '8', 'pro60eceaa1f0ab8000001000.jpg,pro60eceaa1f138f100000000.jpg', NULL, NULL, 'AG-7220781', '3', '5', 'Legushi Beach', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products2`
+--
+
+CREATE TABLE `products2` (
+  `id` bigint(20) NOT NULL,
+  `brand` varchar(255) NOT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `color` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `long_description` text NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `sub_category` varchar(255) NOT NULL,
+  `image` text NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `seller_id` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `lga` varchar(255) NOT NULL,
+  `location` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products2`
+--
+
+INSERT INTO `products2` (`id`, `brand`, `product_code`, `color`, `name`, `short_description`, `long_description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `lga`, `location`) VALUES
+(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-8614937', '', '', 'Lugbe'),
+(5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-91933000', '', '', ''),
+(6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '2021-06-22 12:49:56', 'AG-93843232', '', '', ''),
+(7, 'HP', '19678428', 'silver', 'HP laptop envy', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d058e959f000001000.jpg,pro60d1d058e9aa7000100000.jpg,pro60d1d058e9f8a000001000.jpg', '90000', '2021-06-22 12:58:16', 'AG-60722385', '', '', ''),
+(8, 'Lenovo', '55860887', 'silver', 'Silver m4', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d0843ccb5000010000.jpg,pro60d1d0843d251010000000.jpg,pro60d1d0843d76c000010000.jpg', '70000', '2021-06-22 12:59:00', 'AG-90470554', '', '', ''),
+(9, 'Apple', '36376549', 'silver', 'macbook pro', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d0cf8926e000001000.jpg,pro60d1d0cf89786010000000.jpg,pro60d1d0cf89bd0000100000.jpg', '70000', '2021-06-22 13:00:15', 'AG-42990797', '', '', ''),
+(10, 'Apple', '78518873', 'black', 'Apple desktop', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d12697b21100000000.jpg', '70000', '2021-06-22 13:01:42', 'AG-79974221', '', '', ''),
+(11, 'Xaiomi', '30645954', 'black', 'Xaiomi headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d1cfee06e100000000.jpg', '70000', '2021-06-22 13:04:31', 'AG-19693443', '', '', ''),
+(12, 'Beats by Dre', '83291175', 'black, red', 'Headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d24460ce9000000100.jpg,pro60d1d2446126b001000000.jpg', '8000', '2021-06-22 13:06:28', 'AG-7748728', '', '', ''),
+(13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '2021-06-22 13:07:34', 'AG-79867936', '', '', ''),
+(14, 'Airpods', '57247936', 'white', 'Headset', 'lorem short description', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '2021-06-22 13:19:11', 'AG-67980776', '', '', ''),
+(15, 'Apple', '3875669', 'white', 'airpod max', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '2021-06-22 13:21:18', 'AG-67743888', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -6499,7 +6516,7 @@ CREATE TABLE `transactions` (
   `user_email` varchar(50) NOT NULL,
   `trans_date` varchar(100) NOT NULL,
   `trans_status` varchar(25) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1
+  `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -6527,7 +6544,8 @@ INSERT INTO `transactions` (`trans_id`, `trans_reference`, `amount`, `currency`,
 (18, 'boh5hvem0v', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-08T09:37:48.000Z', 'boh5hvem0v', 1),
 (19, 'rmcazjn9z8', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T09:56:28.000Z', 'rmcazjn9z8', 1),
 (20, '9sk1p3zxz9', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T09:58:38.000Z', '9sk1p3zxz9', 1),
-(21, '5ey2k8zt6q', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T10:22:22.000Z', '5ey2k8zt6q', 1);
+(21, '5ey2k8zt6q', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T10:22:22.000Z', '5ey2k8zt6q', 1),
+(22, 'd9m7wn74w1', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-13T01:16:00.000Z', 'success', 1);
 
 -- --------------------------------------------------------
 
@@ -6540,22 +6558,22 @@ CREATE TABLE `users` (
   `fullname` tinytext NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(45) NOT NULL,
-  `state` tinytext DEFAULT NULL,
-  `country` tinytext DEFAULT NULL,
+  `state` tinytext,
+  `country` tinytext,
   `whatsapp` varchar(25) DEFAULT NULL,
   `mobile1` varchar(25) DEFAULT NULL,
-  `seller` int(11) NOT NULL DEFAULT 0,
+  `seller` int(11) NOT NULL DEFAULT '0',
   `seller_id` varchar(25) DEFAULT NULL,
-  `account_type` int(11) NOT NULL DEFAULT 0,
-  `image` tinytext DEFAULT NULL,
-  `password` tinytext DEFAULT NULL,
-  `token` tinytext DEFAULT NULL,
+  `account_type` int(11) NOT NULL DEFAULT '0',
+  `image` tinytext,
+  `password` tinytext,
+  `token` tinytext,
   `last_login` datetime DEFAULT NULL,
   `signup_date` date DEFAULT NULL,
   `user_confirm_id` varchar(25) DEFAULT NULL,
   `user_recover_id` varchar(15) DEFAULT NULL,
-  `activated` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 0
+  `activated` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -6567,7 +6585,7 @@ INSERT INTO `users` (`id`, `fullname`, `email`, `phone`, `state`, `country`, `wh
 (38, 'John Doe', 'test@test.com', '08174077714', 'Fct', '', '', '', 1, 'AG-91933000', 1, 'default2.png', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'a4f6212765e6a42f595b1cc6e65b5c51779bf4805469952152737e4bb68cc32f9f03d5279dab3edda3862f42c1c314016cd56dc916b32ae9c33a75e8169f97ab', '2021-06-16 21:42:43', '2020-04-29', '63258', '', 1, 1),
 (39, 'Sunday', 'test3@test.com', '0703300000', '', 'Nigeria', '', '', 0, '', 3, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '2021-04-12 15:02:15', '0000-00-00', '', '', 1, 1),
 (40, 'George', 'directorate@test.com', '0703300000', '37', '', '', '', 0, '', 1, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '2021-04-12 15:35:33', '0000-00-00', '', '', 1, 1),
-(53, 'Michael Akpos', 'mike98989@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-3195923', 3, NULL, '$2y$10$74HpuFkCofdf5Tvj37T/..gmYT8MMIx94BZ9dK5LzVIk4I6.KLGim', 'd455103ab3a0a2902109b26748718c4a7b0057e6de6ff2633d85c8ece7f86f7a3b05b647add2b4889f714632d59367d500c122207ec7cde15d1486a7a3ef70f3', '2021-07-08 20:09:18', '2021-07-08', '4116', NULL, 1, 1);
+(54, 'Jonathan Michael', 'mike98989@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-7220781', 3, NULL, '$2y$10$BJJ6iGtLFgRa8Swwrma8uu92dkRYRIYw6r8lWcSMUkn622mRzjaXK', '0da2c11949d94930ea169b6cf29593b7f8cb88fbbc642fa171ba54bcd6ecfa48545965f8a23ae230e1483a03e235b565b502a912d2ed2300639132b04d02e85e', '2021-07-13 02:15:44', '2021-07-13', '9213', NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -6643,12 +6661,6 @@ ALTER TABLE `lga`
   ADD KEY `state` (`State`);
 
 --
--- Indexes for table `messages`
---
-ALTER TABLE `messages`
-  ADD PRIMARY KEY (`message_id`);
-
---
 -- Indexes for table `most_view`
 --
 ALTER TABLE `most_view`
@@ -6676,6 +6688,13 @@ ALTER TABLE `phone_models`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_code` (`product_code`);
+
+--
+-- Indexes for table `products2`
+--
+ALTER TABLE `products2`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `product_code` (`product_code`);
 
@@ -6793,12 +6812,6 @@ ALTER TABLE `lga`
   MODIFY `Lgaid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=828;
 
 --
--- AUTO_INCREMENT for table `messages`
---
-ALTER TABLE `messages`
-  MODIFY `message_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `most_view`
 --
 ALTER TABLE `most_view`
@@ -6826,7 +6839,13 @@ ALTER TABLE `phone_models`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `products2`
+--
+ALTER TABLE `products2`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `product_cart`
@@ -6868,20 +6887,19 @@ ALTER TABLE `sub_category`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

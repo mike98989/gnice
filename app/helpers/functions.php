@@ -209,7 +209,7 @@ function uploadMultiple($prefix, $location, $size)
             $fileTmp = $files['tmp_name'][$position];
             $fileSize = $files['size'][$position];
             $fileError = $files['error'][$position];
-
+            
             $fileExtention = explode('.', $fileName);
             $fileExtention = strtolower(end($fileExtention));
 
