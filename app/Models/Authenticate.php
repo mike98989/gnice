@@ -24,8 +24,8 @@ class Authenticate extends Model
                         $msg['msg'] = "Your account is not yet active. Please click on the validation link sent to your email or contact administrator!";
                     } else {
 
-                        if(($row->seller=='1')&&($row->account_type!='0')){
-                        $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                        if (($row->seller == '1') && ($row->account_type != '0')) {
+                            $row->seller_account_details = $this->getUserAccountType($row->account_type);
                         }
                         $updated_token = $this->updateUserToken($row->id, 'users');
                         if ((isset($_POST['source'])) && ($_POST['source'] == 'browser')) {
@@ -55,7 +55,8 @@ class Authenticate extends Model
         return $msg;
     }
 
-    public function getUserAccountType($account_type){
+    public function getUserAccountType($account_type)
+    {
         $this->db->query('SELECT title FROM seller_account_packages WHERE package_id= :id');
         $this->db->bind(':id', $account_type);
         $row = $this->db->singleResult();
@@ -91,15 +92,15 @@ class Authenticate extends Model
             $selectedOption = filter_var($_POST['selectedOption']);
             $check_email = $this->findUserByEmail($email, 'users');
             if ($check_email !== false) {
-                if($check_email->seller_id==null){
-                $seller_id = 'AG-' . rand(1000000, 10000000); 
-                $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id '); 
-                $this->db->bind(':seller_id', $seller_id);  
-                }else{
-                $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id '); 
+                if ($check_email->seller_id == null) {
+                    $seller_id = 'AG-' . rand(1000000, 10000000);
+                    $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
+                    $this->db->bind(':seller_id', $seller_id);
+                } else {
+                    $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id ');
                 }
                 $this->db->bind(':account_type', $selectedOption);
-                
+
                 $this->db->bind(':id', $check_email->id);
                 if ($this->db->execute()) {
                     $check_email_again = $this->findUserByEmail($email, 'users');
@@ -142,7 +143,6 @@ class Authenticate extends Model
                     $msg['msg'] = "Successfully updated user details!";
                     $msg['status'] = '1';
                     $_SESSION['data'] = $check_data;
-
                 } else {
                     return false;
                 }
@@ -498,7 +498,7 @@ class Authenticate extends Model
             $verifyToken = $this->verifyToken($token);
             if ($verifyToken) {
                 if ($verifyToken->activated != '0') {
-                        if($data['password']==$data['confirm_password']){
+                    if ($data['password'] == $data['confirm_password']) {
                         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
                         $this->db->query('UPDATE users SET password = :password WHERE token = :token');
                         $this->db->bind(':token', $token);
@@ -506,10 +506,10 @@ class Authenticate extends Model
                         $this->db->execute();
                         $msg['msg'] =  "Successfully changed your account password.";
                         $msg['status'] = '1';
-                        }else{
+                    } else {
                         $msg['msg'] =  "Passwords do not match! Please try again.";
-                        $msg['status'] = '0';    
-                        }
+                        $msg['status'] = '0';
+                    }
                 } else {
                     $msg['msg'] =  "Your account is not activated yet. Please use the 'I have a confirmation code' or 'Resend confirmation code' link.";
                     $msg['status'] = '0';
@@ -602,59 +602,124 @@ class Authenticate extends Model
     // }
 
 
-     public function adminLogin()
+    public function adminLogin()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $email = strtolower(trim($_POST['email']));
             $password = trim($_POST['password']);
 
-                if(!(empty($email) || empty($password))) {
-                    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-                    $email = filter_var($email, FILTER_VALIDATE_EMAIL);
-                    if($email == true){
+            if (!(empty($email) || empty($password))) {
+                $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+                $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+                if ($email == true) {
 
-                        $this->db->query('SELECT id,name, email ,phone, last_login, password FROM admins WHERE email= :email AND status = 1');
-                        $this->db->bind(':email', $email);
-                        $row = $this->db->singleResult();
-                        if($row == true){
-                            $hashedPassword = $row->password;
-                            // if (password_verify($password, $hashedPassword)) {
-                            if($password === $hashedPassword){
-                                
-                                $updated_token = $this->updateUserToken($row->id, 'admins');
+                    $this->db->query('SELECT id, name, email ,phone, last_login, password FROM admins WHERE email= :email AND status = 1');
+                    $this->db->bind(':email', $email);
+                    $row = $this->db->singleResult();
+                    if ($row == true) {
+                        $hashedPassword = $row->password;
+                        // if (password_verify($password, $hashedPassword)) {
+                        if ($password === $hashedPassword) {
 
-                                session_start();
-                                $_SESSION['token'] = $updated_token;
-                                $_SESSION['isLoggedIn'] = true;
-                                $_SESSION['type'] = 'admin';
+                            $updated_token = $this->updateUserToken($row->id, 'admins');
+                            $excluded = $row->password;
+                            unset($row->password, $row->id);
+                            session_start();
+                            $_SESSION['token'] = $updated_token;
+                            $_SESSION['isLoggedIn'] = true;
+                            $_SESSION['type'] = 'admin';
 
-                                $_SESSION['data'] = $row;
-                                $result['status'] = '1';
-                                //$result['data'] = $row;
+                            $_SESSION['data'] = $row;
+                            $result['status'] = '1';
+                            //$result['data'] = $row;
 
-                            }else{
-                                $result['message'] = 'enter valid password or email';
-                                $result['status'] = '0';
-                            }
-                        }else{
-                            
-                            $result['message'] = 'Please contact admin';
+                        } else {
+                            $result['message'] = 'enter valid password or email';
                             $result['status'] = '0';
                         }
-                        
-                    }else{
-                        $result['message'] = 'Please a provide email ';
+                    } else {
+
+                        $result['message'] = 'Please contact admin';
                         $result['status'] = '0';
-                        $result['token'] = '';
                     }
-                    
                 } else {
-                    $result['message'] = 'Please provide email and password';
+                    $result['message'] = 'Please a provide email ';
                     $result['status'] = '0';
-                    $result['token'] = '';
                 }
+            } else {
+                $result['message'] = 'Please provide email and password';
+                $result['status'] = '0';
+            }
             return $result;
         }
+    }
+
+    public function registerAdmin()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $data = filter_var_array($_POST);
+
+            $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
+            if ($email == true) {
+                $data['email']  = $email;
+                $check_email = $this->findUserByEmail($email, 'admins');
+                if ($check_email == false) {
+                    $data['status'] = 1;
+                    $data['reset_password'] = rand(1000, 10000);
+                    $subject = "Welcome to Gnice";
+                    $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
+                     <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
+                     <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
+                     <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
+
+                     </div>
+                     <div style='background:#fff;padding:10px'>
+                     <div style='text-align:left;font-size:14px;padding:0 20px'>
+                     <h3 style='color:#666666'>Hello  " . $data['name'] . " </h3>
+                     <p style='line-height:20px'>
+                     Welcome to <strong>Gnice Market Place</strong>. We bring you a world of possibilities. Get ready to explore.To validate your account, please complete your profile by entering this; <br/>
+                     <h1>" . $data['reset_password'] . "</h1><br/>
+                     <hr style='border:none; border-bottom:1px solid #E7E7E7' />
+                     </p>
+                     <p style='line-height:15px;text-align:left;font-size:12px;margin-top:15px'>
+                     If you did not associate your address with a Gnice account, please ignore this message.
+                     </p>
+                     </div>
+                     </div>
+                     </div>
+                     </div>";
+                    $send_mail = $this->send_mail($email, $data['name'], $subject, $html_message);
+                    foreach (array_keys($data) as $key) {
+                        $fields[] = $key;
+                        $key_fields[] = ":" . $key;
+                        $fields_imploded = implode(",", $fields);
+                        $keys_imploded = implode(",", $key_fields);
+                    }
+
+                    $this->db->query('INSERT INTO users (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
+                    foreach (array_keys($data) as $key) {
+                        $this->db->bind(":" . $key, $data[$key]);
+                    }
+                    if ($this->db->execute()) {
+                        $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
+                        $msg['status'] = '1';
+                    } else {
+                        return false;
+                    }
+                } else {
+                    $result['message'] = 'Please a email is already in use';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'Please a provide email ';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request ';
+        }
+
+        return $result;
     }
 }

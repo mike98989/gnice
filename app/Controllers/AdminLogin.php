@@ -4,12 +4,12 @@ header('Content-type: application/json');
 class AdminLogin extends Controller{
     public function __construct(){
     
-        if(isset($_SESSION['isLoggedIn']) || $_SESSION['type'] === 'admin' ){
+        if(isset($_SESSION['isLoggedIn']) && $_SESSION['type'] === 'admin' ){
             redirect('admin/dashboard');
         }
     }
-   public function index(){
-    //    print_r($_SESSION);
+    public function index(){
+        //    print_r($_SESSION);
     }
     
     public function login(){
@@ -19,5 +19,3 @@ class AdminLogin extends Controller{
     }
 }
 
-
-?>
