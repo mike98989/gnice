@@ -1,14 +1,17 @@
 <?php
 
-class AdminDashboard extends Controller{
+class AdminDashboard extends Controller
+{
 
-    public function __construct(){
-        if(!isset($_SESSION['isLoggedIn']) || $_SESSION['type'] !== 'admin' ){
+    public function __construct()
+    {
+        if (!isset($_SESSION['isLoggedIn']) || $_SESSION['type'] !== 'admin') {
             session_destroy();
-            redirect('admin/login');
+            redirect('admin/login', true, 303);
         }
     }
 
-    public function index(){}
-    
+    public function index()
+    {
+    }
 }

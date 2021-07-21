@@ -209,7 +209,7 @@ function uploadMultiple($prefix, $location, $size)
             $fileTmp = $files['tmp_name'][$position];
             $fileSize = $files['size'][$position];
             $fileError = $files['error'][$position];
-            
+
             $fileExtention = explode('.', $fileName);
             $fileExtention = strtolower(end($fileExtention));
 
@@ -249,12 +249,12 @@ function uploadMultiple($prefix, $location, $size)
             }
         }
     }
-        // return implode(',',$uploaded);
-        $result['image_error'] = implode(',', $failed);
-        $result['imageUrl'] = implode(',', $uploaded);
-        
-        // return $result;
-        return $result;
+    // return implode(',',$uploaded);
+    $result['image_error'] = implode(',', $failed);
+    $result['imageUrl'] = implode(',', $uploaded);
+
+    // return $result;
+    return $result;
 }
 
 function deleteFile($itemName, $location)
@@ -281,6 +281,7 @@ function deleteFile($itemName, $location)
      */
 }
 
-function redirect($location){
-	header('location: ' . APP_URL . '/'. $location);
+function redirect($location, $isbool, $http_code)
+{
+    header('location: ' . APP_URL . '/' . $location, $isbool, $http_code);
 }

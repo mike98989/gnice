@@ -130,7 +130,7 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
             $data = filter_var_array($_POST);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
                 $this->db->query('UPDATE users SET fullname = :fullname, phone=:phone, whatsapp=:whatsapp WHERE id = :id ');
                 $this->db->bind(':fullname', $data['fullname']);
@@ -165,7 +165,7 @@ class Authenticate extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
                 $email = filter_var(strtolower($_POST['email']), FILTER_VALIDATE_EMAIL);
                 $amount = filter_var($_POST['amount']);
@@ -457,7 +457,7 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
                 $confirm_code = filter_var($data['confirm_code']);
                 /////////MATCH THE CONFIRMATION CODE
@@ -495,7 +495,7 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
                 if ($verifyToken->activated != '0') {
                     if ($data['password'] == $data['confirm_password']) {
@@ -580,9 +580,9 @@ class Authenticate extends Model
     }
 
     //verify user token
-    public function verifyToken($token)
+    public function verifyToken($token, $location)
     {
-        $this->db->query('SELECT id,token,email,activated,user_recover_id FROM users WHERE token = :token');
+        $this->db->query("SELECT id,token,email,activated,user_recover_id FROM $location WHERE token = :token");
         $this->db->bind(':token', $token);
         $row = $this->db->singleResult();
         // check row
@@ -602,7 +602,7 @@ class Authenticate extends Model
     // }
 
 
-    public function adminLogin()
+    public function loginAdmin()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
@@ -614,13 +614,13 @@ class Authenticate extends Model
                 $email = filter_var($email, FILTER_VALIDATE_EMAIL);
                 if ($email == true) {
 
-                    $this->db->query('SELECT id, name, email ,phone, last_login, password FROM admins WHERE email= :email AND status = 1');
+                    $this->db->query('SELECT id, name, email ,phone, last_login,privilege password FROM admins WHERE email= :email AND status = 1');
                     $this->db->bind(':email', $email);
                     $row = $this->db->singleResult();
                     if ($row == true) {
                         $hashedPassword = $row->password;
-                        // if (password_verify($password, $hashedPassword)) {
-                        if ($password === $hashedPassword) {
+                        if (password_verify($password, $hashedPassword)) {
+                            // if ($password === $hashedPassword) {
 
                             $updated_token = $this->updateUserToken($row->id, 'admins');
                             $excluded = $row->password;
@@ -629,6 +629,7 @@ class Authenticate extends Model
                             $_SESSION['token'] = $updated_token;
                             $_SESSION['isLoggedIn'] = true;
                             $_SESSION['type'] = 'admin';
+                            $_SESSION['privilege'] = $row->privilege;
 
                             $_SESSION['data'] = $row;
                             $result['status'] = '1';
@@ -659,17 +660,17 @@ class Authenticate extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $data = filter_var_array($_POST);
-
-            $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
-            if ($email == true) {
-                $data['email']  = $email;
-                $check_email = $this->findUserByEmail($email, 'admins');
-                if ($check_email == false) {
-                    $data['status'] = 1;
-                    $data['reset_password'] = rand(1000, 10000);
-                    $subject = "Welcome to Gnice";
-                    $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
+            if ($_SESSION['privilege'] == 2) {
+                $data = filter_var_array($_POST);
+                $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
+                if ($email == true) {
+                    $data['email']  = $email;
+                    $check_email = $this->findUserByEmail($email, 'admins');
+                    if ($check_email == false) {
+                        $data['status'] = 1;
+                        $data['reset_password'] = rand(1000, 10000);
+                        $subject = "Welcome to Gnice";
+                        $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
                      <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
                      <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
                      <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
@@ -690,34 +691,154 @@ class Authenticate extends Model
                      </div>
                      </div>
                      </div>";
-                    $send_mail = $this->send_mail($email, $data['name'], $subject, $html_message);
-                    foreach (array_keys($data) as $key) {
-                        $fields[] = $key;
-                        $key_fields[] = ":" . $key;
-                        $fields_imploded = implode(",", $fields);
-                        $keys_imploded = implode(",", $key_fields);
-                    }
+                        $send_mail = $this->send_mail($email, $data['name'], $subject, $html_message);
+                        foreach (array_keys($data) as $key) {
+                            $fields[] = $key;
+                            $key_fields[] = ":" . $key;
+                            $fields_imploded = implode(",", $fields);
+                            $keys_imploded = implode(",", $key_fields);
+                        }
 
-                    $this->db->query('INSERT INTO users (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
-                    foreach (array_keys($data) as $key) {
-                        $this->db->bind(":" . $key, $data[$key]);
-                    }
-                    if ($this->db->execute()) {
-                        $msg['msg'] =  "New user account created. Please check your mail for confirmation code.";
-                        $msg['status'] = '1';
+                        $this->db->query('INSERT INTO admins (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
+                        foreach (array_keys($data) as $key) {
+                            $this->db->bind(":" . $key, $data[$key]);
+                        }
+                        if ($this->db->execute()) {
+                            $result['message'] =  "New Admin account created. Please check your mail for confirmation code.";
+                            $result['status'] = '1';
+                            $result['code'] = $data['reset_password'];
+                        } else {
+                            $result['message'] = 'try again something went wrong!';
+                            $result['status'] = '0';
+                        }
                     } else {
-                        return false;
+                        $result['message'] = 'Please a email is already in use';
+                        $result['status'] = '0';
                     }
                 } else {
-                    $result['message'] = 'Please a email is already in use';
+                    $result['message'] = 'Please a provide email ';
                     $result['status'] = '0';
                 }
             } else {
-                $result['message'] = 'Please a provide email ';
+                $result['message'] = 'not allowed, upgrade account';
                 $result['status'] = '0';
             }
         } else {
             $result['message'] = 'invalid request ';
+        }
+
+        return $result;
+    }
+
+    public function changeAdminPassword()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $data = filter_var_array($_POST);
+
+            $verifyCode = $this->verifyResetCode($data['reset_code'], 'admins');
+            if ($verifyCode) {
+                if ($verifyCode->status != '0') {
+                    if ($data['password'] == $data['confirm_password']) {
+                        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+                        $this->db->query("UPDATE admins SET password = :password, reset_code = null  WHERE email = :email");
+                        $this->db->bind(':email', $data['email']);
+                        $this->db->bind(':password', $hashedPassword);
+                        $row = $this->db->singleResult();
+                        if ($row == true) {
+                            $updated_token = $this->updateUserToken($row->id, 'admins');
+                            unset($row->password, $row->id);
+                            session_start();
+                            $_SESSION['token'] = $updated_token;
+                            $_SESSION['isLoggedIn'] = true;
+                            $_SESSION['type'] = 'admin';
+
+                            $_SESSION['data'] = $row;
+                            $result['status'] = '1';
+                        } else {
+                            $result['msg'] = 'something went wrong, try again';
+                            $result['status'] = '0';
+                        }
+                    } else {
+                        $result['msg'] =  "Passwords do not match! Please try again.";
+                        $result['status'] = '0';
+                    }
+                } else {
+                    $result['msg'] =  "Your account is deactivated, contact admin";
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['msg'] =  "Invalid token";
+                $result['status'] = '-1';
+            }
+        } else {
+            $result['msg'] =  "invalid request";
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+    public function verifyResetCode($reset_code, $location)
+    {
+        $this->db->query("SELECT id,privilege,phone,last_login,status FROM $location WHERE reset_password = :reset_password");
+        $this->db->bind(':reset_password', $reset_code);
+        $row = $this->db->singleResult();
+        if ($this->db->rowCount() > 0) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
+
+    public function generatePasswordResetCode()
+    {
+        $data = filter_var_array($_POST);
+        $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
+        if ($email == true) {
+            $data['email']  = $email;
+            $check_email = $this->findUserByEmail($email, 'admins');
+            if ($check_email == true) {
+                $data['status'] = 1;
+                $data['reset_password'] = rand(1000, 10000);
+                $subject = "Welcome to Gnice";
+                $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
+                     <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
+                     <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
+                     <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
+
+                     </div>
+                     <div style='background:#fff;padding:10px'>
+                     <div style='text-align:left;font-size:14px;padding:0 20px'>
+                     <h3 style='color:#666666'>Hello  " . $data['name'] . " </h3>
+                     <p style='line-height:20px'>
+                     Welcome to <strong>Gnice Market Place</strong>. We bring you a world of possibilities. Get ready to explore.To validate your account, please complete your profile by entering this; <br/>
+                     <h1>" . $data['reset_password'] . "</h1><br/>
+                     <hr style='border:none; border-bottom:1px solid #E7E7E7' />
+                     </p>
+                     <p style='line-height:15px;text-align:left;font-size:12px;margin-top:15px'>
+                     If you did not associate your address with a Gnice account, please ignore this message.
+                     </p>
+                     </div>
+                     </div>
+                     </div>
+                     </div>";
+                $send_mail = $this->send_mail($email, $data['name'], $subject, $html_message);
+                $this->db->query('UPDATE admins SET resest_password = :resest_password WHERE email = :email');
+                $this->db->bind(':email', $email);
+                $this->db->bind(':reset_password', $data['reset_password']);
+                if ($this->db->execute()) {
+                    $result['message'] = 'reset code sent successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'try again';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'Please register first';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['msg'] =  "Please enter a valid email.";
+            $result['status'] = '0';
         }
 
         return $result;
