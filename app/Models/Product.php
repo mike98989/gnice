@@ -4,6 +4,7 @@ class Product extends Model
 {
     public function getAllProducts()
     {
+        //edited the end
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $this->db
@@ -66,7 +67,7 @@ class Product extends Model
             $uploader = uploadMultiple('pro', 'products', 2);
             //Filter sanitize all input as string to remove all unwanted scripts and tags
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
+
             //get renamed pictures from helper functions
             $image = $uploader['imageUrl'];
             // $product_code = rand(1000000, 100000000);
@@ -519,7 +520,6 @@ class Product extends Model
         if (isset($header['gnice-authenticate'])) {
 
             $deleteImage = [];
-
         }
     }
 

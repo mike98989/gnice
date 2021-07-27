@@ -614,7 +614,7 @@ class Authenticate extends Model
                 $email = filter_var($email, FILTER_VALIDATE_EMAIL);
                 if ($email == true) {
 
-                    $this->db->query('SELECT id, name, email ,phone, last_login,privilege password FROM admins WHERE email= :email AND status = 1');
+                    $this->db->query('SELECT id, name, email ,phone, last_login,privilege, password FROM admins WHERE email= :email AND status = 1');
                     $this->db->bind(':email', $email);
                     $row = $this->db->singleResult();
                     if ($row == true) {
@@ -660,7 +660,7 @@ class Authenticate extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            if ($_SESSION['privilege'] == 2) {
+            if ($_SESSION['privilege'] == 3) {
                 $data = filter_var_array($_POST);
                 $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
                 if ($email == true) {
@@ -842,5 +842,16 @@ class Authenticate extends Model
         }
 
         return $result;
+    }
+
+    // TODO: admin logout
+    public function adminLogout()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            session_destroy();
+            // redirect('users/login');
+        }
     }
 }

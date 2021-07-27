@@ -201,7 +201,7 @@ function uploadMultiple($prefix, $location, $size)
 
         // $data = array();
         //convert file  size from mb to kb
-        $sizeLimit = round($size / 1024 / 1024, 4);
+        $sizeLimit = round($size * 1024 * 1024, 4);
 
         $allowedExtention = ['jpeg', 'jpg', 'png', 'webp'];
 
@@ -285,3 +285,22 @@ function redirect($location, $isbool, $http_code)
 {
     header('location: ' . APP_URL . '/' . $location, $isbool, $http_code);
 }
+
+function deleteElement($element, $array)
+{
+    $index = array_search($element, $array);
+    if ($index !== false) {
+        unset($array[$index]);
+    }
+}
+
+// function removeElements($elements, $array)
+// {
+//     foreach ($elements as $key) {
+
+//         unset($array[array_search($key, $array)]);
+//         # code...
+//     }
+
+//     return $array;
+// }
