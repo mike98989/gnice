@@ -1,19 +1,22 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Origin: *');
 
 class AdminDashboard extends Controller
 {
 
     public function __construct()
     {
-        if (!isset($_SESSION['isLoggedIn']) || $_SESSION['type'] !== 'admin') {
-            session_destroy();
-            redirect('admin/login', true, 303);
-        }
+        // if (!isset($_SESSION['isLoggedIn']) || $_SESSION['type'] !== 'admin') {
+        //     session_destroy();
+        //     redirect('Admin/gnice_login', true, 303);
+        // }
     }
 
     public function index()
     {
+        $data = [];
+        $js = [];
+        $this->view('Admin/gnice_dashboard', $include_header = true, $data, '_type4', $js);
     }
 
     public function get_all_users()

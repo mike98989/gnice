@@ -1,20 +1,20 @@
 <?php
 
-header('Content-type: application/json');
-class AdminLogin extends Controller
+// header('Content-type: application/json');
+class AdminAuth extends Controller
 {
     public function __construct()
     {
 
-        // if (isset($_SESSION['isLoggedIn']) && $_SESSION['type'] === 'admin') {
-        //     redirect('admin/dashboard', true, 303);
-        // }
+        if (isset($_SESSION['isLoggedIn']) && $_SESSION['type'] === 'admin') {
+            redirect('admin/gnice_dashboard', true, 303);
+        }
     }
     public function index()
     {
         $data = [];
         $js = [];
-        $this->view('Admin/login', $include_header = false, $data, '_type4', $js);
+        $this->view('Admin/gnice_login', $include_header = false, $data, '_type4', $js);
     }
 
     public function login_admin()
