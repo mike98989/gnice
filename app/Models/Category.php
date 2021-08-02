@@ -4,6 +4,7 @@
  * add, delete, create, update categories and sub categories
  *
  */
+
 TODO: // work on category
 
 
@@ -13,6 +14,8 @@ class Category extends Model
     {
         return;
         // $CSVfp = fopen(__DIR__."/lenovo.csv", "r");
+
+        // $CSVfp = fopen(__DIR__."/apple_phones.csv", "r");
         // if($CSVfp !== FALSE) {    
         // while(! feof($CSVfp)) {
         // $data = fgetcsv($CSVfp, 1000, ",");
@@ -381,41 +384,124 @@ class Category extends Model
 
     public function addCategory($data)
     {
-        $this->db->query(
-            'INSERT INTO category (title, address) VALUES (:title,:address)'
-        );
-        $this->db->bind(':title', $data['title']);
-        $this->db->bind(':address', $data['address']);
-        if ($this->db->execute()) {
-            return true;
-            return $status = [1];
+
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $title = trim($_POST['titles']);
+        $id = $_POST['id'];
+        $image = $_FILES['file']['name'];
+        if ($image != "") {
+            $path = 'assets/images/uploads/category/' . $_FILES['file']['name'];
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
+                $this->db->query('UPDATE category SET title = :title,image = :image WHERE id = :id');
+                $this->db->bind(':id', $id);
+                $this->db->bind(':title', $title);
+                $this->db->bind(':image', $image);
+                if ($this->db->execute()) {
+                    $result['rowCount'] = $this->db->rowCount();
+                    $result['message'] = 'Category Updated';
+                    $result['status'] = 1;
+                } else {
+                    $result['message'] = 'Category failed';
+                    $result['status'] = 0;
+                    // return false;
+                }
+            } else {
+                $result['message'] = 'upload failed';
+                $result['status'] = 0;
+            }
         } else {
-            return false;
-            return $status = [0];
+            $this->db->query('UPDATE category SET title = :title WHERE id = :id');
+            $this->db->bind(':title', $title);
+            $this->db->bind(':id', $id);
+            if ($this->db->execute()) {
+                $result['rowCount'] = $this->db->rowCount();
+                $result['message'] = 'Category updated';
+                $result['status'] = 1;
+            } else {
+                $result['message'] = 'Category failed';
+                $result['status'] = 0;
+                // return false;
+            }
         }
+
+        return $result;
     }
-    public function updateCategory($data)
+
+    public function updatesubCategory()
     {
-        $this->db->query(
-            'UPDATE category SET title = :title,address = :address WHERE id = :id'
-        );
-        $this->db->bind(':title', $data['title']);
-        $this->db->bind(':address', $data['address']);
-        if ($this->db->execute()) {
-            return true;
+
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $title = trim($_POST['titles']);
+        $id = $_POST['id'];
+        $parent_id = $_POST['parent_id'];
+        $image = $_FILES['file']['name'];
+        if ($image != "") {
+            $path = 'assets/images/uploads/category/' . $_FILES['file']['name'];
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
+                $this->db->query('UPDATE sub_category SET title = :title, parent_id = :parent_id, image = :image WHERE sub_id = :id');
+                $this->db->bind(':id', $id);
+                $this->db->bind(':title', $title);
+                $this->db->bind(':parent_id', $parent_id);
+                $this->db->bind(':image', $image);
+                if ($this->db->execute()) {
+                    $result['rowCount'] = $this->db->rowCount();
+                    $result['message'] = 'Category Updated';
+                    $result['status'] = 1;
+                } else {
+                    $result['message'] = 'Category failed';
+                    $result['status'] = 0;
+                    // return false;
+                }
+            } else {
+                $result['message'] = 'upload failed';
+                $result['status'] = 0;
+            }
         } else {
-            return false;
+            $this->db->query('UPDATE sub_category SET title = :title, parent_id = :parent_id, WHERE sub_id = :id');
+            $this->db->bind(':title', $title);
+            $this->db->bind(':id', $id);
+            $this->db->bind(':parent_id', $parent_id);
+            if ($this->db->execute()) {
+                $result['rowCount'] = $this->db->rowCount();
+                $result['message'] = 'Category updated';
+                $result['status'] = 1;
+            } else {
+                $result['message'] = 'Category failed';
+                $result['status'] = 0;
+                // return false;
+            }
         }
+
+        return $result;
     }
     public function deleteCategory($id)
     {
-        $this->db->query('DELETE * FROM category WHERE id = :id ');
-        $this->db->bind(':id', $id);
+        $cat_id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->db->query('DELETE  FROM category WHERE id = :id ');
+        $this->db->bind(':id', $cat_id);
         if ($this->db->execute()) {
-            return true;
+            $result['message'] = 'Category Deleted';
+            $result['status'] = 1;
         } else {
-            return false;
+            $result['message'] = 'Category failed';
+            $result['status'] = 0;
         }
+        return $result;
+    }
+
+    public function deletesubCategory($id)
+    {
+        $cat_id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->db->query('DELETE  FROM sub_category WHERE sub_id = :id ');
+        $this->db->bind(':id', $cat_id);
+        if ($this->db->execute()) {
+            $result['message'] = 'Category Deleted';
+            $result['status'] = 1;
+        } else {
+            $result['message'] = 'Category failed';
+            $result['status'] = 0;
+        }
+        return $result;
     }
 
     public function getAllSubCategory()
@@ -429,7 +515,7 @@ class Category extends Model
                           WHERE sub_category.parent_id = category.id
                         ');
                         */
-        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id, sub_category.parent_id,
+        $this->db->query('SELECT DISTINCT sub_category.title,Sub_category.image,sub_category.sub_id, sub_category.parent_id,
 
                             category.title as parentCategory
                           FROM sub_category
@@ -452,15 +538,20 @@ class Category extends Model
     public function getSelectedCategory($id)
     {
         // the value is sanitize to an interger
+
+
         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id,sub_category.parent_id,
+        $this->db->query('SELECT DISTINCT sub_category.title,sub_category.image,sub_category.sub_id,sub_category.parent_id,
+
                             category.title as parentCategory
                           FROM sub_category
                             INNER JOIN category ON  sub_category.parent_id = category.id
                           WHERE parent_id = :product_code
                         ');
+
         $this->db->bind(':product_code', $id);
         if ($this->db->resultSet()) {
+
             $rows['data'] = $this->db->resultSet();
             $rows['status'] = '1';
         } else {
@@ -470,6 +561,28 @@ class Category extends Model
 
         return $rows;
     }
+    public function getAllCategory()
+    {
+
+
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            // the value is sanitize to an interger
+            $this->db->query('SELECT * from Category
+                        ');
+
+            if ($this->db->resultSet()) {
+                $result['rowCounts'] = $this->db->rowCount();
+                $result['data'] = $this->db->resultSet();
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+            }
+            return $result;
+        }
+    }
+
     public function getSingleCategory($id)
     {
 
@@ -477,9 +590,9 @@ class Category extends Model
         $product_codes = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         $this->db->query('SELECT DISTINCT sub_category.title,sub_category.sub_id,sub_category.parent_id,
                             category.title as parentCategory
-                          FROM sub_category 
-                            INNER JOIN category ON  sub_category.parent_id = category.id  
-                          WHERE sub_id = :product_code  
+                          FROM sub_category
+                            INNER JOIN category ON  sub_category.parent_id = category.id
+                          WHERE sub_id = :product_code
                         ');
         $this->db->bind(':product_code', $id);
         if ($this->db->singleResult()) {
@@ -494,21 +607,40 @@ class Category extends Model
     }
     // FIXME: moved to admintasks
 
-    public function addSubCategory($data)
+    public function addSubCategory()
     {
-        $this->db->query(
-            'INSERT INTO sub_category (title, parent_id, address) VALUES (:title, :parent_id, :address)'
-        );
-        $this->db->bind(':title', $data['title']);
-        $this->db->bind(':parent_id', $data['category']);
-        $this->db->bind(':address', $data['address']);
-        if ($this->db->execute()) {
-            return true;
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $title = trim($_POST['title']);
+        $parent_id = trim($_POST['parent_id']);
+        $status = 1;
+        /*
+        $image = $uploader['uploaded'];
+        */
+        $image = $_FILES['file']['name'];
+        $path = 'assets/images/uploads/category/' . $_FILES['file']['name'];
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
+            $this->db->query('INSERT INTO sub_category (title,parent_id,image,status) VALUES (:title, :parent_id, :image,:status)');
+            $this->db->bind(':title', $title);
+            $this->db->bind(':parent_id', $parent_id);
+            $this->db->bind(':image', $image);
+            $this->db->bind(':status', $status);
+            if ($this->db->execute()) {
+                $result['rowCount'] = $this->db->rowCount();
+                $result['message'] = 'Category added';
+                $result['status'] = 1;
+            } else {
+                $result['message'] = 'Category failed';
+                $result['status'] = 0;
+                // return false;
+            }
         } else {
-            return false;
+            $result['message'] = 'upload failed';
+            $result['status'] = 0;
         }
+        return $result;
     }
 
+    /*
     public function deleteSubCategory($id)
     {
         $this->db->query('DELETE * FROM sub-category WHERE sub_id = :id ');
@@ -519,6 +651,7 @@ class Category extends Model
             return false;
         }
     }
+    */
 
     public function testCategory()
     {
@@ -565,6 +698,7 @@ class Category extends Model
 
         return $result;
     }
+
 
     public function createSubCategory()
     {

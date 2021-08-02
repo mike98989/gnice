@@ -1,5 +1,6 @@
 <?php
 
+
 class Product extends Model
 {
     public function getAllProducts()
@@ -37,16 +38,20 @@ class Product extends Model
 
             //  print_r($product_code);
             //  exit('got here');
-            $this->db->query(" SELECT *,
-                            category.name as productCategory,
-                            sub_category.title as productSubCategory
-                            FROM products
-                            INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
-                            INNER JOIN category ON category.id = products.category
+
+            $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as signup_date,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
                             WHERE product_code = :product_code
                             AND status = 1
                         ");
             $this->db->bind(':product_code', $product_code);
+
+
 
             if ($this->db->singleResult()) {
                 $result['rowCount'] = $this->db->rowCount();
@@ -112,6 +117,281 @@ class Product extends Model
             return $result;
         }
     }
+
+
+    public function getAllRelatedProducts()
+    {
+        $sub_category_id = filter_var($_GET['sub_cat_id']);
+        $brand = filter_var($_GET['brand']);
+        $product_code = filter_var($_GET['product_code']);
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
+                        WHERE products.product_code!=:product_code AND products.sub_category = :sub_category_id OR products.brand=:brand");
+
+        $this->db->bind(':sub_category_id', $sub_category_id);
+        $this->db->bind(':brand', $brand);
+        $this->db->bind(':product_code', $product_code);
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    public function getAllProductOfaSubCategory($sub_category_id)
+    {
+        /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY 
+        /////// WHEN A SUB CATEGORY RETURNS 0
+        // $this->db->query("SELECT products.*,
+        //                 category.title as productCategory,
+        //                 sub_category.title as productSubCategory
+        //                 FROM products
+        //                 INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+        //                 INNER JOIN category ON category.id = products.category
+        //                 WHERE products.sub_category = :sub_category_id
+        //                     ");
+
+
+
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
+                        WHERE products.sub_category = :sub_category_id
+                            ");
+
+        $this->db->bind(':sub_category_id', $sub_category_id);
+
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+    public function getAllPriceOfaSubCategory()
+    {
+        /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY 
+        /////// WHEN A SUB CATEGORY RETURNS 0
+        // $this->db->query("SELECT products.*,
+        //                 category.title as productCategory,
+        //                 sub_category.title as productSubCategory
+        //                 FROM products
+        //                 INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+        //                 INNER JOIN category ON category.id = products.category
+        //                 WHERE products.sub_category = :sub_category_id
+        //                     ");
+
+        $sub_category_id = $_GET['sub_cat_id'];
+        $min = $_GET['min'];
+        $max = $_GET['max'];
+
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
+                        WHERE products.sub_category = :sub_category_id and price BETWEEN :min AND :max
+                            ");
+
+        $this->db->bind(':sub_category_id', $sub_category_id);
+        $this->db->bind(':min', $min);
+        $this->db->bind(':max', $max);
+
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+
+    public function getAllProductOfaCategory($category_id)
+    {
+        $this->db->query("SELECT products.*,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        INNER JOIN category ON category.id = products.category
+                        WHERE products.category = :category_id
+                            ");
+        $this->db->bind(':category_id', $category_id);
+
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    public function getAllBrand($parent_id)
+    {
+        $this->db->query("SELECT DISTINCT brand FROM products WHERE sub_category = :parent_id");
+        $this->db->bind(':parent_id', $parent_id);
+
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    public function getAllColor($parent_id)
+    {
+        $this->db->query("SELECT DISTINCT color FROM products WHERE sub_category = :parent_id");
+        $this->db->bind(':parent_id', $parent_id);
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+
+
+    /*
+
+    public function getAllProducts()
+    {
+        $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id");
+
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    */
+
+
+
+    public function getSelectedProduct($id)
+    {
+        // the value is sanitize to an interger
+        $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        //  print_r($product_code);
+        //  exit('got here');
+        $this->db->query("
+                            SELECT *,
+                            category.title as productCategory,
+                            sub_category.title as productSubCategory
+                            FROM products
+                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN category ON category.id = products.category
+                            WHERE sub_category = :product_code
+                        ");
+        $this->db->bind(':product_code', $product_code);
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+
+    public function getrelatedProduct($id, $cat, $sub)
+    {
+
+        // the value is sanitize to an interger
+        $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $product_cat = filter_var($cat, FILTER_SANITIZE_NUMBER_INT);
+        $product_sub = filter_var($sub, FILTER_SANITIZE_NUMBER_INT);
+
+        //  print_r($product_code);
+        //  exit('got here');
+        $this->db->query("
+                            SELECT *,
+                            category.title as productCategory,
+                            sub_category.title as productSubCategory
+                            FROM products
+                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN category ON category.id = products.category
+                             WHERE product_code != :product_code and  category = :product_cat and sub_category = :product_sub
+                        ");
+        $this->db->bind(':product_code', $product_code);
+        $this->db->bind(':product_cat', $product_cat);
+        $this->db->bind(':product_sub', $product_sub);
+
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    public function getFeatureProduct($cat, $sub)
+    {
+        // the value is sanitize to an interger
+        $product_cat = filter_var($cat, FILTER_SANITIZE_NUMBER_INT);
+        $product_sub = filter_var($sub, FILTER_SANITIZE_NUMBER_INT);
+
+        //  print_r($product_code);
+        //  exit('got here');
+        $this->db->query("
+                            SELECT *,
+                            category.title as productCategory,
+                            sub_category.title as productSubCategory
+                            FROM products
+                            INNER JOIN sub_category ON sub_category.id = products.sub_category
+                            INNER JOIN category ON category.id = products.category
+                            WHERE category = :cat and sub_category != :sub_cat
+                        ");
+        $this->db->bind(':cat', $cat);
+        $this->db->bind(':sub_cat', $sub);
+        if ($this->db->resultSet()) {
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+
+
+
+
     public function mostViewedProduct()
     {
         $header = apache_request_headers();
@@ -166,6 +446,7 @@ class Product extends Model
     }
 
     /////////////GET ALL RELATED PRODUCTS
+    /*
     public function getAllRelatedProducts()
     {
         $header = apache_request_headers();
@@ -197,6 +478,12 @@ class Product extends Model
             return $result;
         }
     }
+
+    */
+
+
+    /////////////GET ALL RELATED PRODUCTS 
+
 
     public function wishLists()
     {
@@ -250,6 +537,7 @@ class Product extends Model
         }
     }
 
+    /*
     public function getAllProductOfaCategory($category_id)
     {
         $header = apache_request_headers();
@@ -275,6 +563,8 @@ class Product extends Model
             return $result;
         }
     }
+    */
+    /*
     public function getAllProductOfaSubCategory($sub_category_id)
     {
         /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY
@@ -311,8 +601,34 @@ class Product extends Model
             return $result;
         }
     }
+    */
 
-    # TODO: search a product using search term
+    //     $productCart = array(
+    //         1234, 123, 12
+    //     );
+
+    //     if (in_array($product_code, $productCart)) {
+    //         $result['status'] = '0';
+    //         $result['message'] = 'item already in cart';
+    //         $result['array'] = $productCart;
+    //     } else {
+    //         $productCart = array(
+    //             $product_code
+    //         );
+
+
+    //         $result['data'] = $product_code;
+    //         $result['status'] = '1';
+    //         $result['message'] = 'item added to cart';
+    //     }
+
+    //     $result['count'] = count($productCart);
+
+    //     return $result;
+    // }
+
+
+
     public function searchForProduct()
     {
         $header = apache_request_headers();

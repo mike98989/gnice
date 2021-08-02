@@ -95,12 +95,7 @@
                 <div class="product-filters-container">
                   <div class="product-single-filter mb-2">
                     <label>Sizes:</label>
-                    <ul class="config-size-list">
-                      <li class="active"><a href="#">S</a></li>
-                      <li><a href="#">M</a></li>
-                      <li><a href="#">L</a></li>
-                      <li><a href="#">X</a></li>
-                    </ul>
+                     {{singleProduct.location}}
                   </div>
                   <!-- End .product-single-filter -->
                 </div>
@@ -109,67 +104,21 @@
                 <hr class="divider" />
 
                 <div class="product-action">
-                  <div class="product-single-qty">
-                    <input
-                      class="horizontal-quantity form-control"
-                      type="text"
-                    />
-                  </div>
+                  
                   <!-- End .product-single-qty -->
 
                   <a
                     href="cart.html"
                     class="btn btn-dark add-cart icon-shopping-cart"
                     title="Add to Cart"
-                    >Add to Cart</a
+                    >Show Number</a
                   >
                 </div>
                 <!-- End .product-action -->
 
-                <hr class="divider mb-1" />
+             
 
-                <div class="product-single-share">
-                  <label class="sr-only">Share:</label>
-
-                  <div class="social-icons mr-2">
-                    <a
-                      href="#"
-                      class="social-icon social-facebook fab fa-facebook-f"
-                      target="_blank"
-                      title="Facebook"
-                    ></a>
-                    <a
-                      href="#"
-                      class="social-icon social-twitter fab fa-twitter"
-                      target="_blank"
-                      title="Twitter"
-                    ></a>
-                    <a
-                      href="#"
-                      class="social-icon social-linkedin fab fa-linkedin-in"
-                      target="_blank"
-                      title="Linkedin"
-                    ></a>
-                    <a
-                      href="#"
-                      class="social-icon social-gplus fab fa-google-plus-g"
-                      target="_blank"
-                      title="Google +"
-                    ></a>
-                    <a
-                      href="#"
-                      class="social-icon social-mail fas fa-envelope"
-                      target="_blank"
-                      title="Mail"
-                    ></a>
-                  </div>
-                  <!-- End .social-icons -->
-
-                  <a href="#" class="add-wishlist" title="Add to Wishlist"
-                    >Add to Wishlist</a
-                  >
-                </div>
-                <!-- End .product single-share -->
+             
               </div>
               <!-- End .product-single-details -->
             </div>
@@ -247,8 +196,10 @@
                   </p>
                   <ul>
                     <li>
-                      <i class="fa fa-check-circle"></i>Any Product types that
-                      You want - Simple, Configurable
+                      <i class="fa fa-check-circle"></i><span>Type</span>{{ singleProduct.productSubCategory  }}
+                    </li>
+                    <li>
+                      <i class="fa fa-check-circle"></i><span>Type</span>{{ singleProduct.brand  }}
                     </li>
                     <li>
                       <i class="fa fa-check-circle"></i>Downloadable/Digital
@@ -295,23 +246,26 @@
                   <form action="#">
                     <h4>Add Your Tags:</h4>
                     <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control form-control-sm"
-                        required
-                      />
-                      <input
-                        type="submit"
-                        class="btn btn-dark"
-                        value="Add Tags"
-                      />
+                      <img src="" class="image-thumnnail">
+                       <p>{{ singleProduct.seller_fullname }}</p>
                     </div>
                     <!-- End .form-group -->
                   </form>
                   <p class="note">
-                    Use spaces to separate tags. Use single quotes (') for
-                    phrases.
+                   {{ singleProduct.signup_date }}
                   </p>
+                   <p class="note">
+                   {{ singleProduct.last_seen }}
+                  </p>
+                  <h4>Safety Tip</h4>
+                  <ul>
+                    <li>Do not Pay in advance even for the delivery</li>
+                    <li>Try to meet at a safe, public location</li>
+                    <li>Check the item Before uou buy it</li>
+                    <li>pay only after collecting the  item</li>
+                  </ul>
+                  <button>Report Abuse</button>
+                  <button>post ad like this</button>
                 </div>
                 <!-- End .product-tags-content -->
               </div>

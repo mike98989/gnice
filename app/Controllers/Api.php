@@ -72,13 +72,97 @@ class Api extends Controller
         }
     }
 
+    public function deleteCategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('category')->deleteCategory($_GET['id']);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+
+
+    public function updateCategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('category')->updateCategory();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
+    public function add_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('category')->addCategory();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
+
+    public function add_subcategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('category')->addSubCategory();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
+
+    public function updatesubCategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('category')->updatesubCategory();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
+
+
+    public function deletesubCategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('category')->deletesubCategory($_GET['id']);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+
+
+
+
+
+
     public function fetch_all_categories_and_sub_categories()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model(
-                'Category'
-            )->getAllCategoriesAndSubCategories();
+            $result = $this->model('Category')->getAllCategoriesAndSubCategories();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -91,7 +175,7 @@ class Api extends Controller
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Category')->getAllCategory2();
+            $result = $this->model('Category')->getAllCategory();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -115,6 +199,7 @@ class Api extends Controller
 
     public function add_product()
     {
+
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Product')->addProduct();

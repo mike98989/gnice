@@ -2,117 +2,90 @@
 	<div class="container mb-2">
 		<div class="row">
 			<div class="col-lg-9">
-				<div class="home-slider owl-carousel owl-theme owl-carousel-lazy mb-2" data-owl-options="{
-							'loop': false,
-							'dots': true,
-							'nav': false
-						}">
-					<div class="home-slide home-slide1 banner banner-md-vw banner-sm-vw">
-						<img class="owl-lazy slide-bg" src="./assets/slide-1.png" data-src="./assets/images/slide-1.png"
-							alt="slider image">
+				<div class=" mb-2" ng-init="getAllHero()">
+					<div class=" banner banner-md-vw banner-sm-vw">
+
+						<img src="assets/images/uploads/hero/{{heros.image}}">
 						<div class="banner-layer banner-layer-middle">
+							<h4 class="text-white pb-4 mb-0">{{ heros.title }}</h4>
 							<input type="text" class="form-control" placeholder="Search Products, Brands and Categories"
 								ng-model="all">
-
-							<h4 class="text-white pb-4 mb-0">Find the Boundaries. Push Through!</h4>
-							<h2 class="text-white mb-0">Summer Sale</h2>
-							<h3 class="text-white text-uppercase m-b-3">70% Off</h3>
-							<h5 class="text-white text-uppercase d-inline-block mb-0 ls-n-20 align-text-bottom">Starting
-								At <b class="coupon-sale-text bg-secondary text-white d-inline-block">$<em
-										class="align-text-top">199</em>99</b></h5>
-							<a href="category.html" class="btn btn-dark btn-md ls-10">Shop Now!</a>
+							<h2 class="text-white mb-2">{{ heros.sub_title }}</h2>
+							<a href="Signup" class="btn btn-dark btn-md ls-10">Sell Now!</a>
 						</div><!-- End .banner-layer -->
 
-					</div><!-- End .home-slide -->
-
-					<div class="home-slide home-slide2 banner banner-md-vw banner-sm-vw">
-						<img class="owl-lazy slide-bg" src="assets/slide-2.jpg" data-src="assets/images/slide-2.jpg"
-							alt="slider image">
-						<div class="banner-layer banner-layer-middle text-uppercase">
-							<h4 class="m-b-2">Over 200 products with discounts</h4>
-							<input type="text" class="form-control" placeholder="Search Products, Brands and Categories"
-								ng-model="all">
-							<h2 class="m-b-3">Great Deals</h2>
-							<h5 class="d-inline-block mb-0 align-top mr-5">Starting At <b>$<em>299</em>99</b></h5>
-							<a href="category.html" class="btn btn-dark btn-md ls-10">Get Yours!</a>
-						</div><!-- End .banner-layer -->
-					</div><!-- End .home-slide -->
-
-					<div class="home-slide home-slide2 banner banner-md-vw banner-sm-vw">
-						<img class="owl-lazy slide-bg" src="assets/slide-2.jpg" data-src="assets/images/slide-2.jpg"
-							alt="slider image">
-						<div class="banner-layer banner-layer-middle text-uppercase">
-							<h4 class="m-b-2">Over 200 products with discounts</h4>
-							<input type="text" class="form-control" placeholder="Search Products, Brands and Categories"
-								ng-model="all">
-							<h2 class="m-b-3">Great Deals</h2>
-							<h5 class="d-inline-block mb-0 align-top mr-5">Starting At <b>$<em>299</em>99</b></h5>
-							<a href="category.html" class="btn btn-dark btn-md ls-10">Get Yours!</a>
-						</div><!-- End .banner-layer -->
-					</div><!-- End .home-slide -->
-				</div>
-
-
-
-				<h2 class="section-title ls-n-10 m-b-4">Gnice Market Place Trending Ads</h2>
-				<div ng-init="fetch_all_product()">
-
-
-					<div class="row">
-						<div class="col-6 col-sm-4 col-md-3" ng-repeat="product in products | filter : all">
-							<div class="product-default inner-quickview inner-icon">
-								<figure>
-									<a href="#" class="pbtn" data-id1="{{product.product_code}}"
-										data-id2="{{product.brand}}" data-id3="{{product.sub_category}}">
-										<img src="assets/images/products/product-1.jpg">
-									</a>
-									<div class="label-group">
-										<div class="product-label label-hot">10X VIP TOP+</div>
-
-									</div>
-									<a href="#" data-id1="{{product.product_code}}" data-id2="{{product.brand}}"
-										data-id3="{{product.sub_category}}" class="btn-quickview pbtn"
-										title="Quick View">Quick View</a>
-								</figure>
-								<div class="product-details">
-									<div class="category-wrap">
-										<div class="category-list">
-											<a href="category.html"
-												class="product-category">{{product.productSubCategory}}</a>
-										</div>
-										<button data-p="{{product.seller_phone}}"
-											class="product-label label-hot prbtn"><i class="icon-phone-2"></i>Show
-											Number</button>
-
-
-
-									</div>
-									<h2 class="product-title">
-										<a href="Product">{{product.name}}</a>
-									</h2>
-									<div class="price-box">
-										<span class="product-price">{{product.price | currency}}</span>
-									</div><!-- End .price-box -->
-								</div><!-- End .product-details -->
-							</div>
-						</div><!-- End .col-md-3 -->
 					</div>
+					<a href="#" data-id1="{{product.product_code}}" data-id2="{{product.brand}}"
+						data-id3="{{product.sub_category}}" class="btn-quickview pbtn" title="Quick View">Quick View</a>
+					</figure>
+					<div class="product-details">
+						<div class="category-wrap">
+							<div class="category-list">
+								<a href="category.html" class="product-category">{{product.productSubCategory}}</a>
+							</div>
+							<button data-p="{{product.seller_phone}}" class="product-label label-hot prbtn"><i
+									class="icon-phone-2"></i>Show
+								Number</button>
+
+							<<<<<<< HEAD=======</div>
+								>>>>>>> 0849120094047d489e263e0ede7845f84a6dabf5
+
+						</div>
+						<h2 class="product-title">
+							<a href="Product">{{product.name}}</a>
+						</h2>
+						<div class="price-box">
+							<span class="product-price">{{product.price | currency}}</span>
+						</div><!-- End .price-box -->
+					</div><!-- End .product-details -->
 				</div>
+			</div><!-- End .col-md-3 -->
+		</div>
+	</div>
 
 
 
 
+	<div class="row">
+		<div class="col-6 col-sm-4 col-md-3" ng-repeat="product in products | filter : all | limitTo:20">
+			<div class="product-default inner-quickview inner-icon">
+				<figure>
+					<a href="#" class="pbtn" data-id1="{{product.product_code}}" data-id2="{{product.brand}}"
+						data-id3="{{product.sub_category}}">
+						<img style="width: 200px!important; height: 150px!important;"
+							src="assets/images/uploads/products/{{ product.image }}">
+					</a>
+					<div class="label-group">
+						<div class="product-label label-hot">10X VIP TOP+</div>
+					</div>
+					<div class="btn-icon-group">
+						<button class="btn-icon btn-add-cart" title="Like" data-toggle="modal"
+							data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
+					</div>
+				</figure>
+				<div class="product-details">
+
+					<div class="category-wrap">
+						<a href="#" title="like" class="btn-icon-wish"><i class="icon-heart"></i></a>
 
 
 
+					</div>
+					<h2 class="product-title">
+						<a href="Product">{{product.name}}</a>
+					</h2>
+					<div class="price-box">
+						<span class="product-price">{{product.price | currency}}</span>
+					</div><!-- End .price-box -->
+				</div><!-- End .product-details -->
+			</div>
+		</div><!-- End .col-md-3 -->
+	</div>
+	</div>
 
+	</div><!-- End .col-lg-9 -->
 
-
-
-
-			</div><!-- End .col-lg-9 -->
-
-			<?php require_once '../app/views/inc/aside.php';?>
-		</div><!-- End .row -->
+	<?php require_once '../app/views/inc/aside.php';?>
+	</div><!-- End .row -->
 	</div><!-- End .container -->
 </main><!-- End .main -->

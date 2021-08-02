@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,15 +45,15 @@
 <body ng-app="gnice">
 
 <div class="page-wrapper">
-		<div class="top-notice text-white bg-dark">
-			<div class="container text-center">
+		<div class="top-notice text-white bg-dark"  ng-controller="homeController">
+			<div class="container text-center" ng-init="getAllBanner()">
 				<h5 class="d-inline-block mb-0">
-				SELL FASTER, BUY SMARTER</h5>
+				{{ banners.title }}</h5>
 				
 			</div><!-- End .container -->
 		</div><!-- End .top-notice -->
 
-		<header class="header">
+		<header class="header" >
 			<div class="header-top bg-primary text-uppercase">
 				<div class="container">
 					<div class="header-left">
@@ -62,25 +65,60 @@
 					</div><!-- End .header-left -->
 
 					<div class="header-right header-dropdowns ml-0 ml-sm-auto">
+						<?php
+                          if (!isset($_SESSION['user_name'])) {
+						?>
 						<p class="top-message mb-0 mr-lg-5 pr-3 d-none d-sm-block">Welcome To Gnice Market Place!</p>
-						<div class="header-dropdown dropdown-expanded mr-3">
-							<a href="Home">Links</a>
-							<div class="header-menu">
-								<ul>
-									<li><a href="About">About Gnice Mkt</a></li>
-									<li><a href="Admin">Blog</a></li>
+						<ul class="d-flex mb-0 mr-3 pr-3">
+									<li class=" mr-3"><a href="About">About Gnice Mkt</a></li>
+									<li class=" mr-3"><a href="">Blog</a></li>
+									<li class=" mr-3"><a href="Contact">Contact</a></li>
 									<li><a href="Contact">Help &amp; FAQs</a></li>
 								</ul>
-							</div><!-- End .header-menu -->
-						</div><!-- End .header-dropown -->
+								<span class="separator"></span>
 
-						<span class="separator"></span>
-
-						<div class="social-icons">
+						<div class="social-icons d-none">
 							<a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
 							<a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
 							<a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
 						</div><!-- End .social-icons -->
+						   	<?php
+                            } else {
+
+                              ?>	
+                           <p class="top-message mb-0 mr-lg-5 pr-3 d-none d-sm-block">Welcome <?php echo $_SESSION['user_name'];?></p>
+					     <ul class="d-flex mb-0 mr-3 pr-3 menu" style="margin-top: -20px!important;">
+                  <li class=" mr-3"><a href="Premium" class="social-icon social-instagram icon-instagram" title="Premium Services"></a></li>
+                  <li class=" mr-3"><a href="Advert" class="social-icon social-instagram icon-instagram" title="Advert"></a></li>
+                  <li class=" mr-3"><a href="Messages" class="social-icon social-instagram icon-instagram" title="My Messages"></a></li>
+                  <li class=" mr-3"><a href="Saved" class="social-icon social-instagram icon-instagram" title="Saved"></a></li>
+                   <li>
+                  <a href="#" class="social-icon social-instagram icon-instagram" title="Profile">Profile</a>
+                  <ul>
+                    <li><a href="Dashboard">My Page</a></li>
+                    <li><a href="Balance">My Balance</a></li>
+                    <li><a href="Statistics">Statistics</a></li>
+                    <li><a href="Notification">Notification</a></li>
+                  
+                    <li><a href="Setting" >Setting</a></li>
+                    <li ng-controller="loginController"><a href="" ng-click="logout()">Logout</a></li>
+                    </ul>
+                   </li>
+                </ul>
+								<span class="separator"></span>
+
+						<div class="social-icons">
+							<a href="Addproduct" >Sell</a>
+							
+						</div><!-- End .social-icons -->
+
+
+                        <?php
+					     }
+					     ?>	
+					
+
+						
 					</div><!-- End .header-right -->
 				</div><!-- End .container -->
 			</div><!-- End .header-top -->
@@ -88,9 +126,13 @@
 			<div class="header-middle text-dark">
 				<div class="container">
 					<div class="header-left col-lg-2 w-auto pl-0">
+						<?php
+                          if (isset($_SESSION['user_name'])) {
+						?>
 						<button class="mobile-menu-toggler mr-2" type="button">
 							<i class="icon-menu"></i>
 						</button>
+					<?php }?>
 						<a href="Home" class="logo">
 							<img src="assets/images/gnicelogo.jpeg" alt="Porto Logo">
 						</a>
@@ -116,14 +158,21 @@
 							
 						</div><!-- End .header-search -->
 
-						<div class="d-none d-lg-flex align-items-center">
+						<div class=" d-lg-flex align-items-center" ng-controller="loginController">
 
-
-							<a href="Login">Sign In</a>
+                             <?php
+                            if (!isset($_SESSION['user_name'])) {
+                            	?>
+                                	<a href="Login">Sign In</a>
 							<a href="Signup"> &nbsp; | Registration &nbsp; &nbsp;</a>
 							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="Login">SELL</a></button>
+                            	<?php
+                            } ?>
+
 						</div>
 					
+
+				
 						<!-- End .header-contact -->
 
 					</div><!-- End .header-right -->

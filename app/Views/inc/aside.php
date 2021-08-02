@@ -1,10 +1,27 @@
 <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 <aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar">
-    <div class="side-menu-wrapper text-uppercase mb-2 d-none d-lg-block">
+    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none">
         <h2 class="side-menu-title bg-gray ls-n-25">Browse Categories</h2>
 
         <nav class="side-nav">
+
+<!--
+            <ul class="menu menu-vertical sf-arrows"  ng-init="fetch_all_categories_and_sub_categories()">
+            <li ng-repeat="catSub in catSubs">
+            <a href="#"  class="sf-with-ul"><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{catSub.image}}">{{catSub.title}} <span>({{ catSub.subcategory.length | number}} ad)</span></a>
+           
+            
+                    <div class="megamenu megamenu-fixed-width megamenu-3cols">
+                        <div class="row" >
+                            <div class="col-lg-6" >
+                                <a href="#" class="nolink">{{catSub.title}} <span>({{ catSub.subcategory.length | number}} ad)</span></a>
+                                <ul class="submenu" >
+                                    <li  ng-repeat="sub in catSub.subcategory ">
+                                        <a href="#" class="cbtn" data-id4="{{sub.sub_id}}"  data-id5="{{sub.parent_id}}" ><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{sub.image}}">{{$index + 1}} {{ sub.title }} </a></li>
+                                    </ul>
+                                -->
+                                   
             <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
                 <li ng-repeat="catSub in catSubs">
                     <a href="#" class="sf-with-ul"><i class="sicon-badge"></i>{{catSub.title}}</a>
@@ -17,6 +34,7 @@
                                         <a href="#" class="cbtn" data-id4="{{sub.sub_id}}" data-id5="{{sub.parent_id}}">{{ sub.title }} </a>
                                     </li>
                                 </ul>
+
 
                             </div>
 
