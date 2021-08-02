@@ -378,7 +378,7 @@ class Category extends Model
     }
 
     // FIXME: move to admin menu
-    /*
+
     public function addCategory($data)
     {
         $this->db->query(
@@ -417,8 +417,6 @@ class Category extends Model
             return false;
         }
     }
-
-    */
 
     public function getAllSubCategory()
     {
@@ -495,7 +493,7 @@ class Category extends Model
         return $rows;
     }
     // FIXME: moved to admintasks
-    /*
+
     public function addSubCategory($data)
     {
         $this->db->query(
@@ -521,7 +519,7 @@ class Category extends Model
             return false;
         }
     }
-    */
+
     public function testCategory()
     {
         $this->db->query("SELECT t1.id, t1.name
@@ -546,7 +544,6 @@ class Category extends Model
     }
 
     // FIXME: moved to admintasks
-    /*
 
     public function createCategory()
     {
@@ -594,7 +591,7 @@ class Category extends Model
         return $result;
     }
 
-    */
+
 
     public function getAllCategory2()
     {

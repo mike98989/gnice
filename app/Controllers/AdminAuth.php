@@ -6,19 +6,21 @@ class AdminLogin extends Controller
     public function __construct()
     {
 
-        if (isset($_SESSION['isLoggedIn']) && $_SESSION['type'] === 'admin') {
-            redirect('admin/dashboard', true, 303);
-        }
+        // if (isset($_SESSION['isLoggedIn']) && $_SESSION['type'] === 'admin') {
+        //     redirect('admin/dashboard', true, 303);
+        // }
     }
     public function index()
     {
-        //    print_r($_SESSION);
+        $data = [];
+        $js = [];
+        $this->view('Admin/login', $include_header = false, $data, '_type4', $js);
     }
 
     public function login_admin()
     {
         $result = $this->model('Authenticate')->loginAdmin();
-        print_r(json_encode($_SESSION));
+        // print_r(json_encode($_SESSION));
         // redirect('admin/dashboad');
     }
 
