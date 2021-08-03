@@ -2,12 +2,13 @@
 
 
 
-class Admin extends Controller{
-   
+class Admin extends Controller
+{
 
-    public function index(){
+    public function index()
+    {
         $data = [];
         $js = ['controllers/admindashboard/homeController.js'];
-        $this->view('Admin/dashboard',$include_header=true,$data,'_type1', $js);
+        $this->view('Admin/dashboard', $include_header = true, $data, '_type1', $js);
     }
 }

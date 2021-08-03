@@ -17,7 +17,7 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="<?php echo APP_URL; ?>/admin-assets/css/style.css">
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="<?php echo APP_URL; ?>/admin-assets/images/favicon.ico" />
+  <link rel="shortcut icon" href="<?php echo APP_URL; ?>/assets/images/icons/favicon.ico" />
 </head>
 
 <body>

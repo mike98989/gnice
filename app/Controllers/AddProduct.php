@@ -1,12 +1,14 @@
 <?php
 
 
-class AddProduct extends Controller{
-   
+class AddProduct extends Controller
+{
 
-    public function index(){
+
+    public function index()
+    {
         $data = [];
-       $js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
-        $this->view('Seller/index',$include_header=true,$data,'_type3', $js);
+        $js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
+        $this->view('Seller/index', $include_header = true, $data, '_type3', $js);
     }
 }
