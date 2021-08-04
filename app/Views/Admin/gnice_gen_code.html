@@ -32,9 +32,11 @@
                             </div>
                             <!-- <h4>Hello! let's get started</h4> -->
                             <h6 class="font-weight-light">Generate reset code</h6>
-                            <form class="pt-3">
+                            <form class="pt-3" id="gnice_gen_code" ng-submit="gnice_gen_code()" method="POST"
+                                action="#">
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" placeholder="enter email">
+                                    <input type="email" class="form-control form-control-lg" placeholder="enter email"
+                                        id="email">
                                 </div>
                                 <div class="mt-3">
                                     <button
@@ -43,7 +45,7 @@
                                 </div>
                                 <div class="mb-2">
                                     <div class="text-center mt-4 font-weight-light"> Have an account? <a
-                                            href="register.html" class="text-primary">Login</a>
+                                            href="gnice_login" class="text-primary">Login</a>
                                     </div>
                             </form>
                         </div>

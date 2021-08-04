@@ -13,12 +13,14 @@ class AdminAuth extends Controller
     public function index()
     {
         $data = [];
-        $js = [];
+        $js = ['controllers/gniceAdminController.js', 'controllers/web/homeController.js'];
         $this->view('Admin/gnice_login', $include_header = false, $data, '_type4', $js);
     }
 
     public function login_admin()
     {
+        $data = [];
+        $js = [];
         $result = $this->model('Authenticate')->loginAdmin();
         // print_r(json_encode($_SESSION));
         // redirect('admin/dashboad');
