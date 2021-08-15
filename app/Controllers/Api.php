@@ -358,7 +358,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
-            $result = $this->model('Profile')->updateUserProfile();
+            $result = $this->model('Authenticate')->updateUserProfile();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -370,7 +370,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
-            $result = $this->model('Profile')->updateProduct();
+            $result = $this->model('Product')->updateProduct();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -382,7 +382,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
-            $result = $this->model('Profile')->uploadImages();
+            $result = $this->model('Product')->uploadImages();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -406,7 +406,7 @@ class Api extends Controller
     public function upload_image(){
          $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Authenticate')->uploadImage();
+            $result = $this->model('Authenticate')->uploadProfileImage();
             print_r(json_encode($result));
         } else {
             echo 'invalid request';
@@ -414,8 +414,6 @@ class Api extends Controller
         }
     }
 
-
-    /*
 
     public function create_category()
     {

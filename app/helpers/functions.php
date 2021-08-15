@@ -196,13 +196,13 @@ function uploadMultiple($prefix, $location, $size)
 {
     $uploaded = [];
     $failed = [];
+   
     if (!empty($_FILES['files']['name'][0])) {
         $files = $_FILES['files'];
-
+        //print_r($files);exit;
         // $data = array();
         //convert file  size from mb to kb
-        $sizeLimit = round($size / 1024 / 1024, 4);
-
+        $sizeLimit = round($size * 1024 * 1024, 4);
         $allowedExtention = ['jpeg', 'jpg', 'png', 'webp'];
 
         foreach ($files['name'] as $position => $fileName) {
@@ -219,7 +219,7 @@ function uploadMultiple($prefix, $location, $size)
                     // if ($fileSize <= 2097152) {
                     if ($fileSize <= $sizeLimit) {
                         $folder = "assets/images/uploads/$location/";
-
+                        
                         if (!file_exists($folder)) {
                             mkdir($folder, 0777, true);
                         }

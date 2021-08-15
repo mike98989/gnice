@@ -13,7 +13,7 @@ class Product extends Model
                         FROM products
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.id DESC");
+                        LEFT JOIN users ON users.seller_id = products.seller_id WHERE products.status='1'  ORDER BY products.id DESC");
 
             if ($this->db->resultSet()) {
                 $result['rowCounts'] = $this->db->rowCount();
@@ -289,13 +289,12 @@ class Product extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $this->db
-                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                ->query("SELECT products.*,
                         sub_category.title as productSubCategory
                         FROM products
                         INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
-                        LEFT JOIN users ON users.seller_id = products.seller_id
                         WHERE products.sub_category = :sub_category_id
-                            ");
+                        ");
 
             $this->db->bind(':sub_category_id', $sub_category_id);
 
@@ -520,10 +519,4 @@ class Product extends Model
         }
     }
 
-    public function uploadImages()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-        }
-    }
 }

@@ -609,8 +609,132 @@ class Authenticate extends Model
     //     $_SESSION['token'] = $user->token;
     // }
 
+    public function updateUserProfile()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token);
+            if ($verifyToken) {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $seller_id = $_POST['seller_id'];
+            $email = trim($_POST['email']);
+            $mobile = trim($_POST['mobile']);
+            $fullname = trim($_POST['fullname']);
+            $phone = trim($_POST['phone']);
+            $state = trim($_POST['state']);
+            $uploader = uploadMultiple('pro', 'products', 2);
+            //Filter sanitize all input as string to remove all unwanted scripts and tags
 
-     public function adminLogin()
+                if (!(empty($email) || empty($seller_id) || empty($fullname) || empty($phone) || empty($state))) {
+                    $is_email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
+                    if ($is_email_valid == true) {
+
+                        //get renamed pictures from helper functions
+                        $image = $uploader['imageUrl'];
+
+                        // $product_code = rand(1000000, 100000000);
+                        $_POST['image'] = $image;
+                        // $_POST['product_code'] = rand(1000000, 100000000);
+                        $data = filter_var_array($_POST);
+                        $data = array_map('trim', array_filter($data));
+                        $excluded = ['files'];
+                        $excluded = ['id'];
+                        // print_r($data);
+                        // exit();
+                        $updateString = "";
+                        $params = [];
+                        foreach (array_keys($data) as $key) {
+                            if (!in_array($key, $excluded)) {
+
+                                $updateString .= "`$key` = :$key,";
+                                $params[$key] = "$data[$key]";
+                            }
+                        }
+                        $updateString = rtrim($updateString, ",");
+
+                        $this->db->query(
+                            "UPDATE users SET $updateString WHERE seller_id = :seller_id"
+                        );
+                        foreach (array_keys($data) as $key) {
+                            if (!in_array($key, $excluded)) {
+                                $this->db->bind(':' . $key, $data[$key]);
+                            }
+                        }
+                        $this->db->bind(':seller_id', $seller_id);
+                        if ($this->db->execute()) {
+                            $result['message'] = 'profile update successfully';
+                            $result['status'] = '1';
+                            $result['errors'] = $uploader['image_error'];
+                        } else {
+                            $result['message'] = 'profile update failed';
+                            $result['status'] = '0';
+                            $result['errors'] = $uploader['image_error'];
+                            return false;
+                        }
+                    } else {
+                        $result['error_email'] = 'please enter valid email';
+                        $result['status'] = '0';
+                    }
+                } else {
+                    $result['error'] = ' all * fields are required';
+                    $result['status'] = '0';
+                }
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';    
+            }
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+        return $result;
+    }
+
+    public function uploadProfileImage(){
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+        $token = filter_var($header['gnice-authenticate']);
+        $verifyToken = $this->verifyToken($token);
+        if ($verifyToken) {
+            $uploader = uploadMultiple('profile', 'profile', 2);
+            $image = $uploader['imageUrl'];
+            if(isset($image) && strlen($image) > 0){
+                $this->db->query("UPDATE users SET image = :image WHERE email = :email AND status = 1");
+                $this->db->bind(':image', $image);
+                $this->db->bind(':email', $verifyToken->email);
+                if($this->db->execute()){
+                    $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+                    $this->db->bind(':email', $verifyToken->email);
+                    $row = $this->db->singleResult();
+                    $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                    $result['data']=$row;
+                    $result['message'] = 'profile picture update successfully';
+                    $result['status'] = '1';
+                    $result['errors'] = $uploader['image_error'];
+                } else{
+                    $result['message'] = 'profile picture update failed';
+                    $result['status'] = '0';
+                    $result['errors'] = $uploader['image_error'];
+
+                }
+            }else {
+                $result['message'] = 'select a picture';
+                $result['status'] = '0';
+            }
+
+            }else{
+            $result['status']='0';
+            $result['msg']='Invalid token';    
+            }
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+       return $result;
+    } 
+
+    public function adminLogin()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {

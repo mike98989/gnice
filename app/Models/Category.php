@@ -321,10 +321,18 @@ class Category extends Model
         //print_r($this->db->rowCount());exit;
         //$row['category'] = $category;
         for ($a = 0; $a < $count; $a++) {
+            /////// GET SUBCATEGORY
             $this->db->query("SELECT * FROM sub_category WHERE parent_id = :category_id AND status!='0'");
             $this->db->bind(':category_id', $category[$a]->id);
             $subcategory =  $this->db->resultSet();
             $category[$a]->subcategory = $this->db->resultSet();
+            $count2 = $this->db->rowCount();
+            /////////COUNT PRODUCTS OF SUB CATEGORY
+            for ($i = 0; $i < $count2; $i++) {
+            $this->db->query("SELECT COUNT(*) as counted FROM products WHERE sub_category = :sub_category_id AND status!='0'");
+            $this->db->bind(':sub_category_id', $category[$a]->subcategory[$i]->sub_id);
+            $category[$a]->subcategory[$i]->counted_sub_category_products = $this->db->singleResult();
+            }
         }
 
         $rows['data'] = $category;
