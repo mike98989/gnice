@@ -8,6 +8,63 @@
     $scope.pageSize = 30;
     $scope.catfilter = 5;
     $scope.listfilter = 5;
+    $scope.hide = true;
+     $('.result').hide(); 
+         //alert($scope.dirlocation);
+    $scope.getAllHero = function(){
+      $.ajax({
+        url: $scope.dirlocation+'Api/getAllHero',
+        type: 'GET',
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers:{'gnice-authenticate':'gnice-web'}, 
+        processData: false,
+        success: function (result) {
+        //alert(result);
+       var response=JSON.stringify(result);
+       var parsed = JSON.parse(response);
+       var msg=angular.fromJson(response);
+       $('.loader').hide(); 
+       if(msg.status=='1'){  
+       $scope.heros = msg.data;
+       $scope.$apply();
+       
+       //alert(JSON.stringify($scope.categories));
+       }
+       
+        }
+      });
+    }
+
+     $scope.getAllBanner = function(){
+      $.ajax({
+        url: $scope.dirlocation+'Api/getAllBanner',
+        type: 'GET',
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers:{'gnice-authenticate':'gnice-web'}, 
+        processData: false,
+        success: function (result) {
+       //alert(result);
+       var response=JSON.stringify(result);
+       var parsed = JSON.parse(response);
+       var msg=angular.fromJson(response);
+       $('.loader').hide(); 
+       if(msg.status=='1'){  
+       $scope.banners = msg.data;
+       $scope.$apply();
+       //alert(JSON.stringify($scope.categories));
+       }
+       
+        }
+      });
+    }
+
+    
     
 
    
@@ -77,12 +134,14 @@
    
         //alert($scope.dirlocation);
 
+
               $scope.add_product = function(){
 
   $('.loader').show();    
-         $('.result').hide(); 
+         
           var sub = $('#sub_category').val();
           alert($('#category').val());
+          alert(sub);
           var formData = new FormData($('#add_product')[0]);
           $.ajax({
                 url: $scope.dirlocation+'api/add_product',
@@ -106,16 +165,13 @@
                var msg=angular.fromJson(response);
                 $('.loader').hide();  
           if(msg.status=='1'){
-        //alert(msg);
-        //alert(JSON.stringify($localStorage.recovery_token));
-        window.location.href=datagrab.completeUrlLocation+'ConfirmRecovery'
-        }else{
-              $('.loader').hide();    
+             $('.loader').hide();    
               $('.result').html(msg.msg);  
               $('.result').show();
-               
-              //$('.signup_loader').hide();
-              //$('.alert').html(answer);
+        }else{
+               $('.loader').hide();    
+              $('.result').html(msg.msg);  
+              $('.result').show();
               }
               
                }
@@ -280,7 +336,7 @@
     
     
      $scope.fetch_single_product = function(){
-      var id = 
+      
       $.ajax({
         url: $scope.dirlocation+'api/fetch_single_product?param='+$localStorage.valueToShare1,
         type: 'GET',

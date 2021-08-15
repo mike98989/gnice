@@ -76,4 +76,4 @@
   </head>
   <body ng-app="gnice">
   <div class="page-wrapper">
-  <?php require APP_ROOT .'/views/inc/navbar.php'; ?>
+ 

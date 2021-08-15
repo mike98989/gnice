@@ -1,9 +1,11 @@
 <?php
 
+
 class Product extends Model
 {
     public function getAllProducts()
     {
+        //edited the end
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $this->db
@@ -67,16 +69,20 @@ class Product extends Model
 
             //  print_r($product_code);
             //  exit('got here');
-            $this->db->query(" SELECT *,
-                            category.name as productCategory,
-                            sub_category.title as productSubCategory
-                            FROM products
-                            INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
-                            INNER JOIN category ON category.id = products.category
+
+            $this->db->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as signup_date,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id
                             WHERE product_code = :product_code
                             AND status = 1
                         ");
             $this->db->bind(':product_code', $product_code);
+
+
 
             if ($this->db->singleResult()) {
                 $result['rowCount'] = $this->db->rowCount();
@@ -97,7 +103,7 @@ class Product extends Model
             $uploader = uploadMultiple('pro', 'products', 2);
             //Filter sanitize all input as string to remove all unwanted scripts and tags
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
+
             //get renamed pictures from helper functions
             $image = $uploader['imageUrl'];
             // $product_code = rand(1000000, 100000000);
@@ -233,6 +239,7 @@ class Product extends Model
     }
 
     /////////////GET ALL RELATED PRODUCTS
+    /*
     public function getAllRelatedProducts()
     {
         $header = apache_request_headers();
@@ -264,6 +271,12 @@ class Product extends Model
             return $result;
         }
     }
+
+    */
+
+
+    /////////////GET ALL RELATED PRODUCTS 
+
 
     public function wishLists()
     {
@@ -317,6 +330,7 @@ class Product extends Model
         }
     }
 
+    /*
     public function getAllProductOfaCategory($category_id)
     {
         $header = apache_request_headers();
@@ -342,6 +356,8 @@ class Product extends Model
             return $result;
         }
     }
+    */
+    /*
     public function getAllProductOfaSubCategory($sub_category_id)
     {
         /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY
@@ -377,8 +393,34 @@ class Product extends Model
             return $result;
         }
     }
+    */
 
-    # TODO: search a product using search term
+    //     $productCart = array(
+    //         1234, 123, 12
+    //     );
+
+    //     if (in_array($product_code, $productCart)) {
+    //         $result['status'] = '0';
+    //         $result['message'] = 'item already in cart';
+    //         $result['array'] = $productCart;
+    //     } else {
+    //         $productCart = array(
+    //             $product_code
+    //         );
+
+
+    //         $result['data'] = $product_code;
+    //         $result['status'] = '1';
+    //         $result['message'] = 'item added to cart';
+    //     }
+
+    //     $result['count'] = count($productCart);
+
+    //     return $result;
+    // }
+
+
+
     public function searchForProduct()
     {
         $header = apache_request_headers();
@@ -583,7 +625,6 @@ class Product extends Model
         if (isset($header['gnice-authenticate'])) {
 
             $deleteImage = [];
-
         }
     }
 

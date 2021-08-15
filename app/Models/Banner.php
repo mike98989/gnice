@@ -11,7 +11,7 @@ class Banner extends Model
 
         if ($this->db->resultSet()) {
             $result['rowCount'] = $this->db->rowCount();
-            $rows['data'] = $this->db->resultSet();
+            $rows['data'] = $this->db->singleResult();
             $rows['status'] = '1';
         } else {
             $rows['data'] = [];

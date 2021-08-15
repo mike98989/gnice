@@ -5,7 +5,10 @@
     <div class="container">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.html"><i class="icon-home"></i></a>
+          <a href="Home"><i class="icon-home"></i></a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="Signup">Sign Up</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Login</li>
       </ol>
@@ -20,61 +23,43 @@
         <p>If you have an account with us, please log in.</p>
       </div>
       <!-- End .heading -->
+      <p class="result"></p>
+      <div>
 
-<<<<<<< HEAD
-      <form ng-submit="user_login()" method="POST" action="">
-=======
-          <form ng-submit="user_login()" id="user_login"  method="POST" action="#">  
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
-        <input
-          type="email"
-          name="username"
-          id="username"
-          class="form-control"
-          placeholder="Email Address"
-          name="email"
-<<<<<<< HEAD
-          ng-model="loginData.email"
-=======
-         
-           
 
-          
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
-        />
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form-control"
-          placeholder="Password"
-<<<<<<< HEAD
-          name="password"
-          ng-model="loginData.password"
-=======
-         
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
-        />
+
+      </div>
+
+
+      <form ng-submit="user_login()" id="user_login" method="POST" action="#">
+        <input type="email" name="username" id="username" class="form-control" placeholder="Email Address"
+          name="email" />
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" />
 
         <div class="form-footer">
-<<<<<<< HEAD
-          <button type="submit" name="login" class="btn btn-primary">
-            LOGIN
-          </button>
-          <a href="#" class="forget-pass"> Forgot your password?</a>
-=======
           <button type="submit" class="btn btn-primary">LOGIN</button>
           <a href="Recovery" class="forget-pass"> Forgot your password?</a>
-         
->>>>>>> fd7000faa37e3f66068128d009c3554e7ea9ece6
-        </div>
-        <!-- End .form-footer -->
-      </form>
-    </div>
-  </div>
-  <!-- End .container -->
+          <form ng-submit="user_login()" id="user_login" method="POST" action="#">
 
-  <div class="mb-5"></div>
-  <!-- margin -->
+            <input type="email" name="username" id="username" class="form-control" placeholder="Email Address"
+              name="email" />
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" />
+
+            <div class="form-footer">
+
+
+
+              <button type="submit" class="btn btn-primary">LOGIN</button>
+              <a href="Recovery" class="forget-pass"> Forgot your password?</a>
+
+            </div>
+            <!-- End .form-footer -->
+          </form>
+        </div>
+    </div>
+    <!-- End .container -->
+
+    <div class="mb-5"></div>
+    <!-- margin -->
 </main>
 <!-- End .main -->

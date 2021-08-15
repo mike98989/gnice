@@ -1,4 +1,8 @@
-
+<?php
+if (!isset($_SESSION['user_name'])) {
+  header("location: Login");
+}
+?>
 
 
   <!DOCTYPE html>
