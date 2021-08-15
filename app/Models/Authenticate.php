@@ -281,6 +281,7 @@ class Authenticate extends Model
                         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                         $data['signup_date'] = date('Y-m-d');
                         $data['status'] = '1';
+                        $data['image']='default.png';
                         $exclude = array('confirm_password');
 
                         ////////////GENERATE CONFIRMATION CODE AND SEND EMAIL

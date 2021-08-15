@@ -27,6 +27,37 @@ class Product extends Model
         }
     }
 
+
+    public function getAllUserSavedProducts($user_id)
+    {
+        //echo $user_id;exit;
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            // $this->db
+            //     ->query("SELECT saved_products.*,products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+            //             category.title as productCategory,
+            //             sub_category.title as productSubCategory
+            //             FROM saved_products
+            //             LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+            //             LEFT JOIN category ON category.id = products.category
+            //             LEFT JOIN users ON users.seller_id = products.seller_id 
+            //             LEFT JOIN products ON products.id = saved_products.product_id 
+            //             WHERE saved_products.user_id=:user_id AND saved_products.status='1'  ORDER BY products.id DESC");
+
+        $this->db
+        ->query("SELECT saved_products.*, products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen FROM saved_products INNER JOIN products ON saved_products.product_id= products.id LEFT JOIN users ON users.seller_id = products.seller_id  WHERE saved_products.user_id=:user_id");
+            $this->db->bind(':user_id', $user_id);
+            if ($this->db->resultSet()) {
+                $result['data'] = $this->db->resultSet();
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+            }
+            return $result;
+        }
+    }
+
     public function getSingleProduct($id)
     {
         $header = apache_request_headers();
@@ -111,6 +142,43 @@ class Product extends Model
             return $result;
         }
     }
+
+
+    public function pinProduct($user_id)
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $data = filter_var_array($_POST);
+            
+            $this->db->query(" SELECT * FROM saved_products WHERE product_id = :product_id AND user_id=:user_id AND status = 1");
+            $this->db->bind(':product_id', $data['product_id']);
+            $this->db->bind(':user_id', $data['user_id']);
+            $this->db->execute();
+        if ($this->db->rowCount() == 0) {
+            $this->db->query(
+                'INSERT INTO saved_products (product_id, user_id, date_saved) VALUES (:product_id, :user_id, now())');
+            $this->db->bind(':product_id', $data['product_id']);
+            $this->db->bind(':user_id', $data['user_id']);
+            if ($this->db->execute()) {
+                $result['message'] = 'product saved successfully';
+                $result['status'] = '1';
+            } else {
+                $result['message'] = 'something went wrong';
+                $result['status'] = '0';
+            }
+            
+        }else{
+        $result['message'] = 'Item already saved by user';
+        $result['status'] = '0';
+        }
+    }else{
+        $result['message'] = 'Invalid request';
+        $result['status'] = '0';
+    }
+    return $result;
+}
+    
+
     public function mostViewedProduct()
     {
         $header = apache_request_headers();

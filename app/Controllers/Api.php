@@ -161,6 +161,47 @@ class Api extends Controller
         }
     }
 
+
+    public function fetch_all_user_saved_products()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token);
+            if($result){
+                $result = $this->model('Product')->getAllUserSavedProducts($result->id);
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+    public function pin_product()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token);
+            if($result){
+                $result = $this->model('Product')->pinProduct($result->id);
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+    
+
     public function fetch_single_product($id){
          $header = apache_request_headers(); 
          if(isset($header['gnice-authenticate'])){
