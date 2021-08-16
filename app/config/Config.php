@@ -14,7 +14,7 @@
     //app Root
     define('APP_ROOT',dirname(dirname(__FILE__)));
     //URL Root
-    define("FOLDER","gnice");
+    define("FOLDER","gnice/public");
     define('APP_URL', 'http://'.$_SERVER['HTTP_HOST'].'/'.FOLDER);
     
     //site Name 

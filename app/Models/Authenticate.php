@@ -741,7 +741,6 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $email = strtolower(trim($_POST['email']));
             $password = trim($_POST['password']);
-
             if (!(empty($email) || empty($password))) {
                 $email = filter_var($email, FILTER_SANITIZE_EMAIL);
                 $email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -754,7 +753,6 @@ class Authenticate extends Model
                         $hashedPassword = $row->password;
                         if (password_verify($password, $hashedPassword)) {
                             // if ($password === $hashedPassword) {
-
                             $updated_token = $this->updateUserToken($row->id, 'admins');
                             $excluded = $row->password;
                             unset($row->password, $row->id);
@@ -763,7 +761,6 @@ class Authenticate extends Model
                             $_SESSION['isLoggedIn'] = true;
                             $_SESSION['type'] = 'admin';
                             $_SESSION['privilege'] = $row->privilege;
-
                             $_SESSION['data'] = $row;
                             $result['status'] = '1';
                             //$result['data'] = $row;

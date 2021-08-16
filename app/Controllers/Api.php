@@ -36,6 +36,18 @@ class Api extends Controller
         }
     }
 
+    public function admin_login()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $login = $this->model('Authenticate')->loginAdmin();
+            print_r(json_encode($login));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
     public function confirm_user_signup()
     {
         $header = apache_request_headers();
