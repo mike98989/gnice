@@ -25,6 +25,8 @@ class Authenticate extends Model
                     } else {
 
                         if (($row->seller == '1') && ($row->account_type != '0')) {
+                            //! review this
+                            die('got here');
                             $row->seller_account_details = $this->getUserAccountType($row->account_type);
                         }
                         $updated_token = $this->updateUserToken($row->id, 'users');

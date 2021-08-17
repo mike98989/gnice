@@ -21,6 +21,8 @@ module.controller("gniceAdminController", [
     $scope.pageSize = 30;
 
     $scope.admin_login = function () {
+      alert("asdfasdfasdf");
+      return;
       $(".loader").show();
       $(".result").show();
       var email = $("#email").val();
