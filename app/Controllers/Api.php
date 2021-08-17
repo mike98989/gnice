@@ -36,6 +36,18 @@ class Api extends Controller
         }
     }
 
+    public function admin_login()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $login = $this->model('Authenticate')->loginAdmin();
+            print_r(json_encode($login));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
     public function confirm_user_signup()
     {
         $header = apache_request_headers();
@@ -231,7 +243,35 @@ class Api extends Controller
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllProductOfASeller($_GET['seller_id']);
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token);
+            if($result){
+                $result = $this->model('Product')->getAllProductOfASeller($_GET['seller_id']);
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+            
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+
+    public function fetch_all_user_saved_products()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token);
+            if($result){
+                $result = $this->model('Product')->getAllUserSavedProducts($result->id);
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
             print_r(json_encode($result));
         } else {
             echo 'invalid request';
@@ -239,14 +279,34 @@ class Api extends Controller
         }
     }
 
-    public function fetch_single_product($id)
+    public function pin_product()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getSingleProduct($id);
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token);
+            if($result){
+                $result = $this->model('Product')->pinProduct($result->id);
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
             print_r(json_encode($result));
         } else {
-            echo "invalid request";
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+    
+
+    public function fetch_single_product($id){
+         $header = apache_request_headers(); 
+         if(isset($header['gnice-authenticate'])){
+             $result = $this->model('Product')->getSingleProduct($id);
+             print_r(json_encode($result));
+         }else {
+             echo "invalid request";
             exit;
         }
     }
@@ -440,7 +500,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
-            $result = $this->model('Profile')->updateUserProfile();
+            $result = $this->model('Authenticate')->updateUserProfile();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -453,7 +513,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
-            $result = $this->model('Profile')->updateProduct();
+            $result = $this->model('Product')->updateProduct();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -466,7 +526,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
-            $result = $this->model('Profile')->uploadImages();
+            $result = $this->model('Product')->uploadImages();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -487,6 +547,18 @@ class Api extends Controller
             exit;
         }
     }
+
+    public function upload_image(){
+         $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Authenticate')->uploadProfileImage();
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
 
     public function create_category()
     {

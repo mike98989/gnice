@@ -4,19 +4,24 @@
 class AdminDashboard extends Controller
 {
 
-    public function __construct()
-    {
-        // if (!isset($_SESSION['isLoggedIn']) || $_SESSION['type'] !== 'admin') {
-        //     session_destroy();
-        //     redirect('Admin/gnice_login', true, 303);
-        // }
-    }
+	function __construct() {
+        parent::__construct();
+		Session::init();
+		//print_r($_SESSION);exit;
+		if (!Session::get('loggedIn')) {
+			Session::destroy();
+			header('location:./AdminAuth');
+			exit;
+		}
+	}
+
 
     public function index()
     {
         $data = [];
-        $js = [];
-        $this->view('Admin/gnice_dashboard', $include_header = true, $data, '_type4', $js);
+        $this->view->js = ['public/assets/js/controllers/admindashboard/homeController.js','public/assets/js/controllers/admindashboard/usersController.js'];
+        $this->view->render('Admin/gnice_dashboard',false,'');
+        
     }
 
     public function get_all_users()

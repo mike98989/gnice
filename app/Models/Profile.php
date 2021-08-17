@@ -77,18 +77,17 @@ class Profile extends Model
         return $result;
     }
 
-    public function uploadImage($prefix, $location, $email){
-        $header = apache_request_headers();
-
-        if(isset($header['gnice-authenticate'])){
-            $uploader = uploadMultiple($prefix, $location, 2);
+    public function uploadProfileImage($email){
+            $uploader = uploadMultiple('profile', 'profile', 2);
             $image = $uploader['imageUrl'];
-
             if(isset($image) && strlen($image) > 0){
-                $this->db->query("UPDATE $location SET image = :image WHERE email = :email AND status = 1");
+                $this->db->query("UPDATE users SET image = :image WHERE email = :email AND status = 1");
                 $this->db->bind(':image', $image);
                 $this->db->bind(':email', $email);
                 if($this->db->execute()){
+                    $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+                    $this->db->bind(':email', $email);
+                    $result['data']=$this->db->singleResult();
                     $result['message'] = 'profile picture update successfully';
                     $result['status'] = '1';
                     $result['errors'] = $uploader['image_error'];
@@ -103,7 +102,7 @@ class Profile extends Model
                 $result['status'] = '0';
             }
 
-        }
+        
 
        return $result;
     } 

@@ -1,30 +1,14 @@
 ///////////// THIS IS THE INDEXPAGE CONTROLLER///////
 ///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
 /////////////////////////
-
-module.controller("loginController", [
-  "$scope",
-  "$sce",
-  "$http",
-  "infogathering",
-  "$routeParams",
-  "$localStorage",
-  "$sessionStorage",
-  function (
-    $scope,
-    $sce,
-    $http,
-    datagrab,
-    $routeParams,
-    $localStorage,
-    $sessionStorage
-  ) {
-    $scope.fieldcounter = 1;
+module.controller("loginController", ["$scope","$sce","$http","infogathering","$routeParams","$localStorage","$sessionStorage",function (
+    $scope,$sce,$http,datagrab,$routeParams,$localStorage,$sessionStorage) {
+    
     //$('.loader').show();
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = 1;
     $scope.pageSize = 30;
-
+  
     $scope.password_recovery = function () {
       $(".loader").show();
       $(".result").hide();
@@ -205,6 +189,7 @@ module.controller("loginController", [
       $localStorage["fullname_checked"] = false;
       window.location.reload();
     };
+
     $scope.admin_login = function () {
       $(".loader").show();
       $(".result").hide();
@@ -212,7 +197,7 @@ module.controller("loginController", [
       var pwrd = $("#password").val();
       var formData = new FormData($("#admin_login")[0]);
       $.ajax({
-        url: $scope.dirlocation + "api/rims_admin_login",
+        url: $scope.dirlocation + "api/admin_login",
         type: "POST",
         //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
         data: formData,
@@ -220,11 +205,11 @@ module.controller("loginController", [
         cache: false,
         contentType: false,
         enctype: "multipart/form-data",
-        headers: { "Rhims-Authenticate": username + ":pwrd:" + pwrd },
+        headers: { "gnice-authenticate": username + ":pwrd:" + pwrd },
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          //alert(answer);
+          alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

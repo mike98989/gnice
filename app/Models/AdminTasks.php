@@ -80,7 +80,7 @@ class AdminTasks extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $this->db->query("SELECT id, fullname, phone, state, email, image,account_type,last_login, signup_date, activated, status FROM users ORDER BY status ASC ");
+            $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.status ASC ");
             $row = $this->db->resultSet();
             if ($this->db->rowCount() > 0) {
 

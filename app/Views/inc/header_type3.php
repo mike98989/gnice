@@ -28,7 +28,7 @@ if (!isset($_SESSION['user_name'])) {
     <link
       rel="icon"
       type="image/x-icon"
-      href="<?php echo APP_URL;?>/assets/images/icons/favicon.ico"
+      href="<?php echo APP_URL;?>/public/assets/images/icons/favicon.ico"
     />
 
     <script type="text/javascript">
@@ -44,7 +44,7 @@ if (!isset($_SESSION['user_name'])) {
       (function (d) {
         var wf = d.createElement("script"),
           s = d.scripts[0];
-        wf.src = "<?php echo APP_URL;?>/assets/js/webfont.js";
+        wf.src = "<?php echo APP_URL;?>/public/assets/js/webfont.js";
         wf.async = true;
         s.parentNode.insertBefore(wf, s);
       })(document);
@@ -55,11 +55,11 @@ if (!isset($_SESSION['user_name'])) {
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
     <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/reg/css/bootstrap.min.css"
+      href="<?php echo APP_URL;?>/public/assets/reg/css/bootstrap.min.css"
     />
      <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/reg/css/gsdk-bootstrap-wizard.css"
+      href="<?php echo APP_URL;?>/public/assets/reg/css/gsdk-bootstrap-wizard.css"
     />
   
 
@@ -68,13 +68,13 @@ if (!isset($_SESSION['user_name'])) {
     <link
       rel="stylesheet"
       type="text/css"
-      href="<?php echo APP_URL;?>/assets/css/style.min.css"
+      href="<?php echo APP_URL;?>/public/assets/css/style.min.css"
     />
   -->
     <link
       rel="stylesheet"
       type="text/css"
-      href="<?php echo APP_URL;?>/assets/vendor/fontawesome-free/css/all.min.css"
+      href="<?php echo APP_URL;?>/public/assets/vendor/fontawesome-free/css/all.min.css"
     />
   </head>
   <body ng-app="gnice">

@@ -6,11 +6,7 @@
     //splice the url to fit in both on localhost and onine server
     var i = webUrl.indexOf('gnice');
     webUrl.splice(i, 1);
-    // if(window.localStorage){
-    //     alert("supported");
-    // }else{
-    //     alert("not supported");
-    // }
+
     var user_data = $localStorage.user_data;
     var user_token = $localStorage.user_token;
     //var dirlocation = window.location.hostname+'/nps/';

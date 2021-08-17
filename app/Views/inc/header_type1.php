@@ -21,7 +21,7 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="<?php echo APP_URL;?>/assets/images/icons/favicon.ico"
+      href="<?php echo APP_URL;?>/public/assets/images/icons/favicon.ico"
     />
 
     <script type="text/javascript">
@@ -37,7 +37,7 @@
       (function (d) {
         var wf = d.createElement("script"),
           s = d.scripts[0];
-        wf.src = "<?php echo APP_URL;?>/assets/js/webfont.js";
+        wf.src = "<?php echo APP_URL;?>/public/assets/js/webfont.js";
         wf.async = true;
         s.parentNode.insertBefore(wf, s);
       })(document);
@@ -50,15 +50,15 @@
 
     <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/css/bootstrap.min.css"
+      href="<?php echo APP_URL;?>/public/assets/css/bootstrap.min.css"
     />
       <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/css/jquery-ui.css"
+      href="<?php echo APP_URL;?>/public/assets/css/jquery-ui.css"
     />
      <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/css/gsdk-bootstrap-wizard.css"
+      href="<?php echo APP_URL;?>/public/assets/css/gsdk-bootstrap-wizard.css"
     />
   
 
@@ -66,12 +66,12 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="<?php echo APP_URL;?>/assets/css/style.min.css"
+      href="<?php echo APP_URL;?>/public/assets/css/style.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="<?php echo APP_URL;?>/assets/vendor/fontawesome-free/css/all.min.css"
+      href="<?php echo APP_URL;?>/public/assets/vendor/fontawesome-free/css/all.min.css"
     />
   </head>
   <body ng-app="gnice">
