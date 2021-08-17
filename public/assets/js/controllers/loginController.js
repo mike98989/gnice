@@ -3,7 +3,7 @@
 /////////////////////////
 module.controller("loginController", ["$scope","$sce","$http","infogathering","$routeParams","$localStorage","$sessionStorage",function (
     $scope,$sce,$http,datagrab,$routeParams,$localStorage,$sessionStorage) {
-    $scope.fieldcounter = 1;
+    
     //$('.loader').show();
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = 1;

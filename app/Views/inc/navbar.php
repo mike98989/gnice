@@ -83,7 +83,7 @@
               </button>
               <a href="index.html" class="logo">
                 <img
-                  src="<?php echo APP_URL;?>/assets/images/logo.png"
+                  src="<?php echo APP_URL;?>/public/assets/images/logo.png"
                   alt="Porto Logo"
                 />
               </a>
@@ -250,7 +250,7 @@
                       </div>
                       <div class="col-lg-4 p-0">
                         <img
-                          src="<?php echo APP_URL;?>/assets/images/menu-banner.jpg"
+                          src="<?php echo APP_URL;?>/public/assets/images/menu-banner.jpg"
                           alt="Menu banner"
                         />
                       </div>
@@ -339,7 +339,7 @@
 
                       <div class="col-lg-3 p-0">
                         <img
-                          src="<?php echo APP_URL;?>/assets/images/menu-bg.png"
+                          src="<?php echo APP_URL;?>/public/assets/images/menu-bg.png"
                           alt="Menu banner"
                           class="product-promo"
                         />

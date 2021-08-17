@@ -14,7 +14,7 @@
   <meta name="author" content="SW-THEMES" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="<?php echo APP_URL; ?>/assets/images/icons/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="<?php echo APP_URL; ?>/public/assets/images/icons/favicon.ico" />
 
   <script type="text/javascript">
     WebFontConfig = {
@@ -29,18 +29,18 @@
     (function(d) {
       var wf = d.createElement("script"),
         s = d.scripts[0];
-      wf.src = "<?php echo APP_URL; ?>/assets/js/webfont.js";
+      wf.src = "<?php echo APP_URL; ?>/public/assets/js/webfont.js";
       wf.async = true;
       s.parentNode.insertBefore(wf, s);
     })(document);
   </script>
 
   <!-- Plugins CSS File -->
-  <link rel="stylesheet" href="<?php echo APP_URL; ?>/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/assets/css/bootstrap.min.css" />
 
   <!-- Main CSS File -->
-  <link rel="stylesheet" type="text/css" href="<?php echo APP_URL; ?>/assets/css/style.min.css" />
-  <link rel="stylesheet" type="text/css" href="<?php echo APP_URL; ?>/assets/vendor/fontawesome-free/css/all.min.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo APP_URL; ?>/public/assets/css/style.min.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo APP_URL; ?>/public/assets/vendor/fontawesome-free/css/all.min.css" />
 </head>
 
 <body>

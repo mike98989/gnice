@@ -17,29 +17,29 @@
 	<meta name="author" content="SW-THEMES">
 		
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="<?php echo APP_URL;?>/assets/images/icons/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="<?php echo APP_URL;?>/public/assets/images/icons/favicon.ico">
 	
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		WebFontConfig = {
 			google: { families: [ 'Open+Sans:300,400,600,700','Poppins:300,400,500,600,700,800', 'Playfair+Display:900' ] }
 		};
 		(function(d) {
 			var wf = d.createElement('script'), s = d.scripts[0];
-			wf.src = 'assets/js/webfont.js';
+			wf.src = '<?php echo APP_URL;?>/public/assets/js/webfont.js';
 			wf.async = true;
 			s.parentNode.insertBefore(wf, s);
 		})(document);
-	</script>
+	</script> -->
 
 	<!-- Plugins CSS File -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?php echo APP_URL;?>/public/assets/css/bootstrap.min.css">
 	
 
 	<!-- Main CSS File -->
-	<link rel="stylesheet" href="assets/css/style.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/assets/vendor/fontawesome-free/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/assets/vendor/simple-line-icons/css/simple-line-icons.min.css">
+	<link rel="stylesheet" href="<?php echo APP_URL;?>/public/assets/css/style.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/public/assets/vendor/fontawesome-free/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/public/assets/vendor/simple-line-icons/css/simple-line-icons.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body ng-app="gnice">
@@ -134,7 +134,7 @@
 						</button>
 					<?php }?>
 						<a href="Home" class="logo">
-							<img src="assets/images/gnicelogo.jpeg" alt="Porto Logo">
+							<img src="<?php echo APP_URL;?>/public/assets/images/gnicelogo.jpeg" alt="Porto Logo">
 						</a>
 					</div><!-- End .header-left -->
 

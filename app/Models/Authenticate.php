@@ -83,6 +83,8 @@ class Authenticate extends Model
         }
     }
 
+    
+
 
     public function updateUserAccountType()
     {
@@ -746,27 +748,36 @@ class Authenticate extends Model
                 $email = filter_var($email, FILTER_VALIDATE_EMAIL);
                 if ($email == true) {
 
-                    $this->db->query('SELECT id, name, email ,phone, last_login,privilege, password FROM admins WHERE email= :email AND status = 1');
+                    $this->db->query('SELECT id, fullname, email ,phone, last_login,privilege, password FROM admin WHERE email= :email AND status = 1');
                     $this->db->bind(':email', $email);
                     $row = $this->db->singleResult();
                     if ($row == true) {
                         $hashedPassword = $row->password;
                         if (password_verify($password, $hashedPassword)) {
                             // if ($password === $hashedPassword) {
-                            $updated_token = $this->updateUserToken($row->id, 'admins');
+                            $updated_token = $this->updateUserToken($row->id, 'admin');
                             $excluded = $row->password;
                             unset($row->password, $row->id);
-                            session_start();
-                            $_SESSION['token'] = $updated_token;
-                            $_SESSION['isLoggedIn'] = true;
-                            $_SESSION['type'] = 'admin';
-                            $_SESSION['privilege'] = $row->privilege;
-                            $_SESSION['data'] = $row;
+                            @session_start();
+                            Session::init();
+                            Session::set('loggedIn',true);
+                            Session::set('loggedType','admin');
+                            Session::set('token',$updated_token);
+                            Session::set('data',$row);
                             $result['status'] = '1';
+                            $result['data'] = $row;
+                            $result['token'] = $updated_token;
+                            // session_start();
+                            // $_SESSION['token'] = $updated_token;
+                            // $_SESSION['isLoggedIn'] = true;
+                            // $_SESSION['type'] = 'admin';
+                            // $_SESSION['privilege'] = $row->privilege;
+                            // $_SESSION['data'] = $row;
+                            // $result['status'] = '1';
                             //$result['data'] = $row;
 
                         } else {
-                            $result['message'] = 'enter valid password or email';
+                            $result['message'] = 'Enter valid password or email';
                             $result['status'] = '0';
                         }
                     } else {
@@ -871,12 +882,12 @@ class Authenticate extends Model
                 if ($verifyCode->status != '0') {
                     if ($data['password'] == $data['confirm_password']) {
                         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-                        $this->db->query("UPDATE admins SET password = :password, reset_code = null  WHERE email = :email");
+                        $this->db->query("UPDATE admin SET password = :password, reset_code = null  WHERE email = :email");
                         $this->db->bind(':email', $data['email']);
                         $this->db->bind(':password', $hashedPassword);
                         $row = $this->db->singleResult();
                         if ($row == true) {
-                            $updated_token = $this->updateUserToken($row->id, 'admins');
+                            $updated_token = $this->updateUserToken($row->id, 'admin');
                             unset($row->password, $row->id);
                             session_start();
                             $_SESSION['token'] = $updated_token;
