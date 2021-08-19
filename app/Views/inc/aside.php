@@ -1,37 +1,20 @@
 <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 <aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar">
-    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none">
-        <h2 class="side-menu-title bg-gray ls-n-25">Browse Categories</h2>
-
-        <nav class="side-nav">
-
-<!--
-            <ul class="menu menu-vertical sf-arrows"  ng-init="fetch_all_categories_and_sub_categories()">
-            <li ng-repeat="catSub in catSubs">
-            <a href="#"  class="sf-with-ul"><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{catSub.image}}">{{catSub.title}} <span>({{ catSub.subcategory.length | number}} ad)</span></a>
-           
-            
-                    <div class="megamenu megamenu-fixed-width megamenu-3cols">
-                        <div class="row" >
-                            <div class="col-lg-6" >
-                                <a href="#" class="nolink">{{catSub.title}} <span>({{ catSub.subcategory.length | number}} ad)</span></a>
-                                <ul class="submenu" >
-                                    <li  ng-repeat="sub in catSub.subcategory ">
-                                        <a href="#" class="cbtn" data-id4="{{sub.sub_id}}"  data-id5="{{sub.parent_id}}" ><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{sub.image}}">{{$index + 1}} {{ sub.title }} </a></li>
-                                    </ul>
-                                -->
-                                   
+    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none" style="border-top:none">
+        <h2 class="side-menu-title bg-gray ls-n-25" style="padding-top:20px;margin-top:0">Browse Categories</h2>
+        <nav class="side-nav">    
             <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
                 <li ng-repeat="catSub in catSubs">
-                    <a href="#" class="sf-with-ul"><i class="sicon-badge"></i>{{catSub.title}}</a>
+                    <a href="#" style="font-weight:normal;" class="" data-idc="{{catSub.id}}"><img style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px" src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
                         <div class="row">
                             <div class="col-lg-6">
                                 <a href="#" class="nolink">{{catSub.title}}</a>
                                 <ul class="submenu">
                                     <li ng-repeat="sub in catSub.subcategory ">
-                                        <a href="#" class="cbtn" data-id4="{{sub.sub_id}}" data-id5="{{sub.parent_id}}">{{ sub.title }} </a>
+                                        <a href="#" class="cbtn" data-id4="{{sub.sub_id}}" data-id5="{{sub.parent_id}}">
+                                            <img style="width: 40px!important; height: 40px!important;" src="{{dirlocation}}public/assets/images/uploads/category/{{sub.image}}">{{ sub.title }} </a>
                                     </li>
                                 </ul>
 
@@ -39,7 +22,7 @@
                             </div>
 
                             <div class="col-lg-6 p-0">
-                                <img src="assets/images/menu-banner.jpg" alt="Menu banner">
+                                <img src="{{dirlocation}}public/assets/images/menu-banner.jpg" alt="Menu banner">
                             </div>
                         </div>
                     </div><!-- End .megamenu -->
@@ -77,7 +60,7 @@
                                 </ul>
                             </div>
                             <div class="col-lg-4 p-0">
-                                <img src="assets/images/menu-banner.jpg" alt="Menu banner">
+                                <img src="{{dirlocation}}public/assets/images/menu-banner.jpg" alt="Menu banner">
                             </div>
                         </div>
                     </div><
@@ -117,7 +100,7 @@
                             </div>//End .col-lg-4
 
                             <div class="col-lg-3 p-0">
-                                <img src="assets/images/menu-bg.png" alt="Menu banner" class="product-promo">
+                                <img src="{{dirlocation}}public/assets/images/menu-bg.png" alt="Menu banner" class="product-promo">
                             </div>End .col-lg-4 
                         </div>// End .row 
                     </div>// End .megamenu
@@ -245,7 +228,7 @@
             <article class="post">
                 <div class="post-media">
                     <a href="single.html">
-                        <img src="assets/images/blog/home/post-1.jpg" alt="Post">
+                        <img src="{{dirlocation}}public/assets/images/blog/home/post-1.jpg" alt="Post">
                     </a>
                     <div class="post-date">
                         <span class="day">29</span>
@@ -269,7 +252,7 @@
             <article class="post">
                 <div class="post-media">
                     <a href="single.html">
-                        <img src="assets/images/blog/home/post-2.jpg" alt="Post">
+                        <img src="{{dirlocation}}public/assets/images/blog/home/post-2.jpg" alt="Post">
                     </a>
                     <div class="post-date">
                         <span class="day">29</span>
@@ -293,7 +276,7 @@
             <article class="post">
                 <div class="post-media">
                     <a href="single.html">
-                        <img src="assets/images/blog/home/post-3.jpg" alt="Post">
+                        <img src="{{dirlocation}}public/assets/images/blog/home/post-3.jpg" alt="Post">
                     </a>
                     <div class="post-date">
                         <span class="day">29</span>

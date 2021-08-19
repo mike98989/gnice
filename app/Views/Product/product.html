@@ -2,100 +2,82 @@
       <main class="main" ng-controller="homeController">
         <div class="container"  ng-init="fetch_single_product()">
           <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" >
               <li class="breadcrumb-item">
-                <a href="index.html"><i class="icon-home"></i></a>
+                <a href="Home"><i class="icon-home"></i>  Home</a>
               </li>
-              <li class="breadcrumb-item"><a href="#">{{singleProduct.productCategory}}</a></li>
+
+              <li class="breadcrumb-item"><a href="#" class="sf-with-ul cabtn" data-idc="{{product.category}}">{{product.productCategory}}</a></li>
+              <li class="breadcrumb-item"><a href="#" class="cbtn" data-id4="{{product.sub_category}}" data-id5="{{product.category}}">{{ product.productSubCategory }}</a></li>
+               <li class="breadcrumb-item">
+                <a href=""><i class="breadcrumb-item active"></i>{{ product.name }}</a>
+              </li>
+
             </ol>
           </nav>
-          <div class="product-single-container product-single-default" >
-            <div class="row">
-              <div class="col-md-5 product-single-gallery">
-                <div class="product-slider-container">
-                  <div class="product-single-carousel owl-carousel owl-theme">
-                    <div class="product-item">
-                      <img
-                        class="product-single-image"
-                        src="<?php echo APP_URL;?>/assets/images/products/zoom/product-1.jpg"
-                        data-zoom-image="<?php echo APP_URL;?>assets/images/products/zoom/product-1-big.jpg"
-                      />
-                    </div>
-                    <div class="product-item">
-                      <img
-                        class="product-single-image"
-                        src="<?php echo APP_URL;?>/assets/images/products/zoom/product-2.jpg"
-                        data-zoom-image="<?php echo APP_URL;?>/assets/images/products/zoom/product-2-big.jpg"
-                      />
-                    </div>
-                    <div class="product-item">
-                      <img
-                        class="product-single-image"
-                        src="<?php echo APP_URL;?>/assets/images/products/zoom/product-3.jpg"
-                        data-zoom-image="<?php echo APP_URL;?>/assets/images/products/zoom/product-3-big.jpg"
-                      />
-                    </div>
-                    <div class="product-item">
-                      <img
-                        class="product-single-image"
-                        src="<?php echo APP_URL;?>/assets/images/products/zoom/product-4.jpg"
-                        data-zoom-image="<?php echo APP_URL;?>/assets/images/products/zoom/product-4-big.jpg"
-                      />
-                    </div>
-                  </div>
-                  <!-- End .product-single-carousel -->
-                  <span class="prod-full-screen">
-                    <i class="icon-plus"></i>
-                  </span>
-                </div>
-                <div class="prod-thumbnail owl-dots" id="carousel-custom-dots">
-                  <div class="owl-dot">
-                    <img src="<?php echo APP_URL;?>/assets/images/products/zoom/product-1.jpg" />
-                  </div>
-                  <div class="owl-dot">
-                    <img src="<?php echo APP_URL;?>/assets/images/products/zoom/product-2.jpg" />
-                  </div>
-                  <div class="owl-dot">
-                    <img src="<?php echo APP_URL;?>/assets/images/products/zoom/product-3.jpg" />
-                  </div>
-                  <div class="owl-dot">
-                    <img src="<?php echo APP_URL;?>/assets/images/products/zoom/product-4.jpg" />
-                  </div>
-                </div>
+          <div class="product-single-container product-single-default">
+            <div class="row" >
+              <div class="col-md-6 product-single-gallery">
+
+
+                <!--Carousel Wrapper-->
+    <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+      <!--Slides-->
+      
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item" ng-class="{active: $index == 0}" ng-repeat="image in product_image">
+          <img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" alt="slide">
+        </div>
+        
+      </div>
+      <!--/.Slides-->
+      <!--Controls-->
+      <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      <!--/.Controls-->
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-thumb" data-slide-to="{{$index}}" ng-class="{active: $index == 0}" ng-repeat="image in product_image"> <img class="d-block w-100" src="{{dirlocation}}public/assets/images/uploads/products/{{image}}"
+            class="img-fluid"></li>
+        
+      </ol>
+    </div>
+    <!--/.Carousel Wrapper-->
+
               </div>
+          
               <!-- End .product-single-gallery -->
 
-              <div class="col-md-7 product-single-details">
-                <h1 class="product-title">{{singleProduct.name}}</h1>
+              <div class="col-md-6 product-single-details">
+                <h1 class="product-title" style="padding-top:0;margin-top:0">{{product.name}}</h1>
 
-                <div class="ratings-container">
+        
+                  <p>{{product.land_mark}}, {{product.lga}}, {{product.state}}</p>
                 
-                  <!-- End .product-ratings -->
-                  <p>{{ singleProduct.state }}, {{ singleProduct.location }}</p>
-
-                  
-                </div>
                 <!-- End .ratings-container -->
-
-                <hr class="short-divider" />
-
                 <div class="price-box">
-                  <span class="product-price">${{singleProduct.price}}</span>
+                  <span class="product-price">{{product.price| currency: 'NGN '}}</span>
                 </div>
                 <!-- End .price-box -->
 
-                <div class="product-desc">
-                  <p>
-                   {{singleProduct.short_description}}
-                    <a href="#">(read more)</a>
-                  </p>
-                </div>
                 <!-- End .product-desc -->
+               
 
                 <div class="product-filters-container">
                   <div class="product-single-filter mb-2">
-                    <label>Sizes:</label>
-                     {{singleProduct.location}}
+                     <img style="width: 50px!important;"   src="{{dirlocation}}public/assets/images/uploads/profile/{{product.seller_image}}" class="img-profile rounded-circle mb-4">
+                     {{product.seller_fullname}},
+                  </div>
+                   <div class="product-single-filter mb-2">
+                    <label>Join Gnice on : {{product.signup_date}} </label>
+                  </div>
+                   <div class="product-single-filter mb-2">
+                    <label>Last Seen : {{product.last_seen}}</label>
                   </div>
                   <!-- End .product-single-filter -->
                 </div>
@@ -107,11 +89,18 @@
                   
                   <!-- End .product-single-qty -->
 
-                  <a
-                    href="cart.html"
+                  <a ng-click="showNum()" ng-show="hidetag"
+                    href=""
                     class="btn btn-dark add-cart icon-shopping-cart"
-                    title="Add to Cart"
+                    title="Show Number"
                     >Show Number</a
+                  >
+                   <a ng-show="shownumber"
+                    href="tel:{{product.seller_phone}}"
+
+                    class="btn btn-dark add-cart icon-shopping-cart"
+                   
+                    >{{product.seller_phone}}</a
                   >
                 </div>
                 <!-- End .product-action -->
@@ -161,7 +150,7 @@
                   role="tab"
                   aria-controls="product-tags-content"
                   aria-selected="false"
-                  >Tags</a
+                  >Message Seller</a
                 >
               </li>
               <li class="nav-item">
@@ -185,39 +174,72 @@
                 aria-labelledby="product-tab-desc"
               >
                 <div class="product-desc-content">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat.
-                  </p>
+                <div ng-bind-html="product.description"></div>
                   <ul>
                     <li>
-                      <i class="fa fa-check-circle"></i><span>Type</span>{{ singleProduct.productSubCategory  }}
+                      <i class="fa fa-check-circle"></i><span>Make:       </span> {{ product.brand  }} 
+                    </li>
+                   
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Model:      </span>{{ product.model  }}
                     </li>
                     <li>
-                      <i class="fa fa-check-circle"></i><span>Type</span>{{ singleProduct.brand  }}
+                      <i class="fa fa-check-circle"></i><span>Year of Manufacture:</span>{{ product.year_of_manufacture  }}
                     </li>
                     <li>
-                      <i class="fa fa-check-circle"></i>Downloadable/Digital
-                      Products, Virtual Products
+                      <i class="fa fa-check-circle"></i><span>Color:       </span> {{ product.color  }} 
                     </li>
                     <li>
-                      <i class="fa fa-check-circle"></i>Inventory Management
-                      with Backordered items
+                    <i class="fa fa-check-circle"></i><span>Milage:   </span>{{ product.fuel  }}Km
                     </li>
+                    <li>
+                    <i class="fa fa-check-circle"></i><span>Condition:    </span>{{ product.conditon  }}
+                    </li>
+                    <li>
+                      <i class="fa fa-check-circle"></i><span>Ram:    </span>{{ product.ram  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Internal Storage</span>{{ product.internal_storage  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Sim:    </span>{{ product.sim  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Resolution:   </span>{{ product.resolution  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Battery:    </span>{{ product.battery }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Main Camera:    </span>{{ product.main_camera  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Selfie Camera:  </span>{{ product.selfie_camera  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Operating System:  </span>{{ product.operating_system  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Hard Drive Size:   </span>{{ product.hard_drive_size  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Property Size:    </span>{{ product.property_size  }}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Number of Bedrooms:     </span>{{ product.number_of_bedrooms}}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Number of Bathrooms:     </span>{{ product.number_of_bathrooms}}
+                    </li>
+                     <li>
+                      <i class="fa fa-check-circle"></i><span>Property Type:   </span>{{ product.property_type  }}
+                    </li>
+                    
+                 
                   </ul>
-                  <p>
-                    Sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, <br />quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.
-                  </p>
+                 
                 </div>
-                <!-- End .product-desc-content -->
+             
               </div>
               <!-- End .tab-pane -->
 
@@ -229,12 +251,25 @@
               >
                 <div class="product-desc-content">
                   <p>
-                  {{ singleProduct.long_description }}
+                  {{ singleProduct.description }}
                   </p>
+                </div>
+                 <h4>Safety Tip</h4>
+                  <ul>
+
+                    <li> <i class="fa fa-check-circle"></i>   <span>Do not Pay in advance even for the delivery</span></li>
+                    <li> <i class="fa fa-check-circle"></i><span>   Try to meet at a safe, public location</span></li>
+                    <li> <i class="fa fa-check-circle"></i><span>   Check the item Before you buy it</span></li>
+                    <li> <i class="fa fa-check-circle"></i><span>   pay only after collecting the item</span></li>
+                  </ul>
+                  <div class="product-action">
+                  <button  class="btn btn-danger btn-bg-dark">Report Abuse</button>
+                  <button  class="btn btn-success ">post ad like this</button>
                 </div>
                 <!-- End .product-desc-content -->
               </div>
               <!-- End .tab-pane -->
+
 
               <div
                 class="tab-pane fade"
@@ -242,34 +277,84 @@
                 role="tabpanel"
                 aria-labelledby="product-tab-tags"
               >
-                <div class="product-tags-content">
-                  <form action="#">
-                    <h4>Add Your Tags:</h4>
-                    <div class="form-group">
-                      <img src="" class="image-thumnnail">
-                       <p>{{ singleProduct.seller_fullname }}</p>
+
+               <div class="product-reviews-content">
+                  <div class="row">
+                  
+
+                    <div class="col-xl-12">
+                      <div class="add-product-review">
+                        <form class="comment-form m-0" ng-submit="message_product_seller()" id="message_product_seller">
+                          <h3 class="review-title">Message Seller</h3>
+                            <input type="hidden" name="seller_id" value="{{product.seller_id}}">
+                              <input type="hidden" name="product_code" value="{{product.product_code}}">
+                            <div class="row">
+                            <div class="col-md-6 col-xl-12">
+                              <div class="form-group">
+                                <label>Your Name</label>
+                                <input
+                                  type="text"
+                                  name="sender_name"
+                                  class="form-control form-control-sm"
+                                  required
+                                />
+                              </div>
+                              <!-- End .form-group -->
+                            </div>
+
+                            <div class="col-md-6 col-xl-12">
+                              <div class="form-group">
+                                <label>Your E-mail</label>
+                                <input
+                                  type="text"
+                                  name="sender_email"
+                                  class="form-control form-control-sm"
+                                  required
+                                />
+                              </div>
+                              <!-- End .form-group -->
+                            </div>
+                             <div class="col-md-6 col-xl-12">
+                              <div class="form-group">
+                                <label>Your Phone Number</label>
+                                <input
+                                  type="text"
+                                  name="sender_tel"
+                                  class="form-control form-control-sm"
+                                  required
+                                />
+                              </div>
+                              <!-- End .form-group -->
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Your Message</label>
+                            <textarea
+                            name="message"
+                              cols="5"
+                              rows="6"
+                              class="form-control form-control-sm"
+                            ></textarea>
+                          </div>
+                          <!-- End .form-group -->
+                          <input
+                            type="submit"
+                            class="btn btn-dark ls-n-15"
+                            value="Submit"
+                          />
+                        </form>
+                      </div>
+                      <!-- End .add-product-review -->
                     </div>
-                    <!-- End .form-group -->
-                  </form>
-                  <p class="note">
-                   {{ singleProduct.signup_date }}
-                  </p>
-                   <p class="note">
-                   {{ singleProduct.last_seen }}
-                  </p>
-                  <h4>Safety Tip</h4>
-                  <ul>
-                    <li>Do not Pay in advance even for the delivery</li>
-                    <li>Try to meet at a safe, public location</li>
-                    <li>Check the item Before uou buy it</li>
-                    <li>pay only after collecting the  item</li>
-                  </ul>
-                  <button>Report Abuse</button>
-                  <button>post ad like this</button>
+                  </div>
                 </div>
-                <!-- End .product-tags-content -->
+                <!-- End .product-reviews-content -->
+               
               </div>
               <!-- End .tab-pane -->
+
+
 
               <div
                 class="tab-pane fade"
@@ -288,7 +373,7 @@
                         <li class="comment-container">
                           <div class="comment-avatar">
                             <img
-                              src="<?php echo APP_URL;?>/<?php echo APP_URL;?>/assets/images/avatar/avatar1.jpg"
+                              src="{{dirlocation}}public/assets/images/avatar/avatar1.jpg"
                               width="65"
                               height="65"
                               alt="avatar"
@@ -511,7 +596,7 @@
             
           </div>
 
-          <div class="products-section pt-0" ng-init="fetch_related_products()">
+          <div class="products-section pt-0">
             <h2 class="section-title">Related Products</h2>
 
             <div class=" " >
@@ -519,12 +604,15 @@
                 <div class="col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
                      <div class="product-default inner-quickview inner-icon" >
                 <figure>
-                 <a href="#" id="pbtn" data-id1="{{relatedProduct.product_code}}">
-                    <img src="<?php echo APP_URL;?>/assets/images/products/product-14.jpg" />
+                 <a href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">
+                  <div ng-init="img = relatedProduct.image.split(',')"> <img  style="width: 100%!important; height: 150px!important;" src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+                    </div>
+                   
                   </a>
                   <div class="label-group">
-                    <span class="product-label label-sale">-20%</span>
+                   <!-- <span class="product-label label-sale">-20%</span> -->
                   </div>
+                  <!--
                   <div class="btn-icon-group">
                     <button
                       class="btn-icon btn-add-cart"
@@ -534,18 +622,13 @@
                       <i class="icon-shopping-cart"></i>
                     </button>
                   </div>
-                  <a
-                    href="ajax/product-quick-view.html"
-                    class="btn-quickview"
-                    title="Quick View"
-                    >Quick View</a
-                  >
+                -->
                 </figure>
                 <div class="product-details">
                   <div class="category-wrap">
                     <div class="category-list">
                       <a href="category.html" class="product-category"
-                        >category</a
+                        >{{ relatedProduct.productSubCategory }}</a
                       >
                     </div>
                   </div>
@@ -562,8 +645,7 @@
                   </div>
                   <!-- End .ratings-container -->
                   <div class="price-box">
-                    <span class="old-price">$59.00</span>
-                    <span class="product-price">$49.00</span>
+                    <span class="product-price">{{ relatedProduct.price }}</span>
                   </div>
                   <!-- End .price-box -->
                 </div>
@@ -582,6 +664,8 @@
             <!-- End .products-slider -->
           </div>
           <!-- End .products-section -->
+         
+         
         </div>
         <!-- End .container -->
       </main>

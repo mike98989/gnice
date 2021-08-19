@@ -4,10 +4,15 @@
 class Login extends Controller
 {
 
+    function __construct() {
+        parent::__construct();
+		Session::init();
+	}
+
     public function index()
     {
         $data = [];
-        $js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
-        $this->view('Account/login', $include_header = true, $data, '_type1', $js);
+        $this->view->js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
+        $this->view->render('Account/login', false, '');
     }
 }

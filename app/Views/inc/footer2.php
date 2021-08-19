@@ -237,7 +237,7 @@
 
     <!-- Main JS File -->
     <script src="<?php echo APP_URL;?>/public/assets/js/main.min.js"></script>
-    <script src="<?php echo APP_URL;?>/public/assets/custom-js/signup.js"></script>
+    <!--<script src="<?php echo APP_URL;?>/public/assets/custom-js/signup.js"></script> -->
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular.js"></script>
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular-route.js"></script>
     <script src="<?php echo APP_URL; ?>/public/assets/js/dirPagination.js"></script>

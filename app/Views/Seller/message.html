@@ -1,0 +1,40 @@
+  <?php require_once '../app/views/inc/seller_navbar.php';?>
+      
+        <div class="content-wrapper">
+          
+   
+          <div class="row"  ng-controller="homeController">
+            <div class="col-md-12 stretch-card">
+              <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                <div class="card-body">
+                  <p class="card-title">Client Messages</p>
+                  
+                  <div class="table-responsive"  ng-init="fetch_all_messages_to_seller()">
+                    <table id="recent-purchases-listing" class="table table-sm table-hover">
+                      <thead>
+                        <tr>
+                           <th>SN</th>
+          <th>Sender Name</th>
+          <th>Sender Email</th>
+          <th>Sender Number</th>
+          <th>Message</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       <tr ng-repeat="messageToSender in messageTosenders">
+          <td>{{$index + 1}}</td>
+          <td>{{messageToSender.sender_name}}</td>
+          <td>{{messageToSender.sender_email}}</td>
+          <td>{{messageToSender.sender_tel}}</td>
+          <td>{{messageToSender.message}}</td>
+          
+        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2021 at 12:00 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.15
+-- Generation Time: Aug 19, 2021 at 09:16 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `gnice`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `fullname` tinytext NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  `image` tinytext DEFAULT NULL,
+  `password` tinytext DEFAULT NULL,
+  `token` tinytext DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `privilege` int(11) NOT NULL,
+  `activated` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `fullname`, `email`, `phone`, `image`, `password`, `token`, `last_login`, `privilege`, `activated`, `status`) VALUES
+(1, 'Admin Admin', 'admin@test.com', '0703300000', NULL, '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', 'd76881832aeb74dc452ba7589c436d50d880569c2d525a5aaa657542875c35dec2859bc89540a274be8f559e434b3c240baf66e8a1bb1fca47f308d31b36a832', '2021-08-19 08:15:14', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2436,36 +2463,6 @@ INSERT INTO `lga` (`State`, `Lga`, `Lgaid`) VALUES
 ('RIVERS', 'Onelga', 824),
 ('BORNO', 'Maiduguri .M.C', 826),
 ('F.C.T.', 'AMAC', 827);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `messages`
---
-
-CREATE TABLE `messages` (
-  `message_id` bigint(20) NOT NULL,
-  `sender_name` varchar(255) NOT NULL,
-  `sender_tel` varchar(255) NOT NULL,
-  `sender_email` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `date` datetime NOT NULL,
-  `product_code` bigint(20) NOT NULL,
-  `seller_id` varchar(255) NOT NULL,
-  `status` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`message_id`, `sender_name`, `sender_tel`, `sender_email`, `message`, `date`, `product_code`, `seller_id`, `status`) VALUES
-(1, 'collins', '9549859486', 'collin@email.com', 'this is a test message', '2021-07-11 16:54:53', 88230249, 'AG-8614937', 0),
-(2, 'mark', '0908465766', 'collin@email.com', 'this is a test message', '2021-07-11 17:02:22', 88230249, 'AG-8614937', 0),
-(3, 'mark', '0908465766', 'collin@email.com', 'this is a test message', '2021-07-11 17:15:56', 55598537, 'AG-91933000', 0),
-(4, 'mark', '07086483449', 'collin@email.com', 'this is a test message', '2021-07-11 17:21:34', 55598537, 'AG-91933000', 0),
-(5, 'mark', '07086483449', 'collin@email.com', 'this is a test message another test message', '2021-07-11 17:34:36', 55598537, 'AG-91933000', 0),
-(6, 'mark', '07086483449', 'collin@email.com', 'this is a test message another test message', '2021-07-11 17:36:04', 55598537, 'AG-91933000', 0);
 
 -- --------------------------------------------------------
 
@@ -6195,6 +6192,648 @@ INSERT INTO `phone_models` (`model_id`, `make_id`, `model`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `phone_models2`
+--
+
+CREATE TABLE `phone_models2` (
+  `model_id` int(11) NOT NULL,
+  `make_id` varchar(25) NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `phone_models2`
+--
+
+INSERT INTO `phone_models2` (`model_id`, `make_id`, `model`, `status`) VALUES
+(1, '95', 'Spark Plus', 1),
+(2, '95', 'Camon CX Air', 1),
+(3, '95', 'Spark Pro', 1),
+(4, '95', 'Camon CX Manchester City LE', 1),
+(5, '95', 'Phantom 6', 1),
+(6, '95', 'Camon CX', 1),
+(7, '95', 'Pop 1 Lite', 1),
+(8, '95', 'Pouvoir 2', 1),
+(9, '95', 'Pouvoir 2 Pro', 1),
+(10, '95', 'Pop 1 Pro', 1),
+(11, '95', 'Phantom 6 Plus', 1),
+(12, '95', 'Pop 1s', 1),
+(13, '95', 'Pouvoir 1', 1),
+(14, '95', 'Camon X', 1),
+(15, '95', 'Pop 1', 1),
+(16, '95', 'Spark 2', 1),
+(17, '95', 'Spark CM', 1),
+(18, '95', 'Camon X Pro', 1),
+(19, '95', 'Spark', 1),
+(20, '95', 'Phantom 8', 1),
+(21, '95', 'Camon CM', 1),
+(22, '95', 'Camon 11', 1),
+(23, '95', 'F2 LTE', 1),
+(24, '95', 'F2', 1),
+(25, '95', 'Camon 11 Pro', 1),
+(26, '1', '﻿ Liquid Jade 2', 1),
+(27, '1', ' Liquid Zest', 1),
+(28, '1', ' Predator 8', 1),
+(29, '1', ' Jade Primo', 1),
+(30, '1', ' Liquid Z330', 1),
+(31, '1', ' Liquid Z320', 1),
+(32, '1', ' Liquid Z630S', 1),
+(33, '1', ' Liquid Z630', 1),
+(34, '1', ' Liquid Z530S', 1),
+(35, '1', ' Liquid Z530', 1),
+(36, '1', ' Liquid M330', 1),
+(37, '1', ' Liquid M320', 1),
+(38, '1', ' Iconia Tab 10 A3-A30', 1),
+(39, '1', ' Iconia One 8 B1-820', 1),
+(40, '1', ' iconia Tab A3-A20', 1),
+(41, '1', ' Iconia Tab A3-A20FHD', 1),
+(42, '1', ' Liquid Jade Z', 1),
+(43, '1', ' Liquid Z520', 1),
+(44, '1', ' Liquid Z220', 1),
+(45, '1', ' Liquid M220', 1),
+(46, '1', ' Liquid Z410', 1),
+(47, '1', ' Liquid Jade S', 1),
+(48, '1', ' Liquid Z500', 1),
+(49, '1', ' Liquid X1', 1),
+(50, '1', ' Liquid Jade', 1),
+(51, '1', ' Liquid E700', 1),
+(52, '1', ' Liquid E600', 1),
+(53, '1', ' Liquid Z200', 1),
+(54, '1', ' Iconia Tab 8 A1-840FHD', 1),
+(55, '1', ' Iconia Tab 7 A1-713HD', 1),
+(56, '1', ' Iconia Tab 7 A1-713', 1),
+(57, '1', ' Iconia One 7 B1-730', 1),
+(58, '1', ' Liquid E3 Duo Plus', 1),
+(59, '1', ' Liquid E3', 1),
+(60, '1', ' Liquid Z4', 1),
+(61, '1', ' Iconia B1-721', 1),
+(62, '1', ' Iconia B1-720', 1),
+(63, '1', ' Iconia A1-830', 1),
+(64, '1', ' Liquid Z5', 1),
+(65, '1', ' Liquid S2', 1),
+(66, '1', ' Liquid Z3', 1),
+(67, '1', ' Liquid S1', 1),
+(68, '1', ' Iconia Tab A3', 1),
+(69, '1', ' Iconia Tab A1-811', 1),
+(70, '1', ' Iconia Tab A1-810', 1),
+(71, '1', ' Liquid E2', 1),
+(72, '1', ' Liquid C1', 1),
+(73, '1', ' Liquid E1', 1),
+(74, '1', ' Iconia Tab B1-710', 1),
+(75, '1', ' Iconia Tab B1-A71', 1),
+(76, '1', ' Iconia Tab A110', 1),
+(77, '1', ' Liquid Z110', 1),
+(78, '1', ' Liquid Gallant E350', 1),
+(79, '1', ' Liquid Gallant Duo', 1),
+(80, '1', ' Liquid Glow E330', 1),
+(81, '1', ' CloudMobile S500', 1),
+(82, '1', ' Iconia Tab A210', 1),
+(83, '1', ' Iconia Tab A200', 1),
+(84, '1', ' Iconia Tab A701', 1),
+(85, '1', ' Iconia Tab A700', 1),
+(86, '1', ' Iconia Tab A511', 1),
+(87, '1', ' Iconia Tab A510', 1),
+(88, '1', ' Allegro', 1),
+(89, '1', ' Liquid Express E320', 1),
+(90, '1', ' Iconia Tab A501', 1),
+(91, '1', ' Iconia Smart', 1),
+(92, '1', ' Iconia Tab A500', 1),
+(93, '1', ' Iconia Tab A101', 1),
+(94, '1', ' Iconia Tab A100', 1),
+(95, '1', ' Liquid mini E310', 1),
+(96, '1', ' beTouch E210', 1),
+(97, '1', ' beTouch E140', 1),
+(98, '1', ' Liquid mt', 1),
+(99, '1', ' beTouch T500', 1),
+(100, '1', ' beTouch E130', 1),
+(101, '1', ' beTouch E120', 1),
+(102, '1', ' Stream', 1),
+(103, '1', ' Liquid E', 1),
+(104, '1', ' neoTouch P400', 1),
+(105, '1', ' beTouch E400', 1),
+(106, '1', ' neoTouch P300', 1),
+(107, '1', ' beTouch E110', 1),
+(108, '1', ' Liquid', 1),
+(109, '1', ' neoTouch', 1),
+(110, '1', ' beTouch E200', 1),
+(111, '1', ' beTouch E100', 1),
+(112, '1', ' beTouch E101', 1),
+(113, '1', ' DX650', 1),
+(114, '1', ' M900', 1),
+(115, '1', ' F900', 1),
+(116, '1', ' X960', 1),
+(117, '1', ' Liquid Z2', 1),
+(118, '6', '﻿iPad 10.2', 1),
+(119, '6', 'iPad 2 CDMA', 1),
+(120, '6', 'iPad 2 Wi-Fi', 1),
+(121, '6', 'iPad 2 Wi-Fi + 3G', 1),
+(122, '6', 'iPad 3 Wi-Fi', 1),
+(123, '6', 'iPad 3 Wi-Fi + Cellular', 1),
+(124, '6', 'iPad 4 Wi-Fi', 1),
+(125, '6', 'iPad 4 Wi-Fi + Cellular', 1),
+(126, '6', 'iPad 9.7 (2017)', 1),
+(127, '6', 'iPad 9.7 (2018)', 1),
+(128, '6', 'iPad Air', 1),
+(129, '6', 'iPad Air (2019)', 1),
+(130, '6', 'iPad Air 2', 1),
+(131, '6', 'iPad mini (2019)', 1),
+(132, '6', 'iPad mini 2', 1),
+(133, '6', 'iPad mini 3', 1),
+(134, '6', 'iPad mini 4 (2015)', 1),
+(135, '6', 'iPad mini Wi-Fi', 1),
+(136, '6', 'iPad mini Wi-Fi + Cellular', 1),
+(137, '6', 'iPad Pro 10.5 (2017)', 1),
+(138, '6', 'iPad Pro 11 (2018)', 1),
+(139, '6', 'iPad Pro 11 (2020)', 1),
+(140, '6', 'iPad Pro 12.9 (2015)', 1),
+(141, '6', 'iPad Pro 12.9 (2017)', 1),
+(142, '6', 'iPad Pro 12.9 (2018)', 1),
+(143, '6', 'iPad Pro 12.9 (2020)', 1),
+(144, '6', 'iPad Pro 9.7 (2016)', 1),
+(145, '6', 'iPad Wi-Fi', 1),
+(146, '6', 'iPad Wi-Fi + 3G', 1),
+(147, '6', 'iPhone', 1),
+(148, '6', 'iPhone 11', 1),
+(149, '6', 'iPhone 11 Pro', 1),
+(150, '6', 'iPhone 11 Pro Max', 1),
+(151, '6', 'iPhone 3G', 1),
+(152, '6', 'iPhone 3GS', 1),
+(153, '6', 'iPhone 4', 1),
+(154, '6', 'iPhone 4 CDMA', 1),
+(155, '6', 'iPhone 4s', 1),
+(156, '6', 'iPhone 5', 1),
+(157, '6', 'iPhone 5c', 1),
+(158, '6', 'iPhone 5s', 1),
+(159, '6', 'iPhone 6', 1),
+(160, '6', 'iPhone 6 Plus', 1),
+(161, '6', 'iPhone 6s', 1),
+(162, '6', 'iPhone 6s Plus', 1),
+(163, '6', 'iPhone 7', 1),
+(164, '6', 'iPhone 7 Plus', 1),
+(165, '6', 'iPhone 8', 1),
+(166, '6', 'iPhone 8 Plus', 1),
+(167, '6', 'iPhone SE', 1),
+(168, '6', 'iPhone SE (2020)', 1),
+(169, '6', 'iPhone X', 1),
+(170, '6', 'iPhone XR', 1),
+(171, '6', 'iPhone XS', 1),
+(172, '6', 'iPhone XS Max', 1),
+(173, '6', 'Watch 38mm (1st gen)', 1),
+(174, '6', 'Watch 42mm (1st gen)', 1),
+(175, '6', 'Watch Edition 38mm (1st gen)', 1),
+(176, '6', 'Watch Edition 42mm (1st gen)', 1),
+(177, '6', 'Watch Edition Series 2 38mm', 1),
+(178, '6', 'Watch Edition Series 2 42mm', 1),
+(179, '6', 'Watch Edition Series 3', 1),
+(180, '6', 'Watch Edition Series 5', 1),
+(181, '6', 'Watch Series 1 Aluminum 38mm', 1),
+(182, '6', 'Watch Series 1 Aluminum 42mm', 1),
+(183, '6', 'Watch Series 2 38mm', 1),
+(184, '6', 'Watch Series 2 42mm', 1),
+(185, '6', 'Watch Series 2 Aluminum 38mm', 1),
+(186, '6', 'Watch Series 2 Aluminum 42mm', 1),
+(187, '6', 'Watch Series 3', 1),
+(188, '6', 'Watch Series 3 Aluminum', 1),
+(189, '6', 'Watch Series 4', 1),
+(190, '6', 'Watch Series 4 Aluminum', 1),
+(191, '6', 'Watch Series 5', 1),
+(192, '6', 'Watch Series 5 Aluminum', 1),
+(193, '6', 'Watch Sport 38mm (1st gen)', 1),
+(194, '6', 'Watch Sport 42mm (1st gen)', 1),
+(195, '42', 'Note 10 Pro NFC', 1),
+(196, '42', 'Note 10 Pro', 1),
+(197, '42', 'Note 10', 1),
+(198, '42', 'Hot 10T', 1),
+(199, '42', 'Hot 10s NFC', 1),
+(200, '42', 'Hot 10s', 1),
+(201, '42', 'Smart 5 (India)', 1),
+(202, '42', 'Hot 10 Play', 1),
+(203, '42', 'Smart HD 2021', 1),
+(204, '42', 'Zero 8i', 1),
+(205, '42', 'Note 8', 1),
+(206, '42', 'Note 8i', 1),
+(207, '42', 'Hot 10 Lite', 1),
+(208, '42', 'Hot 10', 1),
+(209, '42', 'Zero 8', 1),
+(210, '42', 'Smart 5', 1),
+(211, '42', 'Hot 9 Play', 1),
+(212, '42', 'Note 7', 1),
+(213, '42', 'Note 7 Lite', 1),
+(214, '42', 'Hot 9 Pro', 1),
+(215, '42', 'Hot 9', 1),
+(216, '42', 'S5 Pro (16+32)', 1),
+(217, '42', 'S5 Pro (48+40)', 1),
+(218, '42', 'S5 Pro', 1),
+(219, '42', 'S5 lite', 1),
+(220, '42', 'Smart 4', 1),
+(221, '42', 'Smart 4c', 1),
+(222, '42', 'Hot 8 Lite', 1),
+(223, '42', 'S5', 1),
+(224, '42', 'Hot 8', 1),
+(225, '42', 'Note 6', 1),
+(226, '42', 'Smart3 Plus', 1),
+(227, '42', 'S4', 1),
+(228, '42', 'Hot 7 Pro', 1),
+(229, '42', 'Hot 7', 1),
+(230, '42', 'Zero 6 Pro', 1),
+(231, '42', 'Zero 6', 1),
+(232, '42', 'Smart 2 HD', 1),
+(233, '42', 'Hot 6X', 1),
+(234, '42', 'Note 5 Stylus', 1),
+(235, '42', 'S3X', 1),
+(236, '42', 'Hot 6', 1),
+(237, '42', 'Note 5', 1),
+(238, '42', 'Smart 2 Pro', 1),
+(239, '42', 'Smart 2', 1),
+(240, '42', 'Hot 6 Pro', 1),
+(241, '42', 'Hot S3', 1),
+(242, '42', 'Zero 5 Pro', 1),
+(243, '42', 'Zero 5', 1),
+(244, '42', 'Hot 5 Lite', 1),
+(245, '42', 'Hot 5', 1),
+(246, '42', 'Note 4 Pro', 1),
+(247, '42', 'Note 4', 1),
+(248, '42', 'Smart', 1),
+(249, '42', 'Zero 4 Plus', 1),
+(250, '42', 'Zero 4', 1),
+(251, '42', 'S2 Pro', 1),
+(252, '42', 'Hot 4 Pro', 1),
+(253, '42', 'Hot 4', 1),
+(254, '42', 'Note 3 Pro', 1),
+(255, '42', 'Note 3', 1),
+(256, '42', 'Hot S', 1),
+(258, '70', 'Reno6 Pro+ 5G', 1),
+(259, '70', 'Reno6 Pro 5G', 1),
+(260, '70', 'Reno6 5G', 1),
+(261, '70', 'K9', 1),
+(262, '70', 'A53s 5G', 1),
+(263, '70', 'A95 5G', 1),
+(264, '70', 'A94 5G', 1),
+(265, '70', 'A35', 1),
+(266, '70', 'Reno5 Z', 1),
+(267, '70', 'A54 5G', 1),
+(268, '70', 'A74 5G', 1),
+(269, '70', 'A74', 1),
+(270, '70', 'F19', 1),
+(271, '70', 'A54', 1),
+(272, '70', 'Find X3 Pro', 1),
+(273, '70', 'Find X3', 1),
+(274, '70', 'Find X3 Neo', 1),
+(275, '70', 'Find X3 Lite', 1),
+(276, '70', 'F19 Pro+ 5G', 1),
+(277, '70', 'F19 Pro', 1),
+(278, '70', 'Reno5 Lite', 1),
+(279, '70', 'A94', 1),
+(280, '70', 'Reno5 F', 1),
+(281, '70', 'Reno5 K', 1),
+(282, '70', 'A55 5G', 1),
+(283, '70', 'A93 5G', 1),
+(284, '70', 'A15s', 1),
+(285, '70', 'Reno5 4G', 1),
+(286, '70', 'Reno5 Pro+ 5G', 1),
+(287, '70', 'A53 5G', 1),
+(288, '70', 'Reno5 Pro 5G', 1),
+(289, '70', 'Reno5 5G', 1),
+(290, '70', 'A73 5G', 1),
+(291, '70', 'Reno4 F', 1),
+(292, '70', 'A15', 1),
+(293, '70', 'A53s', 1),
+(294, '70', 'A73', 1),
+(295, '70', 'A93', 1),
+(296, '70', 'Reno4 Z 5G', 1),
+(297, '70', 'Reno4 Lite', 1),
+(298, '70', 'A52', 1),
+(299, '70', 'A11k', 1),
+(300, '70', 'A12', 1),
+(301, '70', 'K7 5G', 1),
+(302, '70', 'Find X2 Lite', 1),
+(303, '70', 'Ace2', 1),
+(304, '70', 'A12e', 1),
+(305, '70', 'Reno3', 1),
+(306, '70', 'Find X2 Pro', 1),
+(307, '70', 'Find X2', 1),
+(308, '70', 'Reno3 Pro', 1),
+(309, '70', 'A31', 1),
+(310, '70', 'F15', 1),
+(311, '70', 'Reno3 Pro 5G', 1),
+(312, '70', 'Reno3 Youth', 1),
+(313, '70', 'Reno3 5G', 1),
+(314, '70', 'A91', 1),
+(315, '70', 'A8', 1),
+(316, '70', 'A11', 1),
+(317, '70', 'K5', 1),
+(318, '70', 'Reno Ace', 1),
+(319, '70', 'Reno A', 1),
+(320, '70', 'A5 (2020)', 1),
+(321, '70', 'A9 (2020)', 1),
+(322, '70', 'Reno2', 1),
+(323, '70', 'Reno2 F', 1),
+(324, '70', 'Reno2 Z', 1),
+(325, '70', 'Reno Z', 1),
+(326, '70', 'K3', 1),
+(327, '70', 'A9x', 1),
+(328, '70', 'A9', 1),
+(329, '70', 'Reno 5G', 1),
+(330, '70', 'Reno 10x zoom', 1),
+(331, '70', 'Reno', 1),
+(332, '70', 'A1k', 1),
+(333, '70', 'A7n', 1),
+(334, '70', 'A5s (AX5s)', 1),
+(335, '70', 'F11', 1),
+(336, '70', 'F11 Pro', 1),
+(337, '70', 'A7', 1),
+(338, '70', 'R15x', 1),
+(339, '70', 'RX17 Neo', 1),
+(340, '70', 'K1', 1),
+(341, '70', 'A7x', 1),
+(342, '70', 'RX17 Pro', 1),
+(343, '70', 'R17', 1),
+(344, '70', 'F9 (F9 Pro)', 1),
+(345, '70', 'A3s', 1),
+(346, '70', 'A5 (AX5)', 1),
+(347, '70', 'Find X Lamborghini', 1),
+(348, '70', 'Find X', 1),
+(349, '70', 'F7 Youth', 1),
+(350, '70', 'A3', 1),
+(351, '70', 'F7', 1),
+(352, '70', 'R15 Pro', 1),
+(353, '70', 'R15', 1),
+(354, '70', 'A1', 1),
+(355, '70', 'A71 (2018)', 1),
+(356, '70', 'A83', 1),
+(357, '70', 'F5 Youth', 1),
+(358, '70', 'R11s Plus', 1),
+(359, '70', 'F5', 1),
+(360, '70', 'R11s', 1),
+(361, '70', 'A71', 1),
+(362, '70', 'A77', 1),
+(363, '70', 'R11 Plus', 1),
+(364, '70', 'R11', 1),
+(365, '70', 'A77 (Mediatek)', 1),
+(366, '70', 'A39', 1),
+(367, '70', 'F3', 1),
+(368, '70', 'F3 Plus', 1),
+(369, '70', 'A57', 1),
+(370, '70', 'F1s', 1),
+(371, '70', 'R9s Plus', 1),
+(372, '70', 'R9s', 1),
+(373, '70', 'A37', 1),
+(374, '70', 'A59', 1),
+(375, '70', 'R9 Plus', 1),
+(376, '70', 'F1 Plus', 1),
+(377, '70', 'F1', 1),
+(378, '70', 'A53 (2015)', 1),
+(379, '70', 'A33 (2015)', 1),
+(380, '70', 'Neo 7', 1),
+(381, '70', 'R7s', 1),
+(382, '70', 'R7 lite', 1),
+(383, '70', 'R5s', 1),
+(384, '70', 'Mirror 5s', 1),
+(385, '70', 'Mirror 5', 1),
+(386, '70', 'Joy 3', 1),
+(387, '70', 'R7 Plus', 1),
+(388, '70', 'R7', 1),
+(389, '70', 'Neo 5 (2015)', 1),
+(390, '70', 'Neo 5s', 1),
+(391, '70', 'Joy Plus', 1),
+(392, '70', 'Mirror 3', 1),
+(393, '70', 'A31 (2015)', 1),
+(394, '70', 'R1x', 1),
+(395, '70', 'U3', 1),
+(396, '70', 'R5', 1),
+(397, '70', 'N3', 1),
+(398, '70', 'R1S', 1),
+(399, '70', 'Neo 3', 1),
+(400, '70', 'Find 5 Mini', 1),
+(401, '70', 'R2001 Yoyo', 1),
+(402, '70', 'R1001 Joy', 1),
+(403, '70', 'Neo 5', 1),
+(404, '70', 'R3', 1),
+(405, '70', 'N1 mini', 1),
+(406, '70', 'Find 7', 1),
+(407, '70', 'Find 7a', 1),
+(408, '70', 'Neo', 1),
+(409, '70', 'R1 R829T', 1),
+(410, '70', 'N1', 1),
+(411, '70', 'R819', 1),
+(412, '70', 'Find 5', 1),
+(413, '70', 'U705T Ulike 2', 1),
+(414, '70', 'R601', 1),
+(415, '70', 'R821T FInd Muse', 1),
+(416, '70', 'R811 Real', 1),
+(417, '70', 'T29', 1),
+(418, '70', 'R817 Real', 1),
+(419, '70', 'R815T Clover', 1),
+(420, '70', 'Find', 1),
+(421, '70', 'U701 Ulike', 1),
+(422, '111', 'Redmi Note 10 Pro (China)', 1),
+(423, '111', 'Redmi Note 8 2021', 1),
+(424, '111', 'Poco M3 Pro 5G', 1),
+(425, '111', 'Redmi K40 Gaming', 1),
+(426, '111', 'Mi 11X Pro', 1),
+(427, '111', 'Mi 11X', 1),
+(428, '111', 'Poco M2 Reloaded', 1),
+(429, '111', 'Mi Mix Fold', 1),
+(430, '111', 'Mi 11 Ultra', 1),
+(431, '111', 'Mi 11 Pro', 1),
+(432, '111', 'Mi 11i', 1),
+(433, '111', 'Mi 11 Lite 5G', 1),
+(434, '111', 'Mi 11 Lite', 1),
+(435, '111', 'Black Shark 4 Pro', 1),
+(436, '111', 'Black Shark 4', 1),
+(437, '111', 'Poco X3 Pro', 1),
+(438, '111', 'Poco F3', 1),
+(439, '111', 'Mi 10S', 1),
+(440, '111', 'Redmi Note 10 Pro', 1),
+(441, '111', 'Redmi Note 10 5G', 1),
+(442, '111', 'Redmi Note 10S', 1),
+(443, '111', 'Redmi Note 10', 1),
+(444, '111', 'Redmi Note 10 Pro Max', 1),
+(445, '111', 'Redmi Note 10 Pro (India)', 1),
+(446, '111', 'Redmi K40 Pro+', 1),
+(447, '111', 'Redmi K40 Pro', 1),
+(448, '111', 'Redmi K40', 1),
+(449, '111', 'Redmi Note 9T', 1),
+(450, '111', 'Redmi 9T', 1),
+(451, '111', 'Mi 10i 5G', 1),
+(452, '111', 'Mi 11', 1),
+(453, '111', 'Redmi 9 Power', 1),
+(454, '111', 'Mi Watch Lite', 1),
+(455, '111', 'Redmi Note 9 Pro 5G', 1),
+(456, '111', 'Redmi Note 9 5G', 1),
+(457, '111', 'Redmi Note 9 4G', 1),
+(458, '111', 'Redmi Watch', 1),
+(459, '111', 'Poco M3', 1),
+(460, '111', 'Redmi K30S', 1),
+(461, '111', 'Poco C3', 1),
+(462, '111', 'Mi 10T Pro 5G', 1),
+(463, '111', 'Mi 10T 5G', 1),
+(464, '111', 'Mi 10T Lite 5G', 1),
+(465, '111', 'Redmi 9AT', 1),
+(466, '111', 'Redmi 9i', 1),
+(467, '111', 'Poco M2', 1),
+(468, '111', 'Poco X3', 1),
+(469, '111', 'Poco X3 NFC', 1),
+(470, '111', 'Redmi 9 (India)', 1),
+(471, '111', 'Mi 10 Ultra', 1),
+(472, '111', 'Redmi K30 Ultra', 1),
+(473, '111', 'Redmi 9 Prime', 1),
+(474, '111', 'Black Shark 3S', 1),
+(475, '111', 'Poco M2 Pro', 1),
+(476, '111', 'Redmi 9A', 1),
+(477, '111', 'Redmi 9C NFC', 1),
+(478, '111', 'Redmi 9C', 1),
+(479, '111', 'Redmi 9', 1),
+(480, '111', 'Redmi 10X Pro 5G', 1),
+(481, '111', 'Redmi 10X 5G', 1),
+(482, '111', 'Redmi 10X 4G', 1),
+(483, '111', 'Redmi K30i 5G', 1),
+(484, '111', 'Poco F2 Pro', 1),
+(485, '111', 'Redmi K30 5G Racing', 1),
+(486, '111', 'Redmi Note 9 Pro', 1),
+(487, '111', 'Redmi Note 9', 1),
+(488, '111', 'Mi Note 10 Lite', 1),
+(489, '111', 'Mi 10 Youth 5G', 1),
+(490, '111', 'Mi 10 Lite 5G', 1),
+(491, '111', 'Redmi K30 Pro Zoom', 1),
+(492, '111', 'Redmi K30 Pro', 1),
+(493, '111', 'Redmi Note 9S', 1),
+(494, '111', 'Redmi Note 9 Pro Max', 1),
+(495, '111', 'Redmi Note 9 Pro (India)', 1),
+(496, '111', 'Black Shark 3 Pro', 1),
+(497, '111', 'Black Shark 3', 1),
+(498, '111', 'Mi 10 Pro 5G', 1),
+(499, '111', 'Mi 10 5G', 1),
+(500, '111', 'Redmi 8A Pro', 1),
+(501, '111', 'Redmi 8A Dual', 1),
+(502, '111', 'Poco X2', 1),
+(503, '111', 'Redmi K30', 1),
+(504, '111', 'Redmi K30 5G', 1),
+(505, '111', 'Redmi Note 8T', 1),
+(506, '111', 'Mi Note 10 Pro', 1),
+(507, '111', 'Mi Note 10', 1),
+(508, '111', 'Mi CC9 Pro', 1),
+(509, '111', 'Redmi 8', 1),
+(510, '111', 'Redmi 8A', 1),
+(511, '111', 'Mi Mix Alpha', 1),
+(512, '111', 'Mi 9 Pro 5G', 1),
+(513, '111', 'Mi 9 Pro', 1),
+(514, '111', 'Redmi K20 Pro Premium', 1),
+(515, '111', 'Mi 9 Lite', 1),
+(516, '111', 'Redmi Note 8 Pro', 1),
+(517, '111', 'Black Shark 2 Pro', 1),
+(518, '111', 'Mi A3', 1),
+(519, '111', 'Redmi 7A', 1),
+(520, '111', 'Mi CC9', 1),
+(521, '111', 'Mi CC9e', 1),
+(522, '111', 'Redmi Note 8', 1),
+(523, '111', 'Mi 9T Pro', 1),
+(524, '111', 'Mi 9T', 1),
+(525, '111', 'Redmi K20', 1),
+(526, '111', 'Redmi K20 Pro', 1),
+(527, '111', 'Redmi Note 7S', 1),
+(528, '111', 'Redmi Y3', 1),
+(529, '111', 'Black Shark 2', 1),
+(530, '111', 'Redmi 7', 1),
+(531, '111', 'Redmi Note 7 Pro', 1),
+(532, '111', 'Mi Mix 3 5G', 1),
+(533, '111', 'Mi 9 Explorer', 1),
+(534, '111', 'Mi 9 SE', 1),
+(535, '111', 'Mi 9', 1),
+(536, '111', 'Redmi Go', 1),
+(537, '111', 'Redmi Note 7', 1),
+(538, '111', 'Mi Play', 1),
+(539, '111', 'Black Shark Helo', 1),
+(540, '111', 'Mi Mix 3', 1),
+(541, '111', 'Redmi Note 6 Pro', 1),
+(542, '111', 'Mi 8 Pro', 1),
+(543, '111', 'Mi 8 Lite', 1),
+(544, '111', 'Pocophone F1', 1),
+(545, '111', 'Mi A2 (Mi 6X)', 1),
+(546, '111', 'Mi A2 Lite (Redmi 6 Pro)', 1),
+(547, '111', 'Mi Max 3', 1),
+(548, '111', 'Mi Pad 4 Plus', 1),
+(549, '111', 'Mi Pad 4', 1),
+(550, '111', 'Redmi 6', 1),
+(551, '111', 'Redmi 6A', 1),
+(552, '111', 'Mi 8 Explorer', 1),
+(553, '111', 'Mi 8', 1),
+(554, '111', 'Mi 8 SE', 1),
+(555, '111', 'Redmi S2 (Redmi Y2)', 1),
+(556, '111', 'Mi Mix 2S', 1),
+(557, '111', 'Redmi Note 5 AI Dual Camera', 1),
+(558, '111', 'Redmi Note 5 Pro', 1),
+(559, '111', 'Black Shark', 1),
+(560, '111', 'Redmi 5 Plus (Redmi Note 5)', 1),
+(561, '111', 'Redmi 5', 1),
+(562, '111', 'Redmi 5A', 1),
+(563, '111', 'Redmi Y1 (Note 5A)', 1),
+(564, '111', 'Redmi Y1 Lite', 1),
+(565, '111', 'Mi Note 3', 1),
+(566, '111', 'Mi Mix 2', 1),
+(567, '111', 'Mi A1 (Mi 5X)', 1),
+(568, '111', 'Mi Max 2', 1),
+(569, '111', 'Redmi 4 (4X)', 1),
+(570, '111', 'Mi 6', 1),
+(571, '111', 'Mi Pad 3', 1),
+(572, '111', 'Mi 5c', 1),
+(573, '111', 'Redmi Note 4X', 1),
+(574, '111', 'Redmi Note 4', 1),
+(575, '111', 'Redmi 4 (China)', 1),
+(576, '111', 'Mi 6 Plus', 1),
+(577, '111', 'Redmi 4 Prime', 1),
+(578, '111', 'Mi Mix', 1),
+(579, '111', 'Mi Note 2', 1),
+(580, '111', 'Mi 5s Plus', 1),
+(581, '111', 'Mi 5s', 1),
+(582, '111', 'Redmi Note 4 (MediaTek)', 1),
+(583, '111', 'Redmi Pro', 1),
+(584, '111', 'Redmi 3x', 1),
+(585, '111', 'Redmi 3s Prime', 1),
+(586, '111', 'Redmi 3s', 1),
+(587, '111', 'Redmi 3 Pro', 1),
+(588, '111', 'Mi Max', 1),
+(589, '111', 'Mi 5', 1),
+(590, '111', 'Mi 4s', 1),
+(591, '111', 'Redmi Note 3', 1),
+(592, '111', 'Redmi 3', 1),
+(593, '111', 'Redmi Note Prime', 1),
+(594, '111', 'Mi Pad 2', 1),
+(595, '111', 'Redmi Note 3 (MediaTek)', 1),
+(596, '111', 'Mi 4c', 1),
+(597, '111', 'Redmi Note 2', 1),
+(598, '111', 'Redmi 2 Pro', 1),
+(599, '111', 'Redmi 2 Prime', 1),
+(600, '111', 'Mi 4i', 1),
+(601, '111', 'Mi Note Pro', 1),
+(602, '111', 'Mi Note', 1),
+(603, '111', 'Redmi 2A', 1),
+(604, '111', 'Redmi 2', 1),
+(605, '111', 'Mi 4 LTE', 1),
+(606, '111', 'Redmi Note 4G', 1),
+(607, '111', 'Mi 4', 1),
+(608, '111', 'Mi Pad 7.9', 1),
+(609, '111', 'Redmi Note', 1),
+(610, '111', 'Mi 3', 1),
+(611, '111', 'Redmi 1S', 1),
+(612, '111', 'Redmi', 1),
+(613, '111', 'Mi 2A', 1),
+(614, '111', 'Mi 2S', 1),
+(615, '111', 'Mi 2', 1),
+(616, '111', 'Mi 1S', 1),
+(617, '111', 'Poco M3 Pro', 1),
+(618, '111', 'Mi 10 Lite Zoom', 1),
+(619, '111', 'Mi 9X', 1),
+(620, '111', 'Mi Max 4 Pro', 1),
+(621, '111', 'Mi Max 4', 1),
+(622, '111', 'Mi 6c', 1),
+(623, '111', 'Redmi Pro 2', 1),
+(624, '111', 'Mi Note Plus', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -6209,14 +6848,13 @@ CREATE TABLE `products` (
   `sub_category` varchar(255) DEFAULT NULL,
   `image` text DEFAULT NULL,
   `price` varchar(255) DEFAULT NULL,
-  `gender` varchar(255) DEFAULT NULL,
   `date_added` datetime DEFAULT NULL,
   `seller_id` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
   `lga` varchar(255) DEFAULT NULL,
-  `landmark` text NOT NULL,
+  `land_mark` tinytext DEFAULT NULL,
   `model` varchar(255) DEFAULT NULL,
-  `conditon` varchar(255) DEFAULT NULL,
+  `condition_state` varchar(255) DEFAULT NULL,
   `ram` smallint(6) DEFAULT NULL,
   `internal_storage` int(11) DEFAULT NULL,
   `resolution` varchar(255) DEFAULT NULL,
@@ -6233,7 +6871,7 @@ CREATE TABLE `products` (
   `registered_vehicle` int(11) DEFAULT NULL,
   `vin_vehicle` int(11) DEFAULT NULL,
   `horse_power_vehicle` varchar(255) DEFAULT NULL,
-  `engine_size` varchar(255) DEFAULT NULL,
+  `engine-size` varchar(255) DEFAULT NULL,
   `year_of_manufacture` int(11) DEFAULT NULL,
   `operating_system` varchar(255) DEFAULT NULL,
   `hard_drive_size` varchar(255) DEFAULT NULL,
@@ -6243,7 +6881,6 @@ CREATE TABLE `products` (
   `number_of_bedrooms` int(11) DEFAULT NULL,
   `property_type` varchar(255) DEFAULT NULL,
   `number_of_bathrooms` int(11) DEFAULT NULL,
-  `size` varchar(255) DEFAULT NULL,
   `status` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -6251,34 +6888,72 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `description`, `category`, `sub_category`, `image`, `price`, `gender`, `date_added`, `seller_id`, `state`, `lga`, `landmark`, `model`, `conditon`, `ram`, `internal_storage`, `resolution`, `sim`, `battery`, `exchange_possible`, `main_camera`, `selfie_camera`, `negotiable`, `delivery_available`, `second_condition`, `transmission_type_vehicle`, `mileage_vehicle`, `registered_vehicle`, `vin_vehicle`, `horse_power_vehicle`, `engine_size`, `year_of_manufacture`, `operating_system`, `hard_drive_size`, `fuel`, `seats_vehicle`, `property_size`, `number_of_bedrooms`, `property_type`, `number_of_bathrooms`, `size`, `status`) VALUES
-(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '', '2021-06-22 12:47:28', 'AG-8614937', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '', '2021-06-22 12:48:54', 'AG-91933000', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '', '2021-06-22 12:49:56', 'AG-93843232', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(7, 'HP', '19678428', 'silver', 'HP laptop envy', 'lorem ipsum long description long', '8', '12', 'pro60d1d058e959f000001000.jpg,pro60d1d058e9aa7000100000.jpg,pro60d1d058e9f8a000001000.jpg', '90000', '', '2021-06-22 12:58:16', 'AG-60722385', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(8, 'Lenovo', '55860887', 'silver', 'Silver m4', 'lorem ipsum long description long', '8', '12', 'pro60d1d0843ccb5000010000.jpg,pro60d1d0843d251010000000.jpg,pro60d1d0843d76c000010000.jpg', '70000', '', '2021-06-22 12:59:00', 'AG-90470554', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(9, 'Apple', '36376549', 'silver', 'macbook pro', 'lorem ipsum long description long', '8', '12', 'pro60d1d0cf8926e000001000.jpg,pro60d1d0cf89786010000000.jpg,pro60d1d0cf89bd0000100000.jpg', '70000', '', '2021-06-22 13:00:15', 'AG-42990797', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(10, 'Apple', '78518873', 'black', 'Apple desktop', 'lorem ipsum long description long', '8', '12', 'pro60d1d12697b21100000000.jpg', '70000', '', '2021-06-22 13:01:42', 'AG-79974221', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(11, 'Xaiomi', '30645954', 'black', 'Xaiomi headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d1cfee06e100000000.jpg', '70000', '', '2021-06-22 13:04:31', 'AG-19693443', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(12, 'Beats by Dre', '83291175', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d24460ce9000000100.jpg,pro60d1d2446126b001000000.jpg', '8000', '', '2021-06-22 13:06:28', 'AG-7748728', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '', '2021-06-22 13:07:34', 'AG-79867936', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(14, 'Airpods', '57247936', 'white', 'Headset', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '', '2021-06-22 13:19:11', 'AG-67980776', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(15, 'Apple', '3875669', 'white', 'airpod max', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '', '2021-06-22 13:21:18', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, '', 1),
-(42, 'Toyota', '64583183', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(43, 'Toyota', '13963398', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(44, 'Toyota', '43486011', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(45, 'Toyota', '31897012', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(46, 'Toyota', '88855098', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(47, 'Toyota', '18675780', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(48, 'Toyota', '50319384', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(49, 'Toyota', '2783461', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(50, 'Toyota', '19202593', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(51, 'Toyota', '16709103', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(52, 'Toyota', '51537224', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(53, 'Toyota', '41432161', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(54, 'Toyota', '71728483', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(55, 'Toyota', '92075770', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(56, 'Toyota', '25139336', 'white', 'Toyota camry', NULL, '1', NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `lga`, `land_mark`, `model`, `condition_state`, `ram`, `internal_storage`, `resolution`, `sim`, `battery`, `exchange_possible`, `main_camera`, `selfie_camera`, `negotiable`, `delivery_available`, `second_condition`, `transmission_type_vehicle`, `mileage_vehicle`, `registered_vehicle`, `vin_vehicle`, `horse_power_vehicle`, `engine-size`, `year_of_manufacture`, `operating_system`, `hard_drive_size`, `fuel`, `seats_vehicle`, `property_size`, `number_of_bedrooms`, `property_type`, `number_of_bathrooms`, `status`) VALUES
+(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '2021-06-22 12:49:56', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(7, 'HP', '19678428', 'silver', 'HP laptop envy', 'lorem ipsum long description long', '8', '12', 'pro60d1d058e959f000001000.jpg,pro60d1d058e9aa7000100000.jpg,pro60d1d058e9f8a000001000.jpg', '90000', '2021-06-22 12:58:16', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(8, 'Lenovo', '55860887', 'silver', 'Silver m4', 'lorem ipsum long description long', '8', '12', 'pro60d1d0843ccb5000010000.jpg,pro60d1d0843d251010000000.jpg,pro60d1d0843d76c000010000.jpg', '70000', '2021-06-22 12:59:00', 'AG-90470554', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(9, 'Apple', '36376549', 'silver', 'macbook pro', 'lorem ipsum long description long', '8', '12', 'pro60d1d0cf8926e000001000.jpg,pro60d1d0cf89786010000000.jpg,pro60d1d0cf89bd0000100000.jpg', '70000', '2021-06-22 13:00:15', 'AG-42990797', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(10, 'Apple', '78518873', 'black', 'Apple desktop', 'lorem ipsum long description long', '8', '12', 'pro60d1d12697b21100000000.jpg', '70000', '2021-06-22 13:01:42', 'AG-79974221', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(11, 'Xaiomi', '30645954', 'black', 'Xaiomi headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d1cfee06e100000000.jpg', '70000', '2021-06-22 13:04:31', 'AG-19693443', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(12, 'Beats by Dre', '83291175', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d24460ce9000000100.jpg,pro60d1d2446126b001000000.jpg', '8000', '2021-06-22 13:06:28', 'AG-7748728', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '2021-06-22 13:07:34', 'AG-79867936', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(14, 'Airpods', '57247936', 'white', 'Headset', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '2021-06-22 13:19:11', 'AG-67980776', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(15, 'Apple', '3875669', 'white', 'airpod max', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '2021-06-22 13:21:18', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(28, NULL, '59344874', NULL, 'Xaomi Phone', NULL, '2', NULL, 'pro60e9aea659bfb001000000.jpg', '12000', NULL, 'AG-3195923', '27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(29, NULL, '34605763', NULL, 'Land for Sale in Jos', NULL, '1', '2', 'pro60e9b050529ae000010000.jpg,pro60e9b05052b9f000000100.jpg', '13000000', NULL, 'AG-3195923', '5', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(30, NULL, '77954049', NULL, 'Land For Sale', NULL, '1', NULL, 'pro60e9cd38db2f1001000000.jpg,pro60e9cd38db6cd000000010.jpg', '200000', NULL, 'AG-3195923', '6', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'undefined', NULL, '2', NULL, 0),
+(31, NULL, '4926210', NULL, 'New gold Ring', NULL, '5', '38', 'pro60ebfa5392ec9000000100.jpg,pro60ebfa5393013000000001.jpg', '12000', NULL, 'AG-3195923', '6', '4', 'undefined', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(32, NULL, '66452675', NULL, 'This  is the Title', NULL, '5', '39', 'pro60eca73b194d8000000001.jpg,pro60eca73b19b50000000001.jpg', '2200', NULL, 'AG-3195923', NULL, NULL, 'undefined', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(33, NULL, '20262119', NULL, 'Free ADs placement', NULL, '3', '8', 'pro60eceaa1f0ab8000001000.jpg,pro60eceaa1f138f100000000.jpg', NULL, NULL, 'AG-7220781', '3', '5', 'Legushi Beach', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(34, NULL, '99439101', NULL, 'Bentley For Sale', NULL, '1', '29', 'pro60f2b3c59c00e000001000.jpg,pro60f2b3c59c915000000100.jpg,pro60f2b3c59cafc010000000.jpg', '4000000', NULL, 'AG-5710843', '5', '3', 'Police Station', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(35, NULL, '70544642', NULL, 'Nigerian Land', NULL, '2', '42', 'pro60f34058c9afa000000001.jpg,pro60f34058ca39b000100000.jpg', '2000000', NULL, 'AG-5710843', '5', '4', 'Hungarian', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'undefined', NULL, '5', NULL, 0),
+(36, '61', '66204491', NULL, 'Toyota Corolla For Sale', NULL, '1', '27', 'pro60f5aaa03a548000000010.jpg,pro60f5aaa03accd000100000.jpg,pro60f5aaa03ae16000001000.jpg', '2000000', NULL, 'AG-9648945', '9', '25', 'Ugborokoko', '8', 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(37, '61', '66591601', NULL, 'New Car for sale', 'lorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description long', '1', '27', 'pro60f6b74a631d1000000010.jpg,pro60f6b74a63b3b010000000.jpg,pro60f6b74a63da2000100000.jpg', '2000000', NULL, 'AG-9420882', '9', '25', 'Refinery road', '8', 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products2`
+--
+
+CREATE TABLE `products2` (
+  `id` bigint(20) NOT NULL,
+  `brand` varchar(255) NOT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `color` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `long_description` text NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `sub_category` varchar(255) NOT NULL,
+  `image` text NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `seller_id` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `lga` varchar(255) NOT NULL,
+  `location` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products2`
+--
+
+INSERT INTO `products2` (`id`, `brand`, `product_code`, `color`, `name`, `short_description`, `long_description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `lga`, `location`) VALUES
+(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-8614937', '', '', 'Lugbe'),
+(5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-91933000', '', '', ''),
+(6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem short description', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '2021-06-22 12:49:56', 'AG-93843232', '', '', ''),
+(7, 'HP', '19678428', 'silver', 'HP laptop envy', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d058e959f000001000.jpg,pro60d1d058e9aa7000100000.jpg,pro60d1d058e9f8a000001000.jpg', '90000', '2021-06-22 12:58:16', 'AG-60722385', '', '', ''),
+(8, 'Lenovo', '55860887', 'silver', 'Silver m4', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d0843ccb5000010000.jpg,pro60d1d0843d251010000000.jpg,pro60d1d0843d76c000010000.jpg', '70000', '2021-06-22 12:59:00', 'AG-90470554', '', '', ''),
+(9, 'Apple', '36376549', 'silver', 'macbook pro', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d0cf8926e000001000.jpg,pro60d1d0cf89786010000000.jpg,pro60d1d0cf89bd0000100000.jpg', '70000', '2021-06-22 13:00:15', 'AG-42990797', '', '', ''),
+(10, 'Apple', '78518873', 'black', 'Apple desktop', 'lorem short description', 'lorem ipsum long description long', '8', '12', 'pro60d1d12697b21100000000.jpg', '70000', '2021-06-22 13:01:42', 'AG-79974221', '', '', ''),
+(11, 'Xaiomi', '30645954', 'black', 'Xaiomi headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d1cfee06e100000000.jpg', '70000', '2021-06-22 13:04:31', 'AG-19693443', '', '', ''),
+(12, 'Beats by Dre', '83291175', 'black, red', 'Headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d24460ce9000000100.jpg,pro60d1d2446126b001000000.jpg', '8000', '2021-06-22 13:06:28', 'AG-7748728', '', '', ''),
+(13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '2021-06-22 13:07:34', 'AG-79867936', '', '', ''),
+(14, 'Airpods', '57247936', 'white', 'Headset', 'lorem short description', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '2021-06-22 13:19:11', 'AG-67980776', '', '', ''),
+(15, 'Apple', '3875669', 'white', 'airpod max', 'lorem short description', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '2021-06-22 13:21:18', 'AG-67743888', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -6331,6 +7006,54 @@ INSERT INTO `property_types` (`type_id`, `type`, `status`) VALUES
 (4, 'Mixed-use Land', 1),
 (5, 'Quarry Land', 1),
 (6, 'Residential Land', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `saved_products`
+--
+
+CREATE TABLE `saved_products` (
+  `saved_id` int(11) NOT NULL,
+  `product_id` varchar(15) NOT NULL,
+  `user_id` varchar(15) NOT NULL,
+  `date_saved` datetime DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `saved_products`
+--
+
+INSERT INTO `saved_products` (`saved_id`, `product_id`, `user_id`, `date_saved`, `status`) VALUES
+(1, '37', '58', '2021-07-14 14:37:44', 1),
+(3, '14', '58', '2021-07-20 16:41:22', 1),
+(4, '15', '58', '2021-07-20 16:42:08', 1),
+(5, '7', '58', '2021-07-20 16:51:20', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seller_account_packages`
+--
+
+CREATE TABLE `seller_account_packages` (
+  `package_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `body` text NOT NULL,
+  `value` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `seller_account_packages`
+--
+
+INSERT INTO `seller_account_packages` (`package_id`, `title`, `body`, `value`, `status`) VALUES
+(1, 'Free', '{\r\n                    title:\'Product upload\',\r\n                    body:\'Maximun of 50 products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'unpredicted product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'No ads slot. Your Ads will be paid by you\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'No whatsapp link on your product page\'\r\n                },\r\n                {\r\n                    price:\'Free\',\r\n                   \r\n                }', '0', 1),
+(2, 'Basic', ' {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Product reach of about 5000 to 150000 customers\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Your ads runs freely for a certain period\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link activated on your product page\'\r\n                },\r\n                {\r\n                    price:\'N5,000/mo\',\r\n                    \r\n                }', '500000', 1),
+(3, 'Super', '      {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Unlimited product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Unlimited ads slot and unlimited ads reach\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link active on product page\'\r\n                },\r\n                {\r\n                    title:\'Product Index\',\r\n                    body:\'Your products are seen before others\'\r\n                },\r\n                {\r\n                    price:\'N7000/mo\',\r\n                    \r\n                }', '700000', 1),
+(4, 'Advance', 'body:[\r\n                {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Unlimited product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Your ads runs freely for a certain period\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link activated on your product page\'\r\n                },\r\n                {\r\n                    title:\'Product Index\',\r\n                    body:\'Your products remains at the top search rank.\'\r\n                },\r\n                {\r\n                    price:\'N10,000/mo\',\r\n                }', '1000000', 1);
 
 -- --------------------------------------------------------
 
@@ -6543,7 +7266,22 @@ INSERT INTO `transactions` (`trans_id`, `trans_reference`, `amount`, `currency`,
 (18, 'boh5hvem0v', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-08T09:37:48.000Z', 'boh5hvem0v', 1),
 (19, 'rmcazjn9z8', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T09:56:28.000Z', 'rmcazjn9z8', 1),
 (20, '9sk1p3zxz9', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T09:58:38.000Z', '9sk1p3zxz9', 1),
-(21, '5ey2k8zt6q', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T10:22:22.000Z', '5ey2k8zt6q', 1);
+(21, '5ey2k8zt6q', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-08T10:22:22.000Z', '5ey2k8zt6q', 1),
+(22, 'd9m7wn74w1', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-13T01:16:00.000Z', 'success', 1),
+(23, 'byd8c9hzg2', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T10:07:56.000Z', 'success', 1),
+(24, 'dfame1vkxz', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-17T10:08:38.000Z', 'success', 1),
+(25, '3o9hq0w7ko', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T14:06:18.000Z', 'success', 1),
+(26, 'bkew0caaox', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T14:24:02.000Z', 'success', 1),
+(27, '8y591hwt3a', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-17T14:27:03.000Z', 'success', 1),
+(28, 'i4ulbqlq1z', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T14:57:00.000Z', 'success', 1),
+(29, 'jix4jok91q', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T16:59:54.000Z', 'success', 1),
+(30, '5z50evhk30', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T17:04:30.000Z', 'success', 1),
+(31, 'rppn8j9u2t', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T17:09:07.000Z', 'success', 1),
+(32, 'lyv8w6kiga', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-17T17:09:55.000Z', 'success', 1),
+(33, 'ap217mx7yd', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-17T17:10:11.000Z', 'success', 1),
+(34, 'rewolevief', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-19T16:36:40.000Z', 'success', 1),
+(35, 'nnaurrph1z', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-20T11:28:29.000Z', 'success', 1),
+(36, 'a1qj74bgx2', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-20T11:41:42.000Z', 'success', 1);
 
 -- --------------------------------------------------------
 
@@ -6552,14 +7290,14 @@ INSERT INTO `transactions` (`trans_id`, `trans_reference`, `amount`, `currency`,
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `fullname` tinytext NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(45) NOT NULL,
   `state` tinytext DEFAULT NULL,
   `country` tinytext DEFAULT NULL,
   `whatsapp` varchar(25) DEFAULT NULL,
-  `mobile` varchar(25) DEFAULT NULL,
+  `mobile1` varchar(25) DEFAULT NULL,
   `seller` int(11) NOT NULL DEFAULT 0,
   `seller_id` varchar(25) DEFAULT NULL,
   `account_type` int(11) NOT NULL DEFAULT 0,
@@ -6578,12 +7316,15 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `email`, `phone`, `state`, `country`, `whatsapp`, `mobile`, `seller`, `seller_id`, `account_type`, `image`, `password`, `token`, `last_login`, `signup_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
+INSERT INTO `users` (`id`, `fullname`, `email`, `phone`, `state`, `country`, `whatsapp`, `mobile1`, `seller`, `seller_id`, `account_type`, `image`, `password`, `token`, `last_login`, `signup_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
 (1, 'Michael Akpobome', 'mike98989gg@gmail.com', '07060678275', 'Delta', '', '', '', 1, 'AG-9420882', 3, 'default.png', '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', '963c0c4f2bbbda47b659449734e24e529e4e27616f8206cf53a482664236e8313c076d1f694fbd514ddfeabfacd86834ca5f4e1ba6e8d88e7f5d29b96a16744b', '2021-07-08 10:10:25', '2019-09-12', '58642', '1341', 1, 1),
-(38, 'John Doe', 'test@test.com', '08174077714', 'Fct', '', '', '', 1, 'AG-91933000', 1, 'default2.png', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'a4f6212765e6a42f595b1cc6e65b5c51779bf4805469952152737e4bb68cc32f9f03d5279dab3edda3862f42c1c314016cd56dc916b32ae9c33a75e8169f97ab', '2021-06-16 21:42:43', '2020-04-29', '63258', '', 1, 1),
+(38, 'John Doe', 'test@test.com', '08174077714', 'Fct', '', '', '', 1, 'AG-91933000', 1, 'default2.png', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'fbc7b152f7ad9094a9a1d527eecf64a83e7c184109e7a30494020deec154bf15f2a15046f569446a031aa9ca71f2efb25b87757cf7c693ebe3d1fdd7bf2d2422', '2021-08-18 12:41:50', '2020-04-29', '63258', '', 1, 1),
 (39, 'Sunday', 'test3@test.com', '0703300000', '', 'Nigeria', '', '', 0, '', 3, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '2021-04-12 15:02:15', '0000-00-00', '', '', 1, 1),
 (40, 'George', 'directorate@test.com', '0703300000', '37', '', '', '', 0, '', 1, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '2021-04-12 15:35:33', '0000-00-00', '', '', 1, 1),
-(53, 'this is another test', 'mike98989@gmail.com', '908875875356', 'mmm', 'cameroon', NULL, '09999999', 1, 'AG-3195923', 3, '', '$2y$10$74HpuFkCofdf5Tvj37T/..gmYT8MMIx94BZ9dK5LzVIk4I6.KLGim', 'd455103ab3a0a2902109b26748718c4a7b0057e6de6ff2633d85c8ece7f86f7a3b05b647add2b4889f714632d59367d500c122207ec7cde15d1486a7a3ef70f3', '2021-07-08 20:09:18', '2021-07-08', '4116', NULL, 1, 1);
+(54, 'Jonathan Michael', 'mike98989ddd@gmail.com', '07060678275', NULL, NULL, '08174077714', NULL, 1, 'AG-5710843', 1, 'profile60f35fcb5ece1000000001.jpg', '$2y$10$M1Ir7cffmUhAwzp3oRd7n.Tl8fOSlbcue78AOBihOZGuoqAJh9tee', '6e87a2f6ee524f437b806fc7dd419c4474f3f3c134f25a74e2dfa142918fc7e97879d73d0eee9a29685647aeef4addf65a486663763e5ca1179dc44b32907e60', '2021-07-19 15:23:50', '2021-07-13', '9213', '5102', 1, 1),
+(56, 'Mike Doe', 'mike98989rr@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-9648945', 3, 'default.png', '$2y$10$KzjeR0NUIV3nldS0At6Z6OzjQ9YTdiVLwpixw/8Cj8X0R29VUJ3zS', 'caee79441454b68f0397483bc8bc84eddc57c381436454e23ae975b75a415f78570a9ec5cc63105222d2f24593e84f505e7e64aba86511e1c0edd4adfc12aedf', '2021-07-20 12:37:23', '2021-07-19', '4882', NULL, 1, 1),
+(58, 'Mike Doe', 'mike98989fff@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-5117377', 1, 'profile60f6b6a53c3c7000000010.jpg', '$2y$10$71PallMVusrx.xLSTBx6yue4zl4S7ybiXxG92M5d621RqRAfxvyAe', '50eff5fd5c4163fb2c9a7e4e1d394197b170af55aa8eea4363bd5ffd82ff3d799b35df31399d552809c61ad632c6bc407e443225d5c41996500bcb5394adb261', '2021-07-20 16:06:30', '2021-07-20', '2601', NULL, 1, 1),
+(60, 'Michael Akpobome', 'mike98989@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, NULL, 0, 'default.png', '$2y$10$GazVNvb.pn05TuKtEZeyd.8tz5jdzus5kDOkhR2DOiZtpVBBjgBF6', '3a2280d5c0d4ed763cfaa3ac0db516d52543ae603b4ca58d25db7e5866a30a4fa0fbf8117e8e9d0adaf38a855869adef9199cb2125e4663055e852223f2fe8fa', '2021-08-19 08:11:40', '2021-08-18', '7918', NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -6602,6 +7343,13 @@ CREATE TABLE `wishlist` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `banners`
@@ -6659,12 +7407,6 @@ ALTER TABLE `lga`
   ADD KEY `state` (`State`);
 
 --
--- Indexes for table `messages`
---
-ALTER TABLE `messages`
-  ADD PRIMARY KEY (`message_id`);
-
---
 -- Indexes for table `most_view`
 --
 ALTER TABLE `most_view`
@@ -6689,9 +7431,22 @@ ALTER TABLE `phone_models`
   ADD PRIMARY KEY (`model_id`);
 
 --
+-- Indexes for table `phone_models2`
+--
+ALTER TABLE `phone_models2`
+  ADD PRIMARY KEY (`model_id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_code` (`product_code`);
+
+--
+-- Indexes for table `products2`
+--
+ALTER TABLE `products2`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `product_code` (`product_code`);
 
@@ -6712,6 +7467,18 @@ ALTER TABLE `product_ratings`
 --
 ALTER TABLE `property_types`
   ADD PRIMARY KEY (`type_id`);
+
+--
+-- Indexes for table `saved_products`
+--
+ALTER TABLE `saved_products`
+  ADD PRIMARY KEY (`saved_id`);
+
+--
+-- Indexes for table `seller_account_packages`
+--
+ALTER TABLE `seller_account_packages`
+  ADD PRIMARY KEY (`package_id`);
 
 --
 -- Indexes for table `seller_ratings`
@@ -6753,6 +7520,12 @@ ALTER TABLE `wishlist`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `banners`
@@ -6809,12 +7582,6 @@ ALTER TABLE `lga`
   MODIFY `Lgaid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=828;
 
 --
--- AUTO_INCREMENT for table `messages`
---
-ALTER TABLE `messages`
-  MODIFY `message_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `most_view`
 --
 ALTER TABLE `most_view`
@@ -6839,10 +7606,22 @@ ALTER TABLE `phone_models`
   MODIFY `model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3539;
 
 --
+-- AUTO_INCREMENT for table `phone_models2`
+--
+ALTER TABLE `phone_models2`
+  MODIFY `model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=625;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `products2`
+--
+ALTER TABLE `products2`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `product_cart`
@@ -6861,6 +7640,18 @@ ALTER TABLE `product_ratings`
 --
 ALTER TABLE `property_types`
   MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `saved_products`
+--
+ALTER TABLE `saved_products`
+  MODIFY `saved_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `seller_account_packages`
+--
+ALTER TABLE `seller_account_packages`
+  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `seller_ratings`
@@ -6884,13 +7675,13 @@ ALTER TABLE `sub_category`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `wishlist`

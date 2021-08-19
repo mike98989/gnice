@@ -1,65 +1,39 @@
-<!-- End .header -->
 
-<main class="main"  ng-controller="signupController">
-  <nav aria-label="breadcrumb" class="breadcrumb-nav">
-    <div class="container">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="Home"><i class="icon-home"></i></a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Confirm Account</li>
-      </ol>
-    </div>
-    <!-- End .container -->
-  </nav>
-    <div class="container">
-    <div class="col-md-6 offset-md-3">
-      <div class="heading">
-        <h2 class="title">Confirm Account</h2>
-        <p></p>
-      </div>
-      <!-- End .heading -->
-
-      <form action="" id="confirm_user_signup" ng-submit="confirm_user_signup()"  method="POST">
-     
-        
-           <input
-            type="email"
-            name="email"
-            id="email"
-            class="form-control"
-            placeholder="Email Address"
-            required
+  <div class="container-scroller"  ng-controller="signupController">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth lock-full-bg">
+        <div class="row w-100">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-transparent text-white text-left p-5 text-center">
+                <p>A confirmation email has been sent to your email address. Please enter the confirmation code</p>
+             
+              
+          <form id="confirm_user_signup" ng-submit="confirm_user_signup()" ng-init="localStorage_get('user_email')">
+            <div class="alert alert-info result"></div>
+           <input type="text" name="email" id="email" class="form-control"placeholder="Email Address" required Value="{{user_email}}"
           />
-        
-        
-       
-         
-        
-          <input
-            type="text"
+            <div class="form-group"><label class="text-white" for="examplePassword1">Confirm password</label>
+              <input  type="text"
             name="confirm_code"
             id="confirm_code"
             class="form-control"
             placeholder="Confirmation Code"
-            required
-          />
-        <div class="form-footer">
-            <button type="submit" class="btn btn-primary" id="">
-              Confirm Account
-            </button>
+            
+            required>
+                </div>
+                <div class="mt-5">
+                   <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">Confirm</button>
+                </div>
+               
+              </form>
+            </div>
           </div>
-
-        
-        <!-- End .form-footer -->
-      </form>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
     </div>
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- End .container -->
-
+  <!-- container-scroller -->
+  <!-- plugins:js -->
  
-
-  <div class="mb-5"></div>
-  <!-- margin -->
-</main>
-<!-- End .main -->

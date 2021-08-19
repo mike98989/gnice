@@ -2,11 +2,17 @@
 
 class Category extends Controller
 {
+    
+    function __construct() {
+        parent::__construct();
+		Session::init();
+	}
+    
     public function index()
     {
         $data = [];
-        $js = ['controllers/web/homeController.js'];
-        $this->view('Category/index', $include_header = true, $data, '_type1', $js);
+        $this->view->js = ['controllers/web/homeController.js'];
+        $this->view->render('Category/index', true, '');
     }
 
     public function details($url)

@@ -300,10 +300,10 @@ class Api extends Controller
 
     
 
-    public function fetch_single_product($id){
+    public function fetch_single_product(){
          $header = apache_request_headers(); 
          if(isset($header['gnice-authenticate'])){
-             $result = $this->model('Product')->getSingleProduct($id);
+             $result = $this->model('Product')->getSingleProduct($_GET['id']);
              print_r(json_encode($result));
          }else {
              echo "invalid request";

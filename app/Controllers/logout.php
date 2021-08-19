@@ -9,7 +9,7 @@ function __construct(){
             $whole_URL= './login';
         }
 		Session::destroy();
-		die(header('location:./adminauth'));
+		die(header('location:'.$whole_URL));
 		exit;
 	}
 

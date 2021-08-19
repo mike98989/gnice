@@ -1,96 +1,100 @@
-
-
-<main class="main">
-			<nav aria-label="breadcrumb" class="breadcrumb-nav">
-				<div class="container">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="Home"><i class="icon-home"></i></a></li>
-						<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-					</ol>
-				</div><!-- End .container -->
-			</nav>
-
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-9 order-lg-last dashboard-content">
-						<h2>My Dashboard</h2>
-
-						<div class="alert alert-success alert-intro" role="alert">
-							Thank you for registering with Porto - Premium Template.
-						</div><!-- End .alert -->
-
-						<div class="alert alert-success" role="alert">
-							Hello, <strong>Porto customer!</strong> From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.
-						</div><!-- End .alert -->
-
-						<div class="mb-4"></div><!-- margin -->
-
-						<h3>Account Information</h3>
-
-						<div class="row">
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-header">
-										Contact Information
-										<a href="#" class="card-edit">Edit</a>
-									</div><!-- End .card-header -->
-
-									<div class="card-body">
-										<p>
-											John Doe<br>
-											porto_shop@gmail.com<br>
-											<a href="#">Change Password</a>
-										</p>
-									</div><!-- End .card-body -->
-								</div><!-- End .card -->
-							</div><!-- End .col-md-6 -->
-
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-header">
-										newsletters
-										<a href="#" class="card-edit">Edit</a>
-									</div><!-- End .card-header -->
-
-									<div class="card-body">
-										<p>
-											You are currently not subscribed to any newsletter.
-										</p>
-									</div><!-- End .card-body -->
-								</div><!-- End .card -->
-							</div><!-- End .col-md-6 -->
-						</div><!-- End .row -->
-
-						<div class="card">
-							<div class="card-header">
-								Address Book
-								<a href="#" class="card-edit">Edit</a>
-							</div><!-- End .card-header -->
-
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-6">
-										<h4 class="">Default Billing Address</h4>
-										<address>
-											You have not set a default billing address.<br>
-											<a href="#">Edit Address</a>
-										</address>
-									</div>
-									<div class="col-md-6">
-										<h4 class="">Default Shipping Address</h4>
-										<address>
-											You have not set a default shipping address.<br>
-											<a href="#">Edit Address</a>
-										</address>
-									</div>
-								</div>
-							</div><!-- End .card-body -->
-						</div><!-- End .card -->
-					</div><!-- End .col-lg-9 -->
-
-					<?php require_once '../app/views/inc/aside3.php';?>
-				</div><!-- End .row -->
-			</div><!-- End .container -->
-
-			<div class="mb-5"></div><!-- margin -->
-		</main><!-- End .main -->
+  <?php require_once './app/views/inc/seller_navbar.php';?>
+      
+        <div class="content-wrapper">
+          
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="d-flex justify-content-between flex-wrap">
+                <div class="d-flex align-items-end flex-wrap">
+                  <div class="mr-md-3 mr-xl-5">
+                    <h2>WELCOME BACK!</h2>
+                    <p class="mb-md-0">Your analytics dashboard template.</p>
+                  </div>
+                
+                </div>
+                <div class="d-flex justify-content-between align-items-end flex-wrap">
+                  <button type="button" class="btn btn-light bg-white btn-icon mr-3 d-none d-md-block ">
+                    <i class="mdi mdi-download text-muted"></i>
+                  </button>
+                  <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
+                    <i class="mdi mdi-clock-outline text-muted"></i>
+                  </button>
+                  <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
+                    <i class="mdi mdi-plus text-muted"></i>
+                  </button>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="card bg-gradient-primary border-0">
+                 
+                <div class="card-body py-3 px-4 d-flex align-items-center justify-content-between flex-wrap" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                    <p class="mb-0 font-weight-medium" style="color: white;">FREE ACCOUNT PACKAGE</p>
+                  <p class="mb-0 text-white font-weight-medium"> YOU HAVE 5 ADS SLOT LEFT AND 14 DAYS LEFT</p>
+                  <div class="d-flex">
+                    <a href="premium" target="_blank" class="btn btn-outline-light mr-2 bg-gradient-danger border-0">Upgrade</a>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                <div class="card-body bg-gradient-primary text-white">
+                  <p class="card-title text-white" style="font-size: 50px ">30</p>
+                  <p class="mb-4 ">Total uplaoded posting</p>
+                  
+                </div>
+              </div>
+            </div>
+             <div class="col-md-6 grid-margin stretch-card">
+              <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                <div class="card-body bg-gradient-danger text-white">
+                  <p class="card-title text-white" style="font-size: 50px">30</p>
+                  <p class="mb-4">Total clients respond</p>
+                 
+                </div>
+              </div>
+            </div>
+        
+          </div>
+          <div class="row"  ng-controller="homeController">
+            <div class="col-md-12 stretch-card">
+              <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                <div class="card-body">
+                  <p class="card-title" style="font-size: 20px;">Client Messages</p>
+                  <div class="table-responsive"  ng-init="fetch_all_messages_to_seller()">
+                    <table id="recent-purchases-listing" class="table table-sm table-hover">
+                      <thead>
+                        <tr>
+                           <th>SN</th>
+          <th>SENDER NAME</th>
+          <th>SENDER EMAIL</th>
+          <th>SENDER PHONE NO.</th>
+          <th>MESSAGES</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       <tr ng-repeat="messageToSender in messageTosenders">
+          <td>{{$index + 1}}</td>
+          <td>{{messageToSender.sender_name}}</td>
+          <td>{{messageToSender.sender_email}}</td>
+          <td>{{messageToSender.sender_tel}}</td>
+          <td>{{messageToSender.message}}</td>
+          
+        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       

@@ -24,19 +24,110 @@
       </div>
       <div id="collapseOne" class="collapse show" data-parent="#accordion">
         <div class="card-body">
-		<h5> 1. <a href="#">Register</a></h5>
-         <p style="font-size: 15px;"> Register using your e-mail and phone number (or do it via Facebook or Google). Make sure you’re entering a correct phone number, so your clients could reach you!</p>
-		 
-		 <h5> 2. Make photos of your item.</h5>
-         <p style="font-size: 15px;"> Feel free to make a lot of photos using your smartphone. Make sure they show your item in the best light.</p>
-		 
-		 <h5> 3. Press <a href="#">SELL.</a></h5>
-         <p style="font-size: 15px;"> Choose a proper category, upload your photos and write a clear title and full description of your item. Enter a fair price, select attributes and send your advert to review!</p>
-		 
-		 <h5> 4. Answer the messages and calls from your clients!</h5>
-         <p style="font-size: 15px;"> 
-		 If everything is ok with your advert, it’ll be on Jiji in a couple of hours after sending to moderation. We’ll send you a letter and notification when your advert goes live. Check your messages and be ready to earn money! Do you want to sell like a pro? Check out our Premium Services .
-		 </p>
+	<div class="container">
+    <div class="row">
+   <div class="col-md-6">
+              <div class="row">
+                    <div class="col-md-10 mx-auto" ng-init="fetch_single_user()">
+                      <div>
+                       <img src="{{singleUser.image}}" width="100px" height="100px" class="img-profile rounded-circle">
+                     </div>
+                       
+                  
+
+                    </div>
+                        <form action="" method="post" enctype="multipart/form-data" id="add_profileImg" ng-submit="add_profileImg()" class="my-3">
+          <div class="form-group" > 
+        <input class="form-control" type="file" name="file" >  
+       <div class="my-2"  id="upload"> 
+           <input type="submit" class="form-control" value="Upload">  
+         </div>
+       </div>
+ 
+</form>
+              
+                  
+          
+          </div>
+    
+   </div> 
+    <div class="col-md-6">
+       <div class="row">
+                    <div class="col-md-10 mx-auto" ng-init="fetch_single_user()">
+                       <form action="" method="post"  id="add_profileDetails" ng-submit="add_profileDetails()" class="my-3">
+
+          <input
+            type="text"
+            name="fullname"
+            id="fullname"
+            class="form-control"
+            placeholder="Full Name"
+            required
+            value="{{singleUser.fullname}}"
+          />
+           <label for="gender">Gender</label>
+          <select class="form-control" name="gender">
+            <option selected="" value="{{singleUser.gender}}">{{singleUser.gender}}</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+
+             <input
+            type="text"
+            name="address"
+            id="address"
+            class="form-control"
+            placeholder="Address"
+            value="{{singleUser.address}}"
+            required
+          />
+             <input
+            type="text"
+            name="state"
+            id="state"
+            class="form-control"
+            placeholder="State"
+            value="{{singleUser.state}}"
+            required
+          />
+             <input
+            type="text"
+            name="country"
+            id="country"
+            class="form-control"
+            placeholder="Country"
+            value="{{singleUser.country}}"
+            required
+          />
+             <input
+            type="text"
+            name="whatsapp"
+            id="whatsapp"
+            class="form-control"
+            placeholder="whatsapp"
+            value="{{singleUser.whatsapp}}"
+            
+          />
+             <input
+            type="text"
+            name="mobile1"
+            id="mobile1"
+            class="form-control"
+            placeholder="Mobile Number"
+            value="{{singleUser.mobile1}}"
+            
+          />
+        <div class="form-footer">
+            <button type="submit" class="btn btn-primary" id="">
+              Confirm Account
+            </button>
+          </div>
+                       </form>
+                    </div>
+                  </div>
+    </div> 
+  </div>
+</div>
         </div>
       </div>
     </div>
