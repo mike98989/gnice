@@ -23,17 +23,9 @@ class Authenticate extends Model
                         $msg['status'] = "0";
                         $msg['msg'] = "Your account is not yet active. Please click on the validation link sent to your email or contact administrator!";
                     } else {
-<<<<<<< HEAD
-
-                        if (($row->seller == '1') && ($row->account_type != '0')) {
-                            //! review this
-                            die('got here');
-                            $row->seller_account_details = $this->getUserAccountType($row->account_type);
-=======
                         $row->password = null;
-                        if(($row->seller=='1')&&($row->account_type!='0')){
-                        $row->seller_account_details = $this->getUserAccountType($row->account_type);
->>>>>>> f2678b64a4d19a776f487fd5005bcc5cfad4c927
+                        if (($row->seller == '1') && ($row->account_type != '0')) {
+                            $row->seller_account_details = $this->getUserAccountType($row->account_type);
                         }
                         $updated_token = $this->updateUserToken($row->id, 'users');
                         if ((isset($_POST['source'])) && ($_POST['source'] == 'browser')) {
@@ -91,7 +83,7 @@ class Authenticate extends Model
         }
     }
 
-    
+
 
 
     public function updateUserAccountType()
@@ -99,28 +91,28 @@ class Authenticate extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
-            $email = filter_var(strtolower($_POST['email_to_be_activated']), FILTER_VALIDATE_EMAIL);
-            $selectedOption = filter_var($_POST['selectedOption']);
-            $check_email = $this->findUserByEmail($email, 'users');
-            if ($check_email !== false) {
-                if ($check_email->seller_id == null) {
-                    $seller_id = 'AG-' . rand(1000000, 10000000);
-                    $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
-                    $this->db->bind(':seller_id', $seller_id);
-                } else {
-                    $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id ');
-                }
-                $this->db->bind(':account_type', $selectedOption);
+                $email = filter_var(strtolower($_POST['email_to_be_activated']), FILTER_VALIDATE_EMAIL);
+                $selectedOption = filter_var($_POST['selectedOption']);
+                $check_email = $this->findUserByEmail($email, 'users');
+                if ($check_email !== false) {
+                    if ($check_email->seller_id == null) {
+                        $seller_id = 'AG-' . rand(1000000, 10000000);
+                        $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
+                        $this->db->bind(':seller_id', $seller_id);
+                    } else {
+                        $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id ');
+                    }
+                    $this->db->bind(':account_type', $selectedOption);
 
-                $this->db->bind(':id', $check_email->id);
-                if ($this->db->execute()) {
-                    $check_email_again = $this->findUserByEmail($email, 'users');
-                    $check_email_again->seller_account_details = $this->getUserAccountType($check_email_again->account_type);
-                    $msg['data'] = $check_email_again;
-                    $msg['msg'] = "Successfully updated user account type!";
-                    $msg['status'] = '1';
+                    $this->db->bind(':id', $check_email->id);
+                    if ($this->db->execute()) {
+                        $check_email_again = $this->findUserByEmail($email, 'users');
+                        $check_email_again->seller_account_details = $this->getUserAccountType($check_email_again->account_type);
+                        $msg['data'] = $check_email_again;
+                        $msg['msg'] = "Successfully updated user account type!";
+                        $msg['status'] = '1';
                     } else {
                         return false;
                     }
@@ -128,11 +120,10 @@ class Authenticate extends Model
                     $msg['msg'] =  "invalid email address";
                     $msg['status'] = '0';
                 }
-            }else {
+            } else {
                 $msg['msg'] =  "invalid token";
                 $msg['status'] = '0';
             }
-            
         } else {
             $msg['msg'] =  "invalid request";
             $msg['status'] = '0';
@@ -291,7 +282,7 @@ class Authenticate extends Model
                         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                         $data['signup_date'] = date('Y-m-d');
                         $data['status'] = '1';
-                        $data['image']='default.png';
+                        $data['image'] = 'default.png';
                         $exclude = array('confirm_password');
 
                         ////////////GENERATE CONFIRMATION CODE AND SEND EMAIL
@@ -625,17 +616,17 @@ class Authenticate extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $seller_id = $_POST['seller_id'];
-            $email = trim($_POST['email']);
-            $mobile = trim($_POST['mobile']);
-            $fullname = trim($_POST['fullname']);
-            $phone = trim($_POST['phone']);
-            $state = trim($_POST['state']);
-            $uploader = uploadMultiple('pro', 'products', 2);
-            //Filter sanitize all input as string to remove all unwanted scripts and tags
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $seller_id = $_POST['seller_id'];
+                $email = trim($_POST['email']);
+                $mobile = trim($_POST['mobile']);
+                $fullname = trim($_POST['fullname']);
+                $phone = trim($_POST['phone']);
+                $state = trim($_POST['state']);
+                $uploader = uploadMultiple('pro', 'products', 2);
+                //Filter sanitize all input as string to remove all unwanted scripts and tags
 
                 if (!(empty($email) || empty($seller_id) || empty($fullname) || empty($phone) || empty($state))) {
                     $is_email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -691,9 +682,9 @@ class Authenticate extends Model
                     $result['error'] = ' all * fields are required';
                     $result['status'] = '0';
                 }
-            }else{
-                $result['status']='0';
-                $result['msg']='Invalid token';    
+            } else {
+                $result['status'] = '0';
+                $result['msg'] = 'Invalid token';
             }
         } else {
             echo 'invalid request';
@@ -702,48 +693,47 @@ class Authenticate extends Model
         return $result;
     }
 
-    public function uploadProfileImage(){
+    public function uploadProfileImage()
+    {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-        $token = filter_var($header['gnice-authenticate']);
-        $verifyToken = $this->verifyToken($token);
-        if ($verifyToken) {
-            $uploader = uploadMultiple('profile', 'profile', 2);
-            $image = $uploader['imageUrl'];
-            if(isset($image) && strlen($image) > 0){
-                $this->db->query("UPDATE users SET image = :image WHERE email = :email AND status = 1");
-                $this->db->bind(':image', $image);
-                $this->db->bind(':email', $verifyToken->email);
-                if($this->db->execute()){
-                    $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token, 'users');
+            if ($verifyToken) {
+                $uploader = uploadMultiple('profile', 'profile', 2);
+                $image = $uploader['imageUrl'];
+                if (isset($image) && strlen($image) > 0) {
+                    $this->db->query("UPDATE users SET image = :image WHERE email = :email AND status = 1");
+                    $this->db->bind(':image', $image);
                     $this->db->bind(':email', $verifyToken->email);
-                    $row = $this->db->singleResult();
-                    $row->seller_account_details = $this->getUserAccountType($row->account_type);
-                    $result['data']=$row;
-                    $result['message'] = 'profile picture update successfully';
-                    $result['status'] = '1';
-                    $result['errors'] = $uploader['image_error'];
-                } else{
-                    $result['message'] = 'profile picture update failed';
+                    if ($this->db->execute()) {
+                        $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+                        $this->db->bind(':email', $verifyToken->email);
+                        $row = $this->db->singleResult();
+                        $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                        $result['data'] = $row;
+                        $result['message'] = 'profile picture update successfully';
+                        $result['status'] = '1';
+                        $result['errors'] = $uploader['image_error'];
+                    } else {
+                        $result['message'] = 'profile picture update failed';
+                        $result['status'] = '0';
+                        $result['errors'] = $uploader['image_error'];
+                    }
+                } else {
+                    $result['message'] = 'select a picture';
                     $result['status'] = '0';
-                    $result['errors'] = $uploader['image_error'];
-
                 }
-            }else {
-                $result['message'] = 'select a picture';
+            } else {
                 $result['status'] = '0';
-            }
-
-            }else{
-            $result['status']='0';
-            $result['msg']='Invalid token';    
+                $result['msg'] = 'Invalid token';
             }
         } else {
             echo 'invalid request';
             exit();
         }
-       return $result;
-    } 
+        return $result;
+    }
 
     public function loginAdmin()
     {
@@ -768,10 +758,10 @@ class Authenticate extends Model
                             unset($row->password, $row->id);
                             @session_start();
                             Session::init();
-                            Session::set('loggedIn',true);
-                            Session::set('loggedType','admin');
-                            Session::set('token',$updated_token);
-                            Session::set('data',$row);
+                            Session::set('loggedIn', true);
+                            Session::set('loggedType', 'admin');
+                            Session::set('token', $updated_token);
+                            Session::set('data', $row);
                             $result['status'] = '1';
                             $result['data'] = $row;
                             $result['token'] = $updated_token;

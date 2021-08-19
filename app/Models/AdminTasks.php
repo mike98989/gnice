@@ -3,25 +3,27 @@
 class AdminTasks extends Model
 {
 
-    public function verifyAdminToken()
+    public function verifyToken()
     {
-        $token = filter_var($_SESSION['token'], FILTER_SANITIZE_STRING);
-        $account_privilege = filter_var($_SESSION['privilege'], FILTER_SANITIZE_NUMBER_INT);
-        $admin_data = $_SESSION['data'];
-        $admin_email = $admin_data->email;
-
-        $this->db->query("SELECT name, email, last_login,privilege FROM admins WHERE email = :email AND token = :token AND privilege = :privilege LIMIT 1");
-        $this->db->bind(':email', $admin_email);
-        $this->db->bind(':token', $token);
-        $this->db->bind(':privilege', $account_privilege);
-        $row = $this->db->singleResult();
-        // check row
-        if ($this->db->rowCount() > 0) {
-            return $row;
-        } else {
-            return false;
+        Session::init();
+        $isLoggedIn = Session::get('loggedIn');
+        $privilegeType = Session::get('loggedIn');
+        $token = Session::get('token');
+        if ($isLoggedIn == true) {
+            $this->db->query("SELECT fullname, email, last_login,privilege, token FROM admin WHERE token = :token AND privilege_type = :privilege AND status = 1 LIMIT 1");
+            $this->db->bind(':token', $token);
+            $this->db->bind(':privilege_type', $privilegeType);
+            $row = $this->db->singleResult();
+            // check row
+            if ($this->db->rowCount() > 0) {
+                // return $row;
+                return true;
+            } else {
+                return false;
+            }
         }
     }
+
 
     public function getAllCategoriesAndSubCategories()
     {
@@ -50,7 +52,7 @@ class AdminTasks extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
 
-            if ($this->verifyAdminToken() == true) {
+            if ($this->verifyToken() == true) {
                 $this->db
                     ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
                         category.title as productCategory,
@@ -78,18 +80,25 @@ class AdminTasks extends Model
 
     public function getAllUsers()
     {
+
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.status ASC ");
-            $row = $this->db->resultSet();
-            if ($this->db->rowCount() > 0) {
 
-                $result['rowCounts'] = $this->db->rowCount();
-                $result['data'] = $row;
-                $result['status'] = '1';
+            if ($this->verifyToken() == true) {
+                $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.status ASC ");
+                $row = $this->db->resultSet();
+                if ($this->db->rowCount() > 0) {
+                    $result['rowCounts'] = $this->db->rowCount();
+                    $result['data'] = $row;
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'error, try again';
+                    $result['status'] = '0';
+                }
             } else {
                 $result['data'] = [];
-                $result['message'] = 'error, try again';
+                $result['message'] = 'invalid';
                 $result['status'] = '0';
             }
         } else {
@@ -99,21 +108,64 @@ class AdminTasks extends Model
         }
         return $result;
     }
+
+    public function disableUser()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $status = $_POST['status'];
+            $seller_id = $_POST['seller_id'];
+            if ($this->verifyToken() == true) {
+                $this->db->query("UPDATE users SET status = : status WHERE seller_id = :seller_id");
+                $this->db->bind(':seller_id', $seller_id);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id WHERE seller_id = :seller_id");
+                    $this->db->bind(':seller_id', $seller_id);
+                    $row = $this->db->singleResult();
+                    $result['data'] = $row;
+                    $result['message'] = 'account operation successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'account operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
+
     public function getAllAdminAccounts()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-
-            $this->db->query("SELECT id, name, phone, email, image,privilege,last_login, status FROM admins ORDER BY privilege ASC ");
-            $row = $this->db->resultSet();
-            unset($row->password, $row->id, $row->token, $row->user_confirm_id, $row->user_recovery_id);
-            if ($this->db->rowCount() > 0) {
-                $result['rowCounts'] = $this->db->rowCount();
-                $result['data'] = $row;
-                $result['status'] = '1';
+            if ($this->verifyToken() == true) {
+                $this->db->query("SELECT id, name, phone, email, image,privilege,last_login, status FROM admins ORDER BY privilege ASC ");
+                $row = $this->db->resultSet();
+                unset($row->password, $row->id, $row->token, $row->user_confirm_id, $row->user_recovery_id);
+                if ($this->db->rowCount() > 0) {
+                    $result['rowCounts'] = $this->db->rowCount();
+                    $result['data'] = $row;
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'error, try again';
+                    $result['status'] = '0';
+                }
             } else {
                 $result['data'] = [];
-                $result['message'] = 'error, try again';
+                $result['message'] = 'invalid token';
                 $result['status'] = '0';
             }
         } else {
@@ -131,20 +183,26 @@ class AdminTasks extends Model
 
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $title = $data['title'];
-            $status = 1;
-            $this->db->query(
-                'INSERT INTO category (title, image, status) VALUES (:title,:image, :status)'
-            );
-            $this->db->bind(':title', $data['title']);
-            $this->db->bind(':status', $status);
-            // $this->db->bind(':image', $image]);
-            if ($this->db->execute()) {
-                $result['message'] = 'category created successfully';
-                $result['status'] = '1';
+            //! if ($this->verifyToken() == true) {}else{}
+            if ($this->verifyToken() == true) {
+                $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $title = $data['title'];
+                $status = 1;
+                $this->db->query(
+                    'INSERT INTO category (title, image, status) VALUES (:title,:image, :status)'
+                );
+                $this->db->bind(':title', $data['title']);
+                $this->db->bind(':status', $status);
+                // $this->db->bind(':image', $image]);
+                if ($this->db->execute()) {
+                    $result['message'] = 'category created successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'error, try again';
+                    $result['status'] = '0';
+                }
             } else {
-                $result['message'] = 'error, try again';
+                $result['message'] = 'invalid request';
                 $result['status'] = '0';
             }
         } else {
@@ -155,6 +213,7 @@ class AdminTasks extends Model
     }
     public function updateCategory($data)
     {
+        //! if ($this->verifyToken() == true) {}else{}
         $this->db->query(
             'UPDATE category SET title = :title,image = :image WHERE id = :id'
         );
