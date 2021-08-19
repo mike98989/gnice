@@ -1,13 +1,18 @@
 <?php
 
 class Product extends Controller {
-     public function index(){
+
+    function __construct() {
+        parent::__construct();
+		Session::init();
+	}
+    public function index(){
         $data = [];
-         $js = ['controllers/web/homeController.js'];
-        $this->view('Product/product',$include_header=true,$data,'_type1',$js);
+        $this->view->js = ['controllers/web/homeController.js'];
+        $this->view->render('Product/product',false,'');
     }
 
-    public function details($url){
+    public function details($url){ 
         //$url = $this->getUrl();
         print_r($url);exit;
     }

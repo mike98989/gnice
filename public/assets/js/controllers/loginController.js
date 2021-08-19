@@ -104,26 +104,30 @@ module.controller("loginController", ["$scope","$sce","$http","infogathering","$
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          //alert(answer);
+         
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
+          var msg = angular.fromJson(parsed);
           //alert(msg);
-          console.log(msg);
+          //console.log(msg);
           $(".loader").hide();
           if (msg.status == "1") {
             //alert(msg.data.fullname);
             //alert(msg.token);
-            $localStorage["user_data"] = msg.data;
-            $localStorage.name = msg.data.fullname;
-            $localStorage.email = msg.data.email;
-            $localStorage.id = msg.data.id;
-            $localStorage.user_token = msg.token;
-            console.log($localStorage["user_data"]);
-            $scope.createUserSession();
+            // $localStorage["user_data"] = msg.data;
+            // $localStorage.name = msg.data.fullname;
+            // $localStorage.email = msg.data.email;
+            // $localStorage.id = msg.data.id;
+            // $localStorage.user_token = msg.token;
+            // console.log($localStorage["user_data"]);
+            // $scope.createUserSession();
+            // window.location.href = datagrab.completeUrlLocation + "Home";
 
-            //alert(JSON.stringify($localStorage['user_data']));
-            window.location.href = datagrab.completeUrlLocation + "Home";
+            $localStorage["user_data"] = msg.data;
+            $localStorage["user_token"] = msg.token;
+            window.location.href =
+              datagrab.completeUrlLocation + "dashboard";
+
           } else {
             $(".loader").hide();
             $(".result").html(msg.msg);
@@ -136,54 +140,6 @@ module.controller("loginController", ["$scope","$sce","$http","infogathering","$
       });
     };
 
-    $scope.createUserSession = function () {
-      $.ajax({
-        url:
-          $scope.dirlocation +
-          "Credentials/createUserSession?name=" +
-          $localStorage.name +
-          "&email=" +
-          $localStorage.email +
-          "&id=" +
-          $localStorage.id,
-        type: "GET",
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-
-        async: true,
-        cache: false,
-        contentType: false,
-        enctype: "multipart/form-data",
-        headers: { "gnice-authenticate": "gnice-web" },
-        crossDomain: true,
-        processData: false,
-        success: function (answer) {
-          //alert(answer);
-          var response = JSON.stringify(answer);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
-          $(".loader").hide();
-        },
-      });
-    };
-
-    $scope.logout = function () {
-      $.ajax({
-        url: $scope.dirlocation + "Credentials/logout",
-        type: "POST",
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-
-        async: true,
-        cache: false,
-        contentType: false,
-        enctype: "multipart/form-data",
-        headers: { "gnice-authenticate": "gnice-web" },
-        crossDomain: true,
-        processData: false,
-        success: function (answer) {
-          window.location.href = datagrab.completeUrlLocation + "Login";
-        },
-      });
-    };
 
     $scope.clear_storage = function () {
       $localStorage["fullname_checked"] = false;

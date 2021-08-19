@@ -1,55 +1,41 @@
-<!-- End .header -->
 
-<main class="main" ng-controller="loginController">
-  <nav aria-label="breadcrumb" class="breadcrumb-nav">
-    <div class="container">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="Home"><i class="icon-home"></i></a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Password Recovery</li>
-      </ol>
-    </div>
-    <!-- End .container -->
-  </nav>
 
-  <div class="container">
-    <div class="col-md-6 offset-md-3">
-      <div class="heading">
-        <h2 class="title">Password Recovery</h2>
-        <p></p>
-      </div>
-      <!-- End .heading -->
 
-          <form ng-submit="password_recovery()" id="password_recovery"  method="POST" action="">  
-        <input
-          type="email"
-          name="email"
-          id="email"
-          class="form-control"
-          
-          placeholder="Email Address"
-          name="email"
-         
-           
-
-          
-        />
+  <div class="container-scroller"  ng-controller="signupController">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth lock-full-bg">
+        <div class="row w-100">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-transparent text-white text-left p-5 text-center">
+              <h2 class="title">Password Recovery</h2>
+             
+              
+                 <form action="" class="pt-5" ng-submit="password_recovery()" id="password_recovery"  method="POST" action="">  
      
         
-
-        <div class="form-footer">
-          <button type="submit" class="btn btn-primary">Submit</button>
-          
-         
+        
+                <div class="form-group">
+                  <label for="examplePassword1">Email</label>
+                  <input  type="email"
+            name="email"
+            id="email"
+            class="form-control"
+            placeholder="Email"
+            
+            required>
+                </div>
+                <div class="mt-5">
+                   <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">Send</button>
+                </div>
+              
+              </form>
+            </div>
+          </div>
         </div>
-        <!-- End .form-footer -->
-      </form>
+      </div>
+      <!-- content-wrapper ends -->
     </div>
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- End .container -->
-
-  <div class="mb-5"></div>
-  <!-- margin -->
-</main>
-<!-- End .main -->
+  <!-- container-scroller -->
+  <!-- plugins:js -->

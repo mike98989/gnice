@@ -75,5 +75,5 @@
     />
   </head>
   <body ng-app="gnice">
-  <div class="page-wrapper">
+ 
  

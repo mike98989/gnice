@@ -1,10 +1,20 @@
 <?php
 class Dashboard extends Controller
 {
+  function __construct() {
+    parent::__construct();
+    Session::init();
+    if (!Session::get('loggedIn')) {
+			Session::destroy();
+			header('location:./Login');
+			exit;
+		}
+  }
+  
   public function index()
   {
     $data = [];
-    $js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
-    $this->view('Seller/Dashboard', $include_header = true, $data, '_type4', $js);
+    $this->view->js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
+    $this->view->render('Seller/Dashboard', false,'');
   }
 }

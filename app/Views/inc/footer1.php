@@ -1,8 +1,8 @@
 
 
- <!-- Plugins JS File -->
- <script src="<?php echo APP_URL;?>/public/assets/js/jquery.min.js"></script>
-    <script src="<?php echo APP_URL;?>/public/assets/js/jquery-ui.min.js"></script>
+    <!-- Plugins JS File -->
+    <script src="<?php echo APP_URL;?>/public/assets/js/jquery.min.js"></script>
+     <script src="<?php echo APP_URL;?>/public/assets/js/jquery-ui.min.js"></script>
     <script src="<?php echo APP_URL;?>/public/assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo APP_URL;?>/public/assets/js/jquery.bootstrap.wizard.js"></script>
     <script src="<?php echo APP_URL;?>/public/assets/js/gsdk-bootstrap-wizard.js"></script>
@@ -12,7 +12,7 @@
 
     <!-- Main JS File -->
     <script src="<?php echo APP_URL;?>/public/assets/js/main.min.js"></script>
-    <script src="<?php echo APP_URL;?>/public/assets/custom-js/signup.js"></script>
+   <!-- <script src="<?php echo APP_URL;?>/public/assets/custom-js/signup.js"></script> -->
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular.js"></script>
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular-route.js"></script>
     <script src="<?php echo APP_URL; ?>/public/assets/js/dirPagination.js"></script>
@@ -36,8 +36,6 @@
   }
 ?>
 <script src="<?php echo APP_URL.'/public/assets/js/controllers/directives.js';?>"></script>
-<script type="text/javascript">
-   
 
   </body>
 

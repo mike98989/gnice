@@ -1,16 +1,20 @@
-<?php?>
+<div class="sidebar-overlay"></div>
+<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 	<aside class="sidebar-shop col-lg-3 mobile-sidebar">
 						<div class="sidebar-wrapper">
-							<div class="widget"  ng-init="fetch_single_sub_category()">
+							<div class="widget"  ng-init=" fetch_single_category()">
 								<h3 class="widget-title"  >
-									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2"><img style="width: 40px!important; height: 40px!important;" src="assets/images/uploads/category/{{singleSubCats.image}}">{{ singleSubCats.parentCategory }}</a>
+									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Category</a>
 								</h3>
 
 								<div class="collapse show" id="widget-body-2"  >
 									<div class="widget-body">
-										<ul class="cat-list" ng-init="fetch_selected_sub_category()">
-											<li ng-repeat="relSubCat in relSubCats">
-											 <a href="#" class="cbtn" data-id4="{{relSubCat.sub_id}}"  data-id5="{{relSubCat.parent_id}}" ><img style="width: 20px!important; height: 20px!important;" src="assets/images/uploads/category/{{relSubCat.image}}">{{relSubCat.title}}</a></li>
+										<h5>
+									{{ singleCat.title }}
+								</h5>
+										<ul class="cat-list" ng-init="fetch_all_sub_category()">
+											<li ng-repeat="allSub in allSubs">
+											 <a href="#" class="cbtn" data-id4="{{allSub.sub_id}}"  data-id5="{{allSub.parent_id}}" >{{allSub.title}}</a></li>
 											
 										</ul>
 									</div><!-- End .widget-body -->
@@ -63,7 +67,7 @@
 							</div><!-- End .widget -->
 
 
-                        
+                        <!--
 
 							<div class="widget">
 								<h3 class="widget-title">
@@ -76,9 +80,9 @@
 											<li  ng-repeat="allBrand in allBrands"><a ng-click="brand()" class="brands" data-brand="{{ allBrand.brand }}" href="#">{{ allBrand.brand }}</a></li>
 											
 										</ul>
-									</div><!-- End .widget-body -->
-								</div><!-- End .collapse -->
-							</div><!-- End .widget -->
+									</div>
+								</div>
+							</div>
 
 							<div class="widget">
 								<h3 class="widget-title">
@@ -95,9 +99,30 @@
 											</li>
 										
 										</ul>
-									</div><!-- End .widget-body -->
-								</div><!-- End .collapse -->
-							</div><!-- End .widget -->
+									</div>
+								</div>
+							</div>
+							<div class="widget">
+								<h3 class="widget-title">
+									<a data-toggle="collapse" href="#widget-body-6" role="button" aria-expanded="true" aria-controls="widget-body-6">Make</a>
+								</h3>
+
+
+								<div class="collapse show" id="widget-body-6"  ng-init="fetch_required_table()">
+									<div class="widget-body" >
+										<ul class="config-swatch-list" >
+											
+											<li  ng-repeat="cars in requiredCar">
+												<a ng-click="brand()" class="brands" data-brand="{{ allColor.color }}" href='' style="background-color: {{ allColor.color }};"></a>
+												<span> {{ cars.make }}</span>
+											</li>
+										
+										</ul>
+									</div><
+								</div>
+							</div>
+						-->
+
 
 			
 							<!--

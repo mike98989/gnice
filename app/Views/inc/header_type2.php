@@ -17,112 +17,128 @@
 	<meta name="author" content="SW-THEMES">
 		
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="<?php echo APP_URL;?>/public/assets/images/icons/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="<?php echo APP_URL;?>/assets/images/icons/favicon.ico">
 	
 	
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 		WebFontConfig = {
 			google: { families: [ 'Open+Sans:300,400,600,700','Poppins:300,400,500,600,700,800', 'Playfair+Display:900' ] }
 		};
 		(function(d) {
 			var wf = d.createElement('script'), s = d.scripts[0];
-			wf.src = '<?php echo APP_URL;?>/public/assets/js/webfont.js';
+			wf.src = 'assets/js/webfont.js';
 			wf.async = true;
 			s.parentNode.insertBefore(wf, s);
 		})(document);
-	</script> -->
+	</script>
 
 	<!-- Plugins CSS File -->
-	<link rel="stylesheet" href="<?php echo APP_URL;?>/public/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/jquery-ui.css">
+	<style type="text/css">
+		.jumbotron{
+  
+  
+    background: 
+linear-gradient(
+  rgba(0, 0, 250, 0.25), 
+  rgba(125, 250, 250, 0.45)
+),
+
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+color:white !important;
+height:270px;
+width: 100%;
+background-size: cover;
+}
+
+.page-scroll{
+  height:5000px;
+}
+
+.btn-outline-danger{
+  color:white;
+  border-color:white;
+  border-radius:0px;
+  font-weight:100;
+  margin-top:20px;
+}
+.lead{
+  font-family:raleway;
+  font-weight:100;
+  margin-top:-10px;
+}
+	</style>
 	
 
 	<!-- Main CSS File -->
-	<link rel="stylesheet" href="<?php echo APP_URL;?>/public/assets/css/style.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/public/assets/vendor/fontawesome-free/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/public/assets/vendor/simple-line-icons/css/simple-line-icons.min.css">
+	<link rel="stylesheet" href="assets/css/style.min.css">
+
+	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/assets/vendor/fontawesome-free/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL;?>/assets/vendor/simple-line-icons/css/simple-line-icons.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body ng-app="gnice">
 
 <div class="page-wrapper">
+	<!--
 		<div class="top-notice text-white bg-dark"  ng-controller="homeController">
 			<div class="container text-center" ng-init="getAllBanner()">
 				<h5 class="d-inline-block mb-0">
 				{{ banners.title }}</h5>
 				
-			</div><!-- End .container -->
-		</div><!-- End .top-notice -->
+			</div> End .container 
+		</div>End .top-notice -->
 
-		<header class="header" >
+		<header class="header" ng-controller="homeController">
 			<div class="header-top bg-primary text-uppercase">
 				<div class="container">
 					<div class="header-left">
-
+						<button class="mobile-menu-toggler mr-2" type="button">
+							<i class="icon-menu"></i>
+						</button>
+				
+						<a href="Home" class="logo">
+							<img width="50px"; height="50px" src="assets/images/gnicelogo.jpeg" alt="Porto Logo">
+						</a>
+                          <!--
 						<div class="header-dropdown ml-4">
 						<p class="top-message mb-0 mr-lg-5 pr-3 d-none d-sm-block">Find everything in 
 						<a href="#" style="background: black; padding: 6px;">&nbsp; &nbsp;<i class="material-icons" style="font-size:16px">edit_location</i>All Nigeria</a></p>
-						</div><!-- End .header-dropown -->
+						</div>
+						End .header-dropown -->
 					</div><!-- End .header-left -->
 
 					<div class="header-right header-dropdowns ml-0 ml-sm-auto">
-						<?php
-                          if (!isset($_SESSION['user_name'])) {
-						?>
-						<p class="top-message mb-0 mr-lg-5 pr-3 d-none d-sm-block">Welcome To Gnice Market Place!</p>
-						<ul class="d-flex mb-0 mr-3 pr-3">
-									<li class=" mr-3"><a href="About">About Gnice Mkt</a></li>
-									<li class=" mr-3"><a href="">Blog</a></li>
-									<li class=" mr-3"><a href="Contact">Contact</a></li>
-									<li><a href="Contact">Help &amp; FAQs</a></li>
-								</ul>
-								<span class="separator"></span>
+											<div class=" d-lg-flex align-items-center" ng-controller="loginController">
 
-						<div class="social-icons d-none">
-							<a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
-							<a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
-							<a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
-						</div><!-- End .social-icons -->
-						   	<?php
-                            } else {
+                             <?php
+                             session_start();
+                            if (!isset($_SESSION['user_name'])) {
+                            	?>
+                                	<a href="Login">Sign In</a>
+							<a href="Signup"> &nbsp; | Registration &nbsp; &nbsp;</a>
+							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="Login">SELL</a></button>
+                            	<?php
+                            }  else {
+                            ?>
+                            <a href="Dashboard">Dashboard</a>
+                         <button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="Login">SELL</a></button>
+                   <?php
+                     }
+                      ?>
 
-                              ?>	
-                           <p class="top-message mb-0 mr-lg-5 pr-3 d-none d-sm-block">Welcome <?php echo $_SESSION['user_name'];?></p>
-					     <ul class="d-flex mb-0 mr-3 pr-3 menu" style="margin-top: -20px!important;">
-                  <li class=" mr-3"><a href="Premium" class="social-icon social-instagram icon-instagram" title="Premium Services"></a></li>
-                  <li class=" mr-3"><a href="Advert" class="social-icon social-instagram icon-instagram" title="Advert"></a></li>
-                  <li class=" mr-3"><a href="Messages" class="social-icon social-instagram icon-instagram" title="My Messages"></a></li>
-                  <li class=" mr-3"><a href="Saved" class="social-icon social-instagram icon-instagram" title="Saved"></a></li>
-                   <li>
-                  <a href="#" class="social-icon social-instagram icon-instagram" title="Profile">Profile</a>
-                  <ul>
-                    <li><a href="Dashboard">My Page</a></li>
-                    <li><a href="Balance">My Balance</a></li>
-                    <li><a href="Statistics">Statistics</a></li>
-                    <li><a href="Notification">Notification</a></li>
-                  
-                    <li><a href="Setting" >Setting</a></li>
-                    <li ng-controller="loginController"><a href="" ng-click="logout()">Logout</a></li>
-                    </ul>
-                   </li>
-                </ul>
-								<span class="separator"></span>
-
-						<div class="social-icons">
-							<a href="Addproduct" >Sell</a>
-							
-						</div><!-- End .social-icons -->
-
-
-                        <?php
-					     }
-					     ?>	
-					
+						</div>
 
 						
 					</div><!-- End .header-right -->
-				</div><!-- End .container -->
-			</div><!-- End .header-top -->
 
+				</div><!-- End .container -->
+
+			</div><!-- End .header-top -->
+            <!--
 			<div class="header-middle text-dark">
 				<div class="container">
 					<div class="header-left col-lg-2 w-auto pl-0">
@@ -134,9 +150,9 @@
 						</button>
 					<?php }?>
 						<a href="Home" class="logo">
-							<img src="<?php echo APP_URL;?>/public/assets/images/gnicelogo.jpeg" alt="Porto Logo">
+							<img src="assets/images/gnicelogo.jpeg" alt="Porto Logo">
 						</a>
-					</div><!-- End .header-left -->
+					</div>End .header-left 
 
 					<div class="header-right w-lg-max pl-2"  ng-controller="homeController">
 						<div class="header-search header-icon header-search-inline header-search-category w-lg-max mr-lg-4"  >
@@ -152,30 +168,20 @@
                         </optgroup>
                        
                       </select>
-									</div><!-- End .select-custom -->
+									</div> End .select-custom 
 									<button class="btn p-0 icon-search-3"  ng-click="searchCat()"></button>
-								</div><!-- End .header-search-wrapper -->
+								</div>End .header-search-wrapper 
 							
-						</div><!-- End .header-search -->
+						</div>End .header-search 
 
-						<div class=" d-lg-flex align-items-center" ng-controller="loginController">
 
-                             <?php
-                            if (!isset($_SESSION['user_name'])) {
-                            	?>
-                                	<a href="Login">Sign In</a>
-							<a href="Signup"> &nbsp; | Registration &nbsp; &nbsp;</a>
-							<button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="Login">SELL</a></button>
-                            	<?php
-                            } ?>
-
-						</div>
 					
 
 				
-						<!-- End .header-contact -->
+						End .header-contact
 
-					</div><!-- End .header-right -->
-				</div><!-- End .container -->
-			</div><!-- End .header-middle -->
+					</div>End .header-rig
+				</div>
+			</div> 
+		-->
 		</header><!-- End .header -->    

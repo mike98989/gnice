@@ -1,0 +1,50 @@
+  <?php require_once '../app/views/inc/seller_navbar.php';?>
+      
+        <div class="content-wrapper">
+         
+         
+          <div class="row"  ng-init="fetch_single_user()">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body bg-gradient-primary text-white">
+
+          <div class="row" >
+            <div class="col-md-6 ">
+                
+                  <div  align="center">
+                       <img ng-if="img == default.png"   src="<?php echo APP_URL;?>/assets/images/uploads/profile/{{singleUser.image}}" width="100px" height="100px" class="img-profile rounded-circle mb-4">
+                       
+                   <img ng-if="img != default.png"  src="<?php echo APP_URL;?>/{{singleUser.image}}" alt="profile" width="100px" height="100px" class="img-profile rounded-circle mb-4"/>
+                       <p>{{singleUser.fullname}}</p>
+                       <a href="editprofile" class="text-white" style="font-size: 13px">Click to upload profile and edit profile</a>
+                     </div>
+                  
+              
+            </div>
+             <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body bg-gradient-danger text-white">
+                
+                  <p class="mb-4">Seller Id : <span>{{singleUser.seller_id}}</span></p>
+                  <p class="mb-4">Account Type : <span>{{singleUser.account_type}}</span></p>
+                  <p class="mb-4">Email : <span>{{singleUser.email}}</span></p>
+                   <p class="mb-4">Phone Number : <span>{{singleUser.phone}}</span></p>
+                    <p class="mb-4">Whatsapp : <span>{{singleUser.whatsapp}}</span></p>
+                     <p class="mb-4">Last Seen : <span>{{singleUser.last_login}}</span></p>
+                 
+                </div>
+              </div>
+            </div>
+        
+          </div>
+                 
+                  
+                </div>
+              </div>
+            </div>
+            
+        
+          </div>
+         
+        </div>
+       

@@ -1,7 +1,7 @@
 
 
     <div class="page-wrapper">
-      <header class="header"  ng-controller="homeController">
+      <header class="header"  ng-controller="homeController" style="padding-bottom:5px;background-color: rgba(236, 234, 234, 0.8);">
         <div class="header-top bg-primary text-uppercase">
           <div class="container">
             <div class="header-left">
@@ -11,7 +11,7 @@
                 <!-- End .header-menu -->
               </div>
               <!-- End .header-dropown -->
-         <!--
+              <!--
               <div class="header-dropdown ml-4">
                 <a href="#">USD</a>
                 <div class="header-menu">
@@ -36,11 +36,11 @@
                 <div class="header-menu">
                   <ul>
                     
-                    <li><a href="About">About</a></li>
+                    <li><a href="<?php echo APP_URL;?>/about">About</a></li>
                     <li><a href="#">Blog</a></li>
-                    <li><a href="Contact">Contact</a></li>
+                    <li><a href="{{dirloation}}contact">Contact</a></li>
                     <li><a href="About">Help &amp; FAQs</a></li>
-                     <li><a href="Login">Sell</a></li>
+                     <li><a href="<?php echo APP_URL;?>/dashboard">Sell</a></li>
 
                   </ul>
                 </div>
@@ -75,47 +75,25 @@
         </div>
         <!-- End .header-top -->
 
-        <div class="header-middle text-dark">
+        <div class="header-middle text-dark" style="display:nne">
           <div class="container">
             <div class="header-left col-lg-2 w-auto pl-0">
               <button class="mobile-menu-toggler mr-2" type="button">
                 <i class="icon-menu"></i>
               </button>
               <a href="index.html" class="logo">
-                <img
-                  src="<?php echo APP_URL;?>/public/assets/images/logo.png"
-                  alt="Porto Logo"
-                />
+                <img src="<?php echo APP_URL;?>/public/assets/images/gnice_logo.png" style="width:80px;margin-bottom:8px"/>
               </a>
             </div>
             <!-- End .header-left -->
 
             <div class="header-right w-lg-max pl-2">
-              <div
-                class="
-                  header-search
-                  header-icon
-                  header-search-inline
-                  header-search-category
-                  w-lg-max
-                  mr-lg-4
-                "
-              >
-                <a href="#" class="search-toggle" role="button"
-                  ><i class="icon-search-3"></i
-                ></a>
-               
+              <div class="header-search header-icon header-search-inline header-search-category w-lg-max mr-lg-4">
+                <a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
+
                   <div class="header-search-wrapper">
-                    <input
-                    ng-model="searchText"
-                      type="text"
-                      class="form-control"
-                      name="q"
-                      id="q"
-                      placeholder="Search..."
-                     
-                    />
-                    {{ searchText }}
+                    <input ng-model="searchText" type="text" class="form-control" name="q" id="q" placeholder="Search..."/>
+                   
                     <div class="select-custom" >
                       <select id="cat" name="cat"  ng-init="fetch_all_categories_and_sub_categories()" >
                         <option   value="">All Categories</option>
@@ -136,16 +114,7 @@
               </div>
               <!-- End .header-search -->
 
-              <div
-                class="
-                  header-contact
-                  d-none d-lg-flex
-                  align-items-center
-                  pr-xl-5
-                  mr-3
-                  ml-xl-5
-                "
-              >
+              <div class="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-3 ml-xl-5">
                 <i class="icon-phone-2"></i>
                 <h6 class="pt-1 line-height-1">
                   Call us now<a
@@ -156,23 +125,18 @@
                 </h6>
               </div>
               <!-- End .header-contact -->
-
-             
-             
-
-           
             <!-- End .header-right -->
           </div>
           <!-- End .container -->
         </div>
         <!-- End .header-middle -->
-
-        <div class="header-bottom sticky-header d-none d-lg-block">
+</div>
+        <div class="sticky-header d-none d-lg-block">
           <div class="container">
             <nav class="main-nav w-100">
               <ul class="menu">
                 <li class="active">
-                  <a href="Home">Home</a>
+                  <a href="<?php echo APP_URL;?>/home">Home</a>
                 </li>
                 <li>
                   <a href="category.html">Categories</a>

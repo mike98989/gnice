@@ -4,9 +4,15 @@
 
 class Confirm extends Controller{
 
+  
+  function __construct() {
+    parent::__construct();
+  Session::init();
+  }
+
      public function index(){
         $data = [];
-          $js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
-        $this->view('Account/confirm',$include_header=true,$data,'_type1',$js);
+        $this->view->js = ['controllers/signupController.js', 'controllers/web/homeController.js'];
+        $this->view->render('Account/confirm',false,'');
     }
 }

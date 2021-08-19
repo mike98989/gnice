@@ -12,6 +12,7 @@ class View
         $this->view->loggedType = Session::get('loggedType');
     }
 
+<<<<<<< HEAD
     public function render($name, $noInclude, $message)
     {
         if ($noInclude == true) {
@@ -19,13 +20,31 @@ class View
             $external_js = null;
             if (!empty($this->js)) {
                 $js = $this->js;
+=======
+	public function render($name, $noInclude, $message)
+	{
+        
+		if ($noInclude == true) {
+			$js=null;  
+			$external_js = null;   
+            if(!empty($this->js)){   
+            $js=$this->js;    
+>>>>>>> 8bee09d09e7d599c7b55bd236fd06088d622c427
             }
             if (!empty($this->external_js)) {
                 $external_js = $this->external_js;
             }
+<<<<<<< HEAD
 
             extract($this->data);
             require "./app/Views/" . $name . ".html";
+=======
+            
+			extract($this->data);
+            require('./app/views/inc/header_type1.php');
+			require "./app/Views/".$name.".html";
+            require('./app/views/inc/footer1.php');
+>>>>>>> 8bee09d09e7d599c7b55bd236fd06088d622c427
             //include_once "./views/index/404.html";
             //require('./views/inc/footerref.php');
         } else {
@@ -37,6 +56,7 @@ class View
             }
 
             ////IF THE USER IS AN ADMIN
+<<<<<<< HEAD
             if (($this->view->loggedType == 'admin') && ($url[1] == 'admindashboard')) {
                 /////ASSIGN JAVASCRIPT  
                 $js = null;
@@ -71,6 +91,63 @@ class View
                 require './app/views/inc/nav.php';
                 require './app/views/' . $name . '.html';
                 require './app/views/inc/footerref.php';
+=======
+            if(($this->view->loggedType == 'admin')&&($url[1]=='admindashboard')){
+			 /////ASSIGN JAVASCRIPT  
+            $js=null;  
+			$external_js = null;   
+            if(!empty($this->js)){   
+            $js=$this->js;    
+            }
+            if(!empty($this->external_js)){    
+            $external_js = $this->external_js;   
+            }
+            
+            require('./app/Views/Admin/inc/headerref.php');
+            require('./app/Views/Admin/inc/header.php');
+            require('./app/Views/Admin/inc/sidenav.php');
+            require_once './app/Views/' . $name . '.html';
+            require('./app/Views/Admin/inc/footerref.php');
+			}
+            
+			////ELSE IF THE USER IS FULLY INTEGRATED
+			elseif(($this->view->loggedType == 'user')&&($url[1]=='dashboard')){
+             /////ASSIGN JAVASCRIPT   
+            $js=null;  
+			$external_js = null;   
+            if(!empty($this->js)){   
+            $js=$this->js;    
+            }
+            if(!empty($this->external_js)){    
+            $external_js = $this->external_js;   
+            }
+          
+            require('./app/views/inc/header_type5.php');    
+			//require './app/views/inc/nav.php';
+			require './app/views/' . $name . '.html';
+			require './app/views/inc/footer5.php'; 
+            
+			}
+
+            
+            ////ELSE IT IS A VISITOR PAGE
+            else{
+             /////ASSIGN JAVASCRIPT 
+            $js=null;  
+			$external_js = null;   
+            if(!empty($this->js)){   
+            $js=$this->js;    
+            }
+            if(!empty($this->external_js)){    
+            $external_js = $this->external_js;   
+            }
+			require('./app/views/inc/header_type1.php');
+            //require('./app/views/inc/header.php');
+            require('./app/views/inc/navbar.php');
+            require "./app/Views/".$name.".html";
+            require('./app/views/inc/footer1.php');
+   
+>>>>>>> 8bee09d09e7d599c7b55bd236fd06088d622c427
             }
 
 

@@ -77,8 +77,8 @@ class Product extends Model
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
                         LEFT JOIN users ON users.seller_id = products.seller_id
-                            WHERE product_code = :product_code
-                            AND status = 1
+                            WHERE products.product_code = :product_code
+                            AND products.status = 1
                         ");
             $this->db->bind(':product_code', $product_code);
 
@@ -238,7 +238,6 @@ class Product extends Model
     }
 
     /////////////GET ALL RELATED PRODUCTS
-    /*
     public function getAllRelatedProducts()
     {
         $header = apache_request_headers();
@@ -271,7 +270,7 @@ class Product extends Model
         }
     }
 
-    */
+    
 
 
     /////////////GET ALL RELATED PRODUCTS 

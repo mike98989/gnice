@@ -6,7 +6,7 @@
                 <div class="widget">
                   <h4 class="widget-title">About Us</h4>
                   <img
-                    src="<?php echo APP_URL;?>/assets/images/logo-footer.png"
+                    width="50px"; height="50px" src="<?php echo APP_URL;?>/public/assets/images/gnicelogo.jpeg"
                     alt="Logo"
                     class="m-b-3"
                   />
@@ -22,30 +22,11 @@
               <div class="col-lg-3 col-sm-6 pb-5 pb-sm-0">
                 <div class="widget">
                   <h4 class="widget-title mb-1 pb-1">Our App</h4>
-               
-                  <div class="social-icons">
-                    <a
-                      href="#"
-                      class="social-icon social-facebook fab fa-facebook-f"
-                      target="_blank"
-                      title="Facebook"
-                    ></a>
-                    <a
-                      href="#"
-                      class="social-icon social-twitter fab fa-twitter"
-                      target="_blank"
-                      title="Twitter"
-                    ></a>
-                    <a
-                      href="#"
-                      class="social-icon social-linkedin fab fa-linkedin-in"
-                      target="_blank"
-                      title="Linkedin"
-                    ></a>
-                  </div>
-                  <!-- End .social-icons -->
                 </div>
                 <!-- End .widget -->
+        <img class="img-fluid sideimg" src="<?php echo APP_URL;?>/public/assets/images/android-app.svg" alt="#">
+        <br>
+        <img class="img-fluid sideimg" src="<?php echo APP_URL;?>/public/assets/images/android-app.svg" alt="#">
               </div>
               <!-- End .col-lg-3 -->
 
@@ -71,14 +52,12 @@
                   <h4 class="widget-title pb-1">Customer Service</h4>
 
                   <ul class="links">
-                    <li><a href="#">Help & FAQs</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="about">About Gnice Market</a></li>
+                    <li><a href="Terms">Terms & Conditions</a></li>
                     <li><a href="#">Billing Policy</a></li>
-                    <li><a href="#">Gnice Tip</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="about.html">Contact Us</a></li>
-                    <li><a href="#">Gince Sellers</a></li>
-                    <li><a href="#">Privacy</a></li>
+                    <li><a href="about">FAQ</a></li>
+                    <li><a href="contact">Contact Us</a></li>
+                    <li><a href="Privacy">Privacy</a></li>
                   </ul>
                 </div>
                 <!-- End .widget -->
@@ -190,8 +169,7 @@
     ></a>
 
     <!-- Plugins JS File -->
- <!-- Plugins JS File -->
- <script src="<?php echo APP_URL;?>/public/assets/js/jquery.min.js"></script>
+    <script src="<?php echo APP_URL;?>/public/assets/js/jquery.min.js"></script>
     <script src="<?php echo APP_URL;?>/public/assets/js/jquery-ui.min.js"></script>
     <script src="<?php echo APP_URL;?>/public/assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo APP_URL;?>/public/assets/js/jquery.bootstrap.wizard.js"></script>
@@ -202,7 +180,7 @@
 
     <!-- Main JS File -->
     <script src="<?php echo APP_URL;?>/public/assets/js/main.min.js"></script>
-    <script src="<?php echo APP_URL;?>/public/assets/custom-js/signup.js"></script>
+   <!-- <script src="<?php echo APP_URL;?>/public/assets/custom-js/signup.js"></script>  -->
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular.js"></script>
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular-route.js"></script>
     <script src="<?php echo APP_URL; ?>/public/assets/js/dirPagination.js"></script>
@@ -227,7 +205,6 @@
 ?>
 <script src="<?php echo APP_URL.'/public/assets/js/controllers/directives.js';?>"></script>
 <script type="text/javascript">
-   
    
 </script>
 

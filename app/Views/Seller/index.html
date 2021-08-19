@@ -1,3 +1,4 @@
+
 <main  ng-controller="homeController">
 	<div class="image-container set-full-height" style="background-image: url('asset/images/wizard.jpg')">
 		<div class="image-container set-full-height" style="background-image: url('assets/reg/img/wizard.jpg')">
@@ -51,105 +52,104 @@
                                      <div class="picture-container">
                                           <div class="picture">
                                               <img src="reg/img/default-avatar.png" class="picture-src" id="wizardPicturePreview" title=""/>
-                                              <input type="file"  name="file" required=""  id="wizard-picture" />
+                                              <input  required=""  type="file" name="files[]" multiple  id="wizard-picture" />
                                           </div>
                                           <h6>Choose Picture</h6>
                                       </div>
                                   </div>
+                                 
                                   <div class="col-sm-6" >
-                                  	 	 <div class="form-group"  ng-hide="cate">
-                                            <label> Categories</label><br>
-                                             <select required=""  class="form-control" ng-model="cate"  ng-init="fetch_all_categories_and_sub_categories()" name="category" id="category">
-                                              <option selected="" value="">Choose Categories</option>
-											 <option  ng-repeat="catSub in catSubs"  value="{{ catSub.id }}"> {{ catSub.title }}
+                               
+                                  	 	 <div class="form-group"  >
+                                           
+                                             <select required=""  class="form-control"   ng-init="fetch_all_category()" name="category" id="category" ng-model="cate">
+                                              <option selected="" value=""> Category</option>
+										              	 <option  ng-repeat="catSub in categories"  value="{{ catSub.id }}"> {{ catSub.title }}
                                              
 											 </option>
                 
                                             </select>
+                                          
+                                           
                                           </div>
-
-                                  	
-                                  	        <div class="form-group"   ng-show="cate">
-                                            <label> Sub Category</label><br>
-                                             <select required  class="form-control" ng-init="fetch_all_sub_category()"  ng-model="ct" name="sub_category" id="sub_category">
-                                               <option selected="" value="">Choose Sub Categories</option>
-											 <option ng-repeat="subcategory in subcategories | filter : cate"   value="{{ subcategory.sub_id }}"> {{ subcategory.title }}
+                                       <!--   <input type="hidden" name="seller_id" id="seller_id" value="<?php  echo $_SESSION['seller_id'];?>"> -->
+                                  	        <div class="form-group" ng-if="cate">
+                                             <select required  class="form-control" ng-init="fetch_all_subcategory()"  name="sub_category" id="sub_category"  ng-model="subcat">
+                                              <option selected="" value="">Sub Category</option>   
+											                     <option  ng-repeat="Sub in subcategories | filter : {parent_id:cate} | orderBy : 'listIndex'"   value="{{ Sub.sub_id }}">   {{ Sub.title }}
+											                          </option> 
+                                            </select>
+                                            
+                                          </div>
+                                          <div  ng-init="fetch_required_table()">
+                                          <div class="form-group"  >
+                                             <select required=""  class="form-control" ng-model="state" name="state"  >
+                                              <option selected="" value="">State</option>
+                       <option  ng-repeat="states in  requiredState"  value="{{ states.state }}"> {{ states.state }}
                                              
-											 </option>
-                                              
-                                                
+                       </option>
+                
                                             </select>
                                           </div>
-
-
-                                                  <div class="row"  ng-hide="1 != cate">
-                                                      <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Title*</label>
-                                            <input required name="year_of_manufacture" id="name" type="text"  class="form-control" placeholder="Title">
+                                                <div  ng-if="state">
+                                              <div class="form-group"  >
+                                             <select  class="form-control" name="lga">
+                               <option   value="" selected="">LGA</option>
+                        <optgroup  ng-repeat="states in  requiredState | filter : state" >
+                         
+                          <option  ng-repeat="local in  states.lgas | filter : state"  value="{{ local.Lga }}"> {{ local.Lga}}
+                                             
+                       </option>
+                        </optgroup>
+                       
+                      </select>
+                                            
                                           </div>
-                                    </div>
-                                                  <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Make*</label>
-                                            <input required name="make" id="make" type="text"  class="form-control" placeholder="Make">
+                                            <div class="form-group"  >
+                                            <input type="text" name="landmark" placeholder="LandMark" class="form-control">
                                           </div>
-                                    </div>
-                                             <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Model*</label>
-                                            <input  name="model" id="model" type="text"  class="form-control" placeholder="Model">
+                                        </div>
+                                                <div class="form-group" ng-if="5==cate" >
+                                            <input type="text" name="brand" placeholder="Name of Product" class="form-control">
                                           </div>
-                                    </div>
-                                      <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Year of Manufacture</label>
-                                            <input  name="year_of_manufacture" id="name" type="text"  class="form-control" placeholder="Year of Manufacture">
+                                          <div ng-if="cate">
+                                              <div class="form-group"  >
+                                            <input type="text" name="name" placeholder="Name of Product" class="form-control">
                                           </div>
-                                    </div>
-                                     <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Color</label>
-                                            <input  name="color" id="color" type="text"  class="form-control" placeholder="Color">
+                                            <div class="form-group"  >
+                                            <input type="text" name="color" placeholder="Color of Product" class="form-control">
                                           </div>
-                                    </div>
-                                        <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Year*</label>
-                                            <input required name="year" id="year" type="text"  class="form-control" placeholder="Year">
                                           </div>
-                                    </div>
+                                      <div ng-if="1 == cate">     
+                                <div class="form-group"  >
+                                <select required=""  class="form-control" id="brand" ng-model="vehicle" name="brand">
+                                              <option selected="" value="">Car Make</option>
+                       <option  ng-repeat="cars in requiredCar"  value="{{ cars.make }}"> {{ cars.make }}       
+                       </option>
+                                            </select>
+                                          </div>
+                                         
+                     <div class="form-group"   ng-if="vehicle">
+                         <select   class="form-control" name="model" id="model">
+                               <option   value="" selected="">Car Model</option>
+                        <optgroup  ng-repeat="cars in  requiredCar | filter : vehicle" >
+                         
+                          <option  ng-repeat="models in  cars.car_models |  orderBy : 'listIndex' "  value="{{ models.model }}"> {{ models.model}}
+                                             
+                       </option>
+                        </optgroup>
+                      </select>     
+                   </div>
+            
+                    <div class="form-group">
+                                            
+                                            <input  name="year_of_manufacture"  type="text"  class="form-control" placeholder="Year of Manufacture">
+                                          </div>
+                                   <!--
+                                         <div  class="form-group">
                                   
-                                       <div class="col-sm-12">
-                                      <label>Condition</label><br>
                                              <select required  class="form-control" name="condition" id="condition">
-                                               <option selected="" value="">Choose Condition</option>
-                                                <option  value="Brand New"> Brand New
-                                               </option>
-                                               <option  value="Foreign Used"> Foreign Used
-                                               </option>
-                                               <option  value="Nigeria Used"> Nigeria Used
-                                               </option>
-                                              
-                                                
-                                            </select>
-                                    </div>
-                                      <div class="col-sm-12">
-                                      <label>Condition</label><br>
-                                             <select required  class="form-control" name="condition" id="condition">
-                                              <input type="checkbox" name="" value="After">
-                                              <input type="checkbox" name="" value="After">
-                                              <input type="checkbox" name="" value="After">
-                                              <input type="checkbox" name="" value="After">
-                                             
-                                              
-                                                
-                                            </select>
-                                    </div>
-                                        <div class="col-sm-12">
-                                      <label>Transmission</label><br>
-                                             <select required  class="form-control" name="condition" id="condition">
-                                               <option selected="" value="">Choose Condition</option>
+                                               <option selected="" value="">Tranmission</option>
                                                 <option  value="Brand New"> Automatic
                                                </option>
                                                <option  value="Manual"> Manual
@@ -162,400 +162,177 @@
                                                 
                                             </select>
                                     </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Year of Manufacture</label>
-                                            <input required name="year_of_manufacture" id="name" type="text"  class="form-control" placeholder="Year of Manufacture">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Number of Seats </label>
-                                            <input required name="seats_vehicle" id="seats_vehicle" type="text" class="form-control" placeholder="Number of Seats ">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
+                                  -->
+                                     <div class="form-group">
                                             <label>Mileage(KM)</label>
                                             <input required name="fuel" type="text" id="fuel"   class="form-control" placeholder="Fuel">
                                           </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>VIN Number</label>
-                                            <input required name="vin_number" id="vin_number" type="text" class="form-control" placeholder="VIN Number">
-                                          </div>
-                                    </div>
-                                </div>
-                                  
-                                </div>
+                 </div>
+                          <!--    //////////////////////////  -->
+                          <div ng-if = "2 == cate">
+                          <div class="form-group"  >
+                                <select required=""  class="form-control" name="property_type">
+                                              <option selected="" value="">Property Type</option>
+                              <option  ng-repeat="Property in  requiredProperty"  value="{{ Property.type }}"> {{ Property.type }} </option>
+                                            </select>
+                           </div>
+                            <div class="form-group">
+                              <input type="number" name="number_of_bathrooms" class="form-control" placeholder="Number of Bathrooms">
+                            </div>
+                            <div class="form-group">
+                              <input type="number" name="number_of_bedrooms" class="form-control" placeholder="Number of Bedrooms">
+                            </div>
+                             <div class="form-group">
+                              <input type="text" name="Property_size" class="form-control" placeholder="Property Size">
+                            </div>
 
-                                              <div class="row"  ng-hide="3 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
+                          </div>
 
+                                      <!--    //////////////////////////  -->
+                                      <div ng-if="3 == cate">
+                                             <div class="form-group"  >
+                                             <select required=""  class="form-control" ng-model="phone" name="brand">
+                                              <option selected="" value="">Phone Make</option>
+                       <option  ng-repeat="phones in requiredPhone"  value="{{ phones.make }}"> {{ phones.make }} </option>
+                
+                                            </select>
+                                          </div>
+                                         
+                                              <div class="form-group" ng-if="phone">
+                                             <select id="model" name="model" class="form-control" >
+                               <option   value="" selected="">Phone Model</option>
+                        <optgroup  ng-repeat="phones in  requiredPhone | filter : {make:phone} " >
+                          <option  ng-repeat="models in  phones.phone_models | orderBy : 'listIndex' "  value="{{ models.model }}"> {{ models.model}}             
+                       </option>
+                        </optgroup>
+                      </select> 
+                         </div>
+                          <div class="form-group">
+                                      <input type="number" name="ram" class="form-control" placeholder="Ram">
+                                       </div>
+                                        <div class="form-group">
+                                      <input type="number" name="internal_storage" class="form-control" placeholder="Internal Storage">
+                                       </div>
+                                        <div class="form-group">
+                                      <input type="text" name="sim" class="form-control" placeholder="Number of Sim">
+                                       </div>
+                                        <div class="form-group">
+                                      <input type="text" name="resolution" class="form-control" placeholder="Resolution">
+                                       </div>
+                                       <div class="form-group">
+                                      <input type="number" name="battery" class="form-control" placeholder="Battery">
+                                       </div>
+                                        <div class="form-group">
+                                          <select class="form-control" name="main_camera">
+                                            <option selected="" value="">Main Camera</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                          </select>
+                                       </div>
+                                        <div class="form-group">
+                                          <select class="form-control" name="main_camera">
+                                            <option selected="" value="">Sefies Camera</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                          </select>
+                                       </div>
+                                     </div>
+<!--    //////////////////////////  -->
+           <!--    //////////////////////////  -->
+                                             <div class="form-group" ng-if="8 == cate" >
+                                            
+                                        <div class="form-group">
+                                      <input type="text" name="hard_drive_size" class="form-control" placeholder="Hard Drive Size">
+                                       </div>
+                                        <div class="form-group">
+                                      <input type="text" name="operating_system" class="form-control" placeholder="Operating System">
+                                       </div>
+                                        <div class="form-group">
+                                      <input type="number" name="ram" class="form-control" placeholder="Ram">
+                                       </div>
+                                        <div class="form-group">
+                                      <input type="number" name="internal_storage" class="form-control" placeholder="Internal Storage">
+                                       </div>
+                                          
+                                         
+                                              <div class="form-group" ng-if="phone">
+                                             <select id="model" name="model" class="form-control" >
+                               <option   value="" selected="">Phone Model</option>
+                        <optgroup  ng-repeat="phones in  requiredPhone | filter : {make:phone} " >
+                          <option  ng-repeat="models in  phones.phone_models | orderBy : 'listIndex' "  value="{{ models.model }}"> {{ models.model}}             
+                       </option>
+                        </optgroup>
+                      </select> 
+                         </div>
 
-                                              <div class="row"  ng-hide="5 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
+                 </div>
 
-                                              <div class="row"  ng-hide="8 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
+                 <!--    //////////////////////////  -->
 
-                                              <div class="row"  ng-hide="9 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
+<div ng-if="cate">
+                          <div class="form-group" >
+                                <select required=""  class="form-control" name="conditon">
+                                              <option selected="" value="">Condition</option>
+                       <option  ng-repeat="condition in requiredCondition"  value="{{ condition.state }}"> {{ condition.state }}       
+                       </option>
+                           </select>
+                           </div>
+                           <div class="form-group">
+                             <input type="" name="price" class="form-control" placeholder="Price">
+                           </div>
+                           <div class="form-group">
+                                          <select class="form-control" name="negotiable">
+                                            <option selected="">Negotiable</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                          </select>
+                                       </div>
+                              <div class="form-group">
+                                          <select class="form-control" name="delivery_available">
+                                            <option selected="">Delivery Available</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                          </select>
+                                       </div>
+                                       <div class="form-group">
+                                         <textarea class="form-control" name="description"></textarea>
+                                       </div>
 
-                                              <div class="row"  ng-hide="1 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-16">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
+                         </div>
 
-                                              <div class="row"  ng-hide="17 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
+                          <input name="submit" type="submit" class='btn  btn-fill btn-warning btn-wd btn-sm' value='Register Account!' />
 
-                                              <div class="row"  ng-hide="20 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
-
-                                              <div class="row"  ng-hide="21 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
-
-                                              <div class="row"  ng-hide="1 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
-
-                                              <div class="row"  ng-hide="22 != cate">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div  class="col-sm-12">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
-
-                                  
-                                 
 
                                           
-                                    
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
-                                
-                              </div>
-                            </div>
-							
-						
+                                  
+  
                              <div class="tab-pane" id="account">
-                              <div class="row">
-                                    <div class="col-sm-12">
-                                      
-                                    </div>
-                                    <div class="col-sm-5 col-sm-offset-1">
-                                         <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input required name="name" id="name" type="text"  class="form-control" placeholder="Product Name">
-                                          </div>
-                                    </div>
-                                   <div class="col-sm-5 col-sm-offset-1">
-                                         <div class="form-group">
-                                            <label>Product Brand </label>
-                                            <input required name="brand" id="brand" type="text" class="form-control" placeholder="Product Brand">
-                                          </div>
-                                    </div>
-                                    <div class="col-sm-5 col-sm-offset-1">
-                                         <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input required name="price" type="text" id="price"   class="form-control" placeholder="Product Price">
-                                          </div>
-                                    </div>
-                                    <div class="col-sm-5 col-sm-offset-1">
-                                         <div class="form-group">
-                                            <label>Product Color</label>
-                                            <input required name="color" id="color" type="text" class="form-control" placeholder="Product Color">
-                                          </div>
-                                    </div>
-                                </div>
+                        
                             </div>
 						
                             <div class="tab-pane" id="address">
                                 <div class="row">
-                                   <div class="col-sm-7 col-sm-offset-1">
-                                    	<textarea rows="3" required="" class="form-control" placeholder="Short Description" id="short_description" name="short_description"></textarea>
-                                     
-                                    </div>
-                                    <br>
+                                  
+                                    
                                     <br>
                                     <div class="col-sm-7 col-sm-offset-1">
-                                    	<div class="form-group">
-                                            <label></label>
-                                           <textarea rows="5" required="" class="form-control" id="long_description" name="long_description" placeholder="LOng Description"></textarea>
-                                          </div>
+                                    	
                                     	
                                      
                                     </div>
                              
                                 </div>
                             </div>
+                          </div>
+            
+                        
 							
 
-                        </div>
+                        
                         <!--========================End of Tab Content ============================-->
                         <!--========================Start of Wizard Footer ============================-->
                         <div class="wizard-footer height-wizard">
