@@ -60,6 +60,13 @@
     }
   }
 ?>
+<script src="<?php echo APP_URL.'/public/assets/js/controllers/web/headerController.js';?>"></script>
+<script src="<?php echo APP_URL.'/public/assets/js/controllers/web/productController.js';?>"></script>
+<script src="<?php echo APP_URL.'/public/assets/js/controllers/web/homeController.js';?>"></script>
+<script src="<?php echo APP_URL.'/public/assets/js/controllers/web/messageController.js';?>"></script>
+<script src="<?php echo APP_URL.'/public/assets/js/controllers/web/profileController.js';?>"></script>
+<script src="<?php echo APP_URL.'/public/assets/js/controllers/web/packageController.js';?>"></script>
+<script src="<?php echo APP_URL.'/public/assets/js/controllers/webapp.js';?>"></script>
 <script src="<?php echo APP_URL.'/public/assets/js/controllers/directives.js';?>"></script>
 </body>
 

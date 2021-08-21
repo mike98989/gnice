@@ -1,0 +1,80 @@
+<div class="form-group"  >
+    <select required=""  class="form-control" ng-model="phone" name="brand">
+     <option selected="" value="">Phone Make</option>
+<option  ng-repeat="phones in requiredPhone"  value="{{ phones.make }}"> {{ phones.make }} </option>
+
+   </select>
+ </div>
+
+     <div class="form-group" ng-if="phone">
+    <select id="model" name="model" class="form-control" >
+<option   value="" selected="">Phone Model</option>
+<optgroup  ng-repeat="phones in  requiredPhone | filter : {make:phone} " >
+<option  ng-repeat="models in  phones.phone_models"  value="{{ models.model }}"> {{ models.model}}             
+</option>
+</optgroup>
+</select> 
+</div>
+<div class="form-group">
+<label>Ram Size</label>
+<input type="number" name="ram" class="form-control" placeholder="Ram">
+</div>
+<div class="form-group">
+ <label>Internal Memory</label>
+<input type="number" name="internal_storage" class="form-control" placeholder="Internal Storage">
+</div>
+<div class="form-group">
+ <label>Number of Sim</label>
+<input type="text" name="sim" class="form-control" placeholder="Number of Sim">
+</div>
+<div class="form-group">
+ <label>Phone Resolution</label>
+<input type="text" name="resolution" class="form-control" placeholder="Resolution">
+</div>
+<div class="form-group">
+<label>Battery Capacity</label>
+<input type="number" name="battery" class="form-control" placeholder="Battery">
+</div>
+
+ <div class="col-md-6">
+<div class="form-group row">
+<label class="col-sm-3 col-form-label">Main Camera</label>
+<div class="col-sm-4">
+<div class="form-check">
+<label class="form-check-label">
+<input type="radio" name="main_camera" class="form-check-input" value="" checked>
+No
+</label>
+</div>
+</div>
+<div class="col-sm-5">
+<div class="form-check">
+<label class="form-check-label">
+<input type="radio" class="form-check-input"  value="Yes" name="main_camera">
+Yes
+</label>
+</div>
+</div>
+</div>
+</div>
+   <div class="col-md-6">
+<div class="form-group row">
+<label class="col-sm-3 col-form-label">Sefies Camera</label>
+<div class="col-sm-4">
+<div class="form-check">
+<label class="form-check-label">
+<input type="radio" name="selfie_camera" class="form-check-input" value="" checked>
+No
+</label>
+</div>
+</div>
+<div class="col-sm-5">
+<div class="form-check">
+<label class="form-check-label">
+<input type="radio" class="form-check-input"  value="Yes" name="selfie_camera">
+Yes
+</label>
+</div>
+</div>
+</div>
+</div>

@@ -6,7 +6,7 @@ class Dashboard extends Controller
     Session::init();
     if (!Session::get('loggedIn')) {
 			Session::destroy();
-			header('location:./Login');
+			header('location:'.APP_URL.'/Login');
 			exit;
 		}
   }
@@ -14,7 +14,7 @@ class Dashboard extends Controller
   public function index()
   {
     $data = [];
-    $this->view->js = ['controllers/loginController.js', 'controllers/web/homeController.js'];
-    $this->view->render('Seller/Dashboard', false,'');
+    //$this->view->js = ['controllers/web/headerController.js','controllers/web/homeController.js','controllers/web/productController.js'];
+    $this->view->render('User/Dashboard', false,'');
   }
 }

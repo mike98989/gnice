@@ -68,10 +68,10 @@ class View {
             $external_js = $this->external_js;   
             }
           
-            require('./app/views/inc/header_type5.php');    
-			//require './app/views/inc/nav.php';
+            require('./app/views/User/inc/headerref.php');    
+			require './app/views/User/inc/header.php';
 			require './app/views/' . $name . '.html';
-			require './app/views/inc/footer5.php'; 
+			require './app/views/User/inc/footer.php'; 
             
 			}
 

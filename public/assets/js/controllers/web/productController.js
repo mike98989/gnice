@@ -2,13 +2,14 @@
     ///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
     /////////////////////////
 
-  module.controller('homeController', ['$scope','$filter','$sce','$http','infogathering','$routeParams','$localStorage','$sessionStorage', function($scope, $filter, $sce, $http, datagrab,$routeParams,$localStorage,$sessionStorage) {
+  module.controller('productController', ['$scope','$filter','$sce','$http','infogathering','$routeParams','$localStorage','$sessionStorage', function($scope, $filter, $sce, $http, datagrab,$routeParams,$localStorage,$sessionStorage) {
     $scope.dirlocation=datagrab.completeUrlLocation;
     $scope.currentPage = 1;
     $scope.pageSize = 30; 
     $scope.user_data  = $localStorage.user_data;
     $scope.user_token  = $localStorage.user_token;
-        
+    
+
     // $('#butn').click(function(event) {
     // event.preventDefault();
     // var up_id = $('#up_courseid').val();
@@ -23,185 +24,6 @@
 
     //  })
 
-    $scope.getAllHero = function(){
-      $('.result').hide(); 
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_hero',
-        type: 'GET',
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result) {
-        //alert(result);
-       var response=JSON.stringify(result);
-       var parsed = JSON.parse(response);
-       var msg=angular.fromJson(parsed);
-       $('.loader').hide(); 
-       if(msg.status=='1'){  
-       $scope.heros = msg.data;
-       $scope.$apply();
-       
-       
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    }
-
-    $scope.split_image = function(images){
-      return images.split(',');
-    }
-
-    $scope.fetch_all_pages = function(){
-      //alert("lolll");
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_pages',
-        type: 'GET',
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result) {
-        alert(result);
-       var response=JSON.stringify(result);
-       var parsed = JSON.parse(response);
-       var msg=angular.fromJson(response);
-       console.log(msg);
-       $('.loader').hide(); 
-       if(msg.status=='1'){  
-       $scope.pages = msg.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    } 
-
-        $scope.fetch_all_sub_page = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_sub_page',
-        type: 'GET',
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result1) {
-        //alert(result1);
-       var response1=JSON.stringify(result1);
-       var parsed1 = JSON.parse(response1);
-       var msg1=angular.fromJson(response1);
-      
-       console.log(msg1);
-       $('.loader').hide(); 
-       if(msg1.status=='1'){  
-      
-       $scope.subpages = msg1.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    }
-
-      $scope.fetch_all_page_and_sub_page = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_page_and_sub_page',
-        type: 'GET',
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result1) {
-        //alert(result1);
-       var response1=JSON.stringify(result1);
-       var parsed1 = JSON.parse(response1);
-       var msg1=angular.fromJson(response1);
-      
-       console.log(msg1);
-       $('.loader').hide(); 
-       if(msg1.status=='1'){  
-      
-       $scope.pages = msg1.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    }
-
-     $scope.getAllBanner = function(){
-      $.ajax({
-        url: $scope.dirlocation+'Api/getAllBanner',
-        type: 'GET',
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result) {
-       //alert(result);
-       var response=JSON.stringify(result);
-       var parsed = JSON.parse(response);
-       var msg=angular.fromJson(response);
-       $('.loader').hide(); 
-       if(msg.status=='1'){  
-       $scope.banners = msg.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    }
-
-
-      function filter_data() {
-        $(".product_check").click(function() {
-        $("#loader").show();
-        var minimum_price = $('#hidden_minimum_price').val();
-        var maximum_price = $('#hidden_maximum_price').val();
-        $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_price_sub_category?sub_cat_id='+ $localStorage.valueToShare4+'&min='+ minimum_price+'&max='+  maximum_price,
-        type: 'GET',
-       
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-    
-        async: true,
-        cache: false,
-        contentType: false,
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success:function(response) {
-          //alert(response);
-          console.log(response);
-            if(response.status=='1'){  
-            //$("#results").html(response);
-          $("#loader").hide();
-          $("#textChange").html("Filtered Product");
-      $scope.allSubProducts = response.data;
-      $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-                      
-          }
-          });
-
-        });
-      }
-
-  
     $('#price_range').slider({
         range:true,
         min:0,
@@ -219,52 +41,40 @@
         
 
   $scope.add_product = function(){
-
   $('.loader').show();    
-         
-          var sub = $('#brand').val();
-          //alert($('#category').val());
-          //alert(sub);
-          var formData = new FormData($('#add_product')[0]);
-          $.ajax({
-                url: $scope.dirlocation+'api/add_product',
-               //type: 'POST',
-                type: 'GET',
-              method : "post",
-             transformRequest: angular.identity,
-               //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-               headers:{'gnice-authenticate':'gnice-web'}, 
-               data: formData,
-               async: true,
-               cache: false,
-               contentType: false,
-                transformRequest: angular.identity,
-               enctype: 'multipart/form-data',
-              
-               crossDomain: true,
-               processData: false,
-               success: function (answer) {
-               alert(answer);
-               var response=JSON.stringify(answer);
-               var parsed = JSON.parse(response);
-               var msg=angular.fromJson(response);
-                $('.loader').hide();  
-          if(msg.status=='1'){
-             $('.loader').hide();    
-              $('.result').html(msg.message);  
-              $('.result').show();
-              alert(msg.message);
-              window.location.assign(
-                    'Advert');
-        }else{
-               $('.loader').hide();    
-              $('.result').html(msg.message);  
-              $('.result').show();
-              alert(msg.message);
-              }
-              
-               }
-             });
+    var formData = new FormData($('#add_product')[0]);
+    $.ajax({
+          url: $scope.dirlocation+'api/add_product',
+          type: 'POST',
+          headers:{'gnice-authenticate':'gnice-web'}, 
+          data: formData,
+          async: true,
+          cache: false,
+          contentType: false,
+          enctype: 'multipart/form-data',
+          crossDomain: true,
+          processData: false,
+          success: function (answer) {
+          alert(JSON.stringify(answer));
+          var response=JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg=angular.fromJson(parsed);
+          $('.loader').hide();  
+    if(msg.status=='1'){
+        $('.loader').hide();    
+        $('.result').html(msg.message);  
+        $('.result').show();
+        alert(msg.message);
+        //window.location.assign('Advert');
+  }else{
+          $('.loader').hide();    
+        $('.result').html(msg.message);  
+        $('.result').show();
+        alert(msg.message);
+        }
+        
+          }
+        });
     }
 
 
@@ -317,13 +127,41 @@
              });
     }
 
+        
+    $scope.fetch_all_product_of_seller = function(){
+      $.ajax({
+        url: $scope.dirlocation+'api/fetch_all_product_of_seller?seller_id='+$scope.user_data.seller_id,
+        type: 'GET',
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers:{'gnice-authenticate':$scope.user_token}, 
+        processData: false,
+        success: function (result1) {
+        //alert(result1);
+       var response1=JSON.stringify(result1);
+       var parsed1 = JSON.parse(response1);
+       var msg1=angular.fromJson(parsed1);
+       $('.loader').hide(); 
+       if(msg1.status=='1'){  
+       $scope.products = msg1.data;
+       $scope.$apply();
+       //alert(JSON.stringify($scope.products));
+       }
+       
+        }
+      });
+    }
+
+
         $scope.message_product_seller = function(){
           $('.loader').show();    
           var formData = new FormData($('#message_product_seller')[0]);
           $.ajax({
                 url: $scope.dirlocation+'api/message_product_seller',
                 type: 'POST',
-                headers:{'gnice-authenticate':'gnice-web'}, 
+                headers:{'gnice-authenticate':$scope}, 
                 data: formData,
                 async: true,
                 cache: false,
@@ -449,6 +287,11 @@
              });
     }
 
+    $scope.onCategoryValueChange = function(value){
+      let objectval = JSON.parse(value);   
+      $scope.selected_category = objectval;
+      $scope.sub_category = objectval.subcategory;
+    }
 
     $scope.fetch_all_categories_and_sub_categories = function(){
       $.ajax({
@@ -461,17 +304,17 @@
         headers:{'gnice-authenticate':'gnice-web'}, 
         processData: false,
         success: function (result) {
-        //alert(result);
+        //alert(JSON.stringify(result));
        var response=JSON.stringify(result);
        var parsed = JSON.parse(response);
-       var msg=angular.fromJson(response);
+       var msg=angular.fromJson(parsed);
        
        console.log(msg);
        //alert(msg.data[0].title);
    //alert(msg.data[0].subcategory[6].parent_id);
        $('.loader').hide(); 
        if(msg.status=='1'){  
-       $scope.catSubs =msg.data;
+       $scope.categories_and_sub =msg.data;
     
        $scope.$apply();
        //alert(JSON.stringify($scope.categories));
@@ -480,64 +323,6 @@
         }
       });
     }
-
-    //alert($scope.dirlocation);
-    $scope.fetch_all_category = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_category',
-        type: 'GET',
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result) {
-        //alert(result);
-       var response=JSON.stringify(result);
-       var parsed = JSON.parse(response);
-       var msg=angular.fromJson(response);
-       $('.loader').hide(); 
-       if(msg.status=='1'){  
-       $scope.categories = msg.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    }
-
-     $scope.fetch_all_subcategory = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_subcategory',
-        type: 'GET',
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result1) {
-        //alert(result1);
-       var response1=JSON.stringify(result1);
-       var parsed1 = JSON.parse(response1);
-       var msg1=angular.fromJson(response1);
-      
-       console.log(msg1);
-       $('.loader').hide(); 
-       if(msg1.status=='1'){  
-      
-       $scope.subcategories = msg1.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    }
-
-
 
     $scope.fetch_all_product = function(){
       $.ajax({
@@ -721,145 +506,7 @@
       });
     }
 
-      $scope.fetch_all_product_sub_category = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_product_sub_category?id='+ $localStorage.valueToShare4,
-        type: 'GET',
-       
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-      
-        cache: false,
-        contentType: false,
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result7) {
-        //alert(result7);
-       var response7=JSON.stringify(result7);
-       var parsed7 = JSON.parse(response7);
-       var msg7=angular.fromJson(response7);
-       console.log(msg7);
-       //alert(msg7);
-       $('.loader').hide(); 
-       if(msg7.status=='1'){  
-       $scope.allSubProducts = msg7.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-        }
-      });
-    }
-
-           $scope.fetch_all_product_category = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_product_category?id='+ $localStorage.valueToShares,
-        type: 'GET',
-       
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-      
-        cache: false,
-        contentType: false,
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (response7) {
-       // alert(response7);
-       var responses7=JSON.stringify(response7);
-       var parsed7 = JSON.parse(responses7);
-       var data7=angular.fromJson(responses7);
-       console.log(data7);
-       $('.loader').hide(); 
-       if(data7.status=='1'){  
-       $scope.allCatProducts = data7.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-        }
-      });
-    }
-
-           $scope.fetch_all_sub_category = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_sub_category?id='+ $localStorage.valueToShares,
-        type: 'GET',
-       
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-      
-        cache: false,
-        contentType: false,
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (response7) {
-       // alert(response7);
-       var responses7=JSON.stringify(response7);
-       var parsed7 = JSON.parse(responses7);
-       var data7=angular.fromJson(responses7);
-       console.log(data7);
-       $('.loader').hide(); 
-       if(data7.status=='1'){  
-       $scope.allSubs = data7.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-        }
-      });
-    }
-              $scope. fetch_single_category = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/ fetch_single_category?id='+ $localStorage.valueToShares,
-        type: 'GET',
-       
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-      
-        cache: false,
-        contentType: false,
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (response7) {
-        //alert(response7);
-       var responses7=JSON.stringify(response7);
-       var parsed7 = JSON.parse(responses7);
-       var data7=angular.fromJson(responses7);
-       console.log(data7);
-       $('.loader').hide(); 
-       if(data7.status=='1'){  
-       $scope.singleCat = data7.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-        }
-      });
-    }
-   
-          $scope.fetch_single_subcategory = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_single_subcategory?id='+ $localStorage.valueToShare4,
-        type: 'GET',
-       
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-      
-        cache: false,
-        contentType: false,
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (response7) {
-        //alert(response7);
-       var responses7=JSON.stringify(response7);
-       var parsed7 = JSON.parse(responses7);
-       var data7=angular.fromJson(responses7);
-       console.log(data7);
-       $('.loader').hide(); 
-       if(data7.status=='1'){  
-       $scope.singleSub = data7.data;
-       $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       }
-        }
-      });
-    }
-   
-    
-
-
-               $scope.fetch_all_product_brand = function(){
+      $scope.fetch_all_product_brand = function(){
       $.ajax({
         url: $scope.dirlocation+'api/fetch_all_product_brand?id='+ $localStorage.valueToShare4,
         type: 'GET',
@@ -1023,50 +670,11 @@
      }
  
 
-       
-
-             $scope.save_json= function () {
-            
-          $.ajax({
-                url: $scope.dirlocation+'api/save_json',
-               type: 'GET',
-               //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-              
-               async: true,
-               cache: false,
-               contentType: false,
-               enctype: 'multipart/form-data',
-               headers:{'gnice-authenticate':'gnice-web'},
-               crossDomain: true,
-               processData: false,
-               success: function (answer) {
-               //alert(answer);
-               var response=JSON.stringify(answer);
-               var parsed = JSON.parse(response);
-               var msg=angular.fromJson(response);
-              
-               if(msg.status=='1'){  
-                 console.log(msg.data.states);
-          $scope.requiredState = msg.data.states;
-
-           $scope.$apply();
-       //alert(JSON.stringify($scope.categories));
-       } 
-      
-              
-               }
-             });
-
-    }
-
-
-             $scope.fetch_required_table = function () {
-            
+        $scope.fetch_required_table = function () {  
           $.ajax({
                 url: $scope.dirlocation+'api/fetch_required_table',
                type: 'GET',
                //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-              
                async: true,
                cache: false,
                contentType: false,
@@ -1078,16 +686,15 @@
                //alert(answer);
                var response=JSON.stringify(answer);
                var parsed = JSON.parse(response);
-               var msg=angular.fromJson(response);
+               var msg=angular.fromJson(parsed);
               
                if(msg.status=='1'){  
-                 $scope.save_json();
                  console.log(msg.data);
-          $scope.requiredState = msg.data.states;
-          $scope.requiredPhone = msg.data.phone_makes;
-          $scope.requiredCar = msg.data.car_makes;
-          $scope.requiredProperty = msg.data.property_types;
-          $scope.requiredCondition = msg.data.conditions;
+                  $scope.requiredState = msg.data.states;
+                  $scope.requiredPhone = msg.data.phone_makes;
+                  $scope.requiredCar = msg.data.car_makes;
+                  $scope.requiredProperty = msg.data.property_types;
+                  $scope.requiredCondition = msg.data.conditions;
           
 
           $scope.$apply();

@@ -91,7 +91,7 @@ class Authenticate extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token,'users');
             if ($verifyToken) {
             $email = filter_var(strtolower($_POST['email_to_be_activated']), FILTER_VALIDATE_EMAIL);
             $selectedOption = filter_var($_POST['selectedOption']);
@@ -260,7 +260,12 @@ class Authenticate extends Model
                     if ($this->db->execute()) {
                         //$update = $this->updateUserAccountType($email,'2');
                     }
-                    header('location:http://localhost/gnice/transactionstatus?ref=' . $result['data']['reference']);
+                   
+                    if((isset($_GET['source']))&&($_GET['source']=='browser')){  
+                    print_r(json_encode($result)); 
+                    return;   
+                    }
+                    header('location:https://gnice.com.ng/dashboard/transactionstatus?ref=' . $result['data']['reference']);
                 }
             }
             //header('Location:http://localhost/gnice/transactionstatus');
@@ -617,12 +622,12 @@ class Authenticate extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token);
+            $verifyToken = $this->verifyToken($token,'users');
             if ($verifyToken) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $seller_id = $_POST['seller_id'];
             $email = trim($_POST['email']);
-            $mobile = trim($_POST['mobile']);
+            $phone = trim($_POST['phone']);
             $fullname = trim($_POST['fullname']);
             $phone = trim($_POST['phone']);
             $state = trim($_POST['state']);
@@ -748,7 +753,7 @@ class Authenticate extends Model
                 $email = filter_var($email, FILTER_VALIDATE_EMAIL);
                 if ($email == true) {
 
-                    $this->db->query('SELECT id, fullname, email ,phone, last_login,privilege, password FROM admin WHERE email= :email AND status = 1');
+                    $this->db->query('SELECT * FROM admin WHERE email= :email AND status = 1');
                     $this->db->bind(':email', $email);
                     $row = $this->db->singleResult();
                     if ($row == true) {

@@ -3,14 +3,6 @@ header('Access-Control-Allow-Origin: *');
 
 class Api extends Controller
 {
-    public function index()
-    {
-    }
-
-    public function save_json()
-    {
-        $save = $this->model('Category')->save_json();
-    }
 
     public function user_signup()
     {
@@ -244,7 +236,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $result = $this->model('Authenticate')->verifyToken($token);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
             if($result){
                 $result = $this->model('Product')->getAllProductOfASeller($_GET['seller_id']);
             }else{
@@ -322,6 +314,14 @@ class Api extends Controller
             exit;
         }
     }
+
+    public function get_account_packages()
+    {
+        $header = apache_request_headers();
+        $result = $this->model('Misc')->getAccountPackages();
+        print_r(json_encode($result));
+    }
+
 
     public function update_user_profile()
     {
