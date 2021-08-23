@@ -1,0 +1,44 @@
+
+             <div class="d-flex align-items-end flex-wrap">
+              <div class="mr-md-3 mr-xl-5">
+                <h3>ACCOUNT PACKAGES</h3>
+                <p class="mb-md-0">Your analytics dashboard template.</p>
+              </div>
+            
+            </div>
+              <div class="row" ng-init="fetch_account_packages()">
+            <div class="col-md-3 grid-margin stretch-card" ng-repeat="package in packages">
+              <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                <div style="padding: 10px; background-color: #47c0f3; color:white">
+                    <h4>{{package.title}}</h4>
+                   
+                  </div>
+                <div class="card-body">
+                  <ul class="list-ticked">
+                    <li ng-repeat="list in package.package_contents">{{list.content_body}}</li>
+                  </ul>
+                  
+                <div >
+                  
+              <h6  align="center"><span ng-if="package.value!='0'">{{package.value | currency:'NGN '}}</span><span ng-if="package.value=='0'">Free</span></h6>
+            <div class="mt-3">
+              
+               <button type="button" ng-click="choose_package(package)" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" id="">
+               Choose
+            </button>
+            
+                </div>
+            </div>
+                  
+                </div>
+              </div>
+            </div>
+            
+            <div class="row" style="text-align: center;">
+            <button type="button" ng-click="payWithPaystack()" ng-show="selectedOption" class="btn btn-success  font-weight-medium auth-form-btn" id="">CONTINUE</button>
+            </div>
+            
+          </div>
+
+          <script src="https://js.paystack.co/v1/inline.js"></script>
+          

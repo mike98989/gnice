@@ -218,8 +218,7 @@ function uploadMultiple($prefix, $location, $size)
                     //set upload limit to 2mb
                     // if ($fileSize <= 2097152) {
                     if ($fileSize <= $sizeLimit) {
-                        $folder = "assets/images/uploads/$location/";
-                        
+                        $folder = "public/assets/images/uploads/$location/";
                         if (!file_exists($folder)) {
                             mkdir($folder, 0777, true);
                         }

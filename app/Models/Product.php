@@ -469,7 +469,7 @@ class Product extends Model
         $header = apache_request_headers();
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $sender_name = trim($_POST['sender_name']);
-        $sender_tel = trim($_POST['sender_tel']);
+        $sender_tel = trim($_POST['sender_phone']);
         $sender_email = trim($_POST['sender_email']);
         $message = trim($_POST['message']);
         $date = date("Y-m-d H:i:s");
@@ -495,18 +495,18 @@ class Product extends Model
                         $this->db->bind(':' . $key, $data[$key]);
                     }
                     if ($this->db->execute()) {
-                        $result['message'] = 'product added successfully';
+                        $result['message'] = 'Message sent successfully!';
                         $result['status'] = '1';
                     } else {
-                        $result['message'] = 'create product failed';
+                        $result['message'] = 'Something went wrong. Please try agian';
                         $result['status'] = '0';
                     }
                 } else {
-                    $result['error_email'] = 'please enter valid email';
+                    $result['error_email'] = 'Please enter a  valid email';
                     $result['status'] = '0';
                 }
             } else {
-                $result['error'] = 'all field are required';
+                $result['error'] = 'All fields are required';
                 $result['status'] = '0';
             }
             return $result;
@@ -519,7 +519,7 @@ class Product extends Model
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
         if (isset($header['gnice-authenticate'])) {
 
-            $this->db->query("SELECT * FROM messages WHERE seller_id = :seller_id ORDER BY date DESC");
+            $this->db->query("SELECT M.*,P.name,P.image,P.price,P.brand FROM messages M INNER JOIN products P ON M.product_code=P.product_code  WHERE M.seller_id = :seller_id ORDER BY M.date DESC");
             $this->db->bind(':seller_id', $seller_id);
 
             if ($this->db->resultSet()) {

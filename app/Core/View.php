@@ -75,8 +75,15 @@ class View
                 require './app/views/' . $name . '.html';
                 require './app/views/inc/footer5.php';
             }
+          
+            require('./app/views/User/inc/headerref.php');    
+			require './app/views/User/inc/header.php';
+			require './app/views/' . $name . '.html';
+			require './app/views/User/inc/footer.php'; 
+            
+			}
 
-
+            
             ////ELSE IT IS A VISITOR PAGE
             else {
                 /////ASSIGN JAVASCRIPT 
@@ -117,4 +124,5 @@ class View
             // }
         }
     }
+    
 }

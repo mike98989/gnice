@@ -1,0 +1,19 @@
+<div class="form-group"  >
+    <select required=""  class="form-control" name="property_type">
+      <label>Select Property Type</label>
+      <option selected="" value="">Property Type</option>
+      <option  ng-repeat="Property in  requiredProperty"  value="{{ Property.type }}"> {{ Property.type }} </option>
+     </select>
+    </div>
+  <div class="form-group">
+    <label>Number of Bathrooms</label>
+    <input type="number" name="number_of_bathrooms" class="form-control" placeholder="Number of Bathrooms">
+   </div>
+  <div class="form-group">
+   <label>Number of Bedrooms</label>
+    <input type="number" name="number_of_bedrooms" class="form-control" placeholder="Number of Bedrooms">
+   </div>
+  <div class="form-group">
+  <label>Property Size</label>
+  <input type="text" name="Property_size" class="form-control" placeholder="Property Size">
+   </div>

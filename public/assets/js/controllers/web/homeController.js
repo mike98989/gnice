@@ -23,6 +23,7 @@ module.controller("homeController", [
   ) {
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = 1;
+<<<<<<< HEAD
     $scope.pageSize = 30;
     $scope.catfilter = 5;
     $scope.listfilter = 5;
@@ -35,6 +36,12 @@ module.controller("homeController", [
 
 
 
+=======
+    $scope.pageSize = 30; 
+    $scope.user_data  = $localStorage.user_data;
+    $scope.user_token  = $localStorage.user_token;
+        
+>>>>>>> cc4459ea953c11e84b3ce32bb2beb03c55f22cb6
     // $('#butn').click(function(event) {
     // event.preventDefault();
     // var up_id = $('#up_courseid').val();
@@ -49,9 +56,14 @@ module.controller("homeController", [
 
     //  })
 
+<<<<<<< HEAD
 
     $scope.getAllHero = function () {
       $('.result').hide();
+=======
+    $scope.getAllHero = function(){
+      $('.result').hide(); 
+>>>>>>> cc4459ea953c11e84b3ce32bb2beb03c55f22cb6
       $.ajax({
         url: $scope.dirlocation + 'api/fetch_all_hero',
         type: 'GET',
@@ -138,7 +150,11 @@ module.controller("homeController", [
       });
     }
 
+<<<<<<< HEAD
     $scope.fetch_all_page_and_sub_page = function () {
+=======
+      $scope.fetch_all_page_and_sub_page = function(){
+>>>>>>> cc4459ea953c11e84b3ce32bb2beb03c55f22cb6
       $.ajax({
         url: $scope.dirlocation + 'api/fetch_all_page_and_sub_page',
         type: 'GET',
@@ -337,6 +353,7 @@ module.controller("homeController", [
     }
 
 
+<<<<<<< HEAD
     $scope.update_product = function () {
 
       $('.loader').show();
@@ -426,6 +443,90 @@ module.controller("homeController", [
 
         }
       });
+=======
+  $scope.update_product = function(){
+
+  $('.loader').show();    
+         
+          var sub = $('#brand').val();
+          //alert($('#sub_category').val());
+          //alert(sub);
+          var formData = new FormData($('#add_product')[0]);
+          $.ajax({
+                url: $scope.dirlocation+'api/update_product',
+               //type: 'POST',
+                type: 'GET',
+              method : "post",
+             transformRequest: angular.identity,
+               //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+               headers:{'gnice-authenticate':'gnice-web'}, 
+               data: formData,
+               async: true,
+               cache: false,
+               contentType: false,
+                transformRequest: angular.identity,
+               enctype: 'multipart/form-data',
+              
+               crossDomain: true,
+               processData: false,
+               success: function (answer) {
+               alert(answer);
+               var response=JSON.stringify(answer);
+               var parsed = JSON.parse(response);
+               var msg=angular.fromJson(response);
+                $('.loader').hide();  
+          if(msg.status=='1'){
+             $('.loader').hide();    
+              $('.result').html(msg.message);  
+              $('.result').show();
+              alert(msg.message);
+              window.location.assign(
+                    'Advert');
+        }else{
+               $('.loader').hide();    
+              $('.result').html(msg.message);  
+              $('.result').show();
+              alert(msg.message);
+              }
+              
+               }
+             });
+    }
+
+        $scope.message_product_seller = function(){
+          $('.loader').show();    
+          var formData = new FormData($('#message_product_seller')[0]);
+          $.ajax({
+                url: $scope.dirlocation+'api/message_product_seller',
+                type: 'POST',
+                headers:{'gnice-authenticate':'gnice-web'}, 
+                data: formData,
+                async: true,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+               crossDomain: true,
+               processData: false,
+               success: function (answer) {
+               //alert(answer);
+               var response=JSON.stringify(answer);
+               var parsed = JSON.parse(response);
+               var msg=angular.fromJson(parsed);
+              $('.loader').hide();  
+              if(msg.status=='1'){
+                $('.loader').hide();    
+                $('.result').html(msg.message);  
+                $('.result').show();
+              }else{
+               $('.loader').hide();    
+              $('.result').html(msg.message);  
+              $('.result').show();
+              alert(msg.message);
+              }
+              
+               }
+             });
+>>>>>>> cc4459ea953c11e84b3ce32bb2beb03c55f22cb6
     }
 
 

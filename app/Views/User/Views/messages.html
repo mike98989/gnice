@@ -1,0 +1,43 @@
+<div class="d-flex align-items-end flex-wrap">
+  <div class="mr-md-3 mr-xl-5">
+    <h3>CLIENT'S MESSAGES</h3>
+    <p class="mb-md-0">Your analytics dashboard template.</p>
+  </div>
+
+</div>
+          <div class="row">
+            <div class="col-md-12 stretch-card">
+              <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                <div class="card-body">
+                  
+                  <div class="table-responsive" ng-init="fetch_all_messages_to_seller()">
+                    <table id="recent-purchases-listing" class="table table-sm table-hover">
+                      <thead>
+                        <tr>
+                        <th>SN</th>
+                        <th>Sender Name</th>
+                        <th>Sender Email</th>
+                        <th>Sender Number</th>
+                        <th>Product Details</th>
+                        <th>Message</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       <tr ng-repeat="message in messages">
+                      <td>{{$index + 1}}</td>
+                      <td>{{message.sender_name}}</td>
+                      <td>{{message.sender_email}}</td>
+                      <td>{{message.sender_phone}}</td>
+                      <td ng-init="img = message.image.split(',')">
+                      <img style="width: '20px'!important;float:left;margin-right:6px" src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+                        {{message.name}}<br/>{{message.price}}</td>
+                      <td>{{message.message}}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+       

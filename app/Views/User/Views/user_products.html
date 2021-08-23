@@ -1,0 +1,45 @@
+        <div class="content-wrapper">
+          
+          <h4>My Products</h4>
+           <div ng-init="fetch_all_product_of_seller()">
+          <div class="row">
+            
+            <div class=""  ng-repeat="sellerProduct in products">
+              <div class="" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+                <div>
+                 
+                  <div class="container">
+                  <div class="row">
+                    <div class="col-lg-4" >
+                      <a href="#" class="pbtn" >
+                       <img  ng-init="img = sellerProduct.image.split(',')"  style="width: '100%'!important" src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+                    </a>
+                   
+                      <p style="font-size: 15px; padding-top: 3px;">{{sellerProduct.name}} / {{sellerProduct.price | currency}}<br>
+                        <span class="text-danger" style="font-size: 12px; margin-top:-20px;">active <span  style="font-size: 10px; color: white">{{sellerProduct.date_added}}</span></span>
+                      </p>
+                  
+                    </div>
+                  </div>
+
+               
+                  <a href="" class="btn btn-outline-secondary btn-sm">Edit</a>
+                </div>
+                  
+
+
+                </div>
+              </div>
+            </div>
+           
+        
+          </div>
+          <div ng-if="0 == status" class="mt-5">
+            <p><i style="font-size: 200px" class="mdi mdi-briefcase-upload"></i></p>
+            <p>You have not uploaded any ads yet</p>
+            <a href="addproduct" class="btn btn-primary btn-rounded btn-fw">Add Product</a>
+          </div>
+        </div>
+        
+        </div>
+       

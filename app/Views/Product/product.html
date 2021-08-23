@@ -193,7 +193,7 @@
                     <i class="fa fa-check-circle"></i><span>Milage:   </span>{{ product.fuel  }}Km
                     </li>
                     <li>
-                    <i class="fa fa-check-circle"></i><span>Condition:    </span>{{ product.conditon  }}
+                    <i class="fa fa-check-circle"></i><span>Condition:    </span>{{ product.condition_state  }}
                     </li>
                     <li>
                       <i class="fa fa-check-circle"></i><span>Ram:    </span>{{ product.ram  }}
@@ -281,10 +281,10 @@
                <div class="product-reviews-content">
                   <div class="row">
                   
-
                     <div class="col-xl-12">
                       <div class="add-product-review">
                         <form class="comment-form m-0" ng-submit="message_product_seller()" id="message_product_seller">
+                          <div class="alert alert-info result" style="display: none;"></div>
                           <h3 class="review-title">Message Seller</h3>
                             <input type="hidden" name="seller_id" value="{{product.seller_id}}">
                               <input type="hidden" name="product_code" value="{{product.product_code}}">
@@ -319,7 +319,7 @@
                                 <label>Your Phone Number</label>
                                 <input
                                   type="text"
-                                  name="sender_tel"
+                                  name="sender_phone"
                                   class="form-control form-control-sm"
                                   required
                                 />
@@ -337,6 +337,7 @@
                               class="form-control form-control-sm"
                             ></textarea>
                           </div>
+                          
                           <!-- End .form-group -->
                           <input
                             type="submit"

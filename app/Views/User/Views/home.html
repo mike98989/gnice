@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-md-10 grid-margin">
+      <div class="d-flex justify-content-between flex-wrap">
+        <div class="d-flex align-items-end flex-wrap">
+          <div class="mr-md-3 mr-xl-5">
+            <h2>WELCOME BACK!</h2>
+            <p class="mb-md-0">Your analytics dashboard template.</p>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 grid-margin">
+      <div class="card bg-gradient-info border-0">
+         
+        <div class="card-body py-3 px-4 d-flex align-items-center justify-content-between flex-wrap" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+            <p class="mb-0 font-weight-medium" style="color: white;">{{user_data.seller_account_details.title | uppercase}} ACCOUNT PACKAGE</p>
+          <p class="mb-0 text-white font-weight-medium"> YOU HAVE 5 ADS SLOT LEFT AND 14 DAYS LEFT</p>
+          <div class="d-flex">
+            <a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-danger border-0">Upgrade</a>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+        <div class="card-body bg-gradient-info text-white">
+          <p class="card-title text-white" style="font-size: 50px ">30</p>
+          <p class="mb-4 ">Total uplaoded posting</p>
+          
+        </div>
+      </div>
+    </div>
+     <div class="col-md-6 grid-margin stretch-card">
+      <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+        <div class="card-body bg-gradient-danger text-white">
+          <p class="card-title text-white" style="font-size: 50px">30</p>
+          <p class="mb-4">Total clients respond</p>
+         
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row"  ng-controller="homeController">
+    <div class="col-md-12 stretch-card">
+      <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+        <div class="card-body">
+          <p class="card-title" style="font-size: 20px;">Client Messages</p>
+          <div class="table-responsive"  ng-init="fetch_all_messages_to_seller()">
+            <table id="recent-purchases-listing" class="table table-sm table-hover">
+              <thead>
+                <tr>
+                   <th>SN</th>
+  <th>SENDER NAME</th>
+  <th>SENDER EMAIL</th>
+  <th>SENDER PHONE NO.</th>
+  <th>MESSAGES</th>
+                </tr>
+              </thead>
+              <tbody>
+               <tr ng-repeat="messageToSender in messageTosenders">
+  <td>{{$index + 1}}</td>
+  <td>{{messageToSender.sender_name}}</td>
+  <td>{{messageToSender.sender_email}}</td>
+  <td>{{messageToSender.sender_tel}}</td>
+  <td>{{messageToSender.message}}</td>
+  
+</tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Majestic Admin</title>
+  <title>Gnice Admin</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/seller-assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/seller-assets/vendors/base/vendor.bundle.base.css">
@@ -17,7 +17,9 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/seller-assets/css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="<?php echo APP_URL;?>/public/assets/images/gnice_logo.png" />
 </head>
 <body ng-app="gnice">
+<base href="<?php echo APP_URL.'/'.$url[1];?>/"> 
+
     
