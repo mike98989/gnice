@@ -57,7 +57,7 @@ class Authenticate extends Model
 
     public function getUserAccountType($account_type)
     {
-        $this->db->query('SELECT title FROM seller_account_packages WHERE package_id= :id');
+        $this->db->query('SELECT title,product_count,duration_in_days FROM seller_account_packages WHERE package_id= :id');
         $this->db->bind(':id', $account_type);
         $row = $this->db->singleResult();
         return $row;
@@ -99,8 +99,10 @@ class Authenticate extends Model
                 if ($check_email !== false) {
                     if ($check_email->seller_id == null) {
                         $seller_id = 'AG-' . rand(1000000, 10000000);
-                        $this->db->query('UPDATE users SET account_type = :account_type, seller_id=:seller_id WHERE id = :id ');
+                        $date = date('Y-m-d');
+                        $this->db->query('UPDATE users SET account_type = :account_type,account_type_activation_date=:account_type_activation_date, seller_id=:seller_id WHERE id = :id ');
                         $this->db->bind(':seller_id', $seller_id);
+                        $this->db->bind(':account_type_activation_date', $date);
                     } else {
                         $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id ');
                     }
@@ -636,7 +638,6 @@ class Authenticate extends Model
                 if (!(empty($email) || empty($seller_id) || empty($fullname) || empty($phone) || empty($state))) {
                     $is_email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
                     if ($is_email_valid == true) {
-
                         //get renamed pictures from helper functions
                         $image = $uploader['imageUrl'];
 
@@ -714,32 +715,35 @@ class Authenticate extends Model
                     if ($this->db->execute()) {
                         $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
                         $this->db->bind(':email', $verifyToken->email);
-                        $row = $this->db->singleResult();
-                        $row->seller_account_details = $this->getUserAccountType($row->account_type);
-                        $result['data'] = $row;
-                        $result['message'] = 'profile picture update successfully';
-                        $result['status'] = '1';
-                        $result['errors'] = $uploader['image_error'];
+                        if ($this->db->execute()) {
+                            $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+                            $this->db->bind(':email', $verifyToken->email);
+                            $row = $this->db->singleResult();
+                            $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                            $result['data'] = $row;
+                            $result['message'] = 'profile picture update successfully';
+                            $result['status'] = '1';
+                            $result['errors'] = $uploader['image_error'];
+                        } else {
+                            $result['message'] = 'profile picture update failed';
+                            $result['status'] = '0';
+                            $result['errors'] = $uploader['image_error'];
+                        }
                     } else {
-                        $result['message'] = 'profile picture update failed';
+                        $result['message'] = 'select a picture';
                         $result['status'] = '0';
-                        $result['errors'] = $uploader['image_error'];
                     }
                 } else {
-                    $result['message'] = 'select a picture';
                     $result['status'] = '0';
+                    $result['msg'] = 'Invalid token';
                 }
             } else {
-                $result['status'] = '0';
-                $result['msg'] = 'Invalid token';
+                echo 'invalid request';
+                exit();
             }
-        } else {
-            echo 'invalid request';
-            exit();
+            return $result;
         }
-        return $result;
     }
-
     public function loginAdmin()
     {
         $header = apache_request_headers();

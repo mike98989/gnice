@@ -109,6 +109,7 @@ class Product extends Model
             // $product_code = rand(1000000, 100000000);
             $_POST['image'] = $image;
             $_POST['product_code'] = rand(1000000, 100000000);
+            $_POST['date_added'] = date('Y-m-d');
             $data = filter_var_array($_POST);
             $data = array_map('trim', array_filter($data));
             $excluded = ['files'];
@@ -149,6 +150,31 @@ class Product extends Model
         }
     }
 
+    public function deleteProduct($product_id, $seller_id)
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            //$data = filter_var_array($_POST);
+            $seller_id = filter_var($seller_id);
+            $product_id = filter_var($product_id);
+            $select_first = $this->db->query("SELECT image FROM products WHERE id= :product_id");
+            $this->db->bind(':product_id', $product_id);
+            $row = $this->db->singleResult();
+            //print_r($row->image);exit; 
+            //$delete_image = deleteImage($row->image, 'public/assets/images/uploads/products');
+            $delete_image = deleteFile($row->image, 'products');
+            $this->db->query("DELETE FROM products WHERE id = :product_id AND seller_id=:seller_id");
+            $this->db->bind(':product_id', $product_id);
+            $this->db->bind(':seller_id', $seller_id);
+            $this->db->execute();
+            $result['message'] = 'Product details deleted!';
+            $result['status'] = '1';
+        } else {
+            $result['message'] = 'Invalid request';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
 
     public function pinProduct($user_id)
     {
@@ -270,7 +296,7 @@ class Product extends Model
         }
     }
 
-    
+
 
 
     /////////////GET ALL RELATED PRODUCTS 
@@ -614,14 +640,5 @@ class Product extends Model
             }
         }
         return $result;
-    }
-    // TODO: delete image
-    public function deleteImage()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-
-            $deleteImage = [];
-        }
     }
 }

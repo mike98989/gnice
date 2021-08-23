@@ -47,7 +47,7 @@ module.controller("usersController", [
       $scope.$apply();
     }, 0);
 
-    $scope.get_all_users = function () {
+    $scope.get_all_listings = function () {
       $(".loader").show();
       $(".result").hide();
       alert("got here");

@@ -127,7 +127,38 @@
              });
     }
 
-        
+    $scope.delete_product = function(product,index){
+      var conf = confirm("DO YOU WANT TO DELETE THIS AD '"+product.name+"'?");
+      if(conf){   
+      $('.loader2_'+product.id).show();    
+        $.ajax({
+             url: $scope.dirlocation+'api/deleteProduct?product_id='+product.id+'&&seller_id='+$scope.user_data.seller_id,
+             async: true,
+             cache: false,
+             contentType: false,
+             headers:{'gnice-authenticate':$scope.user_token},
+             processData: false,
+             success: function (result) {
+               alert(result);
+                var response=JSON.stringify(result);
+                var parsed = JSON.parse(response);
+                var msg=angular.fromJson(parsed);
+                $('.loader2_'+product.id).hide();  
+                if(msg.status=='1'){
+                  alert(msg.message);
+                 $scope.products.splice(index,1);
+                 $scope.$apply();
+  
+                }
+            
+             }
+           });   
+      
+    }
+  
+      }
+
+      
     $scope.fetch_all_product_of_seller = function(){
       $.ajax({
         url: $scope.dirlocation+'api/fetch_all_product_of_seller?seller_id='+$scope.user_data.seller_id,
@@ -144,16 +175,30 @@
        var parsed1 = JSON.parse(response1);
        var msg1=angular.fromJson(parsed1);
        $('.loader').hide(); 
-       if(msg1.status=='1'){  
+       //if(msg1.status=='1'){  
        $scope.products = msg1.data;
+       $scope.products_count = msg1.data.length;
        $scope.$apply();
+       $scope.get_user_account_package_usage_breakdown();
        //alert(JSON.stringify($scope.products));
-       }
+       //}
        
         }
       });
     }
 
+    $scope.get_user_account_package_usage_breakdown = function(){
+      $scope.user_remaining_product_slot = ($scope.user_data.seller_account_details.product_count*1)-($scope.products_count*1);
+      //alert($scope.user_remaining_product_slot);
+      var date1 = new Date($scope.user_data.account_type_activation_date);
+      var date2 = new Date();
+      var Difference_In_Time = date2.getTime() - date1.getTime();
+       // To calculate the no. of days between two dates
+     var Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+      $scope.slot_remaining_duration = ($scope.user_data.seller_account_details.duration_in_days*1) - (Difference_In_Days);
+      //alert(Difference_In_Days);
+      $scope.$apply();
+     }
 
         $scope.message_product_seller = function(){
           $('.loader').show();    
@@ -323,80 +368,6 @@
         }
       });
     }
-
-    $scope.fetch_all_product = function(){
-      $.ajax({
-        url: $scope.dirlocation+'api/fetch_all_product',
-        type: 'GET',
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers:{'gnice-authenticate':'gnice-web'}, 
-        processData: false,
-        success: function (result2) {
-       
-       var response2=JSON.stringify(result2);
-       var parsed2 = JSON.parse(response2);
-       var msg2=angular.fromJson(parsed2);
-       console.log(msg2);
-      
-       $('.loader').hide(); 
-       if(msg2.status=='1'){ 
-        
-       $scope.products = msg2.data;
-
-
-       $scope.$apply();
-      
-       //alert(JSON.stringify($scope.categories));
-       }
-       
-        }
-      });
-    }
-
-  
-    $('body').delegate('.pbtn','click',function(event) {
-       event.preventDefault();
-       var delid1 = $(this).attr('data-id1');
-       var delid2 = $(this).attr('data-id2');
-       var delid3 = $(this).attr('data-id3');
-       $localStorage.valueToShare1 = delid1;
-       $localStorage.valueToShare2 = delid2;
-       $localStorage.valueToShare3 = delid3;
-       //alert($localStorage.valueToShare2);
-      window.location.assign(
-                    'Product');
-     });
-      $('body').delegate('.upbtn','click',function(event) {
-       event.preventDefault();
-       var delid1 = $(this).attr('data-id1');
-       $localStorage.valueToShare1 = delid1;
-       
-      window.location.assign(
-                    'Update');
-     });
-
-    $('body').delegate('.cbtn','click',function(event) {
-      event.preventDefault();
-      var clid = $(this).attr('data-id4');
-      var clid2 = $(this).attr('data-id5');
-     // alert(clid+' '+clid2);
-     $localStorage.valueToShare4 = clid;
-     $localStorage.valueToShares = clid2;
-     window.location.assign(
-                    'Category');
-  })
-      $('body').delegate('.cabtn','click',function(event) {
-      event.preventDefault();
-      var clid = $(this).attr('data-idc');
-     
-      //alert(clid);
-     $localStorage.valueToShares = clid;
-     window.location.assign(
-                    'CategoryList');
-  })
 
      $scope.searchCat = function () {
       var cad = $('#cat').val();

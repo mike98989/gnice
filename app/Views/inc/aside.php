@@ -6,26 +6,13 @@
         <nav class="side-nav">    
             <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
                 <li ng-repeat="catSub in catSubs">
-                    <a href="#" style="font-weight:normal;" class="" data-idc="{{catSub.id}}"><img style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px" src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
-                    <div class="megamenu megamenu-fixed-width megamenu-3cols">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="#" class="nolink">{{catSub.title}}</a>
+                    <a href="#" style="font-weight:normal;"><img style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px" src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
                                 <ul class="submenu">
                                     <li ng-repeat="sub in catSub.subcategory ">
-                                        <a href="#" class="cbtn" data-id4="{{sub.sub_id}}" data-id5="{{sub.parent_id}}">
-                                            <img style="width: 40px!important; height: 40px!important;" src="{{dirlocation}}public/assets/images/uploads/category/{{sub.image}}">{{ sub.title }} </a>
+                                        <a href="#">
+                                        <img ng-show="sub.image!=''" style="display:none;width: 30px!important; height: 30px!important;" src="{{dirlocation}}public/assets/images/uploads/category/{{sub.image}}">{{ sub.title }} </a>
                                     </li>
                                 </ul>
-
-
-                            </div>
-
-                            <div class="col-lg-6 p-0">
-                                <img src="{{dirlocation}}public/assets/images/menu-banner.jpg" alt="Menu banner">
-                            </div>
-                        </div>
-                    </div><!-- End .megamenu -->
                 </li>
                 <!-- CATEGORY LOOP ENDS HERE -->
                 <!--

@@ -100,4 +100,55 @@
 
         }
 
+
+        $scope.attach_image = function(input){
+          if(input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.readAsDataURL(input.files[0]);
+            reader.onload = function(e){
+              $('.profile_thumbnail').attr('src',e.target.result);
+              $('.upload_profile_btn').show();
+            }
+          }
+        }
+
+
+        $scope.upload_profile_img = function(){
+          $('.image_upload_loader').show();    
+          $('.image_upload_result').hide();
+          
+          var formData = new FormData($('#upload_profile_img')[0]);
+          $.ajax({
+               url: $scope.dirlocation+'api/upload_image',
+               data:formData,
+               type: 'POST',
+               async: true,
+               cache: false,
+               contentType: false,
+               enctype: 'multipart/form-data',
+               headers:{'gnice-authenticate':$scope.user_token},
+               processData: false,
+               success: function (result) {
+                 //alert(result);
+                  var response=JSON.stringify(result);
+                  var parsed = JSON.parse(response);
+                  var msg=angular.fromJson(parsed);
+                  $('.image_upload_loader').hide();  
+                  $('.image_upload_result').html(msg.msg);  
+                  $('.image_upload_result').show();
+                  if(msg.status=='1'){
+                  $localStorage['user_data']=msg.data;
+                  $scope.user_data = msg.data;
+                  setTimeout(function(){ 
+                  window.location.reload();
+                  }, 1500);
+                  }
+                  // else{
+                    //alert(msg.msg);
+                  // }
+              
+               }
+             });
+        }
+
   }]);
