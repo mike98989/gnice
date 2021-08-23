@@ -90,6 +90,25 @@ class Api extends Controller
     }
 
 
+    public function deleteProduct()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
+            if($result){
+                $result = $this->model('Product')->deleteProduct($_GET['product_id'],$_GET['seller_id']);
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
 
     public function updateCategory()
     {
@@ -257,7 +276,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $result = $this->model('Authenticate')->verifyToken($token);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
             if($result){
                 $result = $this->model('Product')->getAllUserSavedProducts($result->id);
             }else{
@@ -276,7 +295,7 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $result = $this->model('Authenticate')->verifyToken($token);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
             if($result){
                 $result = $this->model('Product')->pinProduct($result->id);
             }else{

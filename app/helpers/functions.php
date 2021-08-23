@@ -258,23 +258,28 @@ function uploadMultiple($prefix, $location, $size)
 
 function deleteFile($itemName, $location)
 {
-    $path = "assets/images/uploads/$location/";
-    foreach (glob($path . $itemName) as $toDelete) {
-        unlink($toDelete);
-        echo $toDelete . " was deleted!";
+    $split = explode(',',$itemName);
+    foreach($split as $filename){
+    $path = "public/assets/images/uploads/$location/".$filename;
+    if (is_file($path)) {
+        unlink($path);
     }
+    }
+    // $path = "assets/images/uploads/$location/";
+    // foreach (glob($path . $itemName) as $toDelete) {
+    //     unlink($toDelete);
+    //     //echo $toDelete . " was deleted!";
+    // }
 
     /**
      * 
-     * 4. Delete all text files in a directory using an easy way!
-        <?php 
-
+     * 
             $filePath = "file/path/if/any/";
             $wildcard = "*.png"
 
             //will delete all png files
             array_map( "unlink", glob( $filePath.$wildcard ));
-        ?>
+        
      * 
      * 
      */

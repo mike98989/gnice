@@ -6,13 +6,16 @@
 
 </div>
 
-           <div class=""  ng-init="fetch_required_table()">
-              <div class="col-lg-8" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+           <div class=""  ng-init="fetch_required_table(); fetch_all_product_of_seller()">
+            <div style="text-align: center;" class="loader">
+              <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
+              </div>
+              <div  ng-show="user_remaining_product_slot > 0" class="col-lg-8" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 5px 0 rgba(0, 0, 0, 0.09);">
                 <div class="card-body">
                   <form class="forms-sample" id="add_product" ng-submit="add_product()">
                 <div class="form-group">
                   <label for="category">CATEGORY</label>
-                 <select required=""  class="form-control"   ng-init="fetch_all_categories_and_sub_categories()" id="category" ng-model="categories" ng-change="onCategoryValueChange(categories)">
+                 <select required="" class="form-control"   ng-init="fetch_all_categories_and_sub_categories()" id="category" ng-model="categories" ng-change="onCategoryValueChange(categories)">
                    <option value="">SELECT CATEGORY</option>
                    <option   ng-repeat="catSub in categories_and_sub track by $index"  value="{{catSub}}"> {{ catSub.title }}</option>
                   </select>   
@@ -52,7 +55,7 @@
                      
                 <div class="form-group">
                   <label for="name">Title</label>
-                <input type="text" name="name" placeholder="Name of Product" class="form-control">
+                <input type="text" name="name" placeholder="Ads Title" class="form-control">
                   </div>
                     <div class="form-group">
                     <label>Price </label>
@@ -138,10 +141,16 @@
                     </div>
                     <input type="hidden" name="seller_id" id="seller_id" value="{{user_data.seller_id}}"> 
                     <input type="hidden" name="category" id="seller_id" value="{{selected_category.id}}"> 
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="submit" class="btn bg-gradient-warning mr-2">
+                      <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="width:25px;display:none">Submit</button>
                   
                   </form>
                 </div>
+              </div>
+              <div  class="col-lg-6" ng-show="user_remaining_product_slot < 1" style="margin:0 auto;text-align: center;">
+                <img src="{{dirlocation}}public/assets/images/cancel_file.png" style="width:70px;float:none;margin:0 auto"><br/>
+                Your have exceeded your account threshold. Please upgrade your account. You can aswell downgrade to a FREE ACCOUNT.
+                <br/><a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-warning border-0" style="margin-top:10px">Upgrade</a>
               </div>
             </div>
      

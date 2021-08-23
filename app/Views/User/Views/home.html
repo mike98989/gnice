@@ -11,36 +11,59 @@
       </div>
     </div>
   </div>
+  
+  <view  ng-controller="productController"  ng-init="fetch_all_product_of_seller()">
+    <div style="text-align: center;" class="loader">
+      <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
+      </div>
   <div class="row">
+
     <div class="col-md-12 grid-margin">
-      <div class="card bg-gradient-info border-0">
+      <div class="card bg-gradient-default border-0">
          
-        <div class="card-body py-3 px-4 d-flex align-items-center justify-content-between flex-wrap" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
-            <p class="mb-0 font-weight-medium" style="color: white;">{{user_data.seller_account_details.title | uppercase}} ACCOUNT PACKAGE</p>
-          <p class="mb-0 text-white font-weight-medium"> YOU HAVE 5 ADS SLOT LEFT AND 14 DAYS LEFT</p>
+        <div ng-show="slot_remaining_duration >= 0" class="card-body py-3 px-4 d-flex align-items-center justify-content-between flex-wrap" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+            <p class="mb-0 font-weight-medium" style="color: rgb(97, 96, 96);">{{user_data.seller_account_details.title | uppercase}} ACCOUNT PACKAGE</p>
+          <p class="mb-0 font-weight-medium"> YOU HAVE {{user_remaining_product_slot}} ADS SLOT LEFT AND {{slot_remaining_duration}} DAYS LEFT</p>
           <div class="d-flex">
-            <a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-danger border-0">Upgrade</a>
-           
+            <a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-warning border-0">Upgrade</a>
           </div>
         </div>
+
+        <div ng-show="slot_remaining_duration < 1 && user_data.account_type=='1'" class="card-body py-3 px-4 d-flex align-items-center justify-content-between flex-wrap" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+          <p class="mb-0 font-weight-medium" style="color: rgb(97, 96, 96);">{{user_data.seller_account_details.title | uppercase}} ACCOUNT PACKAGE</p>
+        <p class="mb-0 font-weight-medium"> YOU HAVE {{user_remaining_product_slot}} ADS SLOT LEFT</p>
+        <div class="d-flex">
+          <a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-warning border-0">Upgrade</a>
+        </div>
+      </div>
+
+        <div ng-show="slot_remaining_duration < 0 && user_data.account_type!='1'" class="card-body bg-gradient-warning py-3 px-4 d-flex align-items-center justify-content-between flex-wrap" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+          <p class="mb-0 font-weight-medium" style="color: rgb(97, 96, 96);">{{user_data.seller_account_details.title | uppercase}} ACCOUNT PACKAGE</p>
+        <p class="mb-0 font-weight-medium"> YOU ADS PACKAGE HAVE EXPIRED, PLEASE UPGRADE YOUR ACCOUNT</p>
+        <div class="d-flex">
+          <a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-warning border-0">Upgrade</a>
+        </div>
+      </div>
+
       </div>
     </div>
   </div>
  
   <div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-md-6 grid-margin stretch-card" ng-controller="productController">
       <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
         <div class="card-body bg-gradient-info text-white">
-          <p class="card-title text-white" style="font-size: 50px ">30</p>
+          <p class="card-title text-white" style="font-size: 50px ">{{products_count}}</p>
           <p class="mb-4 ">Total uplaoded posting</p>
           
         </div>
       </div>
     </div>
-     <div class="col-md-6 grid-margin stretch-card">
+  </view>
+     <div class="col-md-6 grid-margin stretch-card" ng-controller="messageController" ng-init="fetch_all_messages_to_seller()">
       <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
-        <div class="card-body bg-gradient-danger text-white">
-          <p class="card-title text-white" style="font-size: 50px">30</p>
+        <div class="card-body bg-gradient-warning text-white">
+          <p class="card-title text-white" style="font-size: 50px">{{messages.length}}</p>
           <p class="mb-4">Total clients respond</p>
          
         </div>

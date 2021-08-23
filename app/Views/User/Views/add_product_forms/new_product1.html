@@ -8,7 +8,7 @@
     </div>                    
    <div class="form-group" ng-if="vehicle">
     <label for="color"> Select Model</label>   
-   <select class="form-control" name="model" id="model">
+   <select class="form-control" required name="model" id="model">
    <option value="">--SELECT MODEL--</option>
     <optgroup  ng-repeat="cars in  requiredCar | filter : vehicle" >
      <option  ng-repeat="models in  cars.car_models"  value="{{ models.model }}"> {{ models.model}}     

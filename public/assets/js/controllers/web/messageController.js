@@ -25,12 +25,11 @@
          var parsed1 = JSON.parse(response1);
          var msg1=angular.fromJson(parsed1);
          $('.loader').hide(); 
-         if(msg1.status=='1'){  
-        
+         //if(msg1.status=='1'){  
          $scope.messages = msg1.data;
          $scope.$apply();
          //alert(JSON.stringify($scope.categories));
-         }
+         //}
          
           }
         });
