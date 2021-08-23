@@ -31,7 +31,7 @@ module.controller("gniceAdminController", [
       $.ajax({
         url: $scope.dirlocation + "adminauth/index",
         type: "POST",
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        data: JSON.stringify({ user_email: "mike98989@gmail.com" }),
         data: formData,
         async: true,
         cache: false,

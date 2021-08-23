@@ -124,7 +124,6 @@ class AdminTasks extends Model
 
             $status = $_POST['status'];
             $seller_id = $_POST['seller_id'];
-            $token = filter_var($header['gnice-authenticate']);
             if ($this->verifyToken($token) == true) {
                 $this->db->query("UPDATE users SET status = : status WHERE seller_id = :seller_id");
                 $this->db->bind(':seller_id', $seller_id);

@@ -1,14 +1,28 @@
 ///////////// THIS IS THE INDEXPAGE CONTROLLER///////
 ///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
 /////////////////////////
-module.controller("loginController", ["$scope","$sce","$http","infogathering","$routeParams","$localStorage","$sessionStorage",function (
-    $scope,$sce,$http,datagrab,$routeParams,$localStorage,$sessionStorage) {
-    
+module.controller("loginController", [
+  "$scope",
+  "$sce",
+  "$http",
+  "infogathering",
+  "$routeParams",
+  "$localStorage",
+  "$sessionStorage",
+  function (
+    $scope,
+    $sce,
+    $http,
+    datagrab,
+    $routeParams,
+    $localStorage,
+    $sessionStorage
+  ) {
     //$('.loader').show();
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = 1;
     $scope.pageSize = 30;
-  
+
     $scope.password_recovery = function () {
       $(".loader").show();
       $(".result").hide();
@@ -104,7 +118,6 @@ module.controller("loginController", ["$scope","$sce","$http","infogathering","$
         crossDomain: true,
         processData: false,
         success: function (answer) {
-         
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -125,9 +138,7 @@ module.controller("loginController", ["$scope","$sce","$http","infogathering","$
 
             $localStorage["user_data"] = msg.data;
             $localStorage["user_token"] = msg.token;
-            window.location.href =
-              datagrab.completeUrlLocation + "dashboard";
-
+            window.location.href = datagrab.completeUrlLocation + "dashboard";
           } else {
             $(".loader").hide();
             $(".result").html(msg.msg);
@@ -139,7 +150,6 @@ module.controller("loginController", ["$scope","$sce","$http","infogathering","$
         },
       });
     };
-
 
     $scope.clear_storage = function () {
       $localStorage["fullname_checked"] = false;

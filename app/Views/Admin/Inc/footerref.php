@@ -23,25 +23,25 @@
 <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular-cookies.js"></script>
 <script src="<?php echo APP_URL; ?>/public/assets/js/angular/ngStorage.min.js"></script>
 <!----MODULE-->
-<script src="<?php echo APP_URL.'/public/assets/js/controllers/module.js';?>"></script>
-<script src="<?php echo APP_URL.'/public/assets/js/controllers/admindashboard/headerController.js';?>"></script>
-<script src="<?php echo APP_URL;?>/public/assets/js/controllers/dashboardapp.js"></script>
+<script src="<?php echo APP_URL . '/public/assets/js/controllers/module.js'; ?>"></script>
+<script src="<?php echo APP_URL . '/public/assets/js/controllers/admindashboard/headerController.js'; ?>"></script>
+<script src="<?php echo APP_URL; ?>/public/assets/js/controllers/dashboardapp.js"></script>
 
-  <?php
-  if (isset($js)) {
-    foreach ($js as $jsfile) {
-      echo "<script src=".APP_URL."/".$jsfile."></script>";
-    }
+<?php
+if (isset($js)) {
+  foreach ($js as $jsfile) {
+    echo "<script src=" . APP_URL . "/" . $jsfile . "></script>";
   }
+}
 //////EXTERNAL JAVASCRIPT
-  if (isset($external_js)) {
-    foreach ($external_js as $external_jsfile) {
-      echo "<script type='text/javascript' src=".$external_jsfile."></script>";
-    }
+if (isset($external_js)) {
+  foreach ($external_js as $external_jsfile) {
+    echo "<script type='text/javascript' src=" . $external_jsfile . "></script>";
   }
+}
 ?>
 
-<script src="<?php echo APP_URL.'/public/assets/js/controllers/directives.js';?>"></script>
+<script src="<?php echo APP_URL . '/public/assets/js/controllers/directives.js'; ?>"></script>
 
 </body>
 

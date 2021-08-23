@@ -14,7 +14,6 @@ class View
 
     public function render($name, $noInclude, $message)
     {
-
         if ($noInclude == true) {
             $js = null;
             $external_js = null;
@@ -26,9 +25,7 @@ class View
             }
 
             extract($this->data);
-            require('./app/views/inc/header_type1.php');
             require "./app/Views/" . $name . ".html";
-            require('./app/views/inc/footer1.php');
             //include_once "./views/index/404.html";
             //require('./views/inc/footerref.php');
         } else {
@@ -70,23 +67,16 @@ class View
                     $external_js = $this->external_js;
                 }
 
-                require('./app/views/inc/header_type5.php');
-                //require './app/views/inc/nav.php';
+                require('./app/views/inc/headerref.php');
+                require './app/views/inc/nav.php';
                 require './app/views/' . $name . '.html';
-                require './app/views/inc/footer5.php';
+                require './app/views/inc/footerref.php';
             }
-          
-            require('./app/views/User/inc/headerref.php');    
-			require './app/views/User/inc/header.php';
-			require './app/views/' . $name . '.html';
-			require './app/views/User/inc/footer.php'; 
-            
-			}
 
-            
+
             ////ELSE IT IS A VISITOR PAGE
             else {
-                /////ASSIGN JAVASCRIPT 
+                /////ASSIGN JAVASCRIPT   
                 $js = null;
                 $external_js = null;
                 if (!empty($this->js)) {
@@ -95,34 +85,11 @@ class View
                 if (!empty($this->external_js)) {
                     $external_js = $this->external_js;
                 }
-                require('./app/views/inc/header_type1.php');
-                //require('./app/views/inc/header.php');
-                require('./app/views/inc/navbar.php');
+                require('./app/views/inc/headerref.php');
+                //require('./views/index/inc/nav.php');
                 require "./app/Views/" . $name . ".html";
-                require('./app/views/inc/footer1.php');
+                require('./app/views/inc/footerref.php');
             }
-
-
-            // TODO: delete //ELSE IT IS A VISITOR PAGE
-            // else {
-            //     /////ASSIGN JAVASCRIPT   
-            //     $js = null;
-            //     $external_js = null;
-            //     if (!empty($this->js)) {
-            //         $js = $this->js;
-            //     }
-            //     if (!empty($this->external_js)) {
-            //         $external_js = $this->external_js;
-            //     }
-            //     //require('./app/views/inc/headerref.php');
-            //     //require('./views/index/inc/nav.php');
-            //     require "./app/Views/" . $name . ".html";
-            //     //require('./app/views/inc/footerref.php');
-
-
-
-            // }
         }
     }
-    
 }
