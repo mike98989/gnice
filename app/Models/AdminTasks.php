@@ -3,16 +3,16 @@
 class AdminTasks extends Model
 {
 
-    public function verifyToken()
+    public function verifyToken($token)
     {
         Session::init();
         $isLoggedIn = Session::get('loggedIn');
-        $privilegeType = Session::get('loggedIn');
-        $token = Session::get('token');
+        // $privilegeType = Session::get('loggedIn');
+        // $token = Session::get('token');
         if ($isLoggedIn == true) {
-            $this->db->query("SELECT fullname, email, last_login,privilege, token FROM admin WHERE token = :token AND privilege_type = :privilege AND status = 1 LIMIT 1");
+            $this->db->query("SELECT fullname, email, last_login,privilege, token FROM admin WHERE token = :token  AND status =1");
             $this->db->bind(':token', $token);
-            $this->db->bind(':privilege_type', $privilegeType);
+            // $this->db->bind(':privilege_type', $privilegeType);
             $row = $this->db->singleResult();
             // check row
             if ($this->db->rowCount() > 0) {
@@ -51,8 +51,10 @@ class AdminTasks extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
 
-            if ($this->verifyToken() == true) {
+            if ($this->verifyToken($token) == true) {
                 $this->db
                     ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
                         category.title as productCategory,
@@ -84,7 +86,10 @@ class AdminTasks extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
 
-            if ($this->verifyToken() == true) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
                 $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.status ASC ");
                 $row = $this->db->resultSet();
                 if ($this->db->rowCount() > 0) {
@@ -97,8 +102,8 @@ class AdminTasks extends Model
                     $result['status'] = '0';
                 }
             } else {
-                $result['data'] = [];
-                $result['message'] = 'invalid';
+                $result['data'] = $token;
+                $result['message'] = 'invalid token';
                 $result['status'] = '0';
             }
         } else {
@@ -113,9 +118,14 @@ class AdminTasks extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
             $status = $_POST['status'];
             $seller_id = $_POST['seller_id'];
-            if ($this->verifyToken() == true) {
+            $token = filter_var($header['gnice-authenticate']);
+            if ($this->verifyToken($token) == true) {
                 $this->db->query("UPDATE users SET status = : status WHERE seller_id = :seller_id");
                 $this->db->bind(':seller_id', $seller_id);
                 $this->db->bind(':status', $status);
@@ -150,7 +160,11 @@ class AdminTasks extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            if ($this->verifyToken() == true) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
                 $this->db->query("SELECT id, name, phone, email, image,privilege,last_login, status FROM admins ORDER BY privilege ASC ");
                 $row = $this->db->resultSet();
                 unset($row->password, $row->id, $row->token, $row->user_confirm_id, $row->user_recovery_id);
@@ -183,8 +197,11 @@ class AdminTasks extends Model
 
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            //! if ($this->verifyToken() == true) {}else{}
-            if ($this->verifyToken() == true) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
                 $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $title = $data['title'];
                 $status = 1;

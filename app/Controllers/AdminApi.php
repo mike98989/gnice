@@ -5,6 +5,9 @@ class AdminApi extends Controller
 {
     public function index()
     {
+        // $data = [];
+        // $this->view->js = ['public/assets/js/controllers/admindashboard/homeController.js', 'public/assets/js/controllers/admindashboard/usersController.js'];
+        // $this->view->render('Admin/gnice_dashboard', false, '');
     }
 
     public function get_all_users()
