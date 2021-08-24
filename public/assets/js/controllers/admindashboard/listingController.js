@@ -2,7 +2,7 @@
 ///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
 /////////////////////////
 
-module.controller("usersController", [
+module.controller("listingController", [
   "$scope",
   "$sce",
   "$http",
@@ -47,13 +47,12 @@ module.controller("usersController", [
       $scope.$apply();
     }, 0);
 
-    $scope.get_all_listings = function () {
+    $scope.get_all_products = function () {
       $(".loader").show();
       $(".result").hide();
-      alert("got here");
-      alert(JSON.stringify($scope.admin_data.email));
+      alert("Loading");
       $.ajax({
-        url: $scope.dirlocation + "adminapi/get_all_users",
+        url: $scope.dirlocation + "adminapi/get_all_products",
         type: "GET",
         async: true,
         cache: false,
@@ -64,14 +63,14 @@ module.controller("usersController", [
         },
         processData: false,
         success: function (result) {
-          // alert(JSON.stringify(result));
+          alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
-          //alert(JSON.stringify(msg.data));
+          alert(JSON.stringify(msg.data));
           if (msg.status == "1") {
-            $scope.all_users = msg.data;
+            $scope.all_listings = msg.data;
             $scope.$apply();
             $(".result").show();
           } else {

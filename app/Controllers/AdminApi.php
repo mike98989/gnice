@@ -50,7 +50,7 @@ class AdminApi extends Controller
     public function get_all_products()
     {
         $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
+        if (!isset($header['gnice-authenticate'])) {
             $result = $this->model('Admintasks')->getAllProducts();
             header('Content-Type: application/json');
             print_r(json_encode($result));

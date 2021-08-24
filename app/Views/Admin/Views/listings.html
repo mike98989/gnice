@@ -1,11 +1,76 @@
-    
-        <div class="content-wrapper">
+<div class="content-wrapper">
 
-            <div class="page-header">
-              <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                  <i class="mdi mdi-home"></i>
-                </span> Listings
-              </h3>
-            </div>
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white mr-2">
+        <i class="mdi mdi-home"></i>
+      </span> Clients/Users
+    </h3>
+  </div>
+
+  <div class="row" ng-init="get_all_products()">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">All listings</h4>
+          <div class="loader" style="text-align: center;">
+            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width:30px">
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th> # </th>
+                  <th> Listing Code</th>
+                  <th> Name</th>
+                  <th> Category</th>
+                  <th> Created at</th>
+                  <th> Seller</th>
+                  <th>Control</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr dir-paginate="listing in all_listings | filter:userSearch | itemsPerPage: pageSize"
+                  current-page="currentPage" ng-cloak>
+                  <td>
+                    {{($index +1) + (currentPage-1) * pageSize}}
+                  </td>
+                  <td><img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
+                      class="mr-2">{{listing.name}} </td>
+                  <td>
+                    {{user.email}}/{{user.phone}}<br />
+                    <span style="color:#f30">{{user.whatsapp}}</span>
+                  </td>
+                  <td>{{user.seller_id}}</td>
+                  <td>{{user.account_type_title}} </td>
+                  <td>{{user.last_login}} </td>
+                  <td><span class="badge badge-danger" style="cursor:pointer;margin-right:7px"
+                      ng-show="user.status=='1'" ng-click="enable_or_disable('0',user,$index)"><img
+                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
+                        style="width:15px;display:none" /> Disable</span>
+                    <span class="badge badge-success" style="cursor:pointer;margin-right:7px" ng-show="user.status=='0'"
+                      ng-click="enable_or_disable('1',user,$index)"> <img
+                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
+                        style="width:15px;display:none" /> Enable</span>
+                    <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader2_{{user.id}}"
+                      style="width:15px;display:none" />
+                    <i style="cursor:pointer;margin-right:7px" class="fa fa-times"
+                      ng-click="delete_staff_record(staff,$index)">
+                    </i>
+                    <i style="cursor:pointer;margin-right:7px" class="fa fa-edit"
+                      ng-click="localStorage_save('staff_data',staff,'edit_profile')">
+                    </i>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+            <dir-pagination-controls boundary-links="true" template-url="" style="float:right">
+            </dir-pagination-controls>
+          </div>
         </div>
+      </div>
+    </div>
+
+  </div>
+</div>

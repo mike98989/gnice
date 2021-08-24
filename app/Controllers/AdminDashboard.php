@@ -23,21 +23,27 @@ class AdminDashboard extends Controller
         $this->view->js = ['public/assets/js/controllers/admindashboard/homeController.js', 'public/assets/js/controllers/admindashboard/usersController.js'];
         $this->view->render('Admin/gnice_dashboard', false, '');
     }
+    // public function index()
+    // {
+    //     $data = [];
+    //     $this->view->js = ['public/assets/js/controllers/admindashboard/homeController.js', 'public/assets/js/controllers/admindashboard/listingController.js'];
+    //     $this->view->render('Admin/gnice_dashboard', false, '');
+    // }
 
     //! Moved to admin API
-    public function get_all_users()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            // echo 'mhere';
-            $result = $this->model('Admintasks')->getAllUsers();
-            header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
+    // public function get_all_users()
+    // {
+    //     $header = apache_request_headers();
+    //     if (isset($header['gnice-authenticate'])) {
+    //         // echo 'mhere';
+    //         $result = $this->model('Admintasks')->getAllUsers();
+    //         header('Content-Type: application/json');
+    //         print_r(json_encode($result));
+    //     } else {
+    //         echo "invalid request";
+    //         exit;
+    //     }
+    // }
     // public function get_all_admins()
     // {
     //     $header = apache_request_headers();

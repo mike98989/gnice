@@ -40,7 +40,7 @@ module.controller("usersController", [
 
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = pager;
-    $scope.pageSize = 3;
+    $scope.pageSize = 9;
     $scope.admin_data = $localStorage.user_data;
     $scope.admin_token = $localStorage.user_token;
     setTimeout(function () {
@@ -50,8 +50,8 @@ module.controller("usersController", [
     $scope.get_all_users = function () {
       $(".loader").show();
       $(".result").hide();
-      alert("got here");
-      alert(JSON.stringify($scope.admin_data.email));
+      // alert("got here");
+      // alert(JSON.stringify($scope.admin_data.email));
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_users",
         type: "GET",
@@ -64,7 +64,7 @@ module.controller("usersController", [
         },
         processData: false,
         success: function (result) {
-          // alert(JSON.stringify(result));
+          alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -80,6 +80,38 @@ module.controller("usersController", [
           }
         },
       });
+    };
+
+    $scope.enable_or_disable = function (code, account, index) {
+      var conf = confirm(
+        "DO YOU WANT DISABLE/ENABLE THIS USER '" + account.fullname + "'?"
+      );
+      if (conf) {
+        $(".loader2_" + account.fullname).show();
+        $.ajax({
+          url:
+            $scope.dirlocation +
+            "adminapi/enable_user?seller_id=" +
+            account.seller_id,
+          async: true,
+          cache: false,
+          contentType: false,
+          headers: { "gnice-authenticate": $scope.admin_token },
+          processData: false,
+          success: function (result) {
+            alert(result);
+            var response = JSON.stringify(result);
+            var parsed = JSON.parse(response);
+            var msg = angular.fromJson(parsed);
+            $(".loader2_" + account.id).hide();
+            if (msg.status == "1") {
+              alert(msg.message);
+              $scope.products.splice(index, 1);
+              $scope.$apply();
+            }
+          },
+        });
+      }
     };
   },
 ]);

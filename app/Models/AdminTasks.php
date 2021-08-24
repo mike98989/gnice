@@ -50,7 +50,7 @@ class AdminTasks extends Model
     public function getAllProducts()
     {
         $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
+        if (!isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
 
