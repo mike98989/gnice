@@ -40,7 +40,7 @@ module.controller("listingController", [
 
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = pager;
-    $scope.pageSize = 3;
+    $scope.pageSize = 10;
     $scope.admin_data = $localStorage.user_data;
     $scope.admin_token = $localStorage.user_token;
     setTimeout(function () {
@@ -50,7 +50,6 @@ module.controller("listingController", [
     $scope.get_all_products = function () {
       $(".loader").show();
       $(".result").hide();
-      alert("Loading");
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_products",
         type: "GET",
@@ -63,14 +62,15 @@ module.controller("listingController", [
         },
         processData: false,
         success: function (result) {
-          alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
-          alert(JSON.stringify(msg.data));
+          // alert(JSON.stringify(msg.data));
           if (msg.status == "1") {
             $scope.all_listings = msg.data;
+            $scope.notification = msg.msg;
+            $scope.status == msg.status;
             $scope.$apply();
             $(".result").show();
           } else {
@@ -79,6 +79,42 @@ module.controller("listingController", [
           }
         },
       });
+    };
+
+    $scope.enable_or_disable_listing = function (code, listing, index) {
+      // alert(index);
+      // return;
+      var conf = confirm(
+        "DO YOU WANT DISABLE/ENABLE THIS USER '" + listing.name + "'?"
+      );
+      if (conf) {
+        $(".loader2_" + listing.namr).show();
+        var formData = new FormData();
+        formData.append("status", code);
+        formData.append("product_code", listing.product_code);
+        $.ajax({
+          url: $scope.dirlocation + "adminapi/disable_enable_ads",
+          data: formData,
+          type: "POST",
+          async: true,
+          cache: false,
+          contentType: false,
+          headers: { "gnice-authenticate": $scope.admin_token },
+          processData: false,
+          success: function (result) {
+            var response = JSON.stringify(result);
+            var parsed = JSON.parse(response);
+            var msg = angular.fromJson(parsed);
+            $(".loader2_" + listing.id).hide();
+            if (msg.status == "1") {
+              // alert(JSON.stringify($scope.all_listings[index]));
+              listing.status = code;
+              $scope.$apply();
+              $(".result").show();
+            }
+          },
+        });
+      }
     };
   },
 ]);

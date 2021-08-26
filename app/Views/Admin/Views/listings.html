@@ -4,7 +4,7 @@
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white mr-2">
         <i class="mdi mdi-home"></i>
-      </span> Clients/Users
+      </span> Ads/Listings
     </h3>
   </div>
 
@@ -17,51 +17,76 @@
             <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width:30px">
           </div>
           <div class="table-responsive">
+
             <table class="table">
               <thead>
                 <tr>
                   <th> # </th>
-                  <th> Listing Code</th>
-                  <th> Name</th>
-                  <th> Category</th>
+                  <th> Image</th>
+                  <th> Name<br><span style="color:#444;font-size: 12px;">unique code</span></th>
+                  <th> Category <br><span style="color:#444;font-size: 12px;">subcategory</span></th>
                   <th> Created at</th>
                   <th> Seller</th>
                   <th>Control</th>
                 </tr>
               </thead>
               <tbody>
-                <tr dir-paginate="listing in all_listings | filter:userSearch | itemsPerPage: pageSize"
+                <tr dir-paginate="listing in all_listings | filter:listingSearch | itemsPerPage: pageSize"
                   current-page="currentPage" ng-cloak>
                   <td>
                     {{($index +1) + (currentPage-1) * pageSize}}
                   </td>
-                  <td><img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
-                      class="mr-2">{{listing.name}} </td>
-                  <td>
-                    {{user.email}}/{{user.phone}}<br />
-                    <span style="color:#f30">{{user.whatsapp}}</span>
+                  <td><img ng-init=" img = listing.image.split(',')"
+                      src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" class="mr-2">
                   </td>
-                  <td>{{user.seller_id}}</td>
-                  <td>{{user.account_type_title}} </td>
-                  <td>{{user.last_login}} </td>
+                  <td>
+                    {{listing.name}} <br><span style="color:#444;font-size: 10px;">{{listing.product_code}}</span>
+                  </td>
+                  <td>{{listing.productCategory}}<br> <span style="color:#444;font-size: 10px;">{{
+                      listing.productSubCategory }}</span>
+                  </td>
+                  <td>{{listing.date_added}} </td>
+                  <td>{{listing.seller_fullname}} <br><span style="color:#444;font-size: 10px;">{{ listing.seller_phone
+                      }}</span></td>
                   <td><span class="badge badge-danger" style="cursor:pointer;margin-right:7px"
-                      ng-show="user.status=='1'" ng-click="enable_or_disable('0',user,$index)"><img
-                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
+                      ng-show="listing.status=='1'" ng-click="enable_or_disable_listing(0,listing,$index)"><img
+                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
                         style="width:15px;display:none" /> Disable</span>
-                    <span class="badge badge-success" style="cursor:pointer;margin-right:7px" ng-show="user.status=='0'"
-                      ng-click="enable_or_disable('1',user,$index)"> <img
-                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
+                    <span class="badge badge-success" style="cursor:pointer;margin-right:7px"
+                      ng-show="listing.status=='0'" ng-click="enable_or_disable_listing(1,listing,$index)"> <img
+                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
                         style="width:15px;display:none" /> Enable</span>
-                    <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader2_{{user.id}}"
-                      style="width:15px;display:none" />
-                    <i style="cursor:pointer;margin-right:7px" class="fa fa-times"
-                      ng-click="delete_staff_record(staff,$index)">
-                    </i>
-                    <i style="cursor:pointer;margin-right:7px" class="fa fa-edit"
-                      ng-click="localStorage_save('staff_data',staff,'edit_profile')">
-                    </i>
+                    <!--  -->
+                    <button type="button" class="badge badge-primary" data-toggle="modal"
+                      data-target="#exampleModalCenter">
+                      <i class="mdi mdi mdi-account-settings"></i> view
+                    </button>
+                    <!--  -->
+
                   </td>
                 </tr>
+                <!-- modal window -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">{{ listing }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        ...
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- modal window -->
 
               </tbody>
             </table>

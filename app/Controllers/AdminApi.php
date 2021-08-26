@@ -50,7 +50,7 @@ class AdminApi extends Controller
     public function get_all_products()
     {
         $header = apache_request_headers();
-        if (!isset($header['gnice-authenticate'])) {
+        if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Admintasks')->getAllProducts();
             header('Content-Type: application/json');
             print_r(json_encode($result));
@@ -76,6 +76,30 @@ class AdminApi extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Admintasks')->updateCategory($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function disable_enable_account()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->disableEnableUser($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function disable_enable_ads()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->disableEnableAds($_POST);
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {

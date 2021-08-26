@@ -50,7 +50,7 @@ class AdminTasks extends Model
     public function getAllProducts()
     {
         $header = apache_request_headers();
-        if (!isset($header['gnice-authenticate'])) {
+        if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
 
@@ -62,7 +62,7 @@ class AdminTasks extends Model
                         FROM products
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.status DESC");
+                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.date_added DESC");
 
                 if ($this->db->resultSet()) {
                     $result['rowCounts'] = $this->db->rowCount();
@@ -90,7 +90,7 @@ class AdminTasks extends Model
             $token = $splitHeader[0];
 
             if ($this->verifyToken($token) == true) {
-                $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.status ASC ");
+                $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.last_login DESC ");
                 $row = $this->db->resultSet();
                 if ($this->db->rowCount() > 0) {
                     $result['rowCounts'] = $this->db->rowCount();
@@ -114,18 +114,17 @@ class AdminTasks extends Model
         return $result;
     }
 
-    public function disableUser()
+    public function disableEnableUser()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
-
             $status = $_POST['status'];
             $seller_id = $_POST['seller_id'];
             if ($this->verifyToken($token) == true) {
-                $this->db->query("UPDATE users SET status = : status WHERE seller_id = :seller_id");
+                $this->db->query("UPDATE users SET status = :status WHERE seller_id = :seller_id");
                 $this->db->bind(':seller_id', $seller_id);
                 $this->db->bind(':status', $status);
                 if ($this->db->execute()) {
@@ -142,7 +141,51 @@ class AdminTasks extends Model
                 }
             } else {
                 $result['data'] = [];
-                $result['message'] = 'invalid';
+                $result['message'] = 'invalid token, login to continue task';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+    public function disableEnableAds()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $status = $_POST['status'];
+            $product_code = $_POST['product_code'];
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("UPDATE products SET status = :status WHERE product_code = :product_code");
+                $this->db->bind(':product_code', $product_code);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $this->db
+                        ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.status DESC");
+                    $row = $this->db->resultSet();
+                    $result['data'] = $row;
+                    $result['message'] = 'ads operation successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'account operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid token, login to continue task';
                 $result['status'] = '0';
             }
         } else {
@@ -189,6 +232,8 @@ class AdminTasks extends Model
 
         return $result;
     }
+
+
 
 
     public function addCategory()

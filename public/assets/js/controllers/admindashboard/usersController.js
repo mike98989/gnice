@@ -40,7 +40,7 @@ module.controller("usersController", [
 
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = pager;
-    $scope.pageSize = 9;
+    $scope.pageSize = 5;
     $scope.admin_data = $localStorage.user_data;
     $scope.admin_token = $localStorage.user_token;
     setTimeout(function () {
@@ -64,7 +64,7 @@ module.controller("usersController", [
         },
         processData: false,
         success: function (result) {
-          alert(JSON.stringify(result));
+          // alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -82,32 +82,36 @@ module.controller("usersController", [
       });
     };
 
-    $scope.enable_or_disable = function (code, account, index) {
+    $scope.enable_or_disable = function (code, user, index) {
       var conf = confirm(
-        "DO YOU WANT DISABLE/ENABLE THIS USER '" + account.fullname + "'?"
+        "DO YOU WANT DISABLE/ENABLE THIS USER '" + user.fullname + "'?"
       );
+      // alert(index);
       if (conf) {
-        $(".loader2_" + account.fullname).show();
+        $(".loader2_" + user.fullname).show();
+        var formData = new FormData();
+        formData.append("status", code);
+        formData.append("seller_id", user.seller_id);
         $.ajax({
-          url:
-            $scope.dirlocation +
-            "adminapi/enable_user?seller_id=" +
-            account.seller_id,
+          url: $scope.dirlocation + "adminapi/disable_enable_account",
+          data: formData,
+          type: "POST",
           async: true,
           cache: false,
           contentType: false,
           headers: { "gnice-authenticate": $scope.admin_token },
           processData: false,
           success: function (result) {
-            alert(result);
             var response = JSON.stringify(result);
             var parsed = JSON.parse(response);
             var msg = angular.fromJson(parsed);
-            $(".loader2_" + account.id).hide();
+            $(".loader2_" + user.id).hide();
             if (msg.status == "1") {
-              alert(msg.message);
-              $scope.products.splice(index, 1);
+              alert(index, code);
+              // all_users[index].status = code;
+              user.status = code;
               $scope.$apply();
+              $(".result").show();
             }
           },
         });

@@ -25,7 +25,7 @@
                   <th> Seller ID </th>
                   <th> Account Type </th>
                   <th> Last Login </th>
-                  <th></th>
+                  <th> Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -37,28 +37,27 @@
                   <td><img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
                       class="mr-2">{{user.fullname}} </td>
                   <td>
-                    {{user.email}}/{{user.phone}}<br />
-                    <span style="color:#f30">{{user.whatsapp}}</span>
+                    {{user.email}}<br><span style="color:#444;font-size: 10px;">{{user.phone}}</span><br />
+                    <span style="color:#444;font-size: 10px;">{{user.whatsapp}}</span>
                   </td>
                   <td>{{user.seller_id}}</td>
-                  <td>{{user.account_type_title}} </td>
+                  <td>{{user.account_type_title}}
+                  </td>
                   <td>{{user.last_login}} </td>
-                  <td><a class="badge badge-danger" style="cursor:pointer;margin-right:7px" ng-show="user.status=='1'"
-                      ng-click="enable_or_disable(0,user,$index)"><img ng-src="{{dirlocation}}public/images/spinner.gif"
-                        class="loader1_{{user.id}}" style="width:15px;display:none" /> Disable</a>
+                  <td "><span class=" badge badge-danger" style="cursor:pointer;margin-right:7px"
+                    ng-show="user.status=='1'" ng-click="enable_or_disable(0,user,$index)"><img
+                      ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
+                      style="width:15px;display:none" /> <i class="mdi mdi-account-off
+"></i>Disable</span>
 
-                    <a class="badge badge-success" style="cursor:pointer;margin-right:7px" ng-show="user.status=='0'"
+                    <span class="badge badge-success" style="cursor:pointer;margin-right:7px" ng-show="user.status=='0'"
                       ng-click="enable_or_disable(1,user,$index)"> <img
                         ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
-                        style="width:15px;display:none" /> Enable</a>
-                    <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader2_{{user.id}}"
-                      style="width:15px;display:none" />
-                    <i style="cursor:pointer;margin-right:7px" class="fa fa-times"
-                      ng-click="delete_staff_record(staff,$index)">
-                    </i>
-                    <i style="cursor:pointer;margin-right:7px" class="fa fa-edit"
-                      ng-click="localStorage_save('staff_data',staff,'edit_profile')">
-                    </i>
+                        style="width:15px;display:none" /> <i class="mdi mdi-account-check"></i>Enable</span>
+                    <span class="badge badge-primary " style="cursor:pointer;">
+                      <i class="mdi mdi mdi-account-settings"></i>
+                      View</span>
+
                   </td>
                 </tr>
 
@@ -70,6 +69,8 @@
         </div>
       </div>
     </div>
+    <!-- dropdown -->
+
 
   </div>
 </div>
