@@ -1,86 +1,237 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white mr-2">
+        <i class="mdi mdi-home"></i>
+      </span>
+      Categories
+    </h3>
+  </div>
 
-    
-        <div class="content-wrapper">
+  <div class="row" ng-init="get_all_cat_and_sub_cat()">
+    <div class="col-md-8 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">All Categories</h4>
+          <div class="loader" style="text-align: center">
+            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Category</th>
+                  <th>Sub Categories</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr dir-paginate="cat in all_cat_and_sub | filter:catSearch | itemsPerPage: pageSize"
+                  current-page="currentPage" ng-cloak>
+                  <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
+                  <td>
+                    <img src="{{dirlocation}}/public/assets/images/uploads/category/{{cat.image}}"
+                      class="mr-2" />{{cat.title}}
+                  </td>
+                  <td>
+                    <ul ng-repeat="sub in cat">
+                      <li>{{ sub.title }}</li>
+                    </ul>
+                  </td>
 
-            <div class="page-header">
-              <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                  <i class="mdi mdi-home"></i>
-                </span> Categories
-              </h3>
-            </div>
+                  <td>{{ cat.status }}</td>
 
-            <div class="row">
-                <div class="col-12 grid-margin">
-                  <div class="card">
-                    <div class="card-body">
-                      <h4 class="card-title">Recent Tickets</h4>
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th> Assignee </th>
-                              <th> Subject </th>
-                              <th> Status </th>
-                              <th> Last Update </th>
-                              <th> Tracking ID </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <img src="{{dirlocation}}/public/admin-assets/images/faces/face1.jpg" class="mr-2"
-                                  alt="image"> David Grey
-                              </td>
-                              <td> Fund is not recieved </td>
-                              <td>
-                                <label class="badge badge-gradient-success">DONE</label>
-                              </td>
-                              <td> Dec 5, 2017 </td>
-                              <td> WD-12345 </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <img src="{{dirlocation}}/public/admin-assets/images/faces/face2.jpg" class="mr-2"
-                                  alt="image"> Stella Johnson
-                              </td>
-                              <td> High loading time </td>
-                              <td>
-                                <label class="badge badge-gradient-warning">PROGRESS</label>
-                              </td>
-                              <td> Dec 12, 2017 </td>
-                              <td> WD-12346 </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <img src="{{dirlocation}}/public/admin-assets/images/faces/face3.jpg" class="mr-2"
-                                  alt="image"> Marina Michel
-                              </td>
-                              <td> Website down for one week </td>
-                              <td>
-                                <label class="badge badge-gradient-info">ON HOLD</label>
-                              </td>
-                              <td> Dec 16, 2017 </td>
-                              <td> WD-12347 </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <img src="{{dirlocation}}/public/admin-assets/images/faces/face4.jpg" class="mr-2"
-                                  alt="image"> John Doe
-                              </td>
-                              <td> Loosing control on server </td>
-                              <td>
-                                <label class="badge badge-gradient-danger">REJECTED</label>
-                              </td>
-                              <td> Dec 3, 2017 </td>
-                              <td> WD-12348 </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                  <td>
+                    <button class="badge badge-info mr-1" ng-show="cat.status=='1'"
+                      ng-click="enable_or_disable_cat(0,user,$index)">
+                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none" /><i class="mdi mdi-account-convert mr-1"></i> Disable
+                    </button>
+                    <button class="badge badge-success mr-1" ng-show="cat.status=='0'"
+                      ng-click="enable_or_disable(1,user,$index)">
+                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none" /><i class="mdi mdi-account-convert mr-1"></i> Enable
+                    </button>
+                    <!--  -->
+                    <button class="badge badge-primary mr-1" data-toggle="modal" data-target="#exampleModalCenter">
+                      <i class="mdi mdi-account-card-details mr-1"></i> View
+                    </button>
+                    <!--  -->
+                    <button class="badge badge-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                      <i class="mdi mdi-delete-forever mr-1"></i> Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <dir-pagination-controls boundary-links="true" template-url="" style="float: right">
+            </dir-pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 grid-margin">
+      <div class="row">
+        <div class="col-12 m-2">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Add A New Category</h4>
+              <div class="loader" style="text-align: center">
+                <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+              </div>
+              <form (ngSubmit)="onSubmit()" #form="ngForm">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="category">Category</label>
+                      <input type="text" class="form-control" name="category" id="category"
+                        placeholder="category name" />
                     </div>
                   </div>
                 </div>
-              </div>
-
+                <button type="submit" class="btn btn-gradient-primary mb-2 ">Submit</button>
             </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-12 m-2">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Add A New Sub Category</h4>
+              <div class="loader" style="text-align: center">
+                <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+              </div>
+              <form (ngSubmit)="onSubmit()" #form="ngForm">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group ">
+                      <label " for=" category">Category</label>
+                      <select class="form-control" name="category" id="category">
+                        <option>Category1</option>
+                        <option>Category2</option>
+                        <option>Category3</option>
+                        <option>Category4</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="sub_category">Sub Category</label>
+                      <input type="text" class="form-control" name="sub_category" id="sub_category"
+                        placeholder="enter sub category name" />
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-gradient-success mb-2">Save</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- dropdown -->
+</div>
+
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Recent Tickets</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Assignee</th>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Last Update</th>
+                <th>Tracking ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <img src="{{dirlocation}}/public/admin-assets/images/faces/face1.jpg" class="mr-2" alt="image" />
+                  David Grey
+                </td>
+                <td>Fund is not recieved</td>
+                <td>
+                  <label class="badge badge-gradient-success">DONE</label>
+                </td>
+                <td>Dec 5, 2017</td>
+                <td>WD-12345</td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="{{dirlocation}}/public/admin-assets/images/faces/face2.jpg" class="mr-2" alt="image" />
+                  Stella Johnson
+                </td>
+                <td>High loading time</td>
+                <td>
+                  <label class="badge badge-gradient-warning">PROGRESS</label>
+                </td>
+                <td>Dec 12, 2017</td>
+                <td>WD-12346</td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="{{dirlocation}}/public/admin-assets/images/faces/face3.jpg" class="mr-2" alt="image" />
+                  Marina Michel
+                </td>
+                <td>Website down for one week</td>
+                <td>
+                  <label class="badge badge-gradient-info">ON HOLD</label>
+                </td>
+                <td>Dec 16, 2017</td>
+                <td>WD-12347</td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="{{dirlocation}}/public/admin-assets/images/faces/face4.jpg" class="mr-2" alt="image" />
+                  John Doe
+                </td>
+                <td>Loosing control on server</td>
+                <td>
+                  <label class="badge badge-gradient-danger">REJECTED</label>
+                </td>
+                <td>Dec 3, 2017</td>
+                <td>WD-12348</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal window -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">
+            {{ listing }}
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">...</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal window -->
+</div>
+</div>

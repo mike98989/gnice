@@ -1,10 +1,10 @@
 <div class="content-wrapper">
-
   <div class="page-header">
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white mr-2">
         <i class="mdi mdi-home"></i>
-      </span> Clients/Users
+      </span>
+      Clients/Users
     </h3>
   </div>
   <div class="row" ng-init="get_all_users()">
@@ -12,58 +12,99 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">All Users</h4>
-          <div class="loader" style="text-align: center;">
-            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width:30px">
+          <div class="loader" style="text-align: center">
+            <img
+              src="{{dirlocation}}public/assets/images/spinner.gif"
+              style="width: 30px"
+            />
           </div>
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th> # </th>
-                  <th> Full Name </th>
-                  <th> Email/Phone </th>
-                  <th> Seller ID </th>
-                  <th> Account Type </th>
-                  <th> Last Login </th>
-                  <th> Actions</th>
+                  <th>#</th>
+                  <th>Full Name</th>
+                  <th>Email/Phone</th>
+                  <th>Seller ID</th>
+                  <th>Account Type</th>
+                  <th>Last Login</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr dir-paginate="user in all_users | filter:userSearch | itemsPerPage: pageSize"
-                  current-page="currentPage" ng-cloak>
+                <tr
+                  dir-paginate="user in all_users | filter:userSearch | itemsPerPage: pageSize"
+                  current-page="currentPage"
+                  ng-cloak
+                >
+                  <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    {{($index +1) + (currentPage-1) * pageSize}}
+                    <img
+                      src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
+                      class="mr-2"
+                    />{{user.fullname}}
                   </td>
-                  <td><img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
-                      class="mr-2">{{user.fullname}} </td>
                   <td>
-                    {{user.email}}<br><span style="color:#444;font-size: 10px;">{{user.phone}}</span><br />
-                    <span style="color:#444;font-size: 10px;">{{user.whatsapp}}</span>
+                    {{user.email}}<br /><span
+                      class="text-muted"
+                      style="font-size: 12px"
+                      >{{user.phone}}</span
+                    ><br />
+                    <span class="text-muted" style="font-size: 12px"
+                      >{{user.whatsapp}}</span
+                    >
                   </td>
                   <td>{{user.seller_id}}</td>
-                  <td>{{user.account_type_title}}
-                  </td>
-                  <td>{{user.last_login}} </td>
-                  <td "><span class=" badge badge-danger" style="cursor:pointer;margin-right:7px"
-                    ng-show="user.status=='1'" ng-click="enable_or_disable(0,user,$index)"><img
-                      ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
-                      style="width:15px;display:none" /> <i class="mdi mdi-account-off
-"></i>Disable</span>
-
-                    <span class="badge badge-success" style="cursor:pointer;margin-right:7px" ng-show="user.status=='0'"
-                      ng-click="enable_or_disable(1,user,$index)"> <img
-                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{user.id}}"
-                        style="width:15px;display:none" /> <i class="mdi mdi-account-check"></i>Enable</span>
-                    <span class="badge badge-primary " style="cursor:pointer;">
-                      <i class="mdi mdi mdi-account-settings"></i>
-                      View</span>
-
+                  <td>{{user.account_type_title}}</td>
+                  <td>{{user.last_login}}</td>
+                  <td>
+                    <button
+                      class="badge badge-info mr-1"
+                      ng-show="user.status=='1'"
+                      ng-click="enable_or_disable(0,user,$index)"
+                    >
+                      <img
+                        ng-src="{{dirlocation}}public/images/spinner.gif"
+                        class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none"
+                      /><i class="mdi mdi-account-convert mr-1"></i> Disable
+                    </button>
+                    <button
+                      class="badge badge-success mr-1"
+                      ng-show="user.status=='0'"
+                      ng-click="enable_or_disable(1,user,$index)"
+                    >
+                      <img
+                        ng-src="{{dirlocation}}public/images/spinner.gif"
+                        class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none"
+                      /><i class="mdi mdi-account-convert mr-1"></i> Enable
+                    </button>
+                    <!--  -->
+                    <button
+                      class="badge badge-primary mr-1"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <i class="mdi mdi-account-card-details mr-1"></i> View
+                    </button>
+                    <!--  -->
+                    <button
+                      class="badge badge-danger"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <i class="mdi mdi-delete-forever mr-1"></i> Delete
+                    </button>
                   </td>
                 </tr>
-
               </tbody>
             </table>
-            <dir-pagination-controls boundary-links="true" template-url="" style="float:right">
+            <dir-pagination-controls
+              boundary-links="true"
+              template-url=""
+              style="float: right"
+            >
             </dir-pagination-controls>
           </div>
         </div>
@@ -71,6 +112,44 @@
     </div>
     <!-- dropdown -->
 
-
+    <!-- modal window -->
+    <div
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">
+              {{ listing }}
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">...</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal window -->
   </div>
 </div>

@@ -28,7 +28,7 @@ class AdminTasks extends Model
     public function getAllCategoriesAndSubCategories()
     {
         $this->db->query(
-            "SELECT * FROM category WHERE  ORDER BY status ASC"
+            "SELECT * FROM category ORDER BY title DESC"
         );
         $category = $this->db->resultSet();
         $count = $this->db->rowCount();

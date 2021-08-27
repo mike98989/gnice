@@ -7,7 +7,7 @@ module.config(function ($routeProvider, $locationProvider) {
     })
     .when("/categories", {
       templateUrl: "../app/views/Admin/views/categories.html",
-      //controller:"combinedController",
+      controller: "categoryController",
     })
     .when("/listings", {
       templateUrl: "../app/views/Admin/views/listings.html",
@@ -19,7 +19,7 @@ module.config(function ($routeProvider, $locationProvider) {
     })
     .when("/account_types", {
       templateUrl: "../app/views/Admin/views/account_types.html",
-      //controller:"combinedController",
+      controller: "packagesController",
     })
     .when("/banners", {
       templateUrl: "../app/views/Admin/views/banners.html",

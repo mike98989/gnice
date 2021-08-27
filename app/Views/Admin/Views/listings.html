@@ -1,10 +1,10 @@
 <div class="content-wrapper">
-
   <div class="page-header">
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white mr-2">
         <i class="mdi mdi-home"></i>
-      </span> Ads/Listings
+      </span>
+      Ads/Listings
     </h3>
   </div>
 
@@ -13,89 +13,166 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">All listings</h4>
-          <div class="loader" style="text-align: center;">
-            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width:30px">
+          <div class="loader" style="text-align: center">
+            <img
+              src="{{dirlocation}}public/assets/images/spinner.gif"
+              style="width: 30px"
+            />
           </div>
           <div class="table-responsive">
-
             <table class="table">
               <thead>
                 <tr>
-                  <th> # </th>
-                  <th> Image</th>
-                  <th> Name<br><span style="color:#444;font-size: 12px;">unique code</span></th>
-                  <th> Category <br><span style="color:#444;font-size: 12px;">subcategory</span></th>
-                  <th> Created at</th>
-                  <th> Seller</th>
+                  <th>#</th>
+                  <th>Image</th>
+                  <th>
+                    Name<br /><span class="text-muted" style="font-size: 12px"
+                      >unique code</span
+                    >
+                  </th>
+                  <th>
+                    Category <br /><span
+                      class="text-muted"
+                      style="font-size: 12px"
+                      >subcategory</span
+                    >
+                  </th>
+                  <th>Created at</th>
+                  <th>Seller</th>
                   <th>Control</th>
                 </tr>
               </thead>
               <tbody>
-                <tr dir-paginate="listing in all_listings | filter:listingSearch | itemsPerPage: pageSize"
-                  current-page="currentPage" ng-cloak>
+                <tr
+                  dir-paginate="listing in all_listings | filter:listingSearch | itemsPerPage: pageSize"
+                  current-page="currentPage"
+                  ng-cloak
+                >
+                  <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    {{($index +1) + (currentPage-1) * pageSize}}
-                  </td>
-                  <td><img ng-init=" img = listing.image.split(',')"
-                      src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" class="mr-2">
+                    <img
+                      ng-init=" img = listing.image.split(',')"
+                      src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}"
+                      class="mr-2"
+                    />
                   </td>
                   <td>
-                    {{listing.name}} <br><span style="color:#444;font-size: 10px;">{{listing.product_code}}</span>
+                    {{listing.name}} <br /><span
+                      class="text-muted"
+                      style="font-size: 12px"
+                      >{{listing.product_code}}</span
+                    >
                   </td>
-                  <td>{{listing.productCategory}}<br> <span style="color:#444;font-size: 10px;">{{
-                      listing.productSubCategory }}</span>
+                  <td>
+                    {{listing.productCategory}}<br />
+                    <span style="font-size: 12px" class="text-muted"
+                      >{{ listing.productSubCategory }}</span
+                    >
                   </td>
-                  <td>{{listing.date_added}} </td>
-                  <td>{{listing.seller_fullname}} <br><span style="color:#444;font-size: 10px;">{{ listing.seller_phone
-                      }}</span></td>
-                  <td><span class="badge badge-danger" style="cursor:pointer;margin-right:7px"
-                      ng-show="listing.status=='1'" ng-click="enable_or_disable_listing(0,listing,$index)"><img
-                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
-                        style="width:15px;display:none" /> Disable</span>
-                    <span class="badge badge-success" style="cursor:pointer;margin-right:7px"
-                      ng-show="listing.status=='0'" ng-click="enable_or_disable_listing(1,listing,$index)"> <img
-                        ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
-                        style="width:15px;display:none" /> Enable</span>
-                    <!--  -->
-                    <button type="button" class="badge badge-primary" data-toggle="modal"
-                      data-target="#exampleModalCenter">
-                      <i class="mdi mdi mdi-account-settings"></i> view
+                  <td>{{listing.date_added }}</td>
+                  <td>
+                    {{listing.seller_fullname}} <br /><span
+                      class="text-muted"
+                      style="font-size: 12px"
+                      >{{ listing.seller_phone }}</span
+                    >
+                  </td>
+                  <td>
+                    <button
+                      class="badge badge-info mr-1"
+                      ng-show="listing.status=='1'"
+                      ng-click="enable_or_disable_listing(0,listing,$index)"
+                    >
+                      <img
+                        ng-src="{{dirlocation}}public/images/spinner.gif"
+                        class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none"
+                      /><i class="mdi mdi-autorenew mr-1"></i> Disable
+                    </button>
+                    <button
+                      class="badge badge-success mr-1"
+                      ng-show="listing.status=='0'"
+                      ng-click="enable_or_disable_listing(1,listing,$index)"
+                    >
+                      <img
+                        ng-src="{{dirlocation}}public/images/spinner.gif"
+                        class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none"
+                      /><i class="mdi mdi-autorenew mr-1"></i> Enable
                     </button>
                     <!--  -->
-
+                    <button
+                      class="badge badge-primary mr-1"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <i class="mdi mdi-information mr-1"></i> View
+                    </button>
+                    <!--  -->
+                    <button
+                      class="badge badge-danger"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <i class="mdi mdi-delete-forever mr-1"></i> Delete
+                    </button>
                   </td>
                 </tr>
                 <!-- modal window -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
+                <div
+                  class="modal fade"
+                  id="exampleModalCenter"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog modal-dialog-centered"
+                    role="document"
+                  >
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">{{ listing }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">
+                          {{ listing }}
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">
-                        ...
-                      </div>
+                      <div class="modal-body">...</div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <!-- modal window -->
-
               </tbody>
             </table>
-            <dir-pagination-controls boundary-links="true" template-url="" style="float:right">
+            <dir-pagination-controls
+              boundary-links="true"
+              template-url=""
+              style="float: right"
+            >
             </dir-pagination-controls>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
