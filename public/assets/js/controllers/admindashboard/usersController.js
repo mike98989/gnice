@@ -117,5 +117,9 @@ module.controller("usersController", [
         });
       }
     };
+    $scope.append_modal_user_info = function (value) {
+      $scope.userInfo = value;
+      console.log(JSON.stringify($scope.userInfo));
+    };
   },
 ]);

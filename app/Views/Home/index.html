@@ -1,287 +1,294 @@
+<main class="main" ng-controller="homeController">
+	<div class="jumbotron jumbotron-fluid" ng-init="getAllHero()"
+		style="background-image: url('{{dirlocation}}public/assets/images/uploads/hero/{{heros.image}}');display:none">
+		<div class="container">
+			<h2 class="text-white" style="margin-bottom: 5px !important;">{{ heros.title }}</h4>
+				<div class="text-dark">
+					<div class="container-fluid">
+						<div class="header-right w-lg-max ">
+							<div class="header-search header-icon header-search-inline header-search-category">
+								<a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
 
-<main class="main" ng-controller="homeController" >
-	<div class="jumbotron jumbotron-fluid" ng-init="getAllHero()" style="background-image: url('{{dirlocation}}public/assets/images/uploads/hero/{{heros.image}}');display:none">
-  <div class="container">
-   <h2 class="text-white" style="margin-bottom: 5px !important;">{{ heros.title }}</h4>
-   <div class="text-dark">
-				<div class="container-fluid">
-					<div class="header-right w-lg-max ">
-						<div class="header-search header-icon header-search-inline header-search-category">
-							<a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
 
-							
 								<div class="header-search-wrapper">
-									<input type="search" class="form-control" name="q" id="q" placeholder="Search Products, Brands and Categories"  ng-model="all">
+									<input type="search" class="form-control" name="q" id="q"
+										placeholder="Search Products, Brands and Categories" ng-model="all">
 									<div class="select-custom">
-                                         <form action="" method="post" ng-init="search_cat() ">
-										<select id="cat" name="cat" ng-init="fetch_all_categories_and_sub_categories()">
-											<option selected="" value="">All Categories</option>
-											<option  ng-repeat="catSub in catSubs" value="{{catSub.id}}">{{catSub.title}}</option>
-											
-										</select>
+										<form action="" method="post" ng-init="search_cat() ">
+											<select id="cat" name="cat"
+												ng-init="fetch_all_categories_and_sub_categories()">
+												<option selected="" value="">All Categories</option>
+												<option ng-repeat="catSub in catSubs" value="{{catSub.id}}">
+													{{catSub.title}}</option>
+
+											</select>
 									</div><!-- End .select-custom -->
 									<button class="btn p-0 icon-search-3" id="butn" type="submit"></button>
 								</div><!-- End .header-search-wrapper -->
-							</form>
-						</div><!-- End .header-search -->
-						<!-- End .header-contact -->
-					</div><!-- End .header-right -->
-				</div><!-- End .container -->
-			</div><!-- End .header-middle -->
-    <h2 class="text-white mb-2">{{ heros.sub_title }}</h2>
-    <a href="Signup" class="btn btn-dark btn-md ls-10">Buy Now!</a>
-  </div>
-</div>
-	
-			<div class="container mb-2">
-				<div class="row">
-					<div class="col-lg-9">
-						<h2 class="section-title ls-n-10 m-b-4" style="padding-top:20px;margin-top:0">Gnice Market Place Trending Ads</h2>
-                        <div  ng-init="fetch_all_product()">
-								<div class="row">
-									
-							<div class="col-6 col-sm-4 col-md-3"  ng-repeat="product in products | filter : all ">
-								<div class="product-default inner-quickview inner-icon">
-									<figure style="padding: 5px;">
-										<a href="#" class="pbtn" ng-init="img = product.image.split(',')">
-											<img   style="width: 200px!important; height: 150px!important;" src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
-										</a>
-										<div class="label-group">
-											<div class="product-label label-hot">10X VIP TOP+</div>
-										</div>
-										<div class="btn-icon-group">
-											<button class="btn-icon btn-add-cart" title="Like" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
-										</div>
-										
-										<div class="">
-											<h2 class="product-title">
-											<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">{{product.name}}</a>
-											</h2>
-											<div class="price-box">
-												<span class="product-price">{{product.price | currency:"NGN "}}</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</figure>
-									
-								</div>
-							</div><!-- End .col-md-3 -->
-						</div>
+								</form>
+							</div><!-- End .header-search -->
+							<!-- End .header-contact -->
+						</div><!-- End .header-right -->
+					</div><!-- End .container -->
+				</div><!-- End .header-middle -->
+				<h2 class="text-white mb-2">{{ heros.sub_title }}</h2>
+				<a href="Signup" class="btn btn-dark btn-md ls-10">Buy Now!</a>
+		</div>
+	</div>
 
-						<div class="row products-widgets">
-							<div class="col-sm-6 col-md-4 pb-4 pb-md-0">
-								<div class="product-column">
-									<h3 class="section-sub-title ls-n-20">Top Rated Products</h3>
+	<div class="container mb-2">
+		<div class="row">
+			<div class="col-lg-9">
+				<h2 class="section-title ls-n-10 m-b-4" style="padding-top:20px;margin-top:0">Gnice Market Place
+					Trending Ads</h2>
+				<div ng-init="fetch_all_product()">
+					<div class="row">
 
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/home-featured-3.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
+						<div class="col-6 col-sm-4 col-md-3" ng-repeat="product in products | filter : all ">
+							<div class="product-default inner-quickview inner-icon">
+								<figure style="padding: 5px;">
+									<a href="#" class="pbtn" ng-init="img = product.image.split(',')">
+										<img style="width: 200px!important; height: 150px!important;"
+											src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+									</a>
+									<div class="label-group">
+										<div class="product-label label-hot">10X VIP TOP+</div>
 									</div>
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/home-featured-4.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
+									<div class="btn-icon-group">
+										<button class="btn-icon btn-add-cart" title="Like" data-toggle="modal"
+											data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
 									</div>
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/small/product-1.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</div>
-								</div><!-- End .product-column -->
-							</div><!-- End .col-md-4 -->
 
-							<div class="col-sm-6 col-md-4 pb-4 pb-md-0">
-								<div class="product-column">
-									<h3 class="section-sub-title ls-n-20">Best Selling Products</h3>
+									<div class="">
+										<h2 class="product-title">
+											<a
+												href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">{{product.name}}</a>
+										</h2>
+										<div class="price-box">
+											<span class="product-price">{{product.price | currency:"NGN "}}</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</figure>
 
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/home-featured-1.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</div>
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/home-featured-2.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</div>
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/home-featured-5.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</div>
-								</div><!-- End .product-column -->
-							</div><!-- End .col-md-4 -->
-
-							<div class="col-sm-6 col-md-4 pb-4 pb-md-0">
-								<div class="product-column">
-									<h3 class="section-sub-title ls-n-20">Latest Products</h3>
-
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/home-featured-4.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</div>
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/small/product-1.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</div>
-									<div class="product-default left-details product-widget mb-3">
-										<figure>
-											<a href="product.html">
-												<img src="{{dirlocation}}public/assets/images/products/home-featured-3.jpg">
-											</a>
-										</figure>
-										<div class="product-details">
-											<h2 class="product-title">
-												<a href="product.html">Product Short Name</a>
-											</h2>
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-													<span class="tooltiptext tooltip-top"></span>
-												</div><!-- End .product-ratings -->
-											</div><!-- End .product-container -->
-											<div class="price-box">
-												<span class="product-price">$49.00</span>
-											</div><!-- End .price-box -->
-										</div><!-- End .product-details -->
-									</div>
-								</div><!-- End .product-column -->
-							</div><!-- End .col-md-4 -->
-						</div><!-- End .row -->
-
+							</div>
+						</div><!-- End .col-md-3 -->
 					</div>
-					</div><!-- End .col-lg-9 -->
-				<?php require_once './app/views/inc/aside.php';?>
-				</div><!-- End .row -->
-			</div><!-- End .container -->
-		</main><!-- End .main -->
+
+					<div class="row products-widgets">
+						<div class="col-sm-6 col-md-4 pb-4 pb-md-0">
+							<div class="product-column">
+								<h3 class="section-sub-title ls-n-20">Top Rated Products</h3>
+
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/home-featured-3.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/home-featured-4.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/small/product-1.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+							</div><!-- End .product-column -->
+						</div><!-- End .col-md-4 -->
+
+						<div class="col-sm-6 col-md-4 pb-4 pb-md-0">
+							<div class="product-column">
+								<h3 class="section-sub-title ls-n-20">Best Selling Products</h3>
+
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/home-featured-1.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/home-featured-2.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/home-featured-5.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+							</div><!-- End .product-column -->
+						</div><!-- End .col-md-4 -->
+
+						<div class="col-sm-6 col-md-4 pb-4 pb-md-0">
+							<div class="product-column">
+								<h3 class="section-sub-title ls-n-20">Latest Products</h3>
+
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/home-featured-4.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/small/product-1.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+								<div class="product-default left-details product-widget mb-3">
+									<figure>
+										<a href="product.html">
+											<img src="{{dirlocation}}public/assets/images/products/home-featured-3.jpg">
+										</a>
+									</figure>
+									<div class="product-details">
+										<h2 class="product-title">
+											<a href="product.html">Product Short Name</a>
+										</h2>
+										<div class="ratings-container">
+											<div class="product-ratings">
+												<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+												<span class="tooltiptext tooltip-top"></span>
+											</div><!-- End .product-ratings -->
+										</div><!-- End .product-container -->
+										<div class="price-box">
+											<span class="product-price">$49.00</span>
+										</div><!-- End .price-box -->
+									</div><!-- End .product-details -->
+								</div>
+							</div><!-- End .product-column -->
+						</div><!-- End .col-md-4 -->
+					</div><!-- End .row -->
+
+				</div>
+			</div><!-- End .col-lg-9 -->
+			<?php require_once './app/views/inc/aside.php';?>
+		</div><!-- End .row -->
+	</div><!-- End .container -->
+</main><!-- End .main -->

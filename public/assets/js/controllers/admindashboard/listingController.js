@@ -117,5 +117,10 @@ module.controller("listingController", [
         });
       }
     };
+
+    $scope.append_modal_value = function (value) {
+      $scope.listingValue = value;
+      alert(JSON.stringify($scope.listingValue));
+    };
   },
 ]);

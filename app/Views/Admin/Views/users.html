@@ -13,10 +13,7 @@
         <div class="card-body">
           <h4 class="card-title">All Users</h4>
           <div class="loader" style="text-align: center">
-            <img
-              src="{{dirlocation}}public/assets/images/spinner.gif"
-              style="width: 30px"
-            />
+            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
           </div>
           <div class="table-responsive">
             <table class="table">
@@ -32,79 +29,70 @@
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  dir-paginate="user in all_users | filter:userSearch | itemsPerPage: pageSize"
-                  current-page="currentPage"
-                  ng-cloak
-                >
+                <tr dir-paginate="user in all_users | filter:userSearch | itemsPerPage: pageSize"
+                  current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    <img
-                      src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
-                      class="mr-2"
-                    />{{user.fullname}}
+                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
+                      class="mr-2" />{{user.fullname}}
                   </td>
                   <td>
-                    {{user.email}}<br /><span
-                      class="text-muted"
-                      style="font-size: 12px"
-                      >{{user.phone}}</span
-                    ><br />
-                    <span class="text-muted" style="font-size: 12px"
-                      >{{user.whatsapp}}</span
-                    >
+                    {{user.email}}<br /><span class="text-muted" style="font-size: 12px">{{user.phone}}</span><br />
+                    <span class="text-muted" style="font-size: 12px">{{user.whatsapp}}</span>
                   </td>
                   <td>{{user.seller_id}}</td>
-                  <td>{{user.account_type_title}}</td>
+                  <td ng-switch="user.account_type_title">
+                    <span ng-switch-when="Free">
+                      <span class="badge badge-secondary">
+                        {{user.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-when="Basic">
+                      <span class="badge badge-success">
+                        {{user.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-when="Super">
+                      <span class="badge badge-info">
+                        {{user.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-when="Advance">
+                      <span class="badge badge-primary">
+                        {{user.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-default>
+
+                    </span>
+                  </td>
                   <td>{{user.last_login}}</td>
                   <td>
-                    <button
-                      class="badge badge-info mr-1"
-                      ng-show="user.status=='1'"
-                      ng-click="enable_or_disable(0,user,$index)"
-                    >
-                      <img
-                        ng-src="{{dirlocation}}public/images/spinner.gif"
-                        class="loader1_{{listing.id}}"
-                        style="width: 15px; display: none"
-                      /><i class="mdi mdi-account-convert mr-1"></i> Disable
+
+                    <button class="badge badge-info mr-1" ng-show="user.status=='1'"
+                      ng-click="enable_or_disable(0,user,$index)">
+                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none" /><i class="mdi mdi-account-convert mr-1"></i> Disable
                     </button>
-                    <button
-                      class="badge badge-success mr-1"
-                      ng-show="user.status=='0'"
-                      ng-click="enable_or_disable(1,user,$index)"
-                    >
-                      <img
-                        ng-src="{{dirlocation}}public/images/spinner.gif"
-                        class="loader1_{{listing.id}}"
-                        style="width: 15px; display: none"
-                      /><i class="mdi mdi-account-convert mr-1"></i> Enable
+                    <button class="badge badge-success mr-1" ng-show="user.status=='0'"
+                      ng-click="enable_or_disable(1,user,$index)">
+                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none" /><i class="mdi mdi-account-convert mr-1"></i> Enable
                     </button>
                     <!--  -->
-                    <button
-                      class="badge badge-primary mr-1"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
-                      <i class="mdi mdi-account-card-details mr-1"></i> View
+                    <button class="badge badge-primary mr-1" data-toggle="modal" data-target="#exampleModalCenter"
+                      ng-click="append_modal_user_info(user)">
+                      <i class=" mdi mdi-account-card-details mr-1"></i> View
                     </button>
                     <!--  -->
-                    <button
-                      class="badge badge-danger"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
+                    <button class="badge badge-danger" data-toggle="modal" data-target=".bd-example-modal-sm">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <dir-pagination-controls
-              boundary-links="true"
-              template-url=""
-              style="float: right"
-            >
+            <dir-pagination-controls boundary-links="true" template-url="" style="float: right">
             </dir-pagination-controls>
           </div>
         </div>
@@ -113,43 +101,131 @@
     <!-- dropdown -->
 
     <!-- modal window -->
-    <div
-      class="modal fade"
-      id="exampleModalCenter"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenterTitle">
-              {{ listing }}
+
             </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+          <div class="modal-body">
+
+            <div class="card">
+              <img class="card-img-top rounded h-50"
+                src="{{dirlocation}}/public/assets/images/uploads/profile/{{userInfo.image}}" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">{{ userInfo.fullname }} <span ng-switch="userInfo.account_type_title"
+                    class="ml-4">
+                    <span ng-switch-when="Free">
+                      <span class="badge badge-secondary">
+                        {{userInfo.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-when="Basic">
+                      <span class="badge badge-success">
+                        {{userInfo.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-when="Super">
+                      <span class="badge badge-info">
+                        {{userInfo.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-when="Advance">
+                      <span class="badge badge-primary">
+                        {{userInfo.account_type_title}}
+                      </span>
+                    </span>
+                    <span ng-switch-default>
+                      <span class="badge badge-light">
+
+                      </span>
+                    </span>
+                  </span></h4>
+                <p ng-show="userInfo.email">
+                  <i class="mdi mdi-check-circle mr-1 text-success">
+                  </i>
+                  Email:
+                  <span>
+                    {{ userInfo.email }}</span>
+                </p>
+                <p ng-show="userInfo.phone">
+                  <i class="mdi mdi-check-circle mr-1 text-success">
+                  </i>
+                  Phone:
+                  <span>
+                    {{ userInfo.phone }}</span>
+                </p>
+                <p ng-show="userInfo.state">
+                  <i class="mdi mdi-check-circle mr-1 text-success">
+                  </i>
+                  State:
+                  <span>
+                    {{ userInfo.state }}</span>
+                </p>
+                <p ng-show="userInfo.whatsapp">
+                  <i class="mdi mdi-check-circle"></i>
+                  Whatsapp:
+                  <span>
+                    {{ userInfo.whatsapp }}</span>
+                </p>
+                <p ng-show="userInfo.last_login">
+                  <i class="mdi mdi-check-circle mr-1 text-success">
+                  </i>
+                  Last seen:
+                  <span>
+                    {{ userInfo.last_login }}</span>
+                </p>
+                <p ng-show="userInfo.signup_date">
+                  <i class="mdi mdi-check-circle mr-1 text-success">
+                  </i>
+                  Join date:
+                  <span>
+                    {{ userInfo.signup_date}}</span>
+                </p>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- modal window -->
+    <!-- small modal -->
+    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              {{ listingValue.name }}
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing
+              elit. Autem dolore blanditiis temporibus. Saepe, dolor
+              inventore sint sequi dolores rem aspernatur accusamus
+              architecto nisi praesentium expedita molestias
+              accusamus.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end small modal -->
   </div>
 </div>

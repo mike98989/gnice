@@ -1,619 +1,501 @@
+<main class="main" ng-controller="homeController">
+  <div class="container" ng-init="fetch_single_product()">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="Home"><i class="icon-home"></i> Home</a>
+        </li>
 
-      <main class="main" ng-controller="homeController">
-        <div class="container"  ng-init="fetch_single_product()">
-          <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <ol class="breadcrumb" >
-              <li class="breadcrumb-item">
-                <a href="Home"><i class="icon-home"></i>  Home</a>
-              </li>
+        <li class="breadcrumb-item"><a href="#" class="sf-with-ul cabtn"
+            data-idc="{{product.category}}">{{product.productCategory}}</a></li>
+        <li class="breadcrumb-item"><a href="#" class="cbtn" data-id4="{{product.sub_category}}"
+            data-id5="{{product.category}}">{{ product.productSubCategory }}</a></li>
+        <li class="breadcrumb-item">
+          <a href=""><i class="breadcrumb-item active"></i>{{ product.name }}</a>
+        </li>
 
-              <li class="breadcrumb-item"><a href="#" class="sf-with-ul cabtn" data-idc="{{product.category}}">{{product.productCategory}}</a></li>
-              <li class="breadcrumb-item"><a href="#" class="cbtn" data-id4="{{product.sub_category}}" data-id5="{{product.category}}">{{ product.productSubCategory }}</a></li>
-               <li class="breadcrumb-item">
-                <a href=""><i class="breadcrumb-item active"></i>{{ product.name }}</a>
-              </li>
+      </ol>
+    </nav>
+    <div class="product-single-container product-single-default">
+      <div class="row">
+        <div class="col-md-6 product-single-gallery">
+
+
+          <!--Carousel Wrapper-->
+          <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+            <!--Slides-->
+
+            <div class="carousel-inner" role="listbox">
+              <div class="carousel-item" ng-class="{active: $index == 0}" ng-repeat="image in product_image">
+                <img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" alt="slide">
+              </div>
+
+            </div>
+            <!--/.Slides-->
+            <!--Controls-->
+            <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            <!--/.Controls-->
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-thumb" data-slide-to="{{$index}}" ng-class="{active: $index == 0}"
+                ng-repeat="image in product_image"> <img class="d-block w-100"
+                  src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" class="img-fluid"></li>
 
             </ol>
-          </nav>
-          <div class="product-single-container product-single-default">
-            <div class="row" >
-              <div class="col-md-6 product-single-gallery">
+          </div>
+          <!--/.Carousel Wrapper-->
 
-
-                <!--Carousel Wrapper-->
-    <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
-      <!--Slides-->
-      
-      <div class="carousel-inner" role="listbox">
-        <div class="carousel-item" ng-class="{active: $index == 0}" ng-repeat="image in product_image">
-          <img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" alt="slide">
         </div>
-        
+
+        <!-- End .product-single-gallery -->
+
+        <div class="col-md-6 product-single-details">
+          <h1 class="product-title" style="padding-top:0;margin-top:0">{{product.name}}</h1>
+
+
+          <p>{{product.land_mark}}, {{product.lga}}, {{product.state}}</p>
+
+          <!-- End .ratings-container -->
+          <div class="price-box">
+            <span class="product-price">{{product.price| currency: 'NGN '}}</span>
+          </div>
+          <!-- End .price-box -->
+
+          <!-- End .product-desc -->
+
+
+          <div class="product-filters-container">
+            <div class="product-single-filter mb-2">
+              <img style="width: 50px!important;"
+                src="{{dirlocation}}public/assets/images/uploads/profile/{{product.seller_image}}"
+                class="img-profile rounded-circle mb-4">
+              {{product.seller_fullname}},
+            </div>
+            <div class="product-single-filter mb-2">
+              <label>Join Gnice on : {{product.signup_date}} </label>
+            </div>
+            <div class="product-single-filter mb-2">
+              <label>Last Seen : {{product.last_seen}}</label>
+            </div>
+            <!-- End .product-single-filter -->
+          </div>
+          <!-- End .product-filters-container -->
+
+          <hr class="divider" />
+
+          <div class="product-action">
+
+            <!-- End .product-single-qty -->
+
+            <a ng-click="showNum()" ng-show="hidetag" href="" class="btn btn-dark add-cart icon-shopping-cart"
+              title="Show Number">Show Number</a>
+            <a ng-show="shownumber" href="tel:{{product.seller_phone}}"
+              class="btn btn-dark add-cart icon-shopping-cart">{{product.seller_phone}}</a>
+          </div>
+          <!-- End .product-action -->
+
+
+
+
+        </div>
+        <!-- End .product-single-details -->
       </div>
-      <!--/.Slides-->
-      <!--Controls-->
-      <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-      <!--/.Controls-->
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-thumb" data-slide-to="{{$index}}" ng-class="{active: $index == 0}" ng-repeat="image in product_image"> <img class="d-block w-100" src="{{dirlocation}}public/assets/images/uploads/products/{{image}}"
-            class="img-fluid"></li>
-        
-      </ol>
+      <!-- End .row -->
     </div>
-    <!--/.Carousel Wrapper-->
+    <!-- End .product-single-container -->
 
-              </div>
-          
-              <!-- End .product-single-gallery -->
-
-              <div class="col-md-6 product-single-details">
-                <h1 class="product-title" style="padding-top:0;margin-top:0">{{product.name}}</h1>
-
-        
-                  <p>{{product.land_mark}}, {{product.lga}}, {{product.state}}</p>
-                
-                <!-- End .ratings-container -->
-                <div class="price-box">
-                  <span class="product-price">{{product.price| currency: 'NGN '}}</span>
-                </div>
-                <!-- End .price-box -->
-
-                <!-- End .product-desc -->
-               
-
-                <div class="product-filters-container">
-                  <div class="product-single-filter mb-2">
-                     <img style="width: 50px!important;"   src="{{dirlocation}}public/assets/images/uploads/profile/{{product.seller_image}}" class="img-profile rounded-circle mb-4">
-                     {{product.seller_fullname}},
-                  </div>
-                   <div class="product-single-filter mb-2">
-                    <label>Join Gnice on : {{product.signup_date}} </label>
-                  </div>
-                   <div class="product-single-filter mb-2">
-                    <label>Last Seen : {{product.last_seen}}</label>
-                  </div>
-                  <!-- End .product-single-filter -->
-                </div>
-                <!-- End .product-filters-container -->
-
-                <hr class="divider" />
-
-                <div class="product-action">
-                  
-                  <!-- End .product-single-qty -->
-
-                  <a ng-click="showNum()" ng-show="hidetag"
-                    href=""
-                    class="btn btn-dark add-cart icon-shopping-cart"
-                    title="Show Number"
-                    >Show Number</a
-                  >
-                   <a ng-show="shownumber"
-                    href="tel:{{product.seller_phone}}"
-
-                    class="btn btn-dark add-cart icon-shopping-cart"
-                   
-                    >{{product.seller_phone}}</a
-                  >
-                </div>
-                <!-- End .product-action -->
-
-             
-
-             
-              </div>
-              <!-- End .product-single-details -->
-            </div>
-            <!-- End .row -->
-          </div>
-          <!-- End .product-single-container -->
-
-          <div class="product-single-tabs">
-            <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  id="product-tab-desc"
-                  data-toggle="tab"
-                  href="#product-desc-content"
-                  role="tab"
-                  aria-controls="product-desc-content"
-                  aria-selected="true"
-                  >Description</a
-                >
+    <div class="product-single-tabs">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content" role="tab"
+            aria-controls="product-desc-content" aria-selected="true">Description</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="product-tab-more-info" data-toggle="tab" href="#product-more-info-content" role="tab"
+            aria-controls="product-more-info-content" aria-selected="false">More Info</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="product-tab-tags" data-toggle="tab" href="#product-tags-content" role="tab"
+            aria-controls="product-tags-content" aria-selected="false">Message Seller</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content" role="tab"
+            aria-controls="product-reviews-content" aria-selected="false">Reviews (3)</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
+          aria-labelledby="product-tab-desc">
+          <div class="product-desc-content">
+            <div ng-bind-html="product.description"></div>
+            <ul>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Make: </span> {{ product.brand }}
               </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="product-tab-more-info"
-                  data-toggle="tab"
-                  href="#product-more-info-content"
-                  role="tab"
-                  aria-controls="product-more-info-content"
-                  aria-selected="false"
-                  >More Info</a
-                >
+
+              <li>
+                <i class="fa fa-check-circle"></i><span>Model: </span>{{ product.model }}
               </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="product-tab-tags"
-                  data-toggle="tab"
-                  href="#product-tags-content"
-                  role="tab"
-                  aria-controls="product-tags-content"
-                  aria-selected="false"
-                  >Message Seller</a
-                >
+              <li>
+                <i class="fa fa-check-circle"></i><span>Year of Manufacture:</span>{{ product.year_of_manufacture }}
               </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="product-tab-reviews"
-                  data-toggle="tab"
-                  href="#product-reviews-content"
-                  role="tab"
-                  aria-controls="product-reviews-content"
-                  aria-selected="false"
-                  >Reviews (3)</a
-                >
+              <li>
+                <i class="fa fa-check-circle"></i><span>Color: </span> {{ product.color }}
               </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Milage: </span>{{ product.fuel }}Km
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Condition: </span>{{ product.condition_state }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Ram: </span>{{ product.ram }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Internal Storage</span>{{ product.internal_storage }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Sim: </span>{{ product.sim }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Resolution: </span>{{ product.resolution }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Battery: </span>{{ product.battery }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Main Camera: </span>{{ product.main_camera }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Selfie Camera: </span>{{ product.selfie_camera }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Operating System: </span>{{ product.operating_system }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Hard Drive Size: </span>{{ product.hard_drive_size }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Property Size: </span>{{ product.property_size }}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Number of Bedrooms: </span>{{ product.number_of_bedrooms}}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Number of Bathrooms: </span>{{ product.number_of_bathrooms}}
+              </li>
+              <li>
+                <i class="fa fa-check-circle"></i><span>Property Type: </span>{{ product.property_type }}
+              </li>
+
+
             </ul>
-            <div class="tab-content">
-              <div
-                class="tab-pane fade show active"
-                id="product-desc-content"
-                role="tabpanel"
-                aria-labelledby="product-tab-desc"
-              >
-                <div class="product-desc-content">
-                <div ng-bind-html="product.description"></div>
-                  <ul>
-                    <li>
-                      <i class="fa fa-check-circle"></i><span>Make:       </span> {{ product.brand  }} 
-                    </li>
-                   
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Model:      </span>{{ product.model  }}
-                    </li>
-                    <li>
-                      <i class="fa fa-check-circle"></i><span>Year of Manufacture:</span>{{ product.year_of_manufacture  }}
-                    </li>
-                    <li>
-                      <i class="fa fa-check-circle"></i><span>Color:       </span> {{ product.color  }} 
-                    </li>
-                    <li>
-                    <i class="fa fa-check-circle"></i><span>Milage:   </span>{{ product.fuel  }}Km
-                    </li>
-                    <li>
-                    <i class="fa fa-check-circle"></i><span>Condition:    </span>{{ product.condition_state  }}
-                    </li>
-                    <li>
-                      <i class="fa fa-check-circle"></i><span>Ram:    </span>{{ product.ram  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Internal Storage</span>{{ product.internal_storage  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Sim:    </span>{{ product.sim  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Resolution:   </span>{{ product.resolution  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Battery:    </span>{{ product.battery }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Main Camera:    </span>{{ product.main_camera  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Selfie Camera:  </span>{{ product.selfie_camera  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Operating System:  </span>{{ product.operating_system  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Hard Drive Size:   </span>{{ product.hard_drive_size  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Property Size:    </span>{{ product.property_size  }}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Number of Bedrooms:     </span>{{ product.number_of_bedrooms}}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Number of Bathrooms:     </span>{{ product.number_of_bathrooms}}
-                    </li>
-                     <li>
-                      <i class="fa fa-check-circle"></i><span>Property Type:   </span>{{ product.property_type  }}
-                    </li>
-                    
-                 
-                  </ul>
-                 
-                </div>
-             
-              </div>
-              <!-- End .tab-pane -->
 
-              <div
-                class="tab-pane fade fade"
-                id="product-more-info-content"
-                role="tabpanel"
-                aria-labelledby="product-tab-more-info"
-              >
-                <div class="product-desc-content">
-                  <p>
-                  {{ singleProduct.description }}
-                  </p>
-                </div>
-                 <h4>Safety Tip</h4>
-                  <ul>
+          </div>
 
-                    <li> <i class="fa fa-check-circle"></i>   <span>Do not Pay in advance even for the delivery</span></li>
-                    <li> <i class="fa fa-check-circle"></i><span>   Try to meet at a safe, public location</span></li>
-                    <li> <i class="fa fa-check-circle"></i><span>   Check the item Before you buy it</span></li>
-                    <li> <i class="fa fa-check-circle"></i><span>   pay only after collecting the item</span></li>
-                  </ul>
-                  <div class="product-action">
-                  <button  class="btn btn-danger btn-bg-dark">Report Abuse</button>
-                  <button  class="btn btn-success ">post ad like this</button>
-                </div>
-                <!-- End .product-desc-content -->
-              </div>
-              <!-- End .tab-pane -->
+        </div>
+        <!-- End .tab-pane -->
+
+        <div class="tab-pane fade fade" id="product-more-info-content" role="tabpanel"
+          aria-labelledby="product-tab-more-info">
+          <div class="product-desc-content">
+            <p>
+              {{ singleProduct.description }}
+            </p>
+          </div>
+          <h4>Safety Tip</h4>
+          <ul>
+
+            <li> <i class="fa fa-check-circle"></i> <span>Do not Pay in advance even for the delivery</span></li>
+            <li> <i class="fa fa-check-circle"></i><span> Try to meet at a safe, public location</span></li>
+            <li> <i class="fa fa-check-circle"></i><span> Check the item Before you buy it</span></li>
+            <li> <i class="fa fa-check-circle"></i><span> pay only after collecting the item</span></li>
+          </ul>
+          <div class="product-action">
+            <button class="btn btn-danger btn-bg-dark">Report Abuse</button>
+            <button class="btn btn-success ">post ad like this</button>
+          </div>
+          <!-- End .product-desc-content -->
+        </div>
+        <!-- End .tab-pane -->
 
 
-              <div
-                class="tab-pane fade"
-                id="product-tags-content"
-                role="tabpanel"
-                aria-labelledby="product-tab-tags"
-              >
+        <div class="tab-pane fade" id="product-tags-content" role="tabpanel" aria-labelledby="product-tab-tags">
 
-               <div class="product-reviews-content">
-                  <div class="row">
-                  
-                    <div class="col-xl-12">
-                      <div class="add-product-review">
-                        <form class="comment-form m-0" ng-submit="message_product_seller()" id="message_product_seller">
-                          <div class="alert alert-info result" style="display: none;"></div>
-                          <h3 class="review-title">Message Seller</h3>
-                            <input type="hidden" name="seller_id" value="{{product.seller_id}}">
-                              <input type="hidden" name="product_code" value="{{product.product_code}}">
-                            <div class="row">
-                            <div class="col-md-6 col-xl-12">
-                              <div class="form-group">
-                                <label>Your Name</label>
-                                <input
-                                  type="text"
-                                  name="sender_name"
-                                  class="form-control form-control-sm"
-                                  required
-                                />
-                              </div>
-                              <!-- End .form-group -->
-                            </div>
+          <div class="product-reviews-content">
+            <div class="row">
 
-                            <div class="col-md-6 col-xl-12">
-                              <div class="form-group">
-                                <label>Your E-mail</label>
-                                <input
-                                  type="text"
-                                  name="sender_email"
-                                  class="form-control form-control-sm"
-                                  required
-                                />
-                              </div>
-                              <!-- End .form-group -->
-                            </div>
-                             <div class="col-md-6 col-xl-12">
-                              <div class="form-group">
-                                <label>Your Phone Number</label>
-                                <input
-                                  type="text"
-                                  name="sender_phone"
-                                  class="form-control form-control-sm"
-                                  required
-                                />
-                              </div>
-                              <!-- End .form-group -->
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label>Your Message</label>
-                            <textarea
-                            name="message"
-                              cols="5"
-                              rows="6"
-                              class="form-control form-control-sm"
-                            ></textarea>
-                          </div>
-                          
-                          <!-- End .form-group -->
-                          <input
-                            type="submit"
-                            class="btn btn-dark ls-n-15"
-                            value="Submit"
-                          />
-                        </form>
+              <div class="col-xl-12">
+                <div class="add-product-review">
+                  <form class="comment-form m-0" ng-submit="message_product_seller()" id="message_product_seller">
+                    <div class="alert alert-info result" style="display: none;"></div>
+                    <h3 class="review-title">Message Seller</h3>
+                    <input type="hidden" name="seller_id" value="{{product.seller_id}}">
+                    <input type="hidden" name="product_code" value="{{product.product_code}}">
+                    <div class="row">
+                      <div class="col-md-6 col-xl-12">
+                        <div class="form-group">
+                          <label>Your Name</label>
+                          <input type="text" name="sender_name" class="form-control form-control-sm" required />
+                        </div>
+                        <!-- End .form-group -->
                       </div>
-                      <!-- End .add-product-review -->
-                    </div>
-                  </div>
-                </div>
-                <!-- End .product-reviews-content -->
-               
-              </div>
-              <!-- End .tab-pane -->
 
-
-
-              <div
-                class="tab-pane fade"
-                id="product-reviews-content"
-                role="tabpanel"
-                aria-labelledby="product-tab-reviews"
-              >
-                <div class="product-reviews-content">
-                  <div class="row">
-                    <div class="col-xl-7">
-                      <h2 class="reviews-title">
-                        3 reviews for Product Long Name
-                      </h2>
-
-                      <ol class="comment-list">
-                        <li class="comment-container">
-                          <div class="comment-avatar">
-                            <img
-                              src="{{dirlocation}}public/assets/images/avatar/avatar1.jpg"
-                              width="65"
-                              height="65"
-                              alt="avatar"
-                            />
-                          </div>
-                          <!-- End .comment-avatar-->
-
-                          <div class="comment-box">
-                            <div class="ratings-container">
-                              <div class="product-ratings">
-                                <span class="ratings" style="width: 80%"></span
-                                ><!-- End .ratings -->
-                              </div>
-                              <!-- End .product-ratings -->
-                            </div>
-                            <!-- End .ratings-container -->
-
-                            <div class="comment-info mb-1">
-                              <h4 class="avatar-name">John Doe</h4>
-                              -
-                              <span class="comment-date"
-                                >Novemeber 15, 2019</span
-                              >
-                            </div>
-                            <!-- End .comment-info -->
-
-                            <div class="comment-text">
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip.
-                              </p>
-                            </div>
-                            <!-- End .comment-text -->
-                          </div>
-                          <!-- End .comment-box -->
-                        </li>
-                        <!-- comment-container -->
-
-                        <li class="comment-container">
-                          <div class="comment-avatar">
-                            <img
-                              src="<?php echo APP_URL;?>/assets/images/avatar/avatar2.jpg"
-                              width="65"
-                              height="65"
-                              alt="avatar"
-                            />
-                          </div>
-                          <!-- End .comment-avatar-->
-
-                          <div class="comment-box">
-                            <div class="ratings-container">
-                              <div class="product-ratings">
-                                <span class="ratings" style="width: 80%"></span
-                                ><!-- End .ratings -->
-                              </div>
-                              <!-- End .product-ratings -->
-                            </div>
-                            <!-- End .ratings-container -->
-
-                            <div class="comment-info mb-1">
-                              <h4 class="avatar-name">John Doe</h4>
-                              -
-                              <span class="comment-date"
-                                >Novemeber 15, 2019</span
-                              >
-                            </div>
-                            <!-- End .comment-info -->
-
-                            <div class="comment-text">
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip.
-                              </p>
-                            </div>
-                            <!-- End .comment-text -->
-                          </div>
-                          <!-- End .comment-box -->
-                        </li>
-                        <!-- comment-container -->
-
-                        <li class="comment-container">
-                          <div class="comment-avatar">
-                            <img
-                              src="<?php echo APP_URL;?>/assets/images/avatar/avatar3.jpg"
-                              width="65"
-                              height="65"
-                              alt="avatar"
-                            />
-                          </div>
-                          <!-- End .comment-avatar-->
-
-                          <div class="comment-box">
-                            <div class="ratings-container">
-                              <div class="product-ratings">
-                                <span class="ratings" style="width: 80%"></span
-                                ><!-- End .ratings -->
-                              </div>
-                              <!-- End .product-ratings -->
-                            </div>
-                            <!-- End .ratings-container -->
-
-                            <div class="comment-info mb-1">
-                              <h4 class="avatar-name">John Doe</h4>
-                              -
-                              <span class="comment-date"
-                                >Novemeber 15, 2019</span
-                              >
-                            </div>
-                            <!-- End .comment-info -->
-
-                            <div class="comment-text">
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip.
-                              </p>
-                            </div>
-                            <!-- End .comment-text -->
-                          </div>
-                          <!-- End .comment-box -->
-                        </li>
-                        <!-- comment-container -->
-                      </ol>
-                      <!-- End .comment-list -->
-                    </div>
-
-                    <div class="col-xl-5">
-                      <div class="add-product-review">
-                        <form action="#" class="comment-form m-0">
-                          <h3 class="review-title">Add a Review</h3>
-
-                          <div class="rating-form">
-                            <label for="rating">Your rating</label>
-                            <span class="rating-stars">
-                              <a class="star-1" href="#">1</a>
-                              <a class="star-2" href="#">2</a>
-                              <a class="star-3" href="#">3</a>
-                              <a class="star-4" href="#">4</a>
-                              <a class="star-5" href="#">5</a>
-                            </span>
-
-                            <select
-                              name="rating"
-                              id="rating"
-                              required=""
-                              style="display: none"
-                            >
-                              <option value="">Rate…</option>
-                              <option value="5">Perfect</option>
-                              <option value="4">Good</option>
-                              <option value="3">Average</option>
-                              <option value="2">Not that bad</option>
-                              <option value="1">Very poor</option>
-                            </select>
-                          </div>
-
-                          <div class="form-group">
-                            <label>Your Review</label>
-                            <textarea
-                              cols="5"
-                              rows="6"
-                              class="form-control form-control-sm"
-                            ></textarea>
-                          </div>
-                          <!-- End .form-group -->
-
-                          <div class="row">
-                            <div class="col-md-6 col-xl-12">
-                              <div class="form-group">
-                                <label>Your Name</label>
-                                <input
-                                  type="text"
-                                  class="form-control form-control-sm"
-                                  required
-                                />
-                              </div>
-                              <!-- End .form-group -->
-                            </div>
-
-                            <div class="col-md-6 col-xl-12">
-                              <div class="form-group">
-                                <label>Your E-mail</label>
-                                <input
-                                  type="text"
-                                  class="form-control form-control-sm"
-                                  required
-                                />
-                              </div>
-                              <!-- End .form-group -->
-                            </div>
-                          </div>
-
-                          <input
-                            type="submit"
-                            class="btn btn-dark ls-n-15"
-                            value="Submit"
-                          />
-                        </form>
+                      <div class="col-md-6 col-xl-12">
+                        <div class="form-group">
+                          <label>Your E-mail</label>
+                          <input type="text" name="sender_email" class="form-control form-control-sm" required />
+                        </div>
+                        <!-- End .form-group -->
                       </div>
-                      <!-- End .add-product-review -->
+                      <div class="col-md-6 col-xl-12">
+                        <div class="form-group">
+                          <label>Your Phone Number</label>
+                          <input type="text" name="sender_phone" class="form-control form-control-sm" required />
+                        </div>
+                        <!-- End .form-group -->
+                      </div>
                     </div>
-                  </div>
+
+                    <div class="form-group">
+                      <label>Your Message</label>
+                      <textarea name="message" cols="5" rows="6" class="form-control form-control-sm"></textarea>
+                    </div>
+
+                    <!-- End .form-group -->
+                    <input type="submit" class="btn btn-dark ls-n-15" value="Submit" />
+                  </form>
                 </div>
-                <!-- End .product-reviews-content -->
+                <!-- End .add-product-review -->
               </div>
-              <!-- End .tab-pane -->
             </div>
-            <!-- End .tab-content -->
           </div>
-          <!-- End .product-single-tabs -->
-          <div>
-            
-          </div>
+          <!-- End .product-reviews-content -->
 
-          <div class="products-section pt-0">
-            <h2 class="section-title">Related Products</h2>
+        </div>
+        <!-- End .tab-pane -->
 
-            <div class=" " >
-              <div class="row">
-                <div class="col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
-                     <div class="product-default inner-quickview inner-icon" >
-                <figure>
-                 <a href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">
-                  <div ng-init="img = relatedProduct.image.split(',')"> <img  style="width: 100%!important; height: 150px!important;" src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+
+
+        <div class="tab-pane fade" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
+          <div class="product-reviews-content">
+            <div class="row">
+              <div class="col-xl-7">
+                <h2 class="reviews-title">
+                  3 reviews for Product Long Name
+                </h2>
+
+                <ol class="comment-list">
+                  <li class="comment-container">
+                    <div class="comment-avatar">
+                      <img src="{{dirlocation}}public/assets/images/avatar/avatar1.jpg" width="65" height="65"
+                        alt="avatar" />
                     </div>
-                   
-                  </a>
-                  <div class="label-group">
-                   <!-- <span class="product-label label-sale">-20%</span> -->
+                    <!-- End .comment-avatar-->
+
+                    <div class="comment-box">
+                      <div class="ratings-container">
+                        <div class="product-ratings">
+                          <span class="ratings" style="width: 80%"></span><!-- End .ratings -->
+                        </div>
+                        <!-- End .product-ratings -->
+                      </div>
+                      <!-- End .ratings-container -->
+
+                      <div class="comment-info mb-1">
+                        <h4 class="avatar-name">John Doe</h4>
+                        -
+                        <span class="comment-date">Novemeber 15, 2019</span>
+                      </div>
+                      <!-- End .comment-info -->
+
+                      <div class="comment-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur
+                          adipiscing elit, sed do eiusmod tempor
+                          incididunt ut labore et dolore magna aliqua. Ut
+                          enim ad minim veniam, quis nostrud exercitation
+                          ullamco laboris nisi ut aliquip.
+                        </p>
+                      </div>
+                      <!-- End .comment-text -->
+                    </div>
+                    <!-- End .comment-box -->
+                  </li>
+                  <!-- comment-container -->
+
+                  <li class="comment-container">
+                    <div class="comment-avatar">
+                      <img src="<?php echo APP_URL;?>/assets/images/avatar/avatar2.jpg" width="65" height="65"
+                        alt="avatar" />
+                    </div>
+                    <!-- End .comment-avatar-->
+
+                    <div class="comment-box">
+                      <div class="ratings-container">
+                        <div class="product-ratings">
+                          <span class="ratings" style="width: 80%"></span><!-- End .ratings -->
+                        </div>
+                        <!-- End .product-ratings -->
+                      </div>
+                      <!-- End .ratings-container -->
+
+                      <div class="comment-info mb-1">
+                        <h4 class="avatar-name">John Doe</h4>
+                        -
+                        <span class="comment-date">Novemeber 15, 2019</span>
+                      </div>
+                      <!-- End .comment-info -->
+
+                      <div class="comment-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur
+                          adipiscing elit, sed do eiusmod tempor
+                          incididunt ut labore et dolore magna aliqua. Ut
+                          enim ad minim veniam, quis nostrud exercitation
+                          ullamco laboris nisi ut aliquip.
+                        </p>
+                      </div>
+                      <!-- End .comment-text -->
+                    </div>
+                    <!-- End .comment-box -->
+                  </li>
+                  <!-- comment-container -->
+
+                  <li class="comment-container">
+                    <div class="comment-avatar">
+                      <img src="<?php echo APP_URL;?>/assets/images/avatar/avatar3.jpg" width="65" height="65"
+                        alt="avatar" />
+                    </div>
+                    <!-- End .comment-avatar-->
+
+                    <div class="comment-box">
+                      <div class="ratings-container">
+                        <div class="product-ratings">
+                          <span class="ratings" style="width: 80%"></span><!-- End .ratings -->
+                        </div>
+                        <!-- End .product-ratings -->
+                      </div>
+                      <!-- End .ratings-container -->
+
+                      <div class="comment-info mb-1">
+                        <h4 class="avatar-name">John Doe</h4>
+                        -
+                        <span class="comment-date">Novemeber 15, 2019</span>
+                      </div>
+                      <!-- End .comment-info -->
+
+                      <div class="comment-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur
+                          adipiscing elit, sed do eiusmod tempor
+                          incididunt ut labore et dolore magna aliqua. Ut
+                          enim ad minim veniam, quis nostrud exercitation
+                          ullamco laboris nisi ut aliquip.
+                        </p>
+                      </div>
+                      <!-- End .comment-text -->
+                    </div>
+                    <!-- End .comment-box -->
+                  </li>
+                  <!-- comment-container -->
+                </ol>
+                <!-- End .comment-list -->
+              </div>
+
+              <div class="col-xl-5">
+                <div class="add-product-review">
+                  <form action="#" class="comment-form m-0">
+                    <h3 class="review-title">Add a Review</h3>
+
+                    <div class="rating-form">
+                      <label for="rating">Your rating</label>
+                      <span class="rating-stars">
+                        <a class="star-1" href="#">1</a>
+                        <a class="star-2" href="#">2</a>
+                        <a class="star-3" href="#">3</a>
+                        <a class="star-4" href="#">4</a>
+                        <a class="star-5" href="#">5</a>
+                      </span>
+
+                      <select name="rating" id="rating" required="" style="display: none">
+                        <option value="">Rate…</option>
+                        <option value="5">Perfect</option>
+                        <option value="4">Good</option>
+                        <option value="3">Average</option>
+                        <option value="2">Not that bad</option>
+                        <option value="1">Very poor</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Your Review</label>
+                      <textarea cols="5" rows="6" class="form-control form-control-sm"></textarea>
+                    </div>
+                    <!-- End .form-group -->
+
+                    <div class="row">
+                      <div class="col-md-6 col-xl-12">
+                        <div class="form-group">
+                          <label>Your Name</label>
+                          <input type="text" class="form-control form-control-sm" required />
+                        </div>
+                        <!-- End .form-group -->
+                      </div>
+
+                      <div class="col-md-6 col-xl-12">
+                        <div class="form-group">
+                          <label>Your E-mail</label>
+                          <input type="text" class="form-control form-control-sm" required />
+                        </div>
+                        <!-- End .form-group -->
+                      </div>
+                    </div>
+
+                    <input type="submit" class="btn btn-dark ls-n-15" value="Submit" />
+                  </form>
+                </div>
+                <!-- End .add-product-review -->
+              </div>
+            </div>
+          </div>
+          <!-- End .product-reviews-content -->
+        </div>
+        <!-- End .tab-pane -->
+      </div>
+      <!-- End .tab-content -->
+    </div>
+    <!-- End .product-single-tabs -->
+    <div>
+
+    </div>
+
+    <div class="products-section pt-0">
+      <h2 class="section-title">Related Products</h2>
+
+      <div class=" ">
+        <div class="row">
+          <div class="col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
+            <div class="product-default inner-quickview inner-icon">
+              <figure>
+                <a
+                  href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">
+                  <div ng-init="img = relatedProduct.image.split(',')"> <img
+                      style="width: 100%!important; height: 150px!important;"
+                      src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
                   </div>
-                  <!--
+
+                </a>
+                <div class="label-group">
+                  <!-- <span class="product-label label-sale">-20%</span> -->
+                </div>
+                <!--
                   <div class="btn-icon-group">
                     <button
                       class="btn-icon btn-add-cart"
@@ -624,50 +506,46 @@
                     </button>
                   </div>
                 -->
-                </figure>
-                <div class="product-details">
-                  <div class="category-wrap">
-                    <div class="category-list">
-                      <a href="category.html" class="product-category"
-                        >{{ relatedProduct.productSubCategory }}</a
-                      >
-                    </div>
+              </figure>
+              <div class="product-details">
+                <div class="category-wrap">
+                  <div class="category-list">
+                    <a href="category.html" class="product-category">{{ relatedProduct.productSubCategory }}</a>
                   </div>
-                  <h3 class="product-title">
-                    <a href="product.html">{{ relatedProduct.name }}</a>
-                  </h3>
-                  <div class="ratings-container">
-                    <div class="product-ratings">
-                      <span class="ratings" style="width: 100%"></span
-                      ><!-- End .ratings -->
-                      <span class="tooltiptext tooltip-top"></span>
-                    </div>
-                    <!-- End .product-ratings -->
-                  </div>
-                  <!-- End .ratings-container -->
-                  <div class="price-box">
-                    <span class="product-price">{{ relatedProduct.price }}</span>
-                  </div>
-                  <!-- End .price-box -->
                 </div>
-                <!-- End .product-details -->
+                <h3 class="product-title">
+                  <a href="product.html">{{ relatedProduct.name }}</a>
+                </h3>
+                <div class="ratings-container">
+                  <div class="product-ratings">
+                    <span class="ratings" style="width: 100%"></span><!-- End .ratings -->
+                    <span class="tooltiptext tooltip-top"></span>
+                  </div>
+                  <!-- End .product-ratings -->
+                </div>
+                <!-- End .ratings-container -->
+                <div class="price-box">
+                  <span class="product-price">{{ relatedProduct.price }}</span>
+                </div>
+                <!-- End .price-box -->
               </div>
-             
-                </div>
+              <!-- End .product-details -->
+            </div>
 
-              </div>
-               <dir-pagination-controls></dir-pagination-controls>
-           
-                </div>
-                <!-- End .product-details -->
-              </div>
-            
-            <!-- End .products-slider -->
           </div>
-          <!-- End .products-section -->
-         
-         
-        </div>
-        <!-- End .container -->
-      </main>
 
+        </div>
+        <dir-pagination-controls></dir-pagination-controls>
+
+      </div>
+      <!-- End .product-details -->
+    </div>
+
+    <!-- End .products-slider -->
+  </div>
+  <!-- End .products-section -->
+
+
+  </div>
+  <!-- End .container -->
+</main>

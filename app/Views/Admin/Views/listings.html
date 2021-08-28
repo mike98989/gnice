@@ -14,10 +14,7 @@
         <div class="card-body">
           <h4 class="card-title">All listings</h4>
           <div class="loader" style="text-align: center">
-            <img
-              src="{{dirlocation}}public/assets/images/spinner.gif"
-              style="width: 30px"
-            />
+            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
           </div>
           <div class="table-responsive">
             <table class="table">
@@ -26,16 +23,10 @@
                   <th>#</th>
                   <th>Image</th>
                   <th>
-                    Name<br /><span class="text-muted" style="font-size: 12px"
-                      >unique code</span
-                    >
+                    Name<br /><span class="text-muted" style="font-size: 12px">unique code</span>
                   </th>
                   <th>
-                    Category <br /><span
-                      class="text-muted"
-                      style="font-size: 12px"
-                      >subcategory</span
-                    >
+                    Category <br /><span class="text-muted" style="font-size: 12px">subcategory</span>
                   </th>
                   <th>Created at</th>
                   <th>Seller</th>
@@ -43,132 +34,570 @@
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  dir-paginate="listing in all_listings | filter:listingSearch | itemsPerPage: pageSize"
-                  current-page="currentPage"
-                  ng-cloak
-                >
+                <tr dir-paginate="listing in all_listings | filter:listingSearch | itemsPerPage: pageSize"
+                  current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    <img
-                      ng-init=" img = listing.image.split(',')"
-                      src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}"
-                      class="mr-2"
-                    />
+                    <img ng-init=" img = listing.image.split(',')"
+                      src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" class="mr-2" />
                   </td>
                   <td>
-                    {{listing.name}} <br /><span
-                      class="text-muted"
-                      style="font-size: 12px"
-                      >{{listing.product_code}}</span
-                    >
+                    {{listing.name}} <br /><span class="text-muted"
+                      style="font-size: 12px">{{listing.product_code}}</span>
                   </td>
                   <td>
                     {{listing.productCategory}}<br />
-                    <span style="font-size: 12px" class="text-muted"
-                      >{{ listing.productSubCategory }}</span
-                    >
+                    <span style="font-size: 12px" class="text-muted">{{ listing.productSubCategory }}</span>
                   </td>
                   <td>{{listing.date_added }}</td>
                   <td>
-                    {{listing.seller_fullname}} <br /><span
-                      class="text-muted"
-                      style="font-size: 12px"
-                      >{{ listing.seller_phone }}</span
-                    >
+                    {{listing.seller_fullname}} <br /><span class="text-muted" style="font-size: 12px">{{
+                      listing.seller_phone }}</span>
                   </td>
                   <td>
-                    <button
-                      class="badge badge-info mr-1"
-                      ng-show="listing.status=='1'"
-                      ng-click="enable_or_disable_listing(0,listing,$index)"
-                    >
-                      <img
-                        ng-src="{{dirlocation}}public/images/spinner.gif"
-                        class="loader1_{{listing.id}}"
-                        style="width: 15px; display: none"
-                      /><i class="mdi mdi-autorenew mr-1"></i> Disable
+                    <button class="badge badge-info mr-1" ng-show="listing.status=='1'"
+                      ng-click="enable_or_disable_listing(0,listing,$index)">
+                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none" /><i class="mdi mdi-autorenew mr-1"></i> Disable
                     </button>
-                    <button
-                      class="badge badge-success mr-1"
-                      ng-show="listing.status=='0'"
-                      ng-click="enable_or_disable_listing(1,listing,$index)"
-                    >
-                      <img
-                        ng-src="{{dirlocation}}public/images/spinner.gif"
-                        class="loader1_{{listing.id}}"
-                        style="width: 15px; display: none"
-                      /><i class="mdi mdi-autorenew mr-1"></i> Enable
+                    <button class="badge badge-success mr-1" ng-show="listing.status=='0'"
+                      ng-click="enable_or_disable_listing(1,listing,$index)">
+                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
+                        style="width: 15px; display: none" /><i class="mdi mdi-autorenew mr-1"></i> Enable
                     </button>
                     <!--  -->
-                    <button
-                      class="badge badge-primary mr-1"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
+                    <button class="badge badge-primary mr-1" data-toggle="modal" data-target="#exampleModalLong"
+                      ng-click="append_modal_value(listing)">
                       <i class="mdi mdi-information mr-1"></i> View
                     </button>
                     <!--  -->
-                    <button
-                      class="badge badge-danger"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
+                    <button class="badge badge-danger" data-toggle="modal" data-target=".bd-example-modal-sm">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
                     </button>
                   </td>
                 </tr>
                 <!-- modal window -->
-                <div
-                  class="modal fade"
-                  id="exampleModalCenter"
-                  tabindex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalCenterTitle"
-                  aria-hidden="true"
-                >
-                  <div
-                    class="modal-dialog modal-dialog-centered"
-                    role="document"
-                  >
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">
-                          {{ listing }}
-                        </h5>
-                        <button
-                          type="button"
-                          class="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
+                        <!-- <h5 class="modal-title" id="exampleModalLongTitle">
+                          {{ listingValue.name }}
+                        </h5> -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">...</div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
+                      <div class="modal-body">
+                        <div class="card">
+                          <!-- carousel -->
+                          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                              <li ng-show="img[1]" data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                              <li ng-show="img[2]" data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                              <li ng-show="img[3]" data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                              <li ng-show="img[4]" data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                              <li ng-show="img[5]" data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                              <li ng-show="img[6]" data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+                              <li ng-show="img[7]" data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+                              <li ng-show="img[8]" data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+                              <li ng-show="img[9]" data-target="#carouselExampleIndicators" data-slide-to="9"></li>
+                              <li ng-show="img[10]" data-target="#carouselExampleIndicators" data-slide-to="10"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}"
+                                  alt="First slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[1]}}"
+                                  alt="Second slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[2]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[3]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[4]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[5]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[6]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[7]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[8]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[9]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[10]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[2]}}"
+                                  alt="Third slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100 rounded"
+                                  src="{{dirlocation}}/public/assets/images/uploads/products/{{img[2]}}"
+                                  alt="Third slide">
+                              </div>
+                            </div>
+                          </div>
+                          <!--end carousel -->
+                          <!-- <img class="card-img-top "
+                            src="{{dirlocation}}/public/assets/images/uploads/products/{{img[1]}}" alt="Card image cap"> -->
+                          <p hidden>{{ img = listingValue.image.split(',')}}
+                          </p>
+
+                          <div class="card-body mb-0 py-3 px-4">
+                            <h4 class="card-title">{{ listingValue.name }}
+                              <span ng-switch="listingValue.status">
+                                <span ng-switch-when="1" class="badge badge-gradient-success">Active</span>
+                                <span ng-switch-when="0" class="badge badge-gradient-warning">Disabled</span>
+                                <span ng-switch-default></span>
+                              </span>
+                            </h4>
+                            <p>{{ listingValue.product_code }}</p>
+                            <div class="card-text mb-0" ng-show="listingValue.description">
+                              <span>Description :</span> <br>
+                              <p>
+                                {{ listingValue.description }} Lorem ipsum dolor, sit amet consectetur adipisicing
+                                elit.
+                                In a inventore veniam libero, quos quisquam facere asperiores fugit atque ex.
+                              </p>
+                            </div>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_fullname">
+                              <img
+                                src="{{dirlocation}}/public/assets/images/uploads/profile/{{listingValue.seller_image}}"
+                                class="class=" mr-3"" " alt=" photo of {{ listingValue.seller_fullname }}"
+                                style="width:60px; height:60px; border-radius:50%;">
+                              <span class="ml-4">
+                                {{ listingValue.seller_fullname }}
+                              </span>
+                              <!-- <span>{{ listingValue.last_seen }}</span> -->
+                            </li>
+                            <li class="list-group-item" ng-show="listingValue.seller_name">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Seller ID:</span>
+                              <span>
+                                {{ listingValue.seller_name }}
+                              </span>
+                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_id">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Client ID:</span>
+                              <span>
+                                {{ listingValue.seller_id }}
+                              </span>
+                            </li>
+                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_email">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Client email:</span>
+                              <span>
+                                {{ listingValue.seller_email }}
+                              </span>
+                            </li>
+                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_phone">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Phone:</span>
+                              <span>
+                                {{ listingValue.seller_phone }}
+                              </span>
+                            </li>
+                            <!-- product info -->
+                            <li class="list-group-item " ng-show="listingValue.productCategory">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Category:</span>
+                              <span>
+                                {{ listingValue.productCategory }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.productSubCategory">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Sub Category:</span>
+                              <span>
+                                {{ listingValue.productSubCategory }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.brand">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Brand:</span>
+                              <span>
+                                {{ listingValue.brand }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.color">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">color:</span>
+                              <span>
+                                {{ listingValue.color }}
+                              </span>
+                            </li>
+
+                            <li class="list-group-item " ng-show="listingValue.date_added">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Date Created:</span>
+                              <span>
+                                {{ listingValue.date_added }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.price">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Price:</span>
+                              <span>
+                                {{ listingValue.price | currency: "NGN" }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.state">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">State:</span>
+                              <span>
+                                {{ listingValue.state }}
+                              </span>
+                            </li>
+
+                            <li class="list-group-item " ng-show="listingValue.lga">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">LGA:</span>
+                              <span>
+                                {{ listingValue.lga}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.land_mark">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">LandMark:</span>
+                              <span>
+                                {{ listingValue.land_mark }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.model">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Model:</span>
+                              <span>
+                                {{ listingValue.model }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.condition_state">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">condition:</span>
+                              <span>
+                                {{ listingValue.condition_state }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.ram">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">RAM:</span>
+                              <span>
+                                {{ listingValue.ram }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.internal_storage">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Internal Storage:</span>
+                              <span>
+                                {{ listingValue.internal_storage }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.resolution">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Resolution:</span>
+                              <span>
+                                {{ listingValue.resolution }}
+                              </span>
+
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.sim">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Sim:</span>
+                              <span>
+                                {{ listingValue.sim }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.battery">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Battery:</span>
+                              <span>
+                                {{ listingValue.battery }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.exchange_possible">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Exchange Possible:</span>
+                              <span ng-switch="listingValue.exchange_possible">
+                                <span ng-switch-when="1">Yes</span>
+                                <span ng-switch-when="0">No</span>
+                                <span ng-switch-default></span>
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.main_camera">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Main Camera:</span>
+                              <span>
+                                {{ listingValue.main_camera }}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.selfie_camera">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Selfie Camera:</span>
+                              <span>
+                                {{ listingValue.selfie_camera }}
+                              </span>
+                            </li>
+
+                            <li class="list-group-item " ng-show="listingValue.negotiable">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Price Negotiable:</span>
+                              <span ng-switch="listingValue.negotiable">
+                                <span ng-switch-when="1">Yes</span>
+                                <span ng-switch-when="0">No</span>
+                                <span ng-switch-default></span>
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.delivery_available">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Price Negotiable:</span>
+                              <span ng-switch="listingValue.delivery_available">
+                                <span ng-switch-when="1">Yes</span>
+                                <span ng-switch-when="0">No</span>
+                                <span ng-switch-default></span>
+                              </span>
+                            </li>
+
+                            <li class="list-group-item " ng-show="listingValue.second_condition">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Second Condition:</span>
+                              <span>
+                                {{ listingValue.second_condition}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.transmission_type_vehicle">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Transmission type:</span>
+                              <span>
+                                {{ listingValue.transmission_type_vehicle}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.mileage_vehicle">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Mileage:</span>
+                              <span>
+                                {{ listingValue.mileage_vehicle}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.mileage_vehicle">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Mileage:</span>
+                              <span>
+                                {{ listingValue.mileage_vehicle}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.registered_vehicle">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Register Vehicle:</span>
+                              <span>
+                                {{ listingValue.registered_vehicle}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.vin_vehicle">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">VIN:</span>
+                              <span>
+                                {{ listingValue.vin_vehicle}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.horse_power_vehicle">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Horse Power:</span>
+                              <span>
+                                {{ listingValue.horse_power_vehicle}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.engine_size">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Engine Size:</span>
+                              <span>
+                                {{ listingValue.engine_size}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.year_of_manufacture">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Year of Manufacture:</span>
+                              <span>
+                                {{ listingValue.year_of_manufacture}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.operating_system">
+                              <i class="mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Operating System :</span>
+                              <span>
+                                {{ listingValue.operating_system}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.   hard_drive_size">
+                              <i class=" mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Hard Drive Size:</span>
+                              <span>
+                                {{ listingValue.hard_drive_size}}
+                              </span>
+                            <li class="list-group-item " ng-show="listingValue.fuel">
+                              <i class=" mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Fuel :</span>
+                              <span>
+                                {{ listingValue.fuel}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.seats_vehicle">
+                              <i class=" mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">No of seats(Vehicle) :</span>
+                              <span>
+                                {{ listingValue.seats_vehicle}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.property_size">
+                              <i class=" mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Property Size:</span>
+                              <span>
+                                {{ listingValue.property_size}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.number_of_bedrooms">
+                              <i class=" mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Number of Bedrooms :</span>
+                              <span>
+                                {{ listingValue.number_of_bedrooms}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.property_type">
+                              <i class=" mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Property Type :</span>
+                              <span>
+                                {{ listingValue.property_type}}
+                              </span>
+                            </li>
+                            <li class="list-group-item " ng-show="listingValue.number_of_bathrooms">
+                              <i class=" mdi mdi-check-circle mr-1 text-success">
+                              </i>
+                              <span class="mr-2">Number of Bathrooms :</span>
+                              <span>
+                                {{ listingValue.number_of_bathrooms}}
+                              </span>
+                            </li>
+
+                          </ul>
+                        </div>
+                      </div>
+                      <div class=" modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
                           Close
-                        </button>
-                        <button type="button" class="btn btn-primary">
-                          Save changes
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- modal window -->
+                <!-- end modal window-->
+                <!-- small modal -->
+                <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                          {{ listingValue.name }}
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Autem dolore blanditiis temporibus. Saepe, dolor
+                          inventore sint sequi dolores rem aspernatur accusamus
+                          architecto nisi praesentium expedita molestias
+                          accusamus.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end small modal -->
+
               </tbody>
             </table>
-            <dir-pagination-controls
-              boundary-links="true"
-              template-url=""
-              style="float: right"
-            >
+            <dir-pagination-controls boundary-links="true" template-url="" style="float: right">
             </dir-pagination-controls>
           </div>
         </div>
