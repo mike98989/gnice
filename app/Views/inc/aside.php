@@ -1,18 +1,24 @@
 <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 <aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar">
-    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none" style="border-top:none">
+    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none"
+        style="border-top:none;background-color: #fff;">
         <h2 class="side-menu-title bg-gray ls-n-25" style="padding-top:20px;margin-top:0">Browse Categories</h2>
-        <nav class="side-nav">    
+        <nav class="side-nav">
             <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
                 <li ng-repeat="catSub in catSubs">
-                    <a href="#" style="font-weight:normal;"><img style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px" src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
-                                <ul class="submenu">
-                                    <li ng-repeat="sub in catSub.subcategory ">
-                                        <a href="#">
-                                        <img ng-show="sub.image!=''" style="display:none;width: 30px!important; height: 30px!important;" src="{{dirlocation}}public/assets/images/uploads/category/{{sub.image}}">{{ sub.title }} </a>
-                                    </li>
-                                </ul>
+                    <a href="#" style="font-weight:normal;"><img
+                            style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px"
+                            src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
+                    <ul class="submenu">
+                        <li ng-repeat="sub in catSub.subcategory ">
+                            <a href="#">
+                                <img ng-show="sub.image!=''"
+                                    style="display:none;width: 30px!important; height: 30px!important;"
+                                    src="{{dirlocation}}public/assets/images/uploads/category/{{sub.image}}">{{ sub.title }}
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <!-- CATEGORY LOOP ENDS HERE -->
                 <!--
@@ -167,29 +173,37 @@
                     </ul>
                 </li>
             -->
-                <li><a href="https://1.envato.market/DdLk5" target="_blank"><i class="sicon-star"></i>Buy Gnice!<span class="tip tip-hot">Hot</span></a></li>
+                <li><a href="https://1.envato.market/DdLk5" target="_blank"><i class="sicon-star"></i>Buy Gnice!<span
+                            class="tip tip-hot">Hot</span></a></li>
 
             </ul>
         </nav>
     </div><!-- End .side-menu-container -->
 
-    <div class="widget widget-banners px-5 pb-3 text-center">
+    <div class="widget widget-banners px-5 pb-3 text-center" style="background-color: #fff;">
         <div class="owl-carousel owl-theme">
             <div class="banner d-flex flex-column align-items-center">
-                <h4 class="sale-text font1 text-uppercase m-b-3" style="font-size: 20px; padding-top:55px;">Got Something to</h4>
-                <h3 class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase"><em class="pt-3 ls-0">Sale</em></h3>
+                <h4 class="sale-text font1 text-uppercase m-b-3" style="font-size: 20px; padding-top:55px;">Got
+                    Something to</h4>
+                <h3
+                    class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase">
+                    <em class="pt-3 ls-0">Sale</em></h3>
                 <p>Post an advert for free!</p>
             </div><!-- End .banner -->
 
             <div class="banner d-flex flex-column align-items-center">
-                <h3 class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase"><em class="pt-3 ls-0">Sale</em>Many Item</h3>
+                <h3
+                    class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase">
+                    <em class="pt-3 ls-0">Sale</em>Many Item</h3>
                 <h4 class="sale-text font1 text-uppercase m-b-3">45<sup>%</sup><sub>off</sub></h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <a href="#" class="btn btn-dark btn-md font1">View Sale</a>
             </div><!-- End .banner -->
 
             <div class="banner d-flex flex-column align-items-center">
-                <h3 class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase"><em class="pt-3 ls-0">Sale</em>Many Item</h3>
+                <h3
+                    class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase">
+                    <em class="pt-3 ls-0">Sale</em>Many Item</h3>
                 <h4 class="sale-text font1 text-uppercase m-b-3">45<sup>%</sup><sub>off</sub></h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <a href="#" class="btn btn-dark btn-md font1">View Sale</a>
@@ -229,7 +243,8 @@
                     </h2>
 
                     <div class="post-content">
-                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per incep tos himens.</p>
+                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent
+                            per conubia nostra, per incep tos himens.</p>
 
                         <a href="single.html" class="read-more">read more <i class="icon-right-open"></i></a>
                     </div><!-- End .post-content -->
@@ -253,7 +268,8 @@
                     </h2>
 
                     <div class="post-content">
-                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per incep tos himens.</p>
+                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent
+                            per conubia nostra, per incep tos himens.</p>
 
                         <a href="single.html" class="read-more">read more <i class="icon-right-open"></i></a>
                     </div><!-- End .post-content -->
@@ -277,7 +293,8 @@
                     </h2>
 
                     <div class="post-content">
-                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per incep tos himens.</p>
+                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent
+                            per conubia nostra, per incep tos himens.</p>
 
                         <a href="single.html" class="read-more">read more <i class="icon-right-open"></i></a>
                     </div><!-- End .post-content -->

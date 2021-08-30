@@ -13,6 +13,7 @@ define('SENDINBLUE_API_KEY', 'xkeysib-04ab5a74c4621ead1155506e7059880aba705e8a1e
 
 //app Root
 define('APP_ROOT', dirname(dirname(__FILE__)));
+define('APP_NAME', 'GNICE Market Place');
 //URL Root
 define("FOLDER", "gnice");
 define('APP_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/' . FOLDER);

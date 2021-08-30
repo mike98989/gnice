@@ -150,6 +150,7 @@ class Product extends Model
         }
     }
 
+
     public function deleteProduct($product_id, $seller_id)
     {
         $header = apache_request_headers();
@@ -477,7 +478,7 @@ class Product extends Model
     {
         $header = apache_request_headers();
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
-        $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1");
+        $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1 ORDER BY id DESC");
         $this->db->bind(':seller_id', $seller_id);
         if ($this->db->resultSet()) {
             $result['rowCounts'] = $this->db->rowCount();
@@ -502,6 +503,7 @@ class Product extends Model
         $_POST['date'] = $date;
         $product_code = $_POST['product_code'];
         $seller_id = $_POST['seller_id'];
+
         if (isset($header['gnice-authenticate'])) {
 
             if (!(empty($sender_tel) || empty($sender_name) || empty($sender_name) || empty($message) || empty($product_code) || empty($seller_id))) {
@@ -584,54 +586,49 @@ class Product extends Model
         if (isset($header['gnice-authenticate'])) {
 
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $seller_id = $_POST['seller_id'];
+            $id = $_POST['edit'];
             $product_code = $_POST['product_code'];
             //Filter sanitize all input as string to remove all unwanted scripts and tags
 
-            if (!(empty($seller_id) || empty($product_code))) {
+            if (!(empty($id) || empty($product_code))) {
 
                 //get renamed pictures from helper functions
-                $uploader = uploadMultiple('pro', 'products', 2);
-                $image = $uploader['imageUrl'];
+                if (isset($_FILES['files'])) {
+                    $uploader = uploadMultiple('pro', 'products', 2);
+                    $image = $uploader['imageUrl'];
 
-                // $product_code = rand(1000000, 100000000);
-                $_POST['image'] = $image;
+                    // $product_code = rand(1000000, 100000000);
+                    $_POST['image'] = $image;
+                }
                 // $_POST['product_code'] = rand(1000000, 100000000);
                 $data = filter_var_array($_POST);
                 $data = array_map('trim', array_filter($data));
-                $excluded = ['files'];
-                $excluded = ['id'];
-                // print_r($data);
-                // exit();
+                $id = $data['edit'];
+                $excluded = ['files', 'edit', 'seller_id'];
                 $updateString = "";
                 $params = [];
                 foreach (array_keys($data) as $key) {
                     if (!in_array($key, $excluded)) {
-
                         $updateString .= "`$key` = :$key,";
                         $params[$key] = "$data[$key]";
                     }
                 }
                 $updateString = rtrim($updateString, ",");
-
                 $this->db->query(
-                    "UPDATE users SET $updateString WHERE seller_id = :seller_id AND product_code = :product_code"
+                    "UPDATE products SET $updateString WHERE id = :id AND product_code = :product_code"
                 );
                 foreach (array_keys($data) as $key) {
                     if (!in_array($key, $excluded)) {
                         $this->db->bind(':' . $key, $data[$key]);
                     }
                 }
-                $this->db->bind(':seller_id', $seller_id);
-                $this->db->bind(':product_code', $product_code);
+                $this->db->bind(':id', $id);
                 if ($this->db->execute()) {
                     $result['message'] = 'product update successfully';
                     $result['status'] = '1';
-                    $result['errors'] = $uploader['image_error'];
                 } else {
                     $result['message'] = 'product update failed';
                     $result['status'] = '0';
-                    $result['errors'] = $uploader['image_error'];
                     return false;
                 }
             } else {

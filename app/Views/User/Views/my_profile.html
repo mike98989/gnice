@@ -42,4 +42,25 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-body">
+      <p class="mb-4">Seller Id : <span>{{user_data.seller_id}}</span></p>
+      <p class="mb-4">Account Type : <span class="badge badge-info">{{user_data.seller_account_details.title}}</span> <a
+          href="{{dirlocation}}dashboard/account_packages">Change</a></p>
+      <p class="mb-4">Email : <span>{{user_data.email}}</span></p>
+      <p class="mb-4">Phone Number : <span>{{user_data.phone}}</span></p>
+      <p class="mb-4">Whatsapp : <span>{{user_data.whatsapp}}</span></p>
+      <p class="mb-4">Last Seen : <span>{{user_data.last_login}}</span></p>
+    </div>
+    <input type="file" accept="image/jpeg, image/png" id="photo_append" name="profile_image"
+      onchange="angular.element(this).scope().attach_image(this)" style="display:none">
+    <div class="col-lg-12" style="text-align: center;margin-bottom:10px">
+      <a href="{{dirlocation}}dashboard/edit_profile" class="btn btn-info btn-md" style="margin-bottom:10px">Edit
+        Profile</a><br />
+      <a href="{{dirlocation}}dashboard/update_password" style="padding-top:10px">Update Password</a>
+    </div>
+  </div>
+</div>
+</div>
+
 </div>

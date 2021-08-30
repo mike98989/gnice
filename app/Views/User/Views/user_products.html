@@ -12,7 +12,8 @@
   </div>
   <div class="row">
     <div class="col-md-3" ng-repeat="sellerProduct in products">
-      <div class="" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
+      <div class=""
+        style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);margin-bottom:15px;border-radius:5px;overflow:hidden">
         <div style="height:150px;overflow:hidden">
           <img ng-init="img = sellerProduct.image.split(',')" style="width: 100%"
             src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
@@ -27,7 +28,9 @@
           </p>
 
           <a href="#" ng-click="delete_product(sellerProduct,$index)">Delete</a>
-          <a href="" class="btn btn-outline-secondary btn-sm">Edit</a>
+          <a href="#" ng-click="localStorage_save('productDetails',sellerProduct,'edit_product')"
+            class="btn btn-outline-secondary btn-sm">Edit</a>
+          <a href="#" class="btn btn-outline-primary btn-sm">Disable</a>
         </div>
       </div>
     </div>
@@ -39,4 +42,15 @@
     <p>You have not uploaded any ads yet</p>
     <a href="addproduct" class="btn btn-primary btn-rounded btn-fw">Add Product</a>
   </div>
+</div>
+</div>
+</div>
+
+
+</div>
+<div ng-if="0 == status" class="mt-5">
+  <p><i style="font-size: 200px" class="mdi mdi-briefcase-upload"></i></p>
+  <p>You have not uploaded any ads yet</p>
+  <a href="addproduct" class="btn btn-primary btn-rounded btn-fw">Add Product</a>
+</div>
 </div>

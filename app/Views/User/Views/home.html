@@ -52,8 +52,8 @@
   <div class="row">
     <div class="col-md-6 grid-margin stretch-card" ng-controller="productController">
       <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
-        <div class="card-body bg-gradient-info text-white">
-          <p class="card-title text-white" style="font-size: 50px ">{{products_count}}</p>
+        <div class="card-body text-black">
+          <p class="card-title text-black" style="font-size: 50px ">{{products_count}}</p>
           <p class="mb-4 ">Total uplaoded posting</p>
           
         </div>
@@ -71,34 +71,43 @@
     </div>
 
   </div>
-  <div class="row"  ng-controller="homeController">
+  <div class="row"  ng-controller="messageController">
     <div class="col-md-12 stretch-card">
       <div class="card" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);">
         <div class="card-body">
           <p class="card-title" style="font-size: 20px;">Client Messages</p>
-          <div class="table-responsive"  ng-init="fetch_all_messages_to_seller()">
-            <table id="recent-purchases-listing" class="table table-sm table-hover">
+          <div class="table-responsive" ng-init="fetch_all_messages_to_seller()">
+            <table id="recent-purchases-listing" class="table table-sm table-striped table-hover">
               <thead>
                 <tr>
-                   <th>SN</th>
-  <th>SENDER NAME</th>
-  <th>SENDER EMAIL</th>
-  <th>SENDER PHONE NO.</th>
-  <th>MESSAGES</th>
+                <th>SN</th>
+                <th>Sender Name</th>
+                <th>Sender Email</th>
+                <th>Sender Number</th>
+                <th>Product Details</th>
+                <th>Message</th>
                 </tr>
               </thead>
               <tbody>
-               <tr ng-repeat="messageToSender in messageTosenders">
-  <td>{{$index + 1}}</td>
-  <td>{{messageToSender.sender_name}}</td>
-  <td>{{messageToSender.sender_email}}</td>
-  <td>{{messageToSender.sender_tel}}</td>
-  <td>{{messageToSender.message}}</td>
-  
-</tr>
+               <tr ng-repeat="message in messages | limitTo:5">
+              <td>{{$index + 1}}</td>
+              <td>{{message.sender_name}}</td>
+              <td>{{message.sender_email}}</td>
+              <td>{{message.sender_phone}}</td>
+              <td ng-init="img = message.image.split(',')">
+              <img style="width: '20px'!important;float:left;margin-right:6px" src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+                {{message.name}}<br/>{{message.price}}</td>
+              <td>{{message.message}}</td>
+              </tr>
+              <tr ng-show="messages.length>0">
+                <td colspan="6">
+                  <a href="{{dirlocation}}dashboard/messages" class="btn btn-info btn-sm">See More</a>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
+
         </div>
       </div>
     </div>
