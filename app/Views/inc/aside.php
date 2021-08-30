@@ -1,7 +1,7 @@
 <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 <aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar">
-    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none" style="border-top:none">
+    <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none" style="border-top:none;background-color: #fff;">
         <h2 class="side-menu-title bg-gray ls-n-25" style="padding-top:20px;margin-top:0">Browse Categories</h2>
         <nav class="side-nav">    
             <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
@@ -173,7 +173,7 @@
         </nav>
     </div><!-- End .side-menu-container -->
 
-    <div class="widget widget-banners px-5 pb-3 text-center">
+    <div class="widget widget-banners px-5 pb-3 text-center" style="background-color: #fff;">
         <div class="owl-carousel owl-theme">
             <div class="banner d-flex flex-column align-items-center">
                 <h4 class="sale-text font1 text-uppercase m-b-3" style="font-size: 20px; padding-top:55px;">Got Something to</h4>

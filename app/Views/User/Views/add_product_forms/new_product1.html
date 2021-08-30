@@ -9,9 +9,8 @@
    <div class="form-group" ng-if="vehicle">
     <label for="color"> Select Model</label>   
    <select class="form-control" required name="model" id="model">
-   <option value="">--SELECT MODEL--</option>
-    <optgroup  ng-repeat="cars in  requiredCar | filter : vehicle" >
-     <option  ng-repeat="models in  cars.car_models"  value="{{ models.model }}"> {{ models.model}}     
+    <optgroup  ng-repeat="cars in  requiredCar | filter : vehicle" label="SELECT MODEL">
+     <option  ng-repeat="models in  cars.car_models"  value="{{ models.model }}"> {{models.model}}     
      </option>
       </optgroup>
      </select>     
@@ -32,5 +31,5 @@
               </div>
          <div class="form-group">
          <label>Mileage(KM)</label>
-        <input required name="fuel" type="text" id="fuel"   class="form-control" placeholder="Fuel">
+        <input required name="mileage" type="text" id="mileage"   class="form-control" placeholder="Mileage">
         </div>

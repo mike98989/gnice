@@ -222,11 +222,16 @@ class Api extends Controller
 
     public function add_product()
     {
-
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
+            if($result){
             $result = $this->model('Product')->addProduct();
-            header('Content-Type: application/json');
+            }else{
+            $result['status']='0';
+            $result['msg']='Invalid token';
+            }
             print_r(json_encode($result));
         } else {
             echo 'invalid response';
@@ -520,7 +525,6 @@ class Api extends Controller
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
             $result = $this->model('Authenticate')->updateUserProfile();
-            header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
             echo "invalid request";
@@ -532,10 +536,16 @@ class Api extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             // exit('got here');
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
+            if($result){
             $result = $this->model('Product')->updateProduct();
-            header('Content-Type: application/json');
+            }else{
+            $result['status']='0';
+            $result['msg']='Invalid token';
+            }
             print_r(json_encode($result));
-        } else {
+            } else {
             echo "invalid request";
             exit;
         }

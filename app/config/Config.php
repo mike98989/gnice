@@ -13,9 +13,10 @@
 
     //app Root
     define('APP_ROOT',dirname(dirname(__FILE__)));
+    define('APP_NAME','GNICE Market Place');
     //URL Root
     define("FOLDER","gnice");
-    define('APP_URL', 'http://'.$_SERVER['HTTP_HOST'].'/'.FOLDER);
+    define('APP_URL', 'https://'.$_SERVER['HTTP_HOST'].'/'.FOLDER);
     
     //site Name 
     define('SITENAME', 'gnice');

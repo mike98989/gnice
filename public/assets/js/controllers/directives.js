@@ -12,7 +12,7 @@
     //var dirlocation = window.location.hostname+'/nps/';
     //var dirlocation = window.location.hostname+'/';
     //var completeUrlLocation = 'https://'+window.location.hostname+'/';
-    var completeUrlLocation = 'http://'+window.location.hostname+'/gnice/';
+    var completeUrlLocation = 'https://'+window.location.hostname+'/gnice/';
    // var completeUrlLocation = 'http://www.gnice.com.ng/';
   
     //var current_user = $('#current_user_value').val();
@@ -85,6 +85,28 @@ module.directive('embedSrc', function () {
     }
   };
 });
+
+module.directive('owlCarousel',[function() {
+    return {
+      restrict: 'EA',
+      transclude: false,
+      scope: {
+        owlOptions: '='
+      },
+      link: function(scope, element, attrs) {
+          scope.initCarousel = function() {
+            $(element).owlCarousel(scope.owlOptions);
+          };
+        }
+      }
+    }]);
+  module.directive('owlCarouselItem',[function() {
+     return function(scope) {
+     if (scope.$last) {
+        scope.initCarousel();
+     }
+    };
+  }]);
 
 
 

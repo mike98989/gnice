@@ -151,6 +151,7 @@ class Authenticate extends Model
                 $this->db->bind(':id', $verifyToken->id);
                 if ($this->db->execute()) {
                     $check_data = $this->findUserByEmail($verifyToken->email, 'users');
+                    $check_data->seller_account_details = $this->getUserAccountType($check_data->account_type);
                     $msg['data'] = $check_data;
                     $msg['msg'] = "Successfully updated user details!";
                     $msg['status'] = '1';

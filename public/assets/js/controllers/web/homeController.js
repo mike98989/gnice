@@ -44,94 +44,6 @@ module.controller("homeController", [
       return images.split(",");
     };
 
-    $scope.add_product = function () {
-      $(".loader").show();
-      var sub = $("#brand").val();
-      //alert($('#category').val());
-      //alert(sub);
-      var formData = new FormData($("#add_product")[0]);
-      $.ajax({
-        url: $scope.dirlocation + "api/add_product",
-        //type: 'POST',
-        type: "GET",
-        method: "post",
-        transformRequest: angular.identity,
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        headers: { "gnice-authenticate": "gnice-web" },
-        data: formData,
-        async: true,
-        cache: false,
-        contentType: false,
-        transformRequest: angular.identity,
-        enctype: "multipart/form-data",
-
-        crossDomain: true,
-        processData: false,
-        success: function (answer) {
-          alert(answer);
-          var response = JSON.stringify(answer);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
-          $(".loader").hide();
-          if (msg.status == "1") {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").show();
-            alert(msg.message);
-            window.location.assign("Advert");
-          } else {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").show();
-            alert(msg.message);
-          }
-        },
-      });
-    };
-
-    $scope.update_product = function () {
-      $(".loader").show();
-      var sub = $("#brand").val();
-      var formData = new FormData($("#add_product")[0]);
-      $.ajax({
-        url: $scope.dirlocation + "api/update_product",
-        //type: 'POST',
-        type: "GET",
-        method: "post",
-        transformRequest: angular.identity,
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        headers: { "gnice-authenticate": "gnice-web" },
-        data: formData,
-        async: true,
-        cache: false,
-        contentType: false,
-        transformRequest: angular.identity,
-        enctype: "multipart/form-data",
-
-        crossDomain: true,
-        processData: false,
-        success: function (answer) {
-          alert(answer);
-          var response = JSON.stringify(answer);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
-          $(".loader").hide();
-          if (msg.status == "1") {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").show();
-            alert(msg.message);
-            window.location.assign("Advert");
-          } else {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").show();
-            alert(msg.message);
-          }
-        },
-      });
-    };
-
     $scope.message_product_seller = function () {
       $(".loader").show();
       var formData = new FormData($("#message_product_seller")[0]);
@@ -289,7 +201,6 @@ module.controller("homeController", [
         enctype: "multipart/form-data",
         processData: false,
         success: function (result3) {
-          alert(result3);
           var response3 = JSON.stringify(result3);
           var parsed3 = JSON.parse(response3);
           var msg3 = angular.fromJson(response3);
@@ -328,7 +239,11 @@ module.controller("homeController", [
             $(".loader").hide();
             if (msg3.status == "1") {
               $scope.product = msg3.data;
-              $scope.product_image = $scope.split_image($scope.product.image);
+              //$scope.product_image = $scope.split_image($scope.product.image);
+              //setTimeout(function(){ 
+                //alert('got here');
+                $scope.product_image = $scope.split_image($scope.product.image);
+               //}, 5000);
               $scope.fetch_related_products();
               $scope.$apply();
             }

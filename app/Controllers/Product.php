@@ -9,7 +9,7 @@ class Product extends Controller {
     public function index(){
         $data = [];
         $this->view->js = ['controllers/web/homeController.js'];
-        $this->view->render('Product/product',false,'');
+        $this->view->render('Product/product2',false,'');
     }
 
     public function details($url){ 

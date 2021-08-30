@@ -24,20 +24,7 @@
 
     //  })
 
-    $('#price_range').slider({
-        range:true,
-        min:0,
-        max:10000,
-        values:[0, 10000000],
-        step:100,
-        stop:function(event, ui)
-        {
-          $('#price_show').html(ui.values[0] + ' -' + ui.values[1]);
-          $('#hidden_minimum_price').val(ui.values[0]);
-          $('#hidden_maximum_price').val(ui.values[1]);
-          filter_data();
-        }
-      });
+
         
 
   $scope.add_product = function(){
@@ -46,7 +33,7 @@
     $.ajax({
           url: $scope.dirlocation+'api/add_product',
           type: 'POST',
-          headers:{'gnice-authenticate':'gnice-web'}, 
+          headers:{'gnice-authenticate':$scope.user_token}, 
           data: formData,
           async: true,
           cache: false,
@@ -55,7 +42,7 @@
           crossDomain: true,
           processData: false,
           success: function (answer) {
-          alert(JSON.stringify(answer));
+          //alert(JSON.stringify(answer));
           var response=JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg=angular.fromJson(parsed);
@@ -64,69 +51,56 @@
         $('.loader').hide();    
         $('.result').html(msg.message);  
         $('.result').show();
-        alert(msg.message);
+        //alert(msg.message);
         //window.location.assign('Advert');
   }else{
           $('.loader').hide();    
         $('.result').html(msg.message);  
         $('.result').show();
-        alert(msg.message);
+        //alert(msg.message);
         }
         
           }
         });
     }
 
-
-  $scope.update_product = function(){
-
-  $('.loader').show();    
-         
-          var sub = $('#brand').val();
-          //alert($('#sub_category').val());
-          //alert(sub);
-          var formData = new FormData($('#add_product')[0]);
-          $.ajax({
-                url: $scope.dirlocation+'api/update_product',
-               //type: 'POST',
-                type: 'GET',
-              method : "post",
-             transformRequest: angular.identity,
-               //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-               headers:{'gnice-authenticate':'gnice-web'}, 
-               data: formData,
-               async: true,
-               cache: false,
-               contentType: false,
-                transformRequest: angular.identity,
-               enctype: 'multipart/form-data',
-              
-               crossDomain: true,
-               processData: false,
-               success: function (answer) {
-               alert(answer);
-               var response=JSON.stringify(answer);
-               var parsed = JSON.parse(response);
-               var msg=angular.fromJson(response);
-                $('.loader').hide();  
-          if(msg.status=='1'){
-             $('.loader').hide();    
-              $('.result').html(msg.message);  
-              $('.result').show();
-              alert(msg.message);
-              window.location.assign(
-                    'Advert');
-        }else{
-               $('.loader').hide();    
-              $('.result').html(msg.message);  
-              $('.result').show();
-              alert(msg.message);
+    $scope.update_product = function(){
+      $('.loader').show();    
+        var formData = new FormData($('#update_product')[0]);
+        $.ajax({
+              url: $scope.dirlocation+'api/update_product',
+              type: 'POST',
+              headers:{'gnice-authenticate':$scope.user_token}, 
+              data: formData,
+              async: true,
+              cache: false,
+              contentType: false,
+              enctype: 'multipart/form-data',
+              crossDomain: true,
+              processData: false,
+              success: function (answer) {
+              ///alert(JSON.stringify(answer));
+              var response=JSON.stringify(answer);
+              var parsed = JSON.parse(response);
+              var msg=angular.fromJson(parsed);
+              $('.loader').hide();  
+        if(msg.status=='1'){
+            $('.loader').hide();    
+            $('.result').html(msg.message);  
+            $('.result').show();
+            //alert(msg.message);
+            //window.location.assign('Advert');
+      }else{
+            $('.loader').hide();    
+            $('.result').html(msg.message);  
+            $('.result').show();
+            //alert(msg.message);
+            }
+            
               }
-              
-               }
-             });
-    }
-
+            });
+        }
+    
     $scope.delete_product = function(product,index){
       var conf = confirm("DO YOU WANT TO DELETE THIS AD '"+product.name+"'?");
       if(conf){   
@@ -338,6 +312,7 @@
       $scope.sub_category = objectval.subcategory;
     }
 
+
     $scope.fetch_all_categories_and_sub_categories = function(){
       $.ajax({
         url: $scope.dirlocation+'api/fetch_all_categories_and_sub_categories',
@@ -443,7 +418,7 @@
        $('.loader').hide(); 
        if(msg3.status=='1'){ 
        $scope.product = msg3.data; 
-       $scope.product_image = $scope.split_image($scope.product.image);
+      $scope.product_image = $scope.split_image($scope.product.image);
        $scope.fetch_related_products();
        $scope.$apply();
 
@@ -476,6 +451,25 @@
         }
       });
     }
+
+    $scope.localStorage_get = function(key){
+      $scope[key] = $localStorage[key];
+      $scope.$apply();
+  }
+
+  $scope.localStorage_save = function(key,value,url){
+      $localStorage[key] = value;
+      //$scope[key] = $localStorage[key];
+      //alert(JSON.stringify(value));
+      if(url!=''){
+          $scope.go_to_url(url);
+      }
+  }
+
+  $scope.go_to_url = function (url){
+      //alert($scope.dirlocation+'admindashboard/'+url);
+      window.location.href=$scope.dirlocation+'dashboard/'+url;
+  }
 
       $scope.fetch_all_product_brand = function(){
       $.ajax({

@@ -9,6 +9,10 @@ module.config(function($routeProvider,$locationProvider){
             templateUrl:"../app/views/user/views/add_product.html",
             controller:"productController",
         })
+        .when('/edit_product',{
+            templateUrl:"../app/views/user/views/edit_product.html",
+            controller:"productController",
+        })
         .when('/my_products',{
             templateUrl:"../app/views/user/views/user_products.html",
             controller:"productController",
