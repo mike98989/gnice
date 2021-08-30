@@ -107,7 +107,7 @@ module.controller("usersController", [
             var msg = angular.fromJson(parsed);
             $(".loader2_" + user.id).hide();
             if (msg.status == "1") {
-              alert(index, code);
+              // alert(index, code);
               // all_users[index].status = code;
               user.status = code;
               $scope.$apply();
@@ -120,6 +120,7 @@ module.controller("usersController", [
     $scope.append_modal_user_info = function (value) {
       $scope.userInfo = value;
       console.log(JSON.stringify($scope.userInfo));
+      $scope.fetch_all_seller_products();
     };
   },
 ]);

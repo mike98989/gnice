@@ -8,12 +8,24 @@
     </h3>
   </div>
   <div class="row" ng-init="get_all_users()">
+
     <div class="col-12 grid-margin">
+
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">All Users</h4>
           <div class="loader" style="text-align: center">
             <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+          </div>
+          <div class="search-field d-none d-md-block my-3">
+            <form class="d-flex align-items-center h-100" action="#">
+              <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                </div>
+                <input type="text" class="form-control bg-transparent border-0" placeholder="search for users ">
+              </div>
+            </form>
           </div>
           <div class="table-responsive">
             <table class="table">
@@ -33,8 +45,31 @@
                   current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}"
-                      class="mr-2" />{{user.fullname}}
+                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}" class="mr-2" />
+                    <span>
+                      {{user.fullname}}
+                    </span>
+
+                    <span ng-switch="user.activated">
+                      <span ng-switch-when="1">
+                        <i class="mdi mdi-shield text-success"></i>
+                      </span>
+                      <span ng-switch-when="0">
+                        <i class="mdi mdi-shield-outline text-danger"></i>
+                      </span>
+                      <span ng-switch-default>
+                      </span>
+                    </span>
+                    <span ng-switch="user.status">
+                      <span ng-switch-when="1">
+                        <i class="mdi mdi-check-circle text-success"></i>
+                      </span>
+                      <span ng-switch-when="0">
+                        <i class="mdi mdi-close-circle text-danger"></i>
+                      </span>
+                      <span ng-switch-default>
+                      </span>
+                    </span>
                   </td>
                   <td>
                     {{user.email}}<br /><span class="text-muted" style="font-size: 12px">{{user.phone}}</span><br />
@@ -70,12 +105,12 @@
                   <td>
 
                     <button class="badge badge-info mr-1" ng-show="user.status=='1'"
-                      ng-click="enable_or_disable(0,user,$index)">
+                      ng-click="enable_or_disable(0,user,$index)" data-target=".bd-example-modal-sm">
                       <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
                         style="width: 15px; display: none" /><i class="mdi mdi-account-convert mr-1"></i> Disable
                     </button>
                     <button class="badge badge-success mr-1" ng-show="user.status=='0'"
-                      ng-click="enable_or_disable(1,user,$index)">
+                      ng-click="enable_or_disable(1,user,$index)" data-target=".bd-example-modal-sm">
                       <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
                         style="width: 15px; display: none" /><i class="mdi mdi-account-convert mr-1"></i> Enable
                     </button>
@@ -85,7 +120,7 @@
                       <i class=" mdi mdi-account-card-details mr-1"></i> View
                     </button>
                     <!--  -->
-                    <button class="badge badge-danger" data-toggle="modal" data-target=".bd-example-modal-sm">
+                    <button class="badge badge-danger" data-toggle="modal" data-target=".disable_enable_user">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
                     </button>
                   </td>
@@ -169,7 +204,7 @@
                     {{ userInfo.state }}</span>
                 </p>
                 <p ng-show="userInfo.whatsapp">
-                  <i class="mdi mdi-check-circle"></i>
+                  <i class="mdi mdi-check-circle text-success"></i>
                   Whatsapp:
                   <span>
                     {{ userInfo.whatsapp }}</span>
@@ -221,6 +256,28 @@
               inventore sint sequi dolores rem aspernatur accusamus
               architecto nisi praesentium expedita molestias
               accusamus.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end small modal -->
+    <!-- small modal disable user -->
+    <div class="modal fade disable_enable_user" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              {{ listingValue.name }}
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              helloe
             </p>
           </div>
         </div>

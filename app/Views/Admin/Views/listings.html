@@ -42,8 +42,21 @@
                       src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" class="mr-2" />
                   </td>
                   <td>
-                    {{listing.name}} <br /><span class="text-muted"
-                      style="font-size: 12px">{{listing.product_code}}</span>
+                    <!-- <p> -->
+                    {{listing.name}}
+                    <span ng-switch="listing.status">
+                      <span ng-switch-when="1">
+                        <i class="mdi mdi-check-circle text-success"></i>
+                      </span>
+                      <span ng-switch-when="0">
+                        <i class="mdi mdi-close-circle text-danger"></i>
+                      </span>
+                      <span ng-switch-default>
+                      </span>
+                    </span>
+                    <!-- </p> -->
+                    <br>
+                    <span class="text-muted" style="font-size: 12px">{{listing.product_code}}</span>
                   </td>
                   <td>
                     {{listing.productCategory}}<br />

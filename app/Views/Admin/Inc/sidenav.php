@@ -10,24 +10,16 @@
                     <i class="mdi mdi-home menu-icon"></i>
                 </a>
             </li>
-            <li class="nav-item" style="cursor:pointer">
-                <a class="nav-link" href="{{dirlocation}}admindashboard/categories">
-                    <span class="menu-title">Categories</span>
-                    <i class="menu-arrow" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                        aria-controls="ui-basic"></i>
-                </a>
-                <div class="collapse" id="ui-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Categories</a>
-                        </li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Sub
-                                Categories</a></li>
-                    </ul>
-                </div>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{dirlocation}}admindashboard/listings">
                     <span class="menu-title">Listings/Ads</span>
+                    <i class="mdi mdi-contacts menu-icon"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{dirlocation}}admindashboard/categories">
+                    <span class="menu-title">Categories</span>
                     <i class="mdi mdi-contacts menu-icon"></i>
                 </a>
             </li>

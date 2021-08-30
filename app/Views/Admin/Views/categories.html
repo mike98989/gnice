@@ -27,8 +27,8 @@
               </div>
             </div>
             <button type="submit" class="btn btn-gradient-primary mb-2 ">Submit</button>
+          </form>
         </div>
-        </form>
       </div>
     </div>
 
@@ -81,14 +81,35 @@
             <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
           </div>
 
-          <div class="row d-flex">
-            <div class="col-md-4 col-sm-12 col-lg-3 m-4 rounded p-3  align-items-center shadow justify-content-center"
-              ng-repeat=" cat in all_cat_and_sub">
+          <div class="row">
+            <div class="col-md-4 col-sm-12 col-lg-3 m-4 rounded p-3 d-flex align-items-center shadow"
+              ng-repeat=" cat in all_cat_and_sub" style="cursor: pointer;">
               <img src="{{dirlocation}}/public/assets/images/uploads/category/{{cat.image}}" alt="{{ cat.title }}"
                 loading="lazy" class="d-block w-50" />
               <p class="lead pl-2">
                 {{ cat.title }}
               </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <img src="{{dirlocation}}/public/assets/images/uploads/category/{{cat.image}}" alt="{{ cat.title }}"
+                    loading="lazy" class="d-block w-50" />
+                  <p class="lead pl-2">
+                    {{ cat.title }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Bar chart</h4>
+                  <canvas id="barChart" style="height:230px"></canvas>
+                </div>
+              </div>
             </div>
           </div>
 
