@@ -67,7 +67,7 @@ module.controller("listingController", [
           var msg = angular.fromJson(parsed);
 
           $(".loader").hide();
-          // alert(JSON.stringify(msg.data));
+          console.table(JSON.stringify(msg));
           if (msg.status == "1") {
             $scope.all_listings = msg.data;
             $scope.notification = msg.msg;

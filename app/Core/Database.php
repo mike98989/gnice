@@ -105,6 +105,7 @@ class Database
     //get row count
     public function rowCount()
     {
+
         return $this->statement->rowCount();
     }
 

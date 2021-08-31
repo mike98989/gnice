@@ -111,8 +111,7 @@ class AdminApi extends Controller
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-
-            $result = $this->model('Product')->getAllProductOfASeller($_GET['seller_id']);
+            $result = $this->model('AdminTasks')->getAllProductOfASeller($_GET['seller_id']);
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {

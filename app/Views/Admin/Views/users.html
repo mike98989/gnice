@@ -2,7 +2,7 @@
   <div class="page-header">
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white mr-2">
-        <i class="mdi mdi-home"></i>
+        <i class="mdi mdi-account-multiple"></i>
       </span>
       Clients/Users
     </h3>
@@ -21,9 +21,10 @@
             <form class="d-flex align-items-center h-100" action="#">
               <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
-                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                  <i class="input-group-text border-0 mdi mdi-account-search"></i>
                 </div>
-                <input type="text" class="form-control bg-transparent border-0" placeholder="search for users ">
+                <input type="text" class="form-control bg-transparent border-0" placeholder="search for users "
+                  ng-model="userSearch">
               </div>
             </form>
           </div>
@@ -65,7 +66,7 @@
                         <i class="mdi mdi-check-circle text-success"></i>
                       </span>
                       <span ng-switch-when="0">
-                        <i class="mdi mdi-close-circle text-danger"></i>
+                        <i class="mdi mdi mdi-lock text-danger"></i>
                       </span>
                       <span ng-switch-default>
                       </span>
@@ -115,10 +116,17 @@
                         style="width: 15px; display: none" /><i class="mdi mdi-account-convert mr-1"></i> Enable
                     </button>
                     <!--  -->
-                    <button class="badge badge-primary mr-1" data-toggle="modal" data-target="#exampleModalCenter"
+                    <!-- <button class="badge badge-primary mr-1" data-toggle="modal" data-target="#exampleModalCenter"
                       ng-click="append_modal_user_info(user)">
                       <i class=" mdi mdi-account-card-details mr-1"></i> View
-                    </button>
+                    </button> -->
+                    <!-- <view ng-controller="listingController"> -->
+
+                    <a href="#" class="badge badge-info mr-1" ng-click="localStorage_save('userInfo',user,'profile')"
+                      style="cursor: pointer;">
+                      <i class=" mdi mdi-eye-check mr-1"></i> View
+                    </a>
+                    <!-- </view> -->
                     <!--  -->
                     <button class="badge badge-danger" data-toggle="modal" data-target=".disable_enable_user">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete

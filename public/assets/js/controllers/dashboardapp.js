@@ -9,6 +9,10 @@ module.config(function ($routeProvider, $locationProvider) {
       templateUrl: "../app/views/Admin/views/categories.html",
       controller: "categoryController",
     })
+    .when("/sub_category", {
+      templateUrl: "../app/views/Admin/views/sub_category.html",
+      controller: "categoryController",
+    })
     .when("/listings", {
       templateUrl: "../app/views/Admin/views/listings.html",
       controller: "listingController",
@@ -17,17 +21,25 @@ module.config(function ($routeProvider, $locationProvider) {
       templateUrl: "../app/views/Admin/views/users.html",
       controller: "usersController",
     })
+    .when("/profile", {
+      templateUrl: "../app/views/Admin/views/profile.html",
+      controller: "usersController",
+    })
+    .when("/single_listing", {
+      templateUrl: "../app/views/Admin/views/single_listing.html",
+      controller: "listingController",
+    })
     .when("/account_types", {
       templateUrl: "../app/views/Admin/views/account_types.html",
       controller: "packagesController",
     })
     .when("/banners", {
       templateUrl: "../app/views/Admin/views/banners.html",
-      //controller:"combinedController",
+      controller: "bannerController",
     })
     .when("/transactions", {
       templateUrl: "../app/views/Admin/views/transactions.html",
-      //controller:"combinedController",
+      controller: "transactionController",
     })
     .otherwise({
       redirectTo: "/index",

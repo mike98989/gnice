@@ -117,10 +117,67 @@ module.controller("usersController", [
         });
       }
     };
+    //! TODO: save and retrieved data from localStorage
+    $scope.localStorage_get = function (key) {
+      $scope[key] = $localStorage[key];
+      alert($localStorage[key]);
+      // $scope.$apply();
+    };
+
+    $scope.localStorage_save = function (key, value, url) {
+      $localStorage[key] = value;
+      // $scope[key] = $localStorage[key];
+      alert(JSON.stringify(value));
+      // return;
+      if (url != "") {
+        $scope.go_to_url(url);
+      }
+    };
+    $scope.go_to_url = function (url) {
+      //alert($scope.dirlocation+'admindashboard/'+url);
+      window.location.href = $scope.dirlocation + "admindashboard/" + url;
+    };
+
+    //! important functions above
+
+    //* more data into modal window
     $scope.append_modal_user_info = function (value) {
       $scope.userInfo = value;
       console.log(JSON.stringify($scope.userInfo));
       $scope.fetch_all_seller_products();
+    };
+
+    //! get all listings of a seller
+    $scope.fetch_all_product_of_seller = function (seller_id) {
+      $.ajax({
+        url:
+          $scope.dirlocation +
+          "adminapi/fetch_all_product_of_seller?seller_id=" +
+          seller_id,
+        type: "GET",
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          console.log(msg);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.all_user_ads = msg.data;
+            $scope.rowCount = msg.rowCounts;
+            $scope.$apply();
+            $(".result").show();
+          } else {
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
     };
   },
 ]);

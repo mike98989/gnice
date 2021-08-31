@@ -1,0 +1,117 @@
+<div class="content-wrapper" ng-controller="usersController" ng-init="localStorage_get('catInfo')">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-sitemap"></i>
+            </span>
+            Sub Categories for | {{ catInfo.title | uppercase }}
+        </h3>
+    </div>
+
+    <!-- {{ catInfo }} -->
+    <div class="row">
+        <div class="col-md-8 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">All Sub Categories for <span class="text-info">{{ catInfo.title }}</span>
+                    </h4>
+
+                    <!-- <div style="text-align: center;" class="loader">
+                        <img src="{{dirlocation}}public/assets/images/spinner4.gif"
+                            style="float:none;margin:0 auto;width:80px">
+                    </div> -->
+                    <div class="search-field d-none d-md-block my-3">
+                        <form class="d-flex align-items-center h-100" action="#">
+                            <div class="input-group">
+                                <div class="input-group-prepend bg-transparent">
+                                    <i class="input-group-text border-0 mdi mdi-account-search"></i>
+                                </div>
+                                <input type="text" class="form-control bg-transparent border-0"
+                                    placeholder="search for users " ng-model="subCatSearch">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Control</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="subCat in catInfo.subcategory | filter:subCatSearch | itemsPerPage: pageSize"
+                                    current-page="currentPage" ng-cloak>
+                                    <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
+
+                                    <td>
+                                        {{ subCat.title }}
+                                    </td>
+                                    <td>
+                                        {{ catInfo.title }}
+                                    </td>
+                                    <td>
+                                        <span ng-switch="subCat.status">
+                                            <span ng-switch-when="1">
+                                                <i class="mdi mdi-check-circle text-success"></i>
+                                            </span>
+                                            <span ng-switch-when="0">
+                                                <i class="mdi mdi-lock text-danger"></i>
+                                            </span>
+                                            <span ng-switch-default>
+                                                none
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-warning" type="button">disable</a>
+                                        <a class="badge badge-info" type="button">edit</a>
+                                        <a class="badge badge-danger" type="button">delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls boundary-links="true" template-url="" style="float: right">
+                        </dir-pagination-controls>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add a new Sub category</h4>
+                    <form (ngSubmit)="onSubmit()" #form="ngForm">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group ">
+                                    <label " for=" category">Category</label>
+                                    <select class="form-control" name="category" id="category">
+                                        <option>Category1</option>
+                                        <option>Category2</option>
+                                        <option>Category3</option>
+                                        <option>Category4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="sub_category">Sub Category</label>
+                                    <input type="text" class="form-control" name="sub_category" id="sub_category"
+                                        placeholder="enter sub category name" />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-success mb-2 btn-sm">Save</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

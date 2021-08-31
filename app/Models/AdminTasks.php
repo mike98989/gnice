@@ -90,7 +90,7 @@ class AdminTasks extends Model
             $token = $splitHeader[0];
 
             if ($this->verifyToken($token) == true) {
-                $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.last_login DESC ");
+                $this->db->query("SELECT  U.id,U.fullname,U.email,U.phone,U.whatsapp,U.state,U.country,U.seller,U.account_type,U.image,U.token,U.seller_id,U.last_login,U.signup_date,U.activated,U.status, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.last_login DESC ");
                 $row = $this->db->resultSet();
                 if ($this->db->rowCount() > 0) {
                     $result['rowCounts'] = $this->db->rowCount();
@@ -391,6 +391,55 @@ class AdminTasks extends Model
             $result['status'] = '1';
         } else {
             $result['message'] = 'category failed';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    public function getAllProductOfASeller($seller_id)
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            // echo ($token);
+            // die();
+
+            if ($this->verifyToken($token) == true) {
+                $header = apache_request_headers();
+                $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
+
+                // $this->db
+                //     ->query("SELECT products.*,
+                //         category.title as productCategory,
+                //         sub_category.title as productSubCategory
+                //         FROM products
+                //         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                //         LEFT JOIN category ON category.id = products.category
+                //         LEFT JOIN users ON users.seller_id = products.seller_id WHERE seller_id = :seller_id ORDER BY products.date_added DESC");
+
+
+                $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id ORDER BY date_added DESC");
+                $this->db->bind(':seller_id', $seller_id);
+                $row = $this->db->resultSet();
+                if ($this->db->rowCount() > 0) {
+                    $result['rowCounts'] = $this->db->rowCount();
+                    $result['data'] = $row;
+                    $result['message'] = 'all ads fetched successfully';
+                    // echo ($result);
+                    // die();
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid header';
             $result['status'] = '0';
         }
         return $result;
