@@ -31,20 +31,26 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{dirlocation}}admindashboard/account_types">
-                    <span class="menu-title">Seller Account Types</span>
+                    <span class="menu-title">Account Types</span>
                     <i class="mdi mdi-ticket-account menu-icon"></i>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{dirlocation}}admindashboard/transactions">
                     <span class="menu-title">Transactions</span>
-                    <i class="mdi mdi-cash menu-icon"></i>
+                    <i class="mdi mdi-cash-multiple menu-icon"></i>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{dirlocation}}admindashboard/banners">
                     <span class="menu-title">Banners</span>
                     <i class="mdi mdi-flag menu-icon"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{dirlocation}}admindashboard/admins">
+                    <span class="menu-title">Admins</span>
+                    <i class="mdi mdi-pencil-lock menu-icon"></i>
                 </a>
             </li>
             <li class="nav-item">

@@ -1,5 +1,5 @@
-///////////// THIS IS THE INDEXPAGE CONTROLLER///////
-///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
+///////////// THIS IS THE LISTING CONTROLLER///////
+///// THIS CONTROLS EVERY ACTIVITY ON THE LISTING PAGE
 /////////////////////////
 
 module.controller("listingController", [
@@ -83,44 +83,37 @@ module.controller("listingController", [
     };
 
     $scope.enable_or_disable_listing = function (code, listing, index) {
-      // alert(index);
-      // return;
-      var conf = confirm(
-        "DO YOU WANT DISABLE/ENABLE THIS USER '" + listing.name + "'?"
-      );
-      if (conf) {
-        $(".loader2_" + listing.namr).show();
-        var formData = new FormData();
-        formData.append("status", code);
-        formData.append("product_code", listing.product_code);
-        $.ajax({
-          url: $scope.dirlocation + "adminapi/disable_enable_ads",
-          data: formData,
-          type: "POST",
-          async: true,
-          cache: false,
-          contentType: false,
-          headers: { "gnice-authenticate": $scope.admin_token },
-          processData: false,
-          success: function (result) {
-            var response = JSON.stringify(result);
-            var parsed = JSON.parse(response);
-            var msg = angular.fromJson(parsed);
-            $(".loader2_" + listing.id).hide();
-            if (msg.status == "1") {
-              // alert(JSON.stringify($scope.all_listings[index]));
-              listing.status = code;
-              $scope.$apply();
-              $(".result").show();
-            }
-          },
-        });
-      }
+      $(".loader2_" + listing.name).show();
+      var formData = new FormData();
+
+      formData.append("status", code);
+      formData.append("product_code", listing.product_code);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/disable_enable_ads",
+        data: formData,
+        type: "POST",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader2_" + listing.id).hide();
+          if (msg.status == "1") {
+            listing.status = code;
+            $scope.$apply();
+            $(".result").show();
+          }
+        },
+      });
     };
 
     $scope.append_modal_value = function (value) {
       $scope.listingValue = value;
-      alert(JSON.stringify($scope.listingValue));
+      // alert(JSON.stringify($scope.listingValue));
     };
   },
 ]);

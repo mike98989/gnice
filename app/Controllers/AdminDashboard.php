@@ -20,7 +20,7 @@ class AdminDashboard extends Controller
     public function index()
     {
         $data = [];
-        $this->view->js = ['public/assets/js/controllers/admindashboard/homeController.js', 'public/assets/js/controllers/admindashboard/usersController.js', 'public/assets/js/controllers/admindashboard/listingController.js', 'public/assets/js/controllers/admindashboard/categoryController.js', 'public/assets/js/controllers/admindashboard/packagesController.js'];
+        $this->view->js = ['public/assets/js/controllers/admindashboard/homeController.js', 'public/assets/js/controllers/admindashboard/usersController.js', 'public/assets/js/controllers/admindashboard/listingController.js', 'public/assets/js/controllers/admindashboard/categoryController.js', 'public/assets/js/controllers/admindashboard/packagesController.js', 'public/assets/js/controllers/admindashboard/transactionController.js', 'public/assets/js/controllers/admindashboard/adminController.js'];
         $this->view->render('Admin/gnice_dashboard', false, '');
     }
     // public function index()

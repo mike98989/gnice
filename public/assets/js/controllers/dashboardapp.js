@@ -41,6 +41,10 @@ module.config(function ($routeProvider, $locationProvider) {
       templateUrl: "../app/views/Admin/views/transactions.html",
       controller: "transactionController",
     })
+    .when("/admins", {
+      templateUrl: "../app/views/Admin/views/admins.html",
+      controller: "adminController",
+    })
     .otherwise({
       redirectTo: "/index",
     });

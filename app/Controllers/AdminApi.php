@@ -188,10 +188,35 @@ class AdminApi extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $header = apache_request_headers();
-            $result = $this->model('Misc')->getAccountPackages();
+            $result = $this->model('AdminTasks')->getAccountPackages();
             print_r(json_encode($result));
         } else {
             echo 'invalid request';
+            exit();
+        }
+    }
+    public function fetch_all_transactions()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('AdminTasks')->getAllTransactions();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+    public function delete_user_account_and_ads()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('AdminTasks')->deleteUserAccount();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request api';
             exit();
         }
     }

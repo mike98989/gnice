@@ -111,6 +111,8 @@ module.controller("productController", [
       });
     };
 
+    // FIXME: delete a profile
+
     $scope.delete_product = function (product, index) {
       var conf = confirm(
         "DO YOU WANT TO DELETE THIS AD '" + product.name + "'?"

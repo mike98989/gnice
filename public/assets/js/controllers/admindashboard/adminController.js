@@ -2,7 +2,7 @@
 ///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
 /////////////////////////
 
-module.controller("packagesController", [
+module.controller("adminController", [
   "$scope",
   "$sce",
   "$http",
@@ -40,20 +40,18 @@ module.controller("packagesController", [
 
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = pager;
-    $scope.pageSize = 5;
+    $scope.pageSize = 10;
     $scope.admin_data = $localStorage.user_data;
     $scope.admin_token = $localStorage.user_token;
     setTimeout(function () {
       $scope.$apply();
     }, 0);
 
-    $scope.get_all_account_packages = function () {
+    $scope.get_all_transactions = function () {
       $(".loader").show();
       $(".result").hide();
-      // alert("got here");
-      // alert(JSON.stringify($scope.admin_data.email));
       $.ajax({
-        url: $scope.dirlocation + "adminapi/get_account_packages",
+        url: $scope.dirlocation + "adminapi/fetch_all_transactions",
         type: "GET",
         async: true,
         cache: false,
@@ -64,14 +62,15 @@ module.controller("packagesController", [
         },
         processData: false,
         success: function (result) {
-          // alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
-          console.log(JSON.stringify(msg.data));
           if (msg.status == "1") {
-            $scope.all_packages = msg.data;
+            $scope.all_transactions = msg.data;
+            console.table(JSON.stringify(msg.data));
+            $scope.notification = msg.msg;
+            $scope.status == msg.status;
             $scope.$apply();
             $(".result").show();
           } else {
@@ -80,42 +79,6 @@ module.controller("packagesController", [
           }
         },
       });
-    };
-
-    $scope.enable_or_disable = function (code, user, index) {
-      var conf = confirm(
-        "DO YOU WANT DISABLE/ENABLE THIS USER '" + user.fullname + "'?"
-      );
-      // alert(index);
-      if (conf) {
-        $(".loader2_" + user.fullname).show();
-        var formData = new FormData();
-        formData.append("status", code);
-        formData.append("seller_id", user.seller_id);
-        $.ajax({
-          url: $scope.dirlocation + "adminapi/disable_enable_account",
-          data: formData,
-          type: "POST",
-          async: true,
-          cache: false,
-          contentType: false,
-          headers: { "gnice-authenticate": $scope.admin_token },
-          processData: false,
-          success: function (result) {
-            var response = JSON.stringify(result);
-            var parsed = JSON.parse(response);
-            var msg = angular.fromJson(parsed);
-            $(".loader2_" + user.id).hide();
-            if (msg.status == "1") {
-              alert(index, code);
-              // all_users[index].status = code;
-              user.status = code;
-              $scope.$apply();
-              $(".result").show();
-            }
-          },
-        });
-      }
     };
   },
 ]);

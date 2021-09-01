@@ -128,10 +128,6 @@ class AdminTasks extends Model
                 $this->db->bind(':seller_id', $seller_id);
                 $this->db->bind(':status', $status);
                 if ($this->db->execute()) {
-                    $this->db->query("SELECT  U.*, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id WHERE seller_id = :seller_id");
-                    $this->db->bind(':seller_id', $seller_id);
-                    $row = $this->db->singleResult();
-                    $result['data'] = $row;
                     $result['message'] = 'account operation successfully';
                     $result['status'] = '1';
                 } else {
@@ -403,23 +399,10 @@ class AdminTasks extends Model
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
-            // echo ($token);
-            // die();
 
             if ($this->verifyToken($token) == true) {
                 $header = apache_request_headers();
                 $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
-
-                // $this->db
-                //     ->query("SELECT products.*,
-                //         category.title as productCategory,
-                //         sub_category.title as productSubCategory
-                //         FROM products
-                //         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
-                //         LEFT JOIN category ON category.id = products.category
-                //         LEFT JOIN users ON users.seller_id = products.seller_id WHERE seller_id = :seller_id ORDER BY products.date_added DESC");
-
-
                 $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id ORDER BY date_added DESC");
                 $this->db->bind(':seller_id', $seller_id);
                 $row = $this->db->resultSet();
@@ -453,5 +436,104 @@ class AdminTasks extends Model
         }
 
         return $array;
+    }
+    public function getAllTransactions()
+    {
+
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("SELECT transactions.*, users.fullname as seller_fullname, users.seller_id as seller_id  FROM transactions LEFT JOIN users ON users.email = transactions.user_email ORDER BY transactions.trans_date DESC ");
+                $row = $this->db->resultSet();
+                if ($this->db->execute()) {
+                    $result['rowCounts'] = $this->db->rowCount();
+                    $result['data'] = $row;
+                    $result['message'] = 'category created successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'error, try again';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    public function getAccountPackages()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
+
+                $this->db->query("SELECT package_id,title,value,status FROM seller_account_packages");
+                $packages = $this->db->resultSet();
+                $count = $this->db->rowCount();
+                for ($a = 0; $a < $count; $a++) {
+                    $this->db->query("SELECT * FROM seller_account_packages_content WHERE package_id = :package_id");
+                    $this->db->bind(':package_id', $packages[$a]->package_id);
+                    $package_content =  $this->db->resultSet();
+                    $packages[$a]->package_contents = $this->db->resultSet();
+                }
+                $result['data'] = $packages;
+                $result['status'] = '1';
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+    public function deleteUserAccount()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $seller_id = $_GET['seller_id'];
+            $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("DELETE * FROM users  WHERE seller_id = :seller_id");
+                $this->db->bind(':seller_id', $seller_id);
+                if ($this->db->execute()) {
+                    $this->db->query("DELETE * FROM products  WHERE seller_id = :seller_id");
+                    $this->db->bind(':seller_id', $seller_id);
+                    if ($this->db->execute()) {
+                        $result['message'] = "all user data successfully deleted";
+                        $result['status'] = '1';
+                    } else {
+                        $result['message'] = 'invalid operation on deleting ads';
+                        $result['status'] = '0';
+                    }
+                } else {
+                    $result['message'] = 'invalid token';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request header model';
+            $result['status'] = '0';
+        }
+        return $result;
     }
 }

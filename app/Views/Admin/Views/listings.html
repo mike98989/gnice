@@ -1,4 +1,5 @@
-<div class="content-wrapper">
+<!-- to enable listing page call the relevant functions below inside usersController[append_modal_info, localStorage_save] -->
+<div class="content-wrapper" ng-controller="usersController">
   <div class="page-header">
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -42,11 +43,10 @@
                       src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" class="mr-2" />
                   </td>
                   <td>
-                    <!-- <p> -->
                     {{listing.name}}
                     <span ng-switch="listing.status">
                       <span ng-switch-when="1">
-                        <i class="mdi mdi-check-circle text-success"></i>
+                        <i class="mdi mdi-lock-open text-success"></i>
                       </span>
                       <span ng-switch-when="0">
                         <i class="mdi mdi-lock text-danger"></i>
@@ -54,7 +54,6 @@
                       <span ng-switch-default>
                       </span>
                     </span>
-                    <!-- </p> -->
                     <br>
                     <span class="text-muted" style="font-size: 12px">{{listing.product_code}}</span>
                   </td>
@@ -68,470 +67,136 @@
                       listing.seller_phone }}</span>
                   </td>
                   <td>
-                    <button class="badge badge-warning mr-1" ng-show="listing.status=='1'"
-                      ng-click="enable_or_disable_listing(0,listing,$index)">
-                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
-                        style="width: 15px; display: none" /><i class="mdi mdi-autorenew mr-1"></i> Disable
+                    <!-- toggle enable account buttons -->
+                    <span ng-switch="listing.status" class="mr-1" data-toggle="modal"
+                      data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
+                      <span ng-switch-when="1">
+                        <button class="badge badge-warning">
+                          <i class="mdi mdi-autorenew mr-1"></i>Disable
+                        </button>
+                      </span>
+                      <span ng-switch-when="0">
+                        <button class="badge badge-success">
+                          <i class="mdi mdi-autorenew mr-1"></i>Enable
+                        </button>
+                      </span>
+                      <span ng-switch-default>
+                        none
+                      </span>
+                    </span>
+
+                    <!-- view user profile details -->
+
+                    <button href="#" class="badge badge-info mr-1"
+                      ng-click="localStorage_save('adsInfo',listing,'single_listing')"">
+                      <i class=" mdi mdi-eye-check mr-1"></i> View
                     </button>
-                    <button class="badge badge-success mr-1" ng-show="listing.status=='0'"
-                      ng-click="enable_or_disable_listing(1,listing,$index)">
-                      <img ng-src="{{dirlocation}}public/images/spinner.gif" class="loader1_{{listing.id}}"
-                        style="width: 15px; display: none" /><i class="mdi mdi-autorenew mr-1"></i> Enable
-                    </button>
-                    <!--  -->
-                    <!-- <button class="badge badge-primary mr-1" data-toggle="modal" data-target="#exampleModalLong"
-                      ng-click="append_modal_value(listing)">
-                      <i class="mdi mdi-information mr-1"></i> View
-                    </button> -->
-                    <view ng-controller="usersController">
-                      <button class="badge badge-info mr-1" data-toggle="modal"
-                        ng-click="localStorage_save('adsInfo',listing,'single_listing')">
-                        <i class="mdi mdi-eye-check mr-1"></i> View
-                      </button>
-                    </view>
-                    <!--  -->
-                    <button class="badge badge-danger" data-toggle="modal" data-target=".bd-example-modal-sm">
+
+                    <!-- delete user account control -->
+
+                    <button class="badge badge-danger" data-toggle="modal" data-target=".delete-user-modal"
+                      ng-click="append_modal_info(listing)">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
                     </button>
                   </td>
                 </tr>
-                <!-- modal window -->
-                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                  aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+              </tbody>
+
+              <!-- disable ads modal -->
+              <div class="modal fade disable-listing-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="card">
+
                       <div class="modal-header">
-                        <!-- <h5 class="modal-title" id="exampleModalLongTitle">
-                          {{ listingValue.name }}
-                        </h5> -->
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <div class="card">
-                          <!-- carousel -->
-
-                          <!--end carousel -->
-                          <!-- <img class="card-img-top "
-                            src="{{dirlocation}}/public/assets/images/uploads/products/{{img[1]}}" alt="Card image cap"> -->
-
-                          <div class="card-body mb-0 py-3 px-4">
-                            <h4 class="card-title">{{ listingValue.name }}
-                              <span ng-switch="listingValue.status">
-                                <span ng-switch-when="1" class="badge badge-gradient-success">Active</span>
-                                <span ng-switch-when="0" class="badge badge-gradient-warning">Disabled</span>
-                                <span ng-switch-default></span>
-                              </span>
-                            </h4>
-                            <p>{{ listingValue.product_code }}</p>
-                            <div class="card-text mb-0" ng-show="listingValue.description">
-                              <span>Description :</span> <br>
-                              <p>
-                                {{ listingValue.description }} Lorem ipsum dolor, sit amet consectetur adipisicing
-                                elit.
-                                In a inventore veniam libero, quos quisquam facere asperiores fugit atque ex.
-                              </p>
-                            </div>
-                          </div>
-                          <ul class="list-group list-group-flush">
-                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_fullname">
-                              <img
-                                src="{{dirlocation}}/public/assets/images/uploads/profile/{{listingValue.seller_image}}"
-                                class="class=" mr-3"" " alt=" photo of {{ listingValue.seller_fullname }}"
-                                style="width:60px; height:60px; border-radius:50%;">
-                              <span class="ml-4">
-                                {{ listingValue.seller_fullname }}
-                              </span>
-                              <!-- <span>{{ listingValue.last_seen }}</span> -->
-                            </li>
-                            <li class="list-group-item" ng-show="listingValue.seller_name">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Seller ID:</span>
-                              <span>
-                                {{ listingValue.seller_name }}
-                              </span>
-                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_id">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Client ID:</span>
-                              <span>
-                                {{ listingValue.seller_id }}
-                              </span>
-                            </li>
-                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_email">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Client email:</span>
-                              <span>
-                                {{ listingValue.seller_email }}
-                              </span>
-                            </li>
-                            <li class="list-group-item list-group-item-primary" ng-show="listingValue.seller_phone">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Phone:</span>
-                              <span>
-                                {{ listingValue.seller_phone }}
-                              </span>
-                            </li>
-                            <!-- product info -->
-                            <li class="list-group-item " ng-show="listingValue.productCategory">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Category:</span>
-                              <span>
-                                {{ listingValue.productCategory }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.productSubCategory">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Sub Category:</span>
-                              <span>
-                                {{ listingValue.productSubCategory }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.brand">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Brand:</span>
-                              <span>
-                                {{ listingValue.brand }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.color">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">color:</span>
-                              <span>
-                                {{ listingValue.color }}
-                              </span>
-                            </li>
-
-                            <li class="list-group-item " ng-show="listingValue.date_added">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Date Created:</span>
-                              <span>
-                                {{ listingValue.date_added }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.price">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Price:</span>
-                              <span>
-                                {{ listingValue.price | currency: "NGN" }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.state">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">State:</span>
-                              <span>
-                                {{ listingValue.state }}
-                              </span>
-                            </li>
-
-                            <li class="list-group-item " ng-show="listingValue.lga">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">LGA:</span>
-                              <span>
-                                {{ listingValue.lga}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.land_mark">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">LandMark:</span>
-                              <span>
-                                {{ listingValue.land_mark }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.model">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Model:</span>
-                              <span>
-                                {{ listingValue.model }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.condition_state">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">condition:</span>
-                              <span>
-                                {{ listingValue.condition_state }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.ram">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">RAM:</span>
-                              <span>
-                                {{ listingValue.ram }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.internal_storage">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Internal Storage:</span>
-                              <span>
-                                {{ listingValue.internal_storage }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.resolution">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Resolution:</span>
-                              <span>
-                                {{ listingValue.resolution }}
-                              </span>
-
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.sim">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Sim:</span>
-                              <span>
-                                {{ listingValue.sim }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.battery">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Battery:</span>
-                              <span>
-                                {{ listingValue.battery }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.exchange_possible">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Exchange Possible:</span>
-                              <span ng-switch="listingValue.exchange_possible">
-                                <span ng-switch-when="1">Yes</span>
-                                <span ng-switch-when="0">No</span>
-                                <span ng-switch-default></span>
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.main_camera">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Main Camera:</span>
-                              <span>
-                                {{ listingValue.main_camera }}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.selfie_camera">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Selfie Camera:</span>
-                              <span>
-                                {{ listingValue.selfie_camera }}
-                              </span>
-                            </li>
-
-                            <li class="list-group-item " ng-show="listingValue.negotiable">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Price Negotiable:</span>
-                              <span ng-switch="listingValue.negotiable">
-                                <span ng-switch-when="1">Yes</span>
-                                <span ng-switch-when="0">No</span>
-                                <span ng-switch-default></span>
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.delivery_available">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Price Negotiable:</span>
-                              <span ng-switch="listingValue.delivery_available">
-                                <span ng-switch-when="1">Yes</span>
-                                <span ng-switch-when="0">No</span>
-                                <span ng-switch-default></span>
-                              </span>
-                            </li>
-
-                            <li class="list-group-item " ng-show="listingValue.second_condition">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Second Condition:</span>
-                              <span>
-                                {{ listingValue.second_condition}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.transmission_type_vehicle">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Transmission type:</span>
-                              <span>
-                                {{ listingValue.transmission_type_vehicle}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.mileage_vehicle">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Mileage:</span>
-                              <span>
-                                {{ listingValue.mileage_vehicle}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.mileage_vehicle">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Mileage:</span>
-                              <span>
-                                {{ listingValue.mileage_vehicle}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.registered_vehicle">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Register Vehicle:</span>
-                              <span>
-                                {{ listingValue.registered_vehicle}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.vin_vehicle">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">VIN:</span>
-                              <span>
-                                {{ listingValue.vin_vehicle}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.horse_power_vehicle">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Horse Power:</span>
-                              <span>
-                                {{ listingValue.horse_power_vehicle}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.engine_size">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Engine Size:</span>
-                              <span>
-                                {{ listingValue.engine_size}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.year_of_manufacture">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Year of Manufacture:</span>
-                              <span>
-                                {{ listingValue.year_of_manufacture}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.operating_system">
-                              <i class="mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Operating System :</span>
-                              <span>
-                                {{ listingValue.operating_system}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.   hard_drive_size">
-                              <i class=" mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Hard Drive Size:</span>
-                              <span>
-                                {{ listingValue.hard_drive_size}}
-                              </span>
-                            <li class="list-group-item " ng-show="listingValue.fuel">
-                              <i class=" mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Fuel :</span>
-                              <span>
-                                {{ listingValue.fuel}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.seats_vehicle">
-                              <i class=" mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">No of seats(Vehicle) :</span>
-                              <span>
-                                {{ listingValue.seats_vehicle}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.property_size">
-                              <i class=" mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Property Size:</span>
-                              <span>
-                                {{ listingValue.property_size}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.number_of_bedrooms">
-                              <i class=" mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Number of Bedrooms :</span>
-                              <span>
-                                {{ listingValue.number_of_bedrooms}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.property_type">
-                              <i class=" mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Property Type :</span>
-                              <span>
-                                {{ listingValue.property_type}}
-                              </span>
-                            </li>
-                            <li class="list-group-item " ng-show="listingValue.number_of_bathrooms">
-                              <i class=" mdi mdi-check-circle mr-1 text-success">
-                              </i>
-                              <span class="mr-2">Number of Bathrooms :</span>
-                              <span>
-                                {{ listingValue.number_of_bathrooms}}
-                              </span>
-                            </li>
-
-                          </ul>
-                        </div>
-                      </div>
-                      <div class=" modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end modal window-->
-                <!-- small modal -->
-                <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
-                  aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">
-                          {{ listingValue.name }}
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Autem dolore blanditiis temporibus. Saepe, dolor
-                          inventore sint sequi dolores rem aspernatur accusamus
-                          architecto nisi praesentium expedita molestias
-                          accusamus.
+                        <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
+                        <p class="display-4 text-center">
+                          You are about to
+                          <span ng-switch="info.status">
+                            <span ng-switch-when="1">
+                              <span> disable </span>
+                            </span>
+                            <span ng-switch-when="0">
+                              <span> enable </span>
+                            </span>
+                            <span ng-switch-default>
+                            </span>
+                          </span>
+                          <span>
+                            {{ info.name | uppercase}}
+                          </span>
                         </p>
                       </div>
+                      <div class="modal-footer">
+
+                        <!-- call disable_enable listing() -->
+                        <span ng-switch="info.status" class="mr-1">
+                          <span ng-switch-when="1">
+                            <button ng-click="enable_or_disable_listing(0,info, $index)" class="btn btn-info btn-sm"
+                              data-dismiss="modal">
+                              Save changes
+                            </button>
+                          </span>
+                          <span ng-switch-when="0">
+                            <button ng-click="enable_or_disable_listing(1,info, $index)" class="btn btn-info btn-sm"
+                              data-dismiss="modal">
+                              Save changes
+                            </button>
+                          </span>
+                          <span ng-switch-default>
+                            none
+                          </span>
+                        </span>
+
+                        <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <!-- end small modal -->
+              </div>
+              <!-- end disable ads modal -->
 
-              </tbody>
+              <!-- delete ads modal -->
+              <div class="modal fade delete-user-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="card">
+
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p class=" text-center display-1 text-danger"><i class="mdi mdi-delete"></i></p>
+                        <p class="display-4 text-center">
+                          You are about to DETETE
+                          <span class="text-danger">
+                            {{ info.name | uppercase}}
+                          </span> FOREVER !
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <!-- call delete function() -->
+                        <button ng-click="delete_user_account_and_ads(info.product_code)" class="btn btn-danger btn-sm"
+                          data-dismiss="modal">
+                          Delete ads !
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- end delete ads modal -->
             </table>
             <dir-pagination-controls boundary-links="true" template-url="" style="float: right">
             </dir-pagination-controls>

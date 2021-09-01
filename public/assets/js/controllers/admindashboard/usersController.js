@@ -1,5 +1,5 @@
-///////////// THIS IS THE INDEXPAGE CONTROLLER///////
-///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
+///////////// THIS IS THE USE CONTROLLER///////
+///// THIS CONTROLS EVERY ACTIVITY ON THE USE PAGE
 /////////////////////////
 
 module.controller("usersController", [
@@ -40,7 +40,7 @@ module.controller("usersController", [
 
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = pager;
-    $scope.pageSize = 5;
+    $scope.pageSize = 10;
     $scope.admin_data = $localStorage.user_data;
     $scope.admin_token = $localStorage.user_token;
     setTimeout(function () {
@@ -50,8 +50,6 @@ module.controller("usersController", [
     $scope.get_all_users = function () {
       $(".loader").show();
       $(".result").hide();
-      // alert("got here");
-      // alert(JSON.stringify($scope.admin_data.email));
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_users",
         type: "GET",
@@ -69,7 +67,6 @@ module.controller("usersController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
-          //alert(JSON.stringify(msg.data));
           if (msg.status == "1") {
             $scope.all_users = msg.data;
             $scope.$apply();
@@ -82,52 +79,45 @@ module.controller("usersController", [
       });
     };
 
-    $scope.enable_or_disable = function (code, user, index) {
-      var conf = confirm(
-        "DO YOU WANT DISABLE/ENABLE THIS USER '" + user.fullname + "'?"
-      );
-      // alert(index);
-      if (conf) {
-        $(".loader2_" + user.fullname).show();
-        var formData = new FormData();
-        formData.append("status", code);
-        formData.append("seller_id", user.seller_id);
-        $.ajax({
-          url: $scope.dirlocation + "adminapi/disable_enable_account",
-          data: formData,
-          type: "POST",
-          async: true,
-          cache: false,
-          contentType: false,
-          headers: { "gnice-authenticate": $scope.admin_token },
-          processData: false,
-          success: function (result) {
-            var response = JSON.stringify(result);
-            var parsed = JSON.parse(response);
-            var msg = angular.fromJson(parsed);
-            $(".loader2_" + user.id).hide();
-            if (msg.status == "1") {
-              // alert(index, code);
-              // all_users[index].status = code;
-              user.status = code;
-              $scope.$apply();
-              $(".result").show();
-            }
-          },
-        });
-      }
+    $scope.enable_or_disable = function (code, user, $index) {
+      $(".loader2_" + user.fullname).show();
+      var formData = new FormData();
+
+      formData.append("status", code);
+      formData.append("seller_id", user.seller_id);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/disable_enable_account",
+        data: formData,
+        type: "POST",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader2_" + user.id).hide();
+          if (msg.status == "1") {
+            user.status = code;
+            $scope.$apply();
+            $(".result").show();
+          }
+        },
+      });
     };
     //! TODO: save and retrieved data from localStorage
     $scope.localStorage_get = function (key) {
       $scope[key] = $localStorage[key];
-      alert($localStorage[key]);
+      // alert($localStorage[key]);
       // $scope.$apply();
     };
 
     $scope.localStorage_save = function (key, value, url) {
       $localStorage[key] = value;
       // $scope[key] = $localStorage[key];
-      alert(JSON.stringify(value));
+      // alert(JSON.stringify(value));
       // return;
       if (url != "") {
         $scope.go_to_url(url);
@@ -141,10 +131,10 @@ module.controller("usersController", [
     //! important functions above
 
     //* more data into modal window
-    $scope.append_modal_user_info = function (value) {
-      $scope.userInfo = value;
-      console.log(JSON.stringify($scope.userInfo));
-      $scope.fetch_all_seller_products();
+    $scope.append_modal_info = function (value) {
+      $scope.info = value;
+      // console.log(JSON.stringify($scope.info));
+      //$scope.get_all_users();
     };
 
     //! get all listings of a seller
@@ -155,7 +145,6 @@ module.controller("usersController", [
           "adminapi/fetch_all_product_of_seller?seller_id=" +
           seller_id,
         type: "GET",
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
         async: true,
         cache: false,
         contentType: "application/json",
@@ -170,6 +159,36 @@ module.controller("usersController", [
           if (msg.status == "1") {
             $scope.all_user_ads = msg.data;
             $scope.rowCount = msg.rowCounts;
+            $scope.$apply();
+            $(".result").show();
+          } else {
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
+    };
+    $scope.delete_user_account_and_ads = function (seller_id) {
+      $.ajax({
+        url:
+          $scope.dirlocation +
+          "adminapi/delete_user_account_and_ads?seller_id=" +
+          seller_id,
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          console.log(JSON.stringify(msg));
+          // alert(msg);
+          // alert(msg.status);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.get_all_users();
             $scope.$apply();
             $(".result").show();
           } else {
