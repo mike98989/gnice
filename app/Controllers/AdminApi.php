@@ -235,6 +235,21 @@ class AdminApi extends Controller
             exit;
         }
     }
+    public function update_package()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            // print_r(json_encode("got"));
+            // die();
+            $result = $this->model('AdminTasks')->updatePackage($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
 
 
     public function deletesubCategory()

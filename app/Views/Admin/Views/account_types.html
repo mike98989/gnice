@@ -7,7 +7,7 @@
       Account Types
     </h3>
   </div>
-  <p class="alert alert-info text-center w-50 mx-auto mb-5 result ">
+  <p class="alert text-center w-50 mx-auto mb-5 result " style="display: none">
   </p>
   <div class="row" ng-init="get_all_account_packages()">
     <div class="col-sm-12 col-md-6 grid-margin" ng-repeat="package in all_packages">
@@ -33,8 +33,9 @@
                 </span>
               </p>
               <div class=" m-2">
-                <button class="btn btn-sm btn-gradient-info mr-3" type="button"><i class="mdi mdi-pen-plus"></i>
-                  Edit</button>
+                <button class="btn btn-sm btn-gradient-info mr-3 btn_{{ package.package_id }}"
+                  ng-click="toggle_form( package.package_id )"><i class="mdi mdi-pen-plus"></i>
+                </button>
                 <!-- </view> -->
                 <!-- modal -->
                 <span ng-switch="package.status" data-toggle="modal" data-target=".disable-package-modal"
@@ -66,24 +67,24 @@
               {{ package.title | uppercase}}
             </h4> -->
             <article class="card-title text-center">
-              <span ng-switch="package.title">
-                <span ng-switch-when="Free">
+              <span ng-switch="package.package_id">
+                <span ng-switch-when="1">
                   <h4 class="badge badge-secondary ">
 
                     {{package.title | uppercase}}
                   </h4>
                 </span>
-                <span ng-switch-when="Basic">
+                <span ng-switch-when="2">
                   <h4 class="badge badge-success">
                     {{package.title | uppercase}}
                   </h4>
                 </span>
-                <span ng-switch-when="Super">
+                <span ng-switch-when="3">
                   <h4 class="badge badge-info">
                     {{package.title | uppercase}}
                   </h4>
                 </span>
-                <span ng-switch-when="Advance">
+                <span ng-switch-when="4">
                   <h4 class="badge badge-primary">
                     {{package.title | uppercase}}
                   </h4>
@@ -96,6 +97,20 @@
               </span>
             </article>
             <h5 class="card-title text-center ">{{ package.value | currency : "NGN "}}</h5>
+            <article class="form-package form_{{ package.package_id }}" style="display:none">
+              <form ng-submit="edit_package(package.package_id, $index)" id=" edit_package_{{ package.package_id
+                }}">
+                <div class=" d-flex m-2">
+                  <input type="text" class="form-control" value="{{ package.package_id}}" name="package_id" hidden>
+                  <input type="text" class="form-control" value="{{ package.title}}" name="title">
+                  <input type="text" class="form-control" value="{{ package.value}}" name="value">
+                  <button type="submit" class="btn btn-sm btn-gradient-success"
+                    ng-click="toggle_form( package.package_id )">
+                    <i class=" mdi mdi-content-save-settings"></i>
+                  </button>
+                </div>
+              </form>
+            </article>
           </div>
 
           <ul class="list-group list-group-flush clearfix">

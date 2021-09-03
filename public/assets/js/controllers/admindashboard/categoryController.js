@@ -69,7 +69,7 @@ module.controller("categoryController", [
           if (msg.status == "1") {
             $scope.all_cat_and_sub = msg.data;
             $scope.$apply();
-            $(".result").show();
+            $(".result").hide();
           } else {
             $(".result").html(msg.message);
             $(".result").show();
@@ -103,6 +103,7 @@ module.controller("categoryController", [
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").show();
+            $("#addCategory")[0].reset();
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);
@@ -136,6 +137,7 @@ module.controller("categoryController", [
             $(".result").html(msg.message);
             alert(msg.message);
             $(".result").show();
+            $("#updateCategory")[0].reset();
           } else {
             $scope.get_all_cat_and_sub_cat();
             alert(msg.message);
@@ -171,6 +173,7 @@ module.controller("categoryController", [
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").show();
+            $("#addSubCategory")[0].reset();
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);
@@ -211,6 +214,7 @@ module.controller("categoryController", [
               // all_users[index].status = code;
               user.status = code;
               $scope.$apply();
+              $(".result").html(msg.message);
               $(".result").show();
             }
           },
@@ -240,6 +244,7 @@ module.controller("categoryController", [
           if (msg.status == "1") {
             sub.status = code;
             $scope.$apply();
+            $(".result").html(msg.message);
             $(".result").show();
           }
         },

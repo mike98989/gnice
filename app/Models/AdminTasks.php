@@ -753,4 +753,42 @@ class AdminTasks extends Model
 
         return $result;
     }
+    public function updatePackage()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $id = trim($_POST['package_id']);
+                $title = trim($_POST['title']);
+                $value = trim($_POST['value']);
+                // print_r(json_encode("got"));
+                // die();
+                $this->db->query("UPDATE seller_account_packages SET title = :title, value = :value WHERE package_id = :id");
+                $this->db->bind(':title', $title);
+                $this->db->bind(':value', $value);
+                $this->db->bind(':id', $id);
+                $row = $this->db->singleResult();
+                if ($this->db->execute()) {
+                    $result['data'] = $row;
+                    $result['message'] = 'Package updated successfully';
+                    $result['status'] = 1;
+                } else {
+                    $result['message'] = 'Package updated failed';
+                    $result['status'] = 0;
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
 }
