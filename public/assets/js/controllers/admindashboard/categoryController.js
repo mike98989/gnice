@@ -66,7 +66,6 @@ module.controller("categoryController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
-          console.table(msg.data);
           if (msg.status == "1") {
             $scope.all_cat_and_sub = msg.data;
             $scope.$apply();
@@ -79,6 +78,110 @@ module.controller("categoryController", [
       });
     };
 
+    $scope.add_new_category = function () {
+      $(".loader").show();
+      var formData = new FormData($("#addCategory")[0]);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/add_category",
+        type: "POST",
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (answer) {
+          alert(JSON.stringify(answer));
+          console.log(answer);
+          var response = JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            alert(msg);
+            $scope.get_all_cat_and_sub_cat();
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").show();
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").show();
+            //alert(msg.message);
+          }
+        },
+      });
+    };
+    $scope.update_category = function () {
+      $(".loader").show();
+      var formData = new FormData($("#updateCategory")[0]);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/update_category",
+        type: "POST",
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (answer) {
+          var response = JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          console.log(JSON.stringify(msg));
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.get_all_cat_and_sub_cat();
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            alert(msg.message);
+            $(".result").show();
+          } else {
+            $scope.get_all_cat_and_sub_cat();
+            alert(msg.message);
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
+    };
+    $scope.add_new_sub_category = function () {
+      $(".loader").show();
+      var formData = new FormData($("#addSubCategory")[0]);
+
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/add_sub_category",
+        type: "POST",
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (answer) {
+          alert(JSON.stringify(answer));
+          // console.log(answer);
+          var response = JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.get_all_cat_and_sub_cat();
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").show();
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").show();
+            //alert(msg.message);
+          }
+        },
+      });
+    };
+
+    // TODO: check code below
     $scope.enable_or_disable = function (code, user, index) {
       var conf = confirm(
         "DO YOU WANT DISABLE/ENABLE THIS USER '" + user.fullname + "'?"
@@ -113,6 +216,34 @@ module.controller("categoryController", [
           },
         });
       }
+    };
+    $scope.enable_disable_sub = function (code, sub) {
+      // $(".loader" + sub.title).show();
+      var formData = new FormData();
+
+      formData.append("status", code);
+      formData.append("sub_id", sub.sub_id);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/disable_enable_sub_category",
+        data: formData,
+        type: "POST",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader2_" + sub.id).hide();
+          if (msg.status == "1") {
+            sub.status = code;
+            $scope.$apply();
+            $(".result").show();
+          }
+        },
+      });
     };
   },
 ]);

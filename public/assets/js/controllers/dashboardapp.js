@@ -13,6 +13,10 @@ module.config(function ($routeProvider, $locationProvider) {
       templateUrl: "../app/views/Admin/views/sub_category.html",
       controller: "categoryController",
     })
+    .when("/edit_sub", {
+      templateUrl: "../app/views/Admin/views/edit_sub_category.html",
+      controller: "categoryController",
+    })
     .when("/listings", {
       templateUrl: "../app/views/Admin/views/listings.html",
       controller: "listingController",
@@ -31,6 +35,10 @@ module.config(function ($routeProvider, $locationProvider) {
     })
     .when("/account_types", {
       templateUrl: "../app/views/Admin/views/account_types.html",
+      controller: "packagesController",
+    })
+    .when("/edit_packages", {
+      templateUrl: "../app/views/Admin/views/edit_packages.html",
       controller: "packagesController",
     })
     .when("/banners", {

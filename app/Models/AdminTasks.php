@@ -90,7 +90,7 @@ class AdminTasks extends Model
             $token = $splitHeader[0];
 
             if ($this->verifyToken($token) == true) {
-                $this->db->query("SELECT  U.id,U.fullname,U.email,U.phone,U.whatsapp,U.state,U.country,U.seller,U.account_type,U.image,U.token,U.seller_id,U.last_login,U.signup_date,U.activated,U.status, S.title as account_type_title FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.last_login DESC ");
+                $this->db->query("SELECT  U.id,U.fullname,U.email,U.phone,U.whatsapp,U.state,U.country,U.seller,U.account_type,U.image,U.token,U.seller_id,U.last_login,U.signup_date,U.activated,U.status, S.title as account_type_title, S.package_id as seller_account_packages_id FROM users U LEFT JOIN seller_account_packages S ON U.account_type = S.package_id ORDER BY U.last_login DESC ");
                 $row = $this->db->resultSet();
                 if ($this->db->rowCount() > 0) {
                     $result['rowCounts'] = $this->db->rowCount();
@@ -148,6 +148,81 @@ class AdminTasks extends Model
 
         return $result;
     }
+    public function togglePackageStatus()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $status = trim($_POST['status']);
+            $id = trim($_POST['id']);
+
+
+            if ($this->verifyToken($token) == true) {
+
+                $this->db->query("UPDATE seller_account_packages SET status = :status WHERE package_id = :id");
+                $this->db->bind(':id', $id);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $result['message'] = 'package status operation successful';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'package status operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid token, login to continue task';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+    public function togglePackageContentStatus()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $status = trim($_POST['status']);
+            $id = trim($_POST['id']);
+
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("UPDATE seller_account_packages_content SET status = :status WHERE content_id = :id");
+                $this->db->bind(':id', $id);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $result['message'] = 'package content status operation successful';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'package content  status operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid token, login to continue task';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
     public function disableEnableAds()
     {
         $header = apache_request_headers();
@@ -173,6 +248,40 @@ class AdminTasks extends Model
                     $row = $this->db->resultSet();
                     $result['data'] = $row;
                     $result['message'] = 'ads operation successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'account operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid token, login to continue task';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+    public function disableEnableSubCategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $status = $_POST['status'];
+            $sub_id = $_POST['sub_id'];
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("UPDATE sub_category SET status = :status WHERE sub_id = :sub_id");
+                $this->db->bind(':sub_id', $sub_id);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $result['message'] = 'sub category operation successfully';
                     $result['status'] = '1';
                 } else {
                     $result['data'] = [];
@@ -240,17 +349,19 @@ class AdminTasks extends Model
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
-
             if ($this->verifyToken($token) == true) {
-                $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $title = $data['title'];
+
+                $uploader = uploadMultiple('cat', 'category', 1);
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $image = $uploader['imageUrl'];
+                $title = $_POST['title'];
                 $status = 1;
                 $this->db->query(
                     'INSERT INTO category (title, image, status) VALUES (:title,:image, :status)'
                 );
-                $this->db->bind(':title', $data['title']);
+                $this->db->bind(':title', $title);
                 $this->db->bind(':status', $status);
-                // $this->db->bind(':image', $image]);
+                $this->db->bind(':image', $image);
                 if ($this->db->execute()) {
                     $result['message'] = 'category created successfully';
                     $result['status'] = '1';
@@ -268,25 +379,78 @@ class AdminTasks extends Model
         }
         return $result;
     }
-    public function updateCategory($data)
+    public function updateCategory()
     {
-        //! if ($this->verifyToken() == true) {}else{}
-        $this->db->query(
-            'UPDATE category SET title = :title,image = :image WHERE id = :id'
-        );
-        $this->db->bind(':title', $data['title']);
-        $this->db->bind(':address', $data['address']);
-        $this->db->bind(':id', $data['id']);
-        if ($this->db->execute()) {
-            $result['message'] = 'category updated successfully';
-            $result['status'] = '1';
+
+        // FIXME: add deleting previous image
+
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $title = trim($_POST['title']);
+                $id = $_POST['id'];
+                $image = $_FILES['file']['name'];
+                // echo ($image);
+                // die;
+                $deleteimage = $_POST['previous_image'];
+                if ($image != "") {
+                    $path = 'assets/images/uploads/category/' . $_FILES['file']['name'];
+                    if (move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
+
+                        //delete previous_image
+                        $pathDelete = "public/assets/images/uploads/category/" . $deleteimage;
+                        if (is_file($pathDelete)) {
+                            unlink($pathDelete);
+                        }
+                        $this->db->query('UPDATE category SET title = :title,image = :image WHERE id = :id');
+                        $this->db->bind(':id', $id);
+                        $this->db->bind(':title', $title);
+                        $this->db->bind(':image', $image);
+                        if ($this->db->execute()) {
+                            $result['rowCount'] = $this->db->rowCount();
+                            $result['message'] = 'Category Updated';
+                            $result['status'] = 1;
+                        } else {
+                            $result['message'] = 'Category failed';
+                            $result['status'] = 0;
+                            // return false;
+                        }
+                    } else {
+                        $result['message'] = 'upload failed';
+                        $result['status'] = 0;
+                    }
+                } else {
+                    $this->db->query('UPDATE category SET title = :title WHERE id = :id');
+                    $this->db->bind(':title', $title);
+                    $this->db->bind(':id', $id);
+                    if ($this->db->execute()) {
+                        $result['rowCount'] = $this->db->rowCount();
+                        $result['message'] = 'Category updated';
+                        $result['status'] = 1;
+                    } else {
+                        $result['message'] = 'Category failed';
+                        $result['status'] = 0;
+                        // return false;
+                    }
+                }
+            } else {
+                $result['message'] = 'Category failed';
+                $result['status'] = 0;
+            }
         } else {
-            $result['message'] = 'category creation failed';
+            $result['message'] = 'invalid request';
             $result['status'] = '0';
         }
 
         return $result;
     }
+
+
+
     public function deleteCategory($id)
     {
         $this->db->query('DELETE * FROM category WHERE id = :id ');
@@ -316,20 +480,35 @@ class AdminTasks extends Model
         return $result;
     }
 
-    public function addSubCategory($data)
+    public function addSubCategory()
     {
-        $status = 1;
-        $this->db->query(
-            'INSERT INTO sub_category (title, parent_id, address) VALUES (:title, :parent_id, :address)'
-        );
-        $this->db->bind(':title', $data['title']);
-        $this->db->bind(':parent_id', $data['category']);
-        $this->db->bind(':status', $status);
-        if ($this->db->execute()) {
-            $result['message'] = 'category updated successfully';
-            $result['status'] = '1';
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $data = array_map('trim', array_filter($_POST));
+                $status = 1;
+                $this->db->query(
+                    'INSERT INTO sub_category (title, parent_id, status) VALUES (:title, :parent_id, :status)'
+                );
+                $this->db->bind(':title', $data['title']);
+                $this->db->bind(':parent_id', $data['parent_id']);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $result['message'] = 'sub category updated successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'sub category creation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
         } else {
-            $result['message'] = 'category creation failed';
+            $result['message'] = 'invalid request';
             $result['status'] = '0';
         }
         return $result;
@@ -534,6 +713,44 @@ class AdminTasks extends Model
             $result['message'] = 'invalid request header model';
             $result['status'] = '0';
         }
+        return $result;
+    }
+    public function updatePackageContents()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $id = trim($_POST['server_content_id']);
+                $content_title = trim($_POST['content_title']);
+                $content_body = trim($_POST['content_body']);
+                // print_r(json_encode("got"));
+                // die();
+                $this->db->query("UPDATE seller_account_packages_content SET content_title = :content_title, content_body = :content_body WHERE content_id = :id");
+                $this->db->bind(':content_title', $content_title);
+                $this->db->bind(':content_body', $content_body);
+                $this->db->bind(':id', $id);
+                $row = $this->db->singleResult();
+                if ($this->db->execute()) {
+                    $result['data'] = $row;
+                    $result['message'] = 'Package content updated successfully';
+                    $result['status'] = 1;
+                } else {
+                    $result['message'] = 'Package content updated failed';
+                    $result['status'] = 0;
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+
         return $result;
     }
 }

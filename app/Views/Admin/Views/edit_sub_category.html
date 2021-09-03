@@ -1,0 +1,21 @@
+<div class="content-wrapper" ng-controller="usersController" ng-init="localStorage_get('catInfo')">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-sitemap"></i>
+            </span>
+            Sub Category | {{ catInfo.title | uppercase }}
+        </h3>
+    </div>
+    <div class="row grid-margin">
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit {}</h4>
+                    <div class="loader" style="text-align: center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

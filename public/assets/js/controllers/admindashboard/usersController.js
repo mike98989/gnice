@@ -69,6 +69,7 @@ module.controller("usersController", [
           $(".loader").hide();
           if (msg.status == "1") {
             $scope.all_users = msg.data;
+            console.log(JSON.stringify(msg.data));
             $scope.$apply();
             $(".result").show();
           } else {
@@ -169,11 +170,14 @@ module.controller("usersController", [
       });
     };
     $scope.delete_user_account_and_ads = function (seller_id) {
+      // alert($scope.admin_token);
+      // return;
       $.ajax({
         url:
           $scope.dirlocation +
           "adminapi/delete_user_account_and_ads?seller_id=" +
           seller_id,
+        type: "GET",
         async: true,
         cache: false,
         contentType: false,

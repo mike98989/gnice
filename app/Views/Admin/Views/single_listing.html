@@ -115,7 +115,7 @@
                         <div class="col-sm-12 col-md-4">
                             <div class="card">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"> <i class="mdi mdi-star mr-1 text-primary">
+                                    <li class="list-group-item"> <i class="mdi mdi-check-circle mr-1 text-success">
                                         </i> Status:
                                         <span ng-switch="adsInfo.status">
                                             <span ng-switch-when="1"
@@ -128,32 +128,33 @@
                                         </span>
                                     </li>
                                     <li class="list-group-item " ng-show="adsInfo.price">
-                                        <i class="mdi mdi-star mr-1 text-primary">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
                                         </i>
                                         <span class="mr-2">Price:</span>
                                         <span>
                                             {{ adsInfo.price | currency: "NGN" }}
                                         </span>
                                     </li>
-                                    <!-- <li class="list-group-item"><i class="mdi mdi-star mr-1 text-primary">
+                                    <!-- <li class="list-group-item"><i class="mdi mdi-check-circle mr-1 text-success">
                                             </i>Title: <span class="ml-2">{{ adsInfo.name }}</span>
                                         </li> -->
                                     <li ng-if="adsInfo.fullname" class="list-group-item"> <i
-                                            class="mdi mdi-star mr-1 text-primary">
+                                            class="mdi mdi-check-circle mr-1 text-success">
                                         </i>Seller: <span class="ml-2">{{ adsInfo.seller_fullname
                                             }}</span>
                                     </li>
-                                    <li class="list-group-item"><i class="mdi mdi-star mr-1 text-primary"></i>Seller
+                                    <li class="list-group-item"><i
+                                            class="mdi mdi-check-circle mr-1 text-success"></i>Seller
                                         ID:
                                         <span class="ml-2">
                                             {{ adsInfo.seller_id
                                             }}</span>
                                     </li>
-                                    <li class="list-group-item"><i class="mdi mdi-star mr-1 text-primary">
+                                    <li class="list-group-item"><i class="mdi mdi-check-circle mr-1 text-success">
                                         </i>Brand: <span class="ml-2">{{ adsInfo.name }}</span>
                                     </li>
                                     <li class="list-group-item " ng-show="adsInfo.negotiable">
-                                        <i class="mdi mdi-star mr-1 text-primary">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
                                         </i>
                                         <span class="mr-2">Price Negotiable:</span>
                                         <span ng-switch="adsInfo.negotiable">
@@ -163,7 +164,7 @@
                                         </span>
                                     </li>
                                     <li class="list-group-item " ng-show="adsInfo.delivery_available">
-                                        <i class="mdi mdi-star mr-1 text-primary">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
                                         </i>
                                         <span class="mr-2">Delivery Available:</span>
                                         <span ng-switch="adsInfo.delivery_available">
@@ -173,7 +174,7 @@
                                         </span>
                                     </li>
                                     <li class="list-group-item " ng-show="adsInfo.exchange_possible">
-                                        <i class="mdi mdi-star mr-1 text-primary">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
                                         </i>
                                         <span class="mr-2">Exchange Possible:</span>
                                         <span ng-switch="adsInfo.exchange_possible">
@@ -459,11 +460,10 @@
                             <div class="row mt-2">
                                 <div class="col-12">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><i
-                                                class="mdi mdi-book-open-page-variant mr-1 text-warning">
+                                        <li class="list-group-item"><i class="mdi mdi-check-circle mr-1 text-success">
                                             </i>Description: <br>
-                                            <span class="">{{
-                                                adsInfo.description}}</span>
+                                            <p class="">{{
+                                                adsInfo.description}}</p>
                                         </li>
                                     </ul>
                                 </div>

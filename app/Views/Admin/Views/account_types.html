@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper" ng-controller="usersController">
   <div class="page-header">
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -7,6 +7,8 @@
       Account Types
     </h3>
   </div>
+  <p class="alert alert-info text-center w-50 mx-auto mb-5 result ">
+  </p>
   <div class="row" ng-init="get_all_account_packages()">
     <div class="col-sm-12 col-md-6 grid-margin" ng-repeat="package in all_packages">
       <div class="card">
@@ -16,98 +18,272 @@
           <!-- <div class="loader" style="text-align: center">
             <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
           </div> -->
-          <div class="float-right m-2">
-            <a class="badge badge-gradient-info mr-3" type="button"><i class="mdi mdi-pen-plus"></i> Edit</a>
-            <!-- </view> -->
-            <!--  -->
-            <a class="badge badge-gradient-warning" type="button" data-toggle="modal"
-              data-target=".disable_enable_user">
-              <i class="mdi mdi-delete-forever mr-1"></i> Disable
-            </a>
-          </div>
-          <div class="card-header ">
 
-            <p ng-switch="package.status" class="display-4 p-0 m-0">
-              <span ng-switch-when="1">
-                <i class="mdi mdi-lock-open text-success"></i>
-              </span>
-              <span ng-switch-when="0">
-                <i class="mdi mdi-lock text-danger"></i>
-              </span>
-              <span ng-switch-default>
-              </span>
-            </p>
-            <!-- <h4 class="card-title text-center text-info">
-              {{ package.title | uppercase}}
-            </h4> -->
-            <h4 class="card-title text-center">
-              <span ng-switch="package.title">
-                <span ng-switch-when="Free">
-                  <span class="badge badge-secondary">
-                    {{package.title | uppercase}}
-                  </span>
+          <div class="card-header ">
+            <article class="d-flex justify-content-between mb-md-2">
+
+              <p ng-switch="package.status" class="display-4 p-0 m-0">
+                <span ng-switch-when="1">
+                  <i class="mdi mdi-lock-open text-success"></i>
                 </span>
-                <span ng-switch-when="Basic">
-                  <span class="badge badge-success">
-                    {{package.title | uppercase}}
-                  </span>
-                </span>
-                <span ng-switch-when="Super">
-                  <span class="badge badge-info">
-                    {{package.title | uppercase}}
-                  </span>
-                </span>
-                <span ng-switch-when="Advance">
-                  <span class="badge badge-primary">
-                    {{package.title | uppercase}}
-                  </span>
+                <span ng-switch-when="0">
+                  <i class="mdi mdi-lock text-warning"></i>
                 </span>
                 <span ng-switch-default>
-                  <span class="badge badge-light">
+                </span>
+              </p>
+              <div class=" m-2">
+                <button class="btn btn-sm btn-gradient-info mr-3" type="button"><i class="mdi mdi-pen-plus"></i>
+                  Edit</button>
+                <!-- </view> -->
+                <!-- modal -->
+                <span ng-switch="package.status" data-toggle="modal" data-target=".disable-package-modal"
+                  ng-click="append_modal_info(package)">
+                  <span ng-switch-when="1">
+                    <button class="btn btn-sm btn-gradient-warning">
+                      <i class="mdi mdi-autorenew"></i>
+                    </button>
+                  </span>
+                  <span ng-switch-when="0">
+                    <button class="btn btn-sm btn-gradient-success">
+                      <i class="mdi mdi-autorenew"></i>
+                    </button>
+                  </span>
+                  <span ng-switch-default>
                     none
                   </span>
                 </span>
+                <!-- /modal -->
+                <!-- <button class="btn btn-sm btn-gradient-warning" type="button" data-toggle="modal"
+                            data-target=".disable_enable_user">
+                            <i class="mdi mdi-autorenew mr-1"></i> Disable
+                          </button> -->
+
+
+              </div>
+            </article>
+            <!-- <h4 class="card-title text-center text-info">
+              {{ package.title | uppercase}}
+            </h4> -->
+            <article class="card-title text-center">
+              <span ng-switch="package.title">
+                <span ng-switch-when="Free">
+                  <h4 class="badge badge-secondary ">
+
+                    {{package.title | uppercase}}
+                  </h4>
+                </span>
+                <span ng-switch-when="Basic">
+                  <h4 class="badge badge-success">
+                    {{package.title | uppercase}}
+                  </h4>
+                </span>
+                <span ng-switch-when="Super">
+                  <h4 class="badge badge-info">
+                    {{package.title | uppercase}}
+                  </h4>
+                </span>
+                <span ng-switch-when="Advance">
+                  <h4 class="badge badge-primary">
+                    {{package.title | uppercase}}
+                  </h4>
+                </span>
+                <span ng-switch-default>
+                  <p class="badge badge-light">
+                    none
+                  </p>
+                </span>
               </span>
-            </h4>
+            </article>
             <h5 class="card-title text-center ">{{ package.value | currency : "NGN "}}</h5>
           </div>
 
           <ul class="list-group list-group-flush clearfix">
             <li class="list-group-item" ng-repeat="item in package.package_contents">
-              <span ng-switch="package.status" class="mr-1">
+              <span ng-switch="item.status" class="mr-1 clearfix body_{{ item.content_id }} p-0">
                 <span ng-switch-when="1">
                   <i class="mdi mdi-lock-open text-success"></i>
                 </span>
                 <span ng-switch-when="0">
-                  <i class="mdi mdi-lock text-danger"></i>
+                  <i class="mdi mdi-lock text-warning"></i>
                 </span>
                 <span ng-switch-default>
                 </span>
               </span>
-
-              <span class="bold">{{item.content_title}}</span> :
-              <span>{{ item.content_body }}</span>
-
-              <div class="float-right">
-                <a class="badge badge-gradient-info mr-2" type="button"><i class="mdi mdi-pen-plus"></i></a>
-                <!-- </view> -->
-                <!--  -->
-                <a class="badge badge-gradient-warning" type="button" data-toggle="modal"
-                  data-target=".disable_enable_user">
-                  <i class="mdi mdi-delete-forever mr-2"></i>
-                </a>
-                <a class="badge badge-gradient-danger" type="button" data-toggle="modal"
-                  data-target=".disable_enable_user">
-                  <i class="mdi mdi-delete-forever mr-2"></i>
-                </a>
+              <div class="body_{{ item.content_id }}">
+                <span class="h5">{{item.content_title}}</span> :
+                <span>{{ item.content_body }}</span>
               </div>
+              <form ng-submit="edit_package_content(item.content_id, $index)"
+                id="edit_package_content_{{ item.content_id }}" class="p-0 m-0">
+                <input type="text" name="server_content_id" value="{{ item.content_id}}" hidden />
+
+
+
+                <div class="d-flex">
+                  <input type="text" class="form-control title_{{ item.content_id }}" name="content_title"
+                    style="display:none;" value="{{ item.content_title}}" />
+
+                  <input type="text" class=" flex-grow-1 form-control content_{{ item.content_id }}" name="content_body"
+                    style="display:none;" value="{{ item.content_body}}" />
+
+                </div>
+
+
+
+                <button type="submit" class="btn btn-sm btn-gradient-success mt-2 button_save_{{ item.content_id }}"
+                  style="display:none; float:right" type="button" ng-click="show_textinput(item.content_id)">
+                  <i class="mdi mdi-content-save-settings"></i>
+                </button>
+              </form>
+              <article class="d-flex justify-content-between mt-2">
+                <button class="btn btn-sm btn-gradient-info button_edit_{{ item.content_id }} mr-2"
+                  ng-click="show_textinput(item.content_id)" type="button"><i class="mdi mdi-pen-plus"></i>
+                </button>
+
+                <div ng-switch="item.status" data-toggle="modal" data-target=".disable-content-modal"
+                  ng-click="append_modal_info(item)">
+
+                  <span ng-switch-when="1">
+                    <button class="btn btn-sm btn-gradient-warning button_edit_{{ item.content_id }}" type="button">
+                      <i class="mdi mdi-autorenew"></i>
+                    </button>
+                  </span>
+                  <span ng-switch-when="0">
+                    <button class="btn btn-sm btn-gradient-success button_edit_{{ item.content_id }}" type="button">
+                      <i class="mdi mdi-autorenew"></i>
+                    </button>
+                  </span>
+                  <span ng-switch-default>
+                    none
+                  </span>
+                </div>
+              </article>
             </li>
 
           </ul>
         </div>
       </div>
     </div>
-
-
   </div>
+  <!-- disable package modal -->
+  <div class="modal fade disable-package-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="card">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
+            <p class="display-4 text-center">
+              You are about to
+              <span ng-switch="info.status">
+                <span ng-switch-when="1">
+                  <span> disable </span>
+                </span>
+                <span ng-switch-when="0">
+                  <span> enable </span>
+                </span>
+                <span ng-switch-default>
+                </span>
+              </span>
+              <span class="text-info">
+                {{ info.title | uppercase}}
+              </span>
+            </p>
+          </div>
+          <div class="modal-footer">
+
+            <!-- call disable_enable() -->
+            <span ng-switch="info.status" class="mr-1">
+              <span ng-switch-when="1">
+                <button ng-click="toggle_package_status(0,info)" class="btn btn-info btn-sm" data-dismiss="modal">
+                  Disable
+                </button>
+              </span>
+              <span ng-switch-when="0">
+                <button ng-click="toggle_package_status(1,info)" class="btn btn-info btn-sm" data-dismiss="modal">
+                  Enable
+                </button>
+              </span>
+              <span ng-switch-default>
+                none
+              </span>
+            </span>
+
+            <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end disable package modal -->
+
+  <!-- disable content  modal -->
+  <div class="modal fade disable-content-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="card">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
+            <p class="display-4 text-center">
+              You are about to
+              <span ng-switch="info.status">
+                <span ng-switch-when="1">
+                  <span> disable </span>
+                </span>
+                <span ng-switch-when="0">
+                  <span> enable </span>
+                </span>
+                <span ng-switch-default>
+                </span>
+              </span>
+              <span class="text-info">
+                {{ info.title | uppercase}}
+              </span>
+            </p>
+          </div>
+          <div class="modal-footer">
+
+            <!-- call disable_enable() -->
+            <span ng-switch="info.status" class="mr-1">
+              <span ng-switch-when="1">
+                <button ng-click="toggle_package_content_status(0,info)" class="btn btn-info btn-sm"
+                  data-dismiss="modal">
+                  Disable
+                </button>
+              </span>
+              <span ng-switch-when="0">
+                <button ng-click="toggle_package_content_status(1,info)" class="btn btn-info btn-sm"
+                  data-dismiss="modal">
+                  Enable
+                </button>
+              </span>
+              <span ng-switch-default>
+                none
+              </span>
+            </span>
+
+            <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end disable content modal -->
+
 </div>
+
+</article>

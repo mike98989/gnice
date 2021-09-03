@@ -71,12 +71,27 @@ class AdminApi extends Controller
             exit;
         }
     }
+    public function add_sub_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->addSubCategory($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function update_category()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
+
             $result = $this->model('Admintasks')->updateCategory($_POST);
+
             header('Content-Type: application/json');
+
             print_r(json_encode($result));
         } else {
             echo "invalid request";
@@ -88,6 +103,42 @@ class AdminApi extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Admintasks')->disableEnableUser($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function toggle_package_status()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->togglePackageStatus($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function toggle_package_content_status()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->togglePackageContentStatus($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function disable_enable_sub_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->disableEnableSubCategory($_POST);
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -162,6 +213,21 @@ class AdminApi extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('category')->updatesubCategory();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
+    public function update_package_content()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            // print_r(json_encode("got"));
+            // die();
+            $result = $this->model('AdminTasks')->updatePackageContents();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
