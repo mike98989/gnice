@@ -64,7 +64,7 @@ module.controller("packagesController", [
     // };
     $scope.toggle_form = function (id) {
       $(".form_" + id).toggle(500);
-      $(".btn" + id).toggle(500);
+      $(".btn_" + id).toggle(500);
     };
 
     $scope.get_all_account_packages = function () {

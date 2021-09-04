@@ -47,6 +47,11 @@ module.controller("categoryController", [
       $scope.$apply();
     }, 0);
 
+    $scope.toggle_form = function (id) {
+      $(".form_" + id).toggle(500);
+      $(".btn_" + id).toggle(500);
+    };
+
     $scope.get_all_cat_and_sub_cat = function () {
       $(".loader").show();
       $(".result").hide();
@@ -142,6 +147,49 @@ module.controller("categoryController", [
             $scope.get_all_cat_and_sub_cat();
             alert(msg.message);
             $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
+    };
+    $scope.update_sub_category = function (id, index) {
+      $(".loader").show();
+      var formData = new FormData($("#update_sub_category_" + id)[0]);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/update_sub_category",
+        type: "POST",
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (answer) {
+          console.log(answer);
+          var response = JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert-success");
+            $(".result").show();
+            // console.log($scope.all_packages[index]);
+            $scope.all_cat_and_sub[index] = msg.data;
+            // $scope.$apply();
+            // $scope.get_all_account_packages();
+            // $(".result").hide();
+            setTimeout(() => {
+              // $(".result").html(msg.message);
+
+              $(".result").hide("500");
+            }, 3000);
+            $("#update_sub_category_" + id)[0].reset();
+          } else {
+            $(".loader").hide();
+            $(".result").addClass("alert-danger");
             $(".result").html(msg.message);
             $(".result").show();
           }

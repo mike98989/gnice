@@ -46,12 +46,12 @@ module.controller("adminController", [
     setTimeout(function () {
       $scope.$apply();
     }, 0);
-
-    $scope.get_all_transactions = function () {
+    $scope.get_all_admins = function () {
+      alert("got here");
       $(".loader").show();
       $(".result").hide();
       $.ajax({
-        url: $scope.dirlocation + "adminapi/fetch_all_transactions",
+        url: $scope.dirlocation + "adminapi/get_all_admins",
         type: "GET",
         async: true,
         cache: false,
@@ -62,13 +62,14 @@ module.controller("adminController", [
         },
         processData: false,
         success: function (result) {
+          console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
           if (msg.status == "1") {
-            $scope.all_transactions = msg.data;
-            console.table(JSON.stringify(msg.data));
+            $scope.all_admins = msg.data;
+            console.log(msg.data);
             $scope.notification = msg.msg;
             $scope.status == msg.status;
             $scope.$apply();

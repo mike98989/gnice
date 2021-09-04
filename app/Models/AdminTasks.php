@@ -312,7 +312,7 @@ class AdminTasks extends Model
             $token = $splitHeader[0];
 
             if ($this->verifyToken($token) == true) {
-                $this->db->query("SELECT id, name, phone, email, image,privilege,last_login, status FROM admins ORDER BY privilege ASC ");
+                $this->db->query("SELECT id, fullname, phone, email, image,privilege,last_login, status FROM admin ORDER BY privilege DESC ");
                 $row = $this->db->resultSet();
                 unset($row->password, $row->id, $row->token, $row->user_confirm_id, $row->user_recovery_id);
                 if ($this->db->rowCount() > 0) {
@@ -497,10 +497,42 @@ class AdminTasks extends Model
                 $this->db->bind(':parent_id', $data['parent_id']);
                 $this->db->bind(':status', $status);
                 if ($this->db->execute()) {
-                    $result['message'] = 'sub category updated successfully';
+                    $result['message'] = 'sub category creation successfully';
                     $result['status'] = '1';
                 } else {
                     $result['message'] = 'sub category creation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+    public function updateSubCategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $_POST = array_map('trim', array_filter($_POST));
+                $id = $_POST['id'];
+                $title = $_POST['title'];
+                $this->db->query("UPDATE sub_category SET title = :title WHERE sub_id = :id");
+                $this->db->bind(':title', $title);
+                $this->db->bind(':id', $id);
+                if ($this->db->execute()) {
+                    $result['data'] =  $title;
+                    $result['message'] = 'sub category updated successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'sub category update failed';
                     $result['status'] = '0';
                 }
             } else {

@@ -170,18 +170,6 @@ class AdminApi extends Controller
             exit();
         }
     }
-    public function updateCategory()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('category')->updateCategory();
-            header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo 'invalid response';
-            exit;
-        }
-    }
     // public function add_category()
     // {
     //     $header = apache_request_headers();
@@ -195,24 +183,14 @@ class AdminApi extends Controller
     //     }
     // }
 
-    public function add_subcategory()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('category')->addSubCategory();
-            header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo 'invalid response';
-            exit;
-        }
-    }
 
-    public function updatesubCategory()
+    public function update_sub_category()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('category')->updatesubCategory();
+            // print_r($_POST);
+            // die();
+            $result = $this->model('AdminTasks')->updateSubCategory();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
