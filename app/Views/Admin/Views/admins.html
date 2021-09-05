@@ -1,19 +1,19 @@
-<div class="content-wrapper">
+<main class="content-wrapper" ng-init=>
     <div class="page-header">
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-account-star"></i>
             </span>
             Admins
+            {{ admin_privilege }}
         </h3>
     </div>
-    <div class="row" ng-init="get_all_admins()">
+    <section class="row" ng-init="get_all_admins()">
 
-        <div class="col-sm-12 col-md-8 grid-margin">
-
+        <article class="col-12 grid-margin" ng-if="admin_data.privilege == normal">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">All Transactions</h4>
+                    <h4 class="card-title">All Admin Accounts</h4>
                     <div class="loader" style="text-align: center">
                         <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
                     </div>
@@ -24,26 +24,438 @@
                                     <i class="input-group-text border-0 mdi mdi-account-search"></i>
                                 </div>
                                 <input type="text" class="form-control bg-transparent border-0"
-                                    placeholder="search for a transaction " ng-model="transactionSearch">
+                                    placeholder="search for an admin account " ng-model="adminSearch">
                             </div>
                         </form>
                     </div>
-                    <div>
-                        {{ all_admins }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-4 grid-margin">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email /Phone</th>
+                                    <th>Privilege</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="admin in all_admins | filter:adminSearch | itemsPerPage: pageSize"
+                                    current-page="currentPage" ng-cloak>
+                                    <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
+                                    <td>
+                                        <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{admin.image}}"
+                                            class="mr-2" />
+                                        <span>
+                                            {{admin.fullname}}
+                                        </span>
 
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Profile</h4>
-                    <div class="loader" style="text-align: center">
-                        <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+                                        <span ng-switch="admin.activated">
+                                            <span ng-switch-when="1">
+                                                <i class="mdi mdi-shield text-success"></i>
+                                            </span>
+                                            <span ng-switch-when="0">
+                                                <i class="mdi mdi-shield-outline text-danger"></i>
+                                            </span>
+                                            <span ng-switch-default>
+                                            </span>
+                                        </span>
+                                        <span ng-switch="admin.status">
+                                            <span ng-switch-when="1">
+                                                <i class="mdi mdi-lock-open text-success"></i>
+                                            </span>
+                                            <span ng-switch-when="0">
+                                                <i class="mdi mdi mdi-lock text-warning"></i>
+                                            </span>
+                                            <span ng-switch-default>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <!-- <td>
+                                                {{user.email}}<br /><span class="text-muted" style="font-size: 12px">{{user.phone}}</span><br />
+                                                <span class="text-muted" style="font-size: 12px">{{user.whatsapp}}</span>
+                                              </td> -->
+                                    <td>
+                                        <span>
+                                            {{admin.email}}
+                                            <br>
+                                            <small class="text-muted">{{ admin.phone }}</small>
+                                        </span>
+                                    </td>
+                                    <td ng-switch="admin.privilege">
+                                        <span>
+                                            <span ng-switch-when="1">
+                                                <i class="mdi mdi-star text-success"></i>
+                                            </span>
+                                            <span ng-switch-when="2">
+                                                <i class="mdi mdi-star text-success"></i>
+                                                <i class="mdi mdi-star text-success"></i>
+                                            </span>
+                                            <span ng-switch-when="3">
+                                                <i class="mdi mdi-star text-success"></i>
+                                                <i class="mdi mdi-star text-success"></i>
+                                                <i class="mdi mdi-star text-success"></i>
+                                            </span>
+                                            <span ng-switch-default>
+                                                none
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td>{{admin.last_login}}</td>
+                                    <td>
+                                        <!-- toggle enable account buttons -->
+                                        <span ng-switch="admin.status" class="mr-1" data-toggle="modal"
+                                            data-target=".disable-modal" ng-click="append_modal_info(admin)">
+                                            <span ng-switch-when="1">
+                                                <button class="badge badge-warning">
+                                                    <i class="mdi mdi-account-convert mr-1"></i> Disable
+                                                </button>
+                                            </span>
+                                            <span ng-switch-when="0">
+                                                <button class="badge badge-success">
+                                                    <i class="mdi mdi-account-convert mr-1"></i> Enable
+                                                </button>
+                                            </span>
+                                            <span ng-switch-default>
+                                                none
+                                            </span>
+                                        </span>
+
+
+                                        <!-- delete user account control -->
+                                        <button class="badge badge-danger" data-toggle="modal"
+                                            data-target=".delete-user-modal" ng-click="append_modal_info(admin)">
+                                            <i class="mdi mdi-delete-forever mr-1"></i> Delete
+                                        </button>
+                                        <button class="badge badge-info" data-toggle="modal"
+                                            data-target=".delete-user-modal" ng-click="append_modal_info(user)">
+                                            <i class="mdi mdi-pencil-lock mr-1"></i> Privilege
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- disable user modal -->
+                            <div class="modal fade disable-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="card">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class=" text-center display-1 text-warning"><i
+                                                        class="mdi mdi-alert"></i></p>
+                                                <p class="display-4 text-center">
+                                                    You are about to
+                                                    <span ng-switch="info.status">
+                                                        <span ng-switch-when="1">
+                                                            <span> disable </span>
+                                                        </span>
+                                                        <span ng-switch-when="0">
+                                                            <span> enable </span>
+                                                        </span>
+                                                        <span ng-switch-default>
+                                                        </span>
+                                                    </span>
+                                                    <span class="text-info">
+                                                        {{ info.fullname | uppercase}}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <!-- call disable_enable() -->
+                                                <span ng-switch="info.status" class="mr-1">
+                                                    <span ng-switch-when="1">
+                                                        <button ng-click="enable_or_disable(0,info)"
+                                                            class="btn btn-info btn-sm" data-dismiss="modal">
+                                                            Save changes
+                                                        </button>
+                                                    </span>
+                                                    <span ng-switch-when="0">
+                                                        <button ng-click="enable_or_disable(1,info)"
+                                                            class="btn btn-info btn-sm" data-dismiss="modal">
+                                                            Save changes
+                                                        </button>
+                                                    </span>
+                                                    <span ng-switch-default>
+                                                        none
+                                                    </span>
+                                                </span>
+
+                                                <button type="button" class="btn btn-secondary btn-sm "
+                                                    data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end disable user modal -->
+
+                            <!-- delete user modal -->
+                            <div class="modal fade delete-user-modal" id="exampleModalCenter" tabindex="-1"
+                                role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="card">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class=" text-center display-1 text-danger"><i
+                                                        class="mdi mdi-delete"></i></p>
+                                                <p class="display-4 text-center">
+                                                    You are about to DETETE
+                                                    <span class="text-danger">
+                                                        {{ info.fullname | uppercase}}
+                                                    </span>
+                                                    and associated ADS FOREVER !
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <!-- call delete function() -->
+                                                <button ng-click="delete_user_account_and_ads(info.seller_id)"
+                                                    class="btn btn-danger btn-sm" data-dismiss="modal">
+                                                    Delete account !
+                                                </button>
+                                                <button type="button" class="btn btn-secondary btn-sm "
+                                                    data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end delete modal -->
+                        </table>
+                        <dir-pagination-controls boundary-links="true" template-url="" style="float: right">
+                        </dir-pagination-controls>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </article>
+        <article class="col-sm-12 col-md-4 grid-margin">
+            <div class="card">
+                <div class="loader" style="text-align: center">
+                    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="{{dirlocation}}public/assets/images/uploads/profile/{{admin_data.image}}"
+                        class="card-img-top w-50 w-sm-100 mt-4 " alt="{{ admin_data.fullname }}" loading="lazy"
+                        width="100">
+                </div>
+
+                <div class="card-body pt-3">
+                    <h4 class="card-title text-center">{{ admin_data.fullname | uppercase }}</h4>
+                    <p class="card-text"><span>Email: </span> <span>{{ admin_data.email }}</span></p>
+                    <p class="card-text"><span>Phone: </span> <span>{{ admin_data.phone}}</span></p>
+                    <p class="card-text"><span>Privilege: </span>
+                        <span ng-switch="admin_data.privilege">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-when="2">
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-when="3">
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                    <p class="card-text"><span>Activated: </span>
+                        <span ng-switch="admin_data.activated">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-shield text-success"></i>
+                            </span>
+                            <span ng-switch-when="0">
+                                <i class="mdi mdi-shield-outline text-danger"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                    <p class="card-text">
+                        <span>Status: </span>
+                        <span ng-switch="admin_data.status">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-lock-open text-success"></i>
+                            </span>
+                            <span ng-switch-when="0">
+                                <i class="mdi mdi mdi-lock text-warning"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-sm btn-gradient-danger mr-2"><i class="mdi mdi-adjust mr-1"></i>Change
+                        Password</button>
+                    <button class="btn btn-sm btn-gradient-info"><i class="mdi mdi-pen-plus mr-1"></i>Update
+                        Profile</button>
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                </div>
+            </div>
+        </article>
+        <article class="col-sm-12 col-md-4 grid-margin">
+            <div class="card">
+                <div class="loader" style="text-align: center">
+                    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="{{dirlocation}}public/assets/images/uploads/profile/{{admin_data.image}}"
+                        class="card-img-top w-50 w-sm-100 mt-4 " alt="{{ admin_data.fullname }}" loading="lazy"
+                        width="100">
+                </div>
+
+                <div class="card-body pt-3">
+                    <h4 class="card-title text-center">{{ admin_data.fullname | uppercase }}</h4>
+                    <p class="card-text"><span>Email: </span> <span>{{ admin_data.email }}</span></p>
+                    <p class="card-text"><span>Phone: </span> <span>{{ admin_data.phone}}</span></p>
+                    <p class="card-text"><span>Privilege: </span>
+                        <span ng-switch="admin_data.privilege">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-when="2">
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-when="3">
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                    <p class="card-text"><span>Activated: </span>
+                        <span ng-switch="admin_data.activated">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-shield text-success"></i>
+                            </span>
+                            <span ng-switch-when="0">
+                                <i class="mdi mdi-shield-outline text-danger"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                    <p class="card-text">
+                        <span>Status: </span>
+                        <span ng-switch="admin_data.status">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-lock-open text-success"></i>
+                            </span>
+                            <span ng-switch-when="0">
+                                <i class="mdi mdi mdi-lock text-warning"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-sm btn-gradient-danger mr-2"><i class="mdi mdi-adjust mr-1"></i>Change
+                        Password</button>
+                    <button class="btn btn-sm btn-gradient-info"><i class="mdi mdi-pen-plus mr-1"></i>Update
+                        Profile</button>
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                </div>
+            </div>
+        </article>
+        <article class="col-sm-12 col-md-4 grid-margin">
+            <div class="card">
+                <div class="loader" style="text-align: center">
+                    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="{{dirlocation}}public/assets/images/uploads/profile/{{admin_data.image}}"
+                        class="card-img-top w-50 w-sm-100 mt-4 " alt="{{ admin_data.fullname }}" loading="lazy"
+                        width="100">
+                </div>
+
+                <div class="card-body pt-3">
+                    <h4 class="card-title text-center">{{ admin_data.fullname | uppercase }}</h4>
+                    <p class="card-text"><span>Email: </span> <span>{{ admin_data.email }}</span></p>
+                    <p class="card-text"><span>Phone: </span> <span>{{ admin_data.phone}}</span></p>
+                    <p class="card-text"><span>Privilege: </span>
+                        <span ng-switch="admin_data.privilege">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-when="2">
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-when="3">
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                                <i class="mdi mdi-star text-success"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                    <p class="card-text"><span>Activated: </span>
+                        <span ng-switch="admin_data.activated">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-shield text-success"></i>
+                            </span>
+                            <span ng-switch-when="0">
+                                <i class="mdi mdi-shield-outline text-danger"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                    <p class="card-text">
+                        <span>Status: </span>
+                        <span ng-switch="admin_data.status">
+                            <span ng-switch-when="1">
+                                <i class="mdi mdi-lock-open text-success"></i>
+                            </span>
+                            <span ng-switch-when="0">
+                                <i class="mdi mdi mdi-lock text-warning"></i>
+                            </span>
+                            <span ng-switch-default>
+                                none
+                            </span>
+                        </span>
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-sm btn-gradient-danger mr-2"><i class="mdi mdi-adjust mr-1"></i>Change
+                        Password</button>
+                    <button class="btn btn-sm btn-gradient-info"><i class="mdi mdi-pen-plus mr-1"></i>Update
+                        Profile</button>
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                </div>
+            </div>
+        </article>
+    </section>
+</main>

@@ -43,9 +43,18 @@ module.controller("adminController", [
     $scope.pageSize = 10;
     $scope.admin_data = $localStorage.user_data;
     $scope.admin_token = $localStorage.user_token;
+    // $scope.admin_privilege = $localStorage.user_data.privilege;
+    $scope.normal = 1;
+    $scope.advance = 2;
+    $scope.ultra = 3;
+
     setTimeout(function () {
       $scope.$apply();
     }, 0);
+
+    $scope.get_admin_privilege = function () {
+      $scope.admin_data;
+    };
     $scope.get_all_admins = function () {
       alert("got here");
       $(".loader").show();
