@@ -129,10 +129,13 @@
                     </button>
 
                     <!-- delete user account control -->
-                    <button class="badge badge-danger" data-toggle="modal" data-target=".delete-user-modal"
-                      ng-click="append_modal_info(user)">
-                      <i class="mdi mdi-delete-forever mr-1"></i> Delete
-                    </button>
+                    <view ng-if="admin_data.privilege == ultra" ng-controller="adminController">
+
+                      <button class="badge badge-danger" data-toggle="modal" data-target=".delete-user-modal"
+                        ng-click="append_modal_info(user)">
+                        <i class="mdi mdi-delete-forever mr-1"></i> Delete
+                      </button>
+                    </view>
                   </td>
                 </tr>
               </tbody>

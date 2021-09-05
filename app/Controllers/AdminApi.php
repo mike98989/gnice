@@ -110,6 +110,18 @@ class AdminApi extends Controller
             exit;
         }
     }
+    public function disable_enable_admin_account()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->disableEnableAdmin($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function toggle_package_status()
     {
         $header = apache_request_headers();
@@ -202,10 +214,19 @@ class AdminApi extends Controller
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-
-            // print_r(json_encode("got"));
-            // die();
             $result = $this->model('AdminTasks')->updatePackageContents();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
+    }
+    public function update_admin_privilege()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('AdminTasks')->updateAdminPrivilege();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {

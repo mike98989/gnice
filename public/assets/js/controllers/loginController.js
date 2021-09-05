@@ -175,7 +175,7 @@ module.controller("loginController", [
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          alert(answer);
+          // alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

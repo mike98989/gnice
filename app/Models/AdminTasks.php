@@ -23,6 +23,19 @@ class AdminTasks extends Model
             }
         }
     }
+    public function verifyPrivilege($token)
+    {
+
+        $this->db->query("SELECT fullname, email, last_login,privilege, token FROM admin WHERE token = :token  AND privilege = 2 OR privilege = 3");
+        $this->db->bind(':token', $token);
+
+        if ($this->db->execute()) {
+            // return $row;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     public function getAllCategoriesAndSubCategories()
@@ -148,6 +161,77 @@ class AdminTasks extends Model
 
         return $result;
     }
+    public function disableEnableAdmin()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $status = $_POST['status'];
+            $id = $_POST['account_id'];
+            if ($this->verifyToken($token) == true && $this->verifyPrivilege($token) == true) {
+                $this->db->query("UPDATE admin SET status = :status WHERE id = :id");
+                $this->db->bind(':id', $id);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $result['message'] = 'account operation successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'account operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid token or privilege';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+    public function updateAdminPrivilege()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $privilege = $_POST['privilege'];
+            $admin_id = $_POST['admin_id'];
+            if ($this->verifyToken($token) == true && $this->verifyPrivilege($token) == true) {
+                $this->db->query("UPDATE admin SET privilege = :privilege WHERE id = :id");
+                $this->db->bind(':id', $admin_id);
+                $this->db->bind(':privilege', $privilege);
+                if ($this->db->execute()) {
+                    $result['message'] = 'account operation successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'account operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid token or privilege';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
     public function togglePackageStatus()
     {
         $header = apache_request_headers();
