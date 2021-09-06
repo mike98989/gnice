@@ -26,11 +26,22 @@ class AdminTasks extends Model
     public function verifyPrivilege($token)
     {
 
-        $this->db->query("SELECT fullname, email, last_login,privilege, token FROM admin WHERE token = :token  AND privilege = 2 OR privilege = 3");
+        $this->db->query("SELECT fullname, email, last_login,privilege, token FROM admin WHERE token = :token  AND privilege = 3");
         $this->db->bind(':token', $token);
 
         if ($this->db->execute()) {
             // return $row;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function findUserByEmail($email)
+    {
+        $this->db->query("SELECT * FROM admin WHERE email = :email");
+        $this->db->bind(':email', $email);
+        $row = $this->db->singleResult();
+        if ($this->db->rowCount() > 0) {
             return true;
         } else {
             return false;
@@ -905,6 +916,114 @@ class AdminTasks extends Model
             $result['status'] = '0';
         }
 
+        return $result;
+    }
+
+    public function changeAdminPassword()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $email = trim($_POST['verify_email']);
+                // print_r($_POST);
+                // die();
+                // $currentPassword = trim($_POST['current_password']);
+                $newPassword = trim($_POST['new_password']);
+                $confirmNewPassword = trim($_POST['confirm_new_password']);
+                if ($newPassword === $confirmNewPassword) {
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $this->db->query("UPDATE admin SET password = :password WHERE email = :email");
+                    $this->db->bind(":password", $hashedPassword);
+                    $this->db->bind(":email", $email);
+                    $row = $this->db->singleResult();
+                    if ($this->db->execute()) {
+                        $result['data'] = $row;
+                        $result['message'] = 'password update successful';
+                        $result['status'] = '1';
+                    }
+                } else {
+                    $result['message'] = 'new password and confirm new password do not match';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+    public function createAdminAccount()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true && $this->verifyPrivilege($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $checkEmailValididy = filter_var(strtolower(trim($_POST['email'])), FILTER_VALIDATE_EMAIL);
+
+                if ($checkEmailValididy == true) {
+                    $email =  trim($_POST['email']);
+                    $name = trim($_POST['name']);
+                    $image = trim($_POST['image']);
+                    $activated = trim($_POST['activated']);
+                    $phone = trim($_POST['phone']);
+                    $password = trim($_POST['password']);
+                    $cpassword = trim($_POST['cpassword']);
+                    $status = 1;
+
+                    if ($this->findUserByEmail($email) == false) {
+
+                        if ($password === $cpassword) {
+                            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                            $this->db->query("INSERT INTO admin (fullname, email, password, activated, status,image, phone) VALUES (:fullname, :email, :password, :activated, :status, :image, :phone)");
+                            $this->db->bind(":fullname", $name);
+                            $this->db->bind(":email", $email);
+                            $this->db->bind(":password", $hashedPassword);
+                            $this->db->bind(":activated", $activated);
+                            $this->db->bind(":status", $status);
+                            $this->db->bind(":image", $image);
+                            $this->db->bind(":phone", $phone);
+                            $row = $this->db->resultSet();
+                            if ($this->db->rowCount() > 0) {
+                                $result['data'] = $row;
+                                $result['message'] = 'new Admin created successfully';
+                                $result['status'] = '1';
+                            } else {
+
+                                $result['message'] = 'new admin creation failed';
+                                $result['status'] = '0';
+                            }
+                        } else {
+                            $result['message'] = 'password and confirm password do not match';
+                            $result['status'] = '0';
+                        }
+                    } else {
+                        $result['message'] = 'new Admin email already exist';
+                        $result['status'] = '0';
+                    }
+                } else {
+                    $result['message'] = 'invalid email account';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token, login';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
         return $result;
     }
 }

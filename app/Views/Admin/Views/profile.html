@@ -17,7 +17,7 @@
                             <!-- <div class="card"> -->
                             <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{userInfo.image}}"
                                 alt="{{ userInfo.name }}" class="img-thumbnail rounded-circle img-fluid "
-                                style="width:100px; height:100px; ">
+                                style="width:100px; height:100px; " loading="lazy">
                             <p ng-switch="userInfo.activated" class="mb-0 mt-3">
                                 Activated account:
                                 <span ng-switch-when="1">
@@ -156,7 +156,7 @@
                                 <p class="display-4" style="position:absolute;top:0px;left:0;">
                                     <span ng-switch="ads.status">
                                         <span ng-switch-when="1">
-                                            <i class="mdi mdi-check-circle text-success"></i>
+                                            <i class="mdi mdi-lock-open text-success"></i>
                                         </span>
                                         <span ng-switch-when="0">
                                             <i class="mdi mdi-lock text-warning"></i>
@@ -173,13 +173,15 @@
                                     <span class="badge badge-primary">{{ ads.state }}</span>
 
                                     <div class="card-text ">
-                                        <p class="text-primary">{{ ads.price | currency : "NGN" }}</p>
+                                        <p class="text-success">{{ ads.price | currency : "NGN" }}</p>
                                         <p class="text-center">
-                                            <a href="#" class=" badge badge-gradient-info mr-2 mb-1 p-2"
+                                            <a type="button" class=" badge badge-gradient-info mr-2 mb-1 p-2"
                                                 ng-click="localStorage_save('adsInfo',ads,'single_listing')"
                                                 style="cursor: pointer; font-size: 14px;"> <i
-                                                    class="mdi mdi-eye-check mr-2"></i>Details</a>
-                                            <button href="#" class="btn btn-inverse-danger btn-sm mb-1">disable</button>
+                                                    class="mdi mdi-eye-check mr-2"></i>View</a>
+                                            <button href="#" class="btn btn-warning btn-sm mb-1">
+                                                <i class="mdi mdi-account-convert mr-1"></i>
+                                                Disable</button>
                                         </p>
                                     </div>
 

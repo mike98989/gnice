@@ -103,65 +103,6 @@
                 </tr>
               </tbody>
 
-              <!-- disable ads modal -->
-              <div class="modal fade disable-listing-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="card">
-
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
-                        <p class="display-4 text-center">
-                          You are about to
-                          <span ng-switch="info.status">
-                            <span ng-switch-when="1">
-                              <span> disable </span>
-                            </span>
-                            <span ng-switch-when="0">
-                              <span> enable </span>
-                            </span>
-                            <span ng-switch-default>
-                            </span>
-                          </span>
-                          <span class="text-info">
-                            {{ info.name | uppercase}}
-                          </span>
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-
-                        <!-- call disable_enable listing() -->
-                        <span ng-switch="info.status" class="mr-1">
-                          <span ng-switch-when="1">
-                            <button ng-click="enable_or_disable_listing(0,info, $index)" class="btn btn-info btn-sm"
-                              data-dismiss="modal">
-                              Save changes
-                            </button>
-                          </span>
-                          <span ng-switch-when="0">
-                            <button ng-click="enable_or_disable_listing(1,info, $index)" class="btn btn-info btn-sm"
-                              data-dismiss="modal">
-                              Save changes
-                            </button>
-                          </span>
-                          <span ng-switch-default>
-                            none
-                          </span>
-                        </span>
-
-                        <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end disable ads modal -->
 
               <!-- delete ads modal -->
               <div class="modal fade delete-user-modal" id="exampleModalCenter" tabindex="-1" role="dialog"

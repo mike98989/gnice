@@ -35,10 +35,9 @@ class AdminAuth extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
 
-            print_r($_POST);
-            die();
-
-            $result = $this->model('Authenticate')->signupAdmin();
+            // print_r($_POST);
+            // die();
+            $result = $this->model('AdminTasks')->createAdminAccount($_POST);
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -48,8 +47,16 @@ class AdminAuth extends Controller
     }
     public function change_admin_password()
     {
-        $result = $this->model('Authenticate')->changeAdminPassword();
-        print_r(json_encode($result));
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $result = $this->model('AdminTasks')->changeAdminPassword($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
     }
     public function send_admin_reset_code()
     {

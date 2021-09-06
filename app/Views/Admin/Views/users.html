@@ -46,7 +46,8 @@
                   current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}" class="mr-2" />
+                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user.image}}" class="mr-2"
+                      loading="lazy" alt="{{ user.fullname }}" />
                     <span>
                       {{user.fullname}}
                     </span>
@@ -77,23 +78,23 @@
                     <span class="text-muted" style="font-size: 12px">{{user.whatsapp}}</span>
                   </td> -->
                   <td>{{user.seller_id}}</td>
-                  <td ng-switch="user.account_type_title">
-                    <span ng-switch-when="Free">
+                  <td ng-switch="user.seller_account_packages_id">
+                    <span ng-switch-when="1">
                       <span class="badge badge-secondary">
                         {{user.account_type_title}}
                       </span>
                     </span>
-                    <span ng-switch-when="Basic">
+                    <span ng-switch-when="2">
                       <span class="badge badge-success">
                         {{user.account_type_title}}
                       </span>
                     </span>
-                    <span ng-switch-when="Super">
+                    <span ng-switch-when="3">
                       <span class="badge badge-info">
                         {{user.account_type_title}}
                       </span>
                     </span>
-                    <span ng-switch-when="Advance">
+                    <span ng-switch-when="4">
                       <span class="badge badge-primary">
                         {{user.account_type_title}}
                       </span>
@@ -175,15 +176,15 @@
                         <!-- call disable_enable() -->
                         <span ng-switch="info.status" class="mr-1">
                           <span ng-switch-when="1">
-                            <button ng-click="enable_or_disable(0,info)" class="btn btn-info btn-sm"
+                            <button ng-click="enable_or_disable(0,info)" class="btn btn-warning btn-sm"
                               data-dismiss="modal">
-                              Save changes
+                              Disable
                             </button>
                           </span>
                           <span ng-switch-when="0">
-                            <button ng-click="enable_or_disable(1,info)" class="btn btn-info btn-sm"
+                            <button ng-click="enable_or_disable(1,info)" class="btn btn-success btn-sm"
                               data-dismiss="modal">
-                              Save changes
+                              Enable
                             </button>
                           </span>
                           <span ng-switch-default>
@@ -191,7 +192,8 @@
                           </span>
                         </span>
 
-                        <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"><i
+                            class="mdi mdi-cancel mr-1"></i>Cancel</button>
                       </div>
                     </div>
                   </div>
@@ -228,7 +230,8 @@
                           data-dismiss="modal">
                           Delete account !
                         </button>
-                        <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"><i
+                            class="mdi mdi-cancel mr-1"></i>Cancel</button>
                       </div>
                     </div>
                   </div>
