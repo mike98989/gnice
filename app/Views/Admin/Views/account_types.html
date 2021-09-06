@@ -33,13 +33,13 @@
                 </span>
               </p>
               <div class=" m-2">
-                <button class="btn btn-sm btn-gradient-info mr-3 btn_{{ package.package_id }}"
+                <button class="btn btn-sm btn-gradient-info mr-3 price_inverse_{{ package.package_id }}"
                   ng-click="toggle_form( package.package_id )"><i class="mdi mdi-pen-plus"></i>
                 </button>
                 <!-- </view> -->
                 <!-- modal -->
                 <span ng-switch="package.status" data-toggle="modal" data-target=".disable-package-modal"
-                  ng-click="append_modal_info(package)">
+                  ng-click="append_modal_info(package)" class="price_inverse_{{ package.package_id }}">
                   <span ng-switch-when="1">
                     <button class="btn btn-sm btn-gradient-warning">
                       <i class="mdi mdi-autorenew"></i>
@@ -66,7 +66,7 @@
             <!-- <h4 class="card-title text-center text-info">
               {{ package.title | uppercase}}
             </h4> -->
-            <article class="card-title text-center">
+            <article class="card-title text-center price_inverse_{{ package.package_id }}">
               <span ng-switch="package.package_id">
                 <span ng-switch-when="1">
                   <h4 class="badge badge-secondary ">
@@ -96,8 +96,9 @@
                 </span>
               </span>
             </article>
-            <h5 class="card-title text-center ">{{ package.value | currency : "NGN "}}</h5>
-            <article class="form-package form_{{ package.package_id }}" style="display:none">
+            <h5 class="card-title text-center price_inverse_{{ package.package_id }} ">{{ package.value | currency :
+              "NGN "}}</h5>
+            <article class="form-package price_{{ package.package_id }}" style="display:none">
               <form ng-submit="edit_package(package.package_id, $index)" id=" edit_package_{{ package.package_id
                 }}">
                 <div class=" d-flex m-2">
@@ -113,9 +114,9 @@
             </article>
           </div>
 
-          <ul class="list-group list-group-flush clearfix">
+          <ul class="list-group list-group-flush">
             <li class="list-group-item" ng-repeat="item in package.package_contents">
-              <span ng-switch="item.status" class="mr-1 clearfix body_{{ item.content_id }} p-0">
+              <span ng-switch="item.status" class="mr-1 form_inverse_{{ item.content_id }} p-0">
                 <span ng-switch-when="1">
                   <i class="mdi mdi-lock-open text-success"></i>
                 </span>
@@ -125,47 +126,41 @@
                 <span ng-switch-default>
                 </span>
               </span>
-              <div class="body_{{ item.content_id }}">
+              <div class=" form_inverse_{{item.content_id}}">
                 <span class="h5">{{item.content_title}}</span> :
                 <span>{{ item.content_body }}</span>
               </div>
-              <form ng-submit="edit_package_content(item.content_id, $index)"
-                id="edit_package_content_{{ item.content_id }}" class="p-0 m-0">
-                <input type="text" name="server_content_id" value="{{ item.content_id}}" hidden />
+              <div class="form_{{ item.content_id }}" style="display: none;">
+                <form ng-submit="edit_package_content(item.content_id, $index)"
+                  id="edit_package_content_{{ item.content_id }}" class="p-0 m-0">
+                  <input type="text" name="server_content_id" value="{{ item.content_id}}" hidden />
+                  <div class="d-flex align-content-center">
+                    <input type="text" class="form-control" name="content_title" value="{{ item.content_title}}" />
+                    <input type="text" class=" flex-grow-1 form-control" name="content_body"
+                      value="{{ item.content_body}}" />
 
-
-
-                <div class="d-flex">
-                  <input type="text" class="form-control title_{{ item.content_id }}" name="content_title"
-                    style="display:none;" value="{{ item.content_title}}" />
-
-                  <input type="text" class=" flex-grow-1 form-control content_{{ item.content_id }}" name="content_body"
-                    style="display:none;" value="{{ item.content_body}}" />
-
-                </div>
-
-
-
-                <button type="submit" class="btn btn-sm btn-gradient-success mt-2 button_save_{{ item.content_id }}"
-                  style="display:none; float:right" type="button" ng-click="show_textinput(item.content_id)">
-                  <i class="mdi mdi-content-save-settings"></i>
-                </button>
-              </form>
+                    <button type="submit" class="btn btn-sm btn-gradient-success ml-2" type="button"
+                      ng-click="show_textinput(item.content_id)">
+                      <i class="mdi mdi-content-save-settings"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
               <article class="d-flex justify-content-between mt-2">
-                <button class="btn btn-sm btn-gradient-info button_edit_{{ item.content_id }} mr-2"
+                <button class="btn btn-sm btn-gradient-info  mr-2 form_inverse_{{item.content_id}}"
                   ng-click="show_textinput(item.content_id)" type="button"><i class="mdi mdi-pen-plus"></i>
                 </button>
 
                 <div ng-switch="item.status" data-toggle="modal" data-target=".disable-content-modal"
-                  ng-click="append_modal_info(item)">
+                  ng-click="append_modal_info(item)" class="form_inverse_{{item.content_id}}">
 
                   <span ng-switch-when="1">
-                    <button class="btn btn-sm btn-gradient-warning button_edit_{{ item.content_id }}" type="button">
+                    <button class="btn btn-sm btn-gradient-warning" type="button">
                       <i class="mdi mdi-autorenew"></i>
                     </button>
                   </span>
                   <span ng-switch-when="0">
-                    <button class="btn btn-sm btn-gradient-success button_edit_{{ item.content_id }}" type="button">
+                    <button class="btn btn-sm btn-gradient-success" type="button">
                       <i class="mdi mdi-autorenew"></i>
                     </button>
                   </span>
@@ -217,12 +212,12 @@
             <!-- call disable_enable() -->
             <span ng-switch="info.status" class="mr-1">
               <span ng-switch-when="1">
-                <button ng-click="toggle_package_status(0,info)" class="btn btn-info btn-sm" data-dismiss="modal">
+                <button ng-click="toggle_package_status(0,info)" class="btn btn-warning btn-sm" data-dismiss="modal">
                   Disable
                 </button>
               </span>
               <span ng-switch-when="0">
-                <button ng-click="toggle_package_status(1,info)" class="btn btn-info btn-sm" data-dismiss="modal">
+                <button ng-click="toggle_package_status(1,info)" class="btn btn-success btn-sm" data-dismiss="modal">
                   Enable
                 </button>
               </span>
@@ -231,7 +226,7 @@
               </span>
             </span>
 
-            <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>
@@ -275,13 +270,13 @@
             <!-- call disable_enable() -->
             <span ng-switch="info.status" class="mr-1">
               <span ng-switch-when="1">
-                <button ng-click="toggle_package_content_status(0,info)" class="btn btn-info btn-sm"
+                <button ng-click="toggle_package_content_status(0,info)" class="btn btn-warning btn-sm"
                   data-dismiss="modal">
                   Disable
                 </button>
               </span>
               <span ng-switch-when="0">
-                <button ng-click="toggle_package_content_status(1,info)" class="btn btn-info btn-sm"
+                <button ng-click="toggle_package_content_status(1,info)" class="btn btn-success btn-sm"
                   data-dismiss="modal">
                   Enable
                 </button>
@@ -291,7 +286,7 @@
               </span>
             </span>
 
-            <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>

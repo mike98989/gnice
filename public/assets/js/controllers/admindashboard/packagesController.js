@@ -49,11 +49,8 @@ module.controller("packagesController", [
     }, 0);
 
     $scope.show_textinput = function (id) {
-      $(".title_" + id).toggle(500);
-      $(".content_" + id).toggle(500);
-      $(".body_" + id).toggle(500);
-      $(".button_save_" + id).toggle(500);
-      $(".button_edit_" + id).toggle(500);
+      $(".form_" + id).toggle(500);
+      $(".form_inverse_" + id).toggle(500);
     };
     // $scope.show_textinput = function (id) {
     //   $(".title_" + id).show();
@@ -63,8 +60,8 @@ module.controller("packagesController", [
     //   $(".button_edit_" + id).hide();
     // };
     $scope.toggle_form = function (id) {
-      $(".form_" + id).toggle(500);
-      $(".btn_" + id).toggle(500);
+      $(".price_" + id).toggle(500);
+      $(".price_inverse_" + id).toggle(500);
     };
 
     $scope.get_all_account_packages = function () {

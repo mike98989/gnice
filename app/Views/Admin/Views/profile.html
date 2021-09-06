@@ -197,6 +197,124 @@
                 </div>
             </div>
         </div>
+        <!-- disable user modal -->
+        <div class="modal fade disable-package-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
+                            <p class="display-4 text-center">
+                                You are about to
+                                <span ng-switch="info.status">
+                                    <span ng-switch-when="1">
+                                        <span> disable </span>
+                                    </span>
+                                    <span ng-switch-when="0">
+                                        <span> enable </span>
+                                    </span>
+                                    <span ng-switch-default>
+                                    </span>
+                                </span>
+                                <span class="text-info">
+                                    {{ info.title | uppercase}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+
+                            <!-- call disable_enable() -->
+                            <span ng-switch="info.status" class="mr-1">
+                                <span ng-switch-when="1">
+                                    <button ng-click="toggle_package_status(0,info)" class="btn btn-warning btn-sm"
+                                        data-dismiss="modal">
+                                        Disable
+                                    </button>
+                                </span>
+                                <span ng-switch-when="0">
+                                    <button ng-click="toggle_package_status(1,info)" class="btn btn-success btn-sm"
+                                        data-dismiss="modal">
+                                        Enable
+                                    </button>
+                                </span>
+                                <span ng-switch-default>
+                                    none
+                                </span>
+                            </span>
+
+                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end disable user modal -->
+        <!-- disable ads modal -->
+        <div class="modal fade disable-package-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
+                            <p class="display-4 text-center">
+                                You are about to
+                                <span ng-switch="info.status">
+                                    <span ng-switch-when="1">
+                                        <span> disable </span>
+                                    </span>
+                                    <span ng-switch-when="0">
+                                        <span> enable </span>
+                                    </span>
+                                    <span ng-switch-default>
+                                    </span>
+                                </span>
+                                <span class="text-info">
+                                    {{ info.title | uppercase}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+
+                            <!-- call disable_enable() -->
+                            <span ng-switch="info.status" class="mr-1">
+                                <span ng-switch-when="1">
+                                    <button ng-click="toggle_package_status(0,info)" class="btn btn-warning btn-sm"
+                                        data-dismiss="modal">
+                                        Disable
+                                    </button>
+                                </span>
+                                <span ng-switch-when="0">
+                                    <button ng-click="toggle_package_status(1,info)" class="btn btn-success btn-sm"
+                                        data-dismiss="modal">
+                                        Enable
+                                    </button>
+                                </span>
+                                <span ng-switch-default>
+                                    none
+                                </span>
+                            </span>
+
+                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end disable ads modal -->
     </div>
 
 
