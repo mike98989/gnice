@@ -151,8 +151,8 @@
                             ng-repeat="ads in all_user_ads | filter: userAds">
                             <div class="card shadow">
                                 <img ng-init=" img = ads.image.split(',')"
-                                    src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" alt=""
-                                    class="card-img-top w-100 p-0 rounded" height="150">
+                                    src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}"
+                                    alt="{{ ads.name }}" class="card-img-top w-100 p-0 rounded" height="150">
                                 <p class="display-4" style="position:absolute;top:0px;left:0;">
                                     <span ng-switch="ads.status">
                                         <span ng-switch-when="1">
@@ -175,13 +175,34 @@
                                     <div class="card-text ">
                                         <p class="text-success">{{ ads.price | currency : "NGN" }}</p>
                                         <p class="text-center">
-                                            <a type="button" class=" badge badge-gradient-info mr-2 mb-1 p-2"
+                                            <a type="button" class="btn btn-sm btn-info mr-2 mb-1 p-2"
                                                 ng-click="localStorage_save('adsInfo',ads,'single_listing')"
-                                                style="cursor: pointer; font-size: 14px;"> <i
-                                                    class="mdi mdi-eye-check mr-2"></i>View</a>
-                                            <button href="#" class="btn btn-warning btn-sm mb-1">
+                                                style="cursor: pointer; font-size: 14px;">
+                                                <i class="mdi mdi-eye-check mr-2"></i>View
+                                            </a>
+
+
+                                            <span ng-switch="ads.status" class="mr-1" data-toggle="modal"
+                                                data-target=".disable-listing-modal" ng-click="append_modal_info(ads)">
+                                                <span ng-switch-when="1">
+                                                    <button class="btn btn-sm btn-warning">
+                                                        <i class="mdi mdi-autorenew mr-1"></i>Disable
+                                                    </button>
+                                                </span>
+                                                <span ng-switch-when="0">
+                                                    <button class="btn btn-sm btn-success">
+                                                        <i class="mdi mdi-autorenew mr-1"></i>Enable
+                                                    </button>
+                                                </span>
+                                                <span ng-switch-default>
+                                                    none
+                                                </span>
+                                            </span>
+
+                                            <!-- <button href="#" class="btn btn-warning btn-sm mb-1" data-toggle="modal"
+                                                data-target=".disable-listing-modal" ng-click="append_modal_info(ads)">
                                                 <i class="mdi mdi-account-convert mr-1"></i>
-                                                Disable</button>
+                                                Disable</button> -->
                                         </p>
                                     </div>
 
@@ -315,6 +336,69 @@
             </div>
         </div>
         <!-- end disable ads modal -->
+
+        <!-- disable listing modal -->
+        <div class="modal fade disable-listing-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
+                            <p class="display-4 text-center">
+                                You are about to
+                                <span ng-switch="info.status">
+                                    <span ng-switch-when="1">
+                                        <span> disable </span>
+                                    </span>
+                                    <span ng-switch-when="0">
+                                        <span> enable </span>
+                                    </span>
+                                    <span ng-switch-default>
+                                    </span>
+                                </span>
+                                <span class="text-info">
+                                    {{ info.name | uppercase}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+
+                            <!-- call disable_enable() -->
+                            <view ng-controller="listingController">
+                                <span ng-switch="info.status" class="mr-1">
+                                    <span ng-switch-when="1">
+                                        <button ng-click="enable_or_disable_listing(0,info, $index)"
+                                            class="btn btn-warning btn-sm" data-dismiss="modal">
+                                            Disable
+                                        </button>
+                                    </span>
+                                    <span ng-switch-when="0">
+                                        <button ng-click="enable_or_disable_listing(1,info, $index)"
+                                            class="btn btn-success btn-sm" data-dismiss="modal">
+                                            Enable
+                                        </button>
+                                    </span>
+                                    <span ng-switch-default>
+                                        none
+                                    </span>
+                                </span>
+                            </view>
+
+                            <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"><i
+                                    class="mdi mdi-cancel mr-1"></i>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end disable listing modal -->
     </div>
 
 
