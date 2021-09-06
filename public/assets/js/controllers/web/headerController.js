@@ -9,4 +9,8 @@
     $scope.user_data  = $localStorage.user_data;
     $scope.user_token  = $localStorage.user_token;
   
+    $scope.logout = function(){
+      $localStorage.$reset();
+      window.location.href=$scope.dirlocation+'logout';
+    }
   }]);

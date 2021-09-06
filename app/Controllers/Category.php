@@ -15,10 +15,11 @@ class Category extends Controller
         $this->view->render('Category/index', true, '');
     }
 
-    public function details($url)
+    public function sub_category()
     {
-        //$url = $this->getUrl();
-        print_r($url);
-        exit;
+        $data = [];
+        $this->view->js = ['controllers/web/homeController.js'];
+        $this->view->render('Category/sub_category', true, '');
     }
+
 }

@@ -23,11 +23,17 @@
                 <a href="#">Links</a>
                 <div class="header-menu">
                   <ul>
+                  <li ng-if="user_data">
+                  <a href="{{dirlocation}}dashboard/home">
+                <img src="{{dirlocation}}public/assets/images/uploads/profile/{{user_data.image}}" style="width:30px;height:30px;border-radius:20px;border:1px solid #fff"/>
+                    {{user_data.fullname}}
+                  </a>
+                  </li>  
                   <li><a href="<?php echo APP_URL;?>/home">Home</a></li>
                     <li><a href="<?php echo APP_URL;?>/about">About</a></li>
                     <li><a href="#">Blog</a></li>
                     <li><a href="{{dirloation}}contact">Contact</a></li>
-                    <li><a href="<?php echo APP_URL;?>/dashboard">Sell</a></li>
+                    <li><a href="<?php echo APP_URL;?>/dashboard/add_product">Sell</a></li>
 
                   </ul>
                 </div>
@@ -99,6 +105,7 @@
               <!-- End .header-search -->
 
               <div class="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-3 ml-xl-5">
+                
                 <i class="icon-phone-2"></i>
                 <h6 class="pt-1 line-height-1">
                   Call us now<a
@@ -106,8 +113,10 @@
                     class="d-block text-dark ls-10 pt-1"
                     >+234 706 067 8275</a
                   >
-                </h6>
+                </h6> 
               </div>
+
+              
               <!-- End .header-contact -->
             <!-- End .header-right -->
           </div>

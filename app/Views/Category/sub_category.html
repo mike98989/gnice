@@ -1,0 +1,68 @@
+<main class="main" ng-controller="homeController">
+			<div class="category-banner-container bg-gray" style="display: none;">
+				<div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('assets/images/banners/banner-top.jpg');">
+					<div class="container position-relative">
+						<div class="row">
+							<div class="pl-lg-5 pb-5 pb-md-0 col-md-5 col-xl-4 col-lg-4 offset-1">
+								<h3 class="ml-lg-5 mb-2 ls-10">Electronic<br>Deals</h3>
+								<a href="#" class="ml-lg-5 btn btn-dark btn-black ls-10">Get Yours!</a>
+							</div>
+							<div class="pl-lg-5 col-md-4 offset-md-0 offset-1 pt-4">
+								<div class="coupon-sale-content">
+									<h4 class="m-b-2 coupon-sale-text bg-white ls-10 text-transform-none">Exclusive COUPON</h4>
+									<h5 class="mb-2 coupon-sale-text d-block ls-10 p-0"><i class="ls-0">UP TO</i><b class="text-dark">$100</b> OFF</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container"ng-init="fetch_all_product_sub_category('<?php echo $_GET['id'];?>')">
+				<nav aria-label="breadcrumb" class="breadcrumb-nav">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{{dirlocation}}"><i class="icon-home"></i></a></li>
+						<li class="breadcrumb-item"><a href="#"><?php echo $_GET['cat'];?></a></li>
+						<li class="breadcrumb-item active" aria-current="page"><?php echo $_GET['sub'];?></li>
+					</ol>
+				</nav>
+
+				
+                
+				<div class="row mx-0 divide-line up-effect">
+					<div class="col-6 col-sm-4 col-md-3 product-default inner-quickview inner-icon" ng-repeat="product in allSubProducts">
+						<figure>
+							<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">
+                                <div ng-init="img = product.image.split(',')"> <img   style="width: 100%!important; height: 150px!important;" src="{{dirlocation}}public/assets/images/uploads/products/{{ img[0] }}">
+                                </div>
+							</a>
+						</figure>
+						<div class="product-details">
+							<div class="category-wrap">
+								<div class="category-list">
+									<a href="category.html" class="product-category">{{product.productSubCategory}}</a>
+								</div>
+								
+							</div>
+							<h2 class="product-title">
+								<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">{{product.name}}</a>
+							</h2>
+							<div class="ratings-container">
+								<div class="product-ratings">
+									<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+									<span class="tooltiptext tooltip-top"></span>
+								</div><!-- End .product-ratings -->
+							</div><!-- End .product-container -->
+							<div class="price-box">
+								<span class="product-price">{{product.price | currency:'NGN '}}</span>
+							</div><!-- End .price-box -->
+						</div><!-- End .product-details -->
+					</div><!-- End .product-default -->
+
+				</div><!-- End .row -->
+                
+
+			</div><!-- End .container -->
+
+			<div class="mb-3"></div><!-- margin -->
+		</main><!-- End .main -->

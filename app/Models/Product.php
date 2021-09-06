@@ -177,6 +177,50 @@ class Product extends Model
     return $result;
     }
 
+    public function saveProductReview()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST['date'] = date('Y-m-d');
+            $data = filter_var_array($_POST);
+            $data = array_map('trim', array_filter($data));
+            $excluded = ['files'];
+            // print_r($data);
+            // exit();
+            foreach (array_keys($data) as $key) {
+                if (!in_array($key, $excluded)) {
+                    $fields[] = $key;
+                    $key_fields[] = ':' . $key;
+                    $fields_imploded = implode(',', $fields);
+                    $keys_imploded = implode(',', $key_fields);
+                }
+            }
+            $this->db->query(
+                'INSERT INTO product_reviews (' .
+                    $fields_imploded .
+                    ') VALUES (' .
+                    $keys_imploded .
+                    ')'
+            );
+            foreach (array_keys($data) as $key) {
+                if (!in_array($key, $excluded)) {
+                    $this->db->bind(':' . $key, $data[$key]);
+                }
+            }
+            // $row = $this->db->singleResult();
+            if ($this->db->execute()) {
+                $result['message'] = 'product review saved successfully';
+                $result['status'] = '1';
+            } else {
+                $result['message'] = 'Something went wrong. Please try again later.';
+                $result['status'] = '0';
+                //return false;
+            }
+            return $result;
+        }
+    }
+
     public function pinProduct($user_id)
     {
         $header = apache_request_headers();
@@ -265,6 +309,23 @@ class Product extends Model
         }
     }
 
+    public function getProductReviews()
+    {
+        $product_id = filter_var($_GET['id']);
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $this->db->query("SELECT P.*,U.fullname,U.image FROM product_reviews P INNER JOIN users U ON P.user_id=U.id WHERE P.product_id = :product_id AND P.status=1 ORDER BY review_id DESC");
+            $this->db->bind(':product_id', $product_id);
+            if ($this->db->resultSet()) {
+                $rows['data'] = $this->db->resultSet();
+                $rows['status'] = '1';
+            } else {
+                $rows['data'] = [];
+                $rows['status'] = '0';
+            }
+            return $rows;
+        }
+    }
     /////////////GET ALL RELATED PRODUCTS
     public function getAllRelatedProducts()
     {
@@ -281,7 +342,7 @@ class Product extends Model
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
                         LEFT JOIN users ON users.seller_id = products.seller_id
-                        WHERE products.product_code!=:product_code AND products.sub_category = :sub_category_id OR products.brand=:brand");
+                        WHERE products.product_code!=:product_code AND products.sub_category = :sub_category_id OR products.brand=:brand AND products.status='1'");
 
             $this->db->bind(':sub_category_id', $sub_category_id);
             $this->db->bind(':brand', $brand);
@@ -356,16 +417,14 @@ class Product extends Model
         }
     }
 
-    /*
+    
     public function getAllProductOfaCategory($category_id)
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $this->db->query("SELECT products.*,
-                        category.title as productCategory,
-                        sub_category.title as productSubCategory
+                        category.title as productCategory
                         FROM products
-                        INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
                         INNER JOIN category ON category.id = products.category
                         WHERE products.category = :category_id AND products.status = 1
                             ");
@@ -382,8 +441,8 @@ class Product extends Model
             return $result;
         }
     }
-    */
-    /*
+    
+    
     public function getAllProductOfaSubCategory($sub_category_id)
     {
         /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY
@@ -419,7 +478,7 @@ class Product extends Model
             return $result;
         }
     }
-    */
+    
 
     //     $productCart = array(
     //         1234, 123, 12

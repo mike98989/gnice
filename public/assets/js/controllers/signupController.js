@@ -11,6 +11,7 @@
     
    
     $scope.user_signup = function(){
+      
         $('.loader').show();    
          $('.result').hide(); 
          var email = $('#email').val();
@@ -48,7 +49,7 @@
               $('.result').show();
               alert(msg.msg);
               } 
-              
+              $localStorage.$reset();
                }
              });
             }else{
@@ -61,7 +62,7 @@
     
     $scope.localStorage_get = function(key){
       $scope[key] = $localStorage[key];
-      $scope.$apply();
+      //$scope.$apply();
     }
 
   $scope.localStorage_save = function(key,value,url){

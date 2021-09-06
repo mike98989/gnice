@@ -4,7 +4,7 @@ class Misc extends Model
 {
     public function getAccountPackages()
     {
-        $this->db->query("SELECT package_id,title,value,status FROM seller_account_packages S1 WHERE S1.status=1");
+        $this->db->query("SELECT package_id,title,duration_in_days,value,status FROM seller_account_packages S1 WHERE S1.status=1");
         $packages = $this->db->resultSet();
         $count = $this->db->rowCount();
         for ($a = 0; $a < $count; $a++) {

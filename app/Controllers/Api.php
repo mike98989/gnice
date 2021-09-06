@@ -52,6 +52,30 @@ class Api extends Controller
         }
     }
 
+    public function find_user_by_email()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $check = $this->model('Authenticate')->findUserByEmail($_GET['email'], 'users');
+            print_r(json_encode($check));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
+    public function user_login_from_facebook()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $login = $this->model('Authenticate')->user_login_from_facebook();
+            print_r(json_encode($login));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
     public function confirm_password_recovery_code()
     {
         $header = apache_request_headers();
@@ -220,6 +244,20 @@ class Api extends Controller
         }
     }
 
+    public function fetch_all_sub_category_from_parent()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Category')->getAllSubCategoryFromParent($_GET['parent_id']);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+    
+
     public function add_product()
     {
         $header = apache_request_headers();
@@ -242,6 +280,19 @@ class Api extends Controller
     /**
      * Product apis
      */
+    public function save_product_review()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->saveProductReview();
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit();
+        }
+    }
+
+    
     public function fetch_all_product()
     {
         $header = apache_request_headers();
@@ -254,7 +305,18 @@ class Api extends Controller
         }
     }
 
-
+    public function get_product_reviews()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getProductReviews();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    
     public function fetch_all_product_of_seller()
     {
         $header = apache_request_headers();

@@ -43,7 +43,9 @@
       }
 
       $scope.payWithPaystack = function(){
+        
         if($scope.selectedOption.value!='0'){
+          
         var handler = PaystackPop.setup({
             key: 'pk_test_ba985e21c8a78ea8da3609b479b2f087944dcb00',
             email: $scope.user_data.email,

@@ -55,6 +55,54 @@ class Authenticate extends Model
         return $msg;
     }
 
+    public function user_login_from_facebook()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            
+            $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+            $id = filter_var($_POST['id']);
+            $this->db->query('SELECT * FROM users WHERE email= :email AND user_fb_id=:id');
+            $this->db->bind(':email', $email);
+            $this->db->bind(':id', $id);
+            $row = $this->db->singleResult();
+            if ($row == true) {
+                    if ($row->status == '0') {
+                        $msg['status'] = "0";
+                        $msg['msg'] = "Your account is disabled. Please contact administrator!";
+                    } elseif ($row->activated == '0') {
+                        $msg['status'] = "0";
+                        $msg['msg'] = "Your account is not yet active. Please click on the validation link sent to your email or contact administrator!";
+                    } else {
+                        $row->password = null;
+                        if(($row->seller=='1')&&($row->account_type!='0')){
+                        $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                        }
+                        $updated_token = $this->updateUserToken($row->id, 'users');
+                        if ((isset($_POST['source'])) && ($_POST['source'] == 'browser')) {
+                            @session_start();
+                            Session::init();
+                            Session::set('loggedIn', true);
+                            Session::set('loggedType', 'user');
+                            Session::set('token', $updated_token);
+                            Session::set('data', $row);
+                        }
+                        $msg['status'] = '1';
+                        $msg['token'] = $updated_token;
+                        $msg['data'] = $row;
+                    }
+            
+            } else {
+                $msg['status'] = '0';
+                $msg['msg'] = 'Account not found!';
+            }
+        } else {
+            $msg['msg'] =  "invalid request";
+            $msg['status'] = '0';
+        }
+        return $msg;
+    }
+
     public function getUserAccountType($account_type)
     {
         $this->db->query('SELECT title,product_count,duration_in_days FROM seller_account_packages WHERE package_id= :id');

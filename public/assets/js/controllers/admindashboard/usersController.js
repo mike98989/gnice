@@ -455,23 +455,7 @@
         window.location.href=$scope.dirlocation+'admindashboard/'+url;
     }
 
-    $scope.generate_id_card = function(staff_data){
-        //var qrcode = new QRCode("qrcode");
-        var qrcode = new QRCode("qrcode", {
-            text: "http://rims.corrections.gov.ng",
-            width: 130,
-            height: 130,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-        qrcode.makeCode('Name:'+staff_data.sname+' '+staff_data.fname+' '+staff_data.othernames+' | ServiceNo:'+staff_data.serviceNo+' | Rank:'+staff_data.presentRank+' | BG:'+staff_data.blood_group+' | Img:'+staff_data.photo+' | Url: https://rims.corrections.gov.ng/staff?identity='+staff_data.serviceNo);
-        $('.id_card_template').show();
-        $('.id_card_template_back').show();
-        $('.generate_id').hide();
-        
-        
-    }
+
 
 
     $scope.bind_blood_group = function(blood_group){

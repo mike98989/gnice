@@ -1,16 +1,14 @@
-<div class="d-flex align-items-end flex-wrap">
-  <div class="mr-md-3 mr-xl-5">
-    <h3>ADD NEW PRODUCT</h3>
-    <p class="mb-md-0">Your analytics dashboard template.</p>
-  </div>
-
-</div>
-
+<div class="main-content container-fluid">
+      <section class="section">
+        <div class="col-12 mt-3 mb-1">
+          <h4 class="section-title text-uppercase">New Products</h4>
+          <p class="text-subtitle text-muted">A good dashboard to display your statistics</p>
+      </div>
            <div class=""  ng-init="fetch_required_table(); fetch_all_product_of_seller()">
             <div style="text-align: center;" class="loader">
               <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
               </div>
-              <div  ng-show="user_remaining_product_slot > 0" class="col-lg-8" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 5px 0 rgba(0, 0, 0, 0.09);">
+              <div  ng-show="user_remaining_product_slot > 0" class="col-lg-8 card">
                 <div class="card-body">
                   <form class="forms-sample" id="add_product" ng-submit="add_product()">
                 <div class="form-group">
@@ -66,16 +64,16 @@
                       <input type="" name="price" class="form-control" placeholder="Price">
                     </div>
                   </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="form-group row">
-                          <label class="col-sm-3">Negotiable</label>
+                          <label class="col-sm-4">Negotiable</label>
                           <div class="col-sm-4">
                               <label>
                                 <input type="radio" name="negotiable" class="" value="0" checked>
                                 No
                               </label>
                           </div>
-                          <div class="col-sm-5">
+                          <div class="col-sm-4">
                               <label>
                                 <input type="radio" class=""  value="1"  name="negotiable">
                                 Yes
@@ -84,16 +82,16 @@
                         </div>
                       </div>
                     
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                         <div class="form-group row">
-                          <label class="col-sm-3">Delivery Available</label>
+                          <label class="col-sm-4">Delivery Available</label>
                           <div class="col-sm-4">
                               <label>
                                 <input type="radio" name="delivery_available" class="" value="0" checked>
                                 No
                               </label>
                           </div>
-                          <div class="col-sm-5">
+                          <div class="col-sm-4">
                               <label>
                                 <input type="radio" class=""  value="1"  name="delivery_available">
                                 Yes
@@ -123,12 +121,12 @@
                       </div>
                        <div class="form-group"  >
                         <label for="landmark">Nearest LandMark</label>
-                      <input type="text" name="land_mark" placeholder="LandMark" class="form-control">
+                      <input type="text" required name="land_mark" placeholder="LandMark" class="form-control">
                      </div>
                     </div> 
                        <div class="form-group">
                       <label for="exampleTextarea1">Description</label>
-                      <textarea class="form-control" name="description"rows="4"></textarea>
+                      <textarea class="form-control" required name="description"rows="4"></textarea>
                     </div>
                 
                     </div> 
@@ -141,7 +139,7 @@
                     </div>
                     <input type="hidden" name="seller_id" id="seller_id" value="{{user_data.seller_id}}"> 
                     <input type="hidden" name="category" id="seller_id" value="{{selected_category.id}}"> 
-                    <button type="submit" class="btn bg-gradient-warning mr-2">
+                    <button type="submit" class="btn btn-primary">
                       <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="width:25px;display:none">Submit</button>
                   </form>
                 </div>
@@ -152,5 +150,7 @@
                 <br/><a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-warning border-0" style="margin-top:10px">Upgrade</a>
               </div>
             </div>
+    </section>
+  </div>
      
        

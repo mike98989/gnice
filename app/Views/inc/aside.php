@@ -6,10 +6,10 @@
         <nav class="side-nav">    
             <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
                 <li ng-repeat="catSub in catSubs">
-                    <a href="#" style="font-weight:normal;"><img style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px" src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
+                    <a href="{{dirlocation}}category?id={{catSub.id}}&cat={{catSub.title}}" style="font-weight:normal;"><img style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px" src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
                                 <ul class="submenu">
                                     <li ng-repeat="sub in catSub.subcategory ">
-                                        <a href="#">
+                                        <a href="{{dirlocation}}category/sub_category?id={{sub.sub_id}}&cat={{catSub.title}}&sub={{sub.title}}">
                                         <img ng-show="sub.image!=''" style="display:none;width: 30px!important; height: 30px!important;" src="{{dirlocation}}public/assets/images/uploads/category/{{sub.image}}">{{ sub.title }} </a>
                                     </li>
                                 </ul>

@@ -9,7 +9,7 @@
     $scope.user_data  = $localStorage.user_data;
     $scope.user_token  = $localStorage.user_token;
     
-
+    
     // $('#butn').click(function(event) {
     // event.preventDefault();
     // var up_id = $('#up_courseid').val();
@@ -26,7 +26,10 @@
 
 
         
-
+  $scope.update_google_data = function(){
+    alert('googodd');
+  }
+  
   $scope.add_product = function(){
   $('.loader').show();    
     var formData = new FormData($('#add_product')[0]);
@@ -47,7 +50,7 @@
           var parsed = JSON.parse(response);
           var msg=angular.fromJson(parsed);
           $('.loader').hide();  
-    if(msg.status=='1'){
+    if(msg.status=='1'){ 
         $('.loader').hide();    
         $('.result').html(msg.message);  
         $('.result').show();

@@ -734,64 +734,21 @@ class Category extends Model
     }
 
 
-
-    public function getAllCategory2()
-    {
-        $parent_id = 0;
-        $this->db->query("SELECT * FROM category WHERE parent_id = :parent_id");
-        $this->db->bind(':parent_id', $parent_id);
-
-
-        // $this->db->query("SELECT * FROM category");
-
-        $catData = [];
-        if ($this->db->resultSet()) {
-            $row = $this->db->resultSet();
-            $data = json_encode($row);
-
-            // print_r($data);
-            // exit('got here');
-            while ($row = $this->db->resultSet()) {
-                $catData[] = [
-                    'id' => $row['id'],
-                    'parent_id' => $row['parent_id'],
-                    'category_name' => $row['name'],
-                    'subcategory' => $this->getAllSubCategory2($row['id'])
-                ];
-            }
-
-
-
-            return $catData;
-        } else {
-            return $catData = [];
-        }
-
-        print_r($catData);
-    }
-
-    public function getAllSubCategory2($parent_id)
+    public function getAllSubCategoryFromParent($parent_id)
     {
         $this->db->query("SELECT * FROM sub_category WHERE parent_id = :parent_id");
         $this->db->bind(':parent_id', $parent_id);
-        $row = $this->db->execute();
+        //$this->db->execute();
 
-        $subCatData = [];
         if ($this->db->resultSet()) {
-            if ($this->db->rowCount() > 0) {
-                while ($row) {
-
-                    $subCatData[] = [
-                        'id' => $row['id'],
-                        'parent_id' => $row['parent_id'],
-                        'subcategory' => $row['subcategory'],
-                    ];
-                    # code...
-                }
-                return $subCatData;
-            } else {
-                return $subCatData = [];
-            }
+            $rows['rowCount'] = $this->db->rowCount();
+            $rows['data'] = $this->db->resultSet();
+            $rows['status'] = '1';
+        } else {
+            $rows['data'] = [];
+            $rows['status'] = '0';
         }
+
+        return $rows;
     }
 }

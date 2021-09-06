@@ -16,6 +16,8 @@
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="Porto - Bootstrap eCommerce Template" />
     <meta name="author" content="SW-THEMES" />
+    <meta name="google-signin-client_id" content="115492595952-2hub4c8ls0p61v5t5nhfpb41tbhojbb3.apps.googleusercontent.com">
+
 
     <!-- Favicon -->
     <link
