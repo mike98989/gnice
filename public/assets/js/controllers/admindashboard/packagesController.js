@@ -204,6 +204,7 @@ module.controller("packagesController", [
       formData.append("status", code);
       formData.append("id", info.package_id);
 
+      console.log("packagesController");
       console.table(code, info);
       // return;
       $.ajax({
