@@ -1,5 +1,5 @@
 <!-- partial -->
-<div class="container-fluid page-body-wrapper">
+<div class="container-fluid page-body-wrapper" ng-controller="headerController">
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
@@ -47,7 +47,7 @@
                     <i class="mdi mdi-flag menu-icon"></i>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" ng-if="user_data.privilege == '3'">
                 <a class="nav-link" href="{{dirlocation}}admindashboard/admins">
                     <span class="menu-title">Admins</span>
                     <i class="mdi mdi-pencil-lock menu-icon"></i>
@@ -59,8 +59,6 @@
                     <i class="mdi mdi-logout menu-icon"></i>
                 </a>
             </li>
-
-
 
         </ul>
     </nav>

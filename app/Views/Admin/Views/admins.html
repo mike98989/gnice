@@ -108,7 +108,7 @@
                                             <form ng-submit="update_admin_privilege(admin.id, $index)"
                                                 id=" update_admin_privilege_form_{{ admin.id}}">
                                                 <input type="text" hidden value="{{ admin.id }}" name="admin_id">
-                                                <div class=" input-group">
+                                                <div class=" input-group" style="min-width:200px">
                                                     <select class="form-control form-control-sm" name="privilege"
                                                         id="privilege_{{ admin.id }}" required>
                                                         <option value="">SELECT PRIVILEGE LEVEL</option>
@@ -215,8 +215,9 @@
                                                     </span>
                                                 </span>
 
-                                                <button type="button" class="btn btn-secondary btn-sm "
-                                                    data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-light btn-sm "
+                                                    data-dismiss="modal"><i
+                                                        class="mdi mdi-cancel mr-1"></i>Cancel</button>
                                             </div>
                                         </div>
                                     </div>
@@ -254,8 +255,9 @@
                                                     class="btn btn-danger btn-sm" data-dismiss="modal">
                                                     Delete admin
                                                 </button>
-                                                <button type="button" class="btn btn-secondary btn-sm "
-                                                    data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-light btn-sm "
+                                                    data-dismiss="modal">
+                                                    <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
                                             </div>
                                         </div>
                                     </div>
@@ -270,7 +272,7 @@
                 </div>
             </div>
         </article>
-        <article class="col-sm-12 col-md-4 grid-margin">
+        <!-- <article class="col-sm-12 col-md-4 grid-margin">
             <div class="card">
                 <div class="loader" style="text-align: center">
                     <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
@@ -366,12 +368,12 @@
                     <button class="btn btn-sm btn-gradient-danger m-1 password_form_inverse"
                         ng-click="toggle_password_form()"><i class="mdi mdi-adjust mr-1"></i>Change
                         Password</button>
-                    <!-- <button class="btn btn-sm btn-gradient-info m-1"><i class="mdi mdi-pen-plus mr-1"></i>Update
-                        Profile</button> -->
-                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                    <button class="btn btn-sm btn-gradient-info m-1"><i class="mdi mdi-pen-plus mr-1"></i>Update
+                        Profile</button>
+                    <small class="text-muted">Last updated 3 mins ago</small> 
                 </div>
             </div>
-        </article>
+        </article> -->
         <article class="col-sm-12 col-md-8 grid-margin" ng-if="admin_data.privilege == ultra">
             <div class="card">
                 <div class="loader" style="text-align: center">
@@ -406,7 +408,8 @@
                             <input type="password" class="form-control" placeholder="confirm password" name="cpassword"
                                 id="cpassword" required>
                         </div>
-                        <button type="submit" class="btn btn-gradient-info mb-2">Submit</button>
+                        <button type="submit" class="btn btn-info btn-sm"><i
+                                class="mdi mdi-book-plus mr-2"></i>Submit</button>
                     </form>
                 </div>
             </div>

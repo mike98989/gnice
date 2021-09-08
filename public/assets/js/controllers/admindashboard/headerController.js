@@ -52,5 +52,20 @@ module.controller("headerController", [
     $scope.pageSize = 30;
     $scope.user_data = datagrab.user_data;
     $scope.user_token = datagrab.user_token;
+
+    //! more data into modal window
+    $scope.append_modal_info = function (value) {
+      $scope.info = value;
+      // console.log(JSON.stringify($scope.info));
+      //$scope.get_all_users();
+    };
+    $scope.toggle_form = function (id, index) {
+      $(".form_inverse_" + id).toggle(500);
+      $(".form_" + id).toggle(500);
+    };
+    $scope.toggle_password_form = function () {
+      $(".password_form_inverse").toggle(500);
+      $(".password_form").toggle(500);
+    };
   },
 ]);
