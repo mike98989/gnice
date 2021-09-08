@@ -7,12 +7,14 @@
         <nav class="side-nav">
             <ul class="menu menu-vertical sf-arrows" ng-init="fetch_all_categories_and_sub_categories()">
                 <li ng-repeat="catSub in catSubs">
-                    <a href="#" style="font-weight:normal;"><img
+                    <a href="{{dirlocation}}category?id={{catSub.id}}&cat={{catSub.title}}"
+                        style="font-weight:normal;"><img
                             style="width: 30px!important; height: 30px!important;float:left;margin-right:7px;margin-top:-7px"
                             src="{{dirlocation}}public/assets/images/uploads/category/{{catSub.image}}">{{catSub.title}}</a>
                     <ul class="submenu">
                         <li ng-repeat="sub in catSub.subcategory ">
-                            <a href="#">
+                            <a
+                                href="{{dirlocation}}category/sub_category?id={{sub.sub_id}}&cat={{catSub.title}}&sub={{sub.title}}">
                                 <img ng-show="sub.image!=''"
                                     style="display:none;width: 30px!important; height: 30px!important;"
                                     src="{{dirlocation}}public/assets/images/uploads/category/{{sub.image}}">{{ sub.title }}
@@ -187,14 +189,16 @@
                     Something to</h4>
                 <h3
                     class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase">
-                    <em class="pt-3 ls-0">Sale</em></h3>
+                    <em class="pt-3 ls-0">Sale</em>
+                </h3>
                 <p>Post an advert for free!</p>
             </div><!-- End .banner -->
 
             <div class="banner d-flex flex-column align-items-center">
                 <h3
                     class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase">
-                    <em class="pt-3 ls-0">Sale</em>Many Item</h3>
+                    <em class="pt-3 ls-0">Sale</em>Many Item
+                </h3>
                 <h4 class="sale-text font1 text-uppercase m-b-3">45<sup>%</sup><sub>off</sub></h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <a href="#" class="btn btn-dark btn-md font1">View Sale</a>
@@ -203,7 +207,8 @@
             <div class="banner d-flex flex-column align-items-center">
                 <h3
                     class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase">
-                    <em class="pt-3 ls-0">Sale</em>Many Item</h3>
+                    <em class="pt-3 ls-0">Sale</em>Many Item
+                </h3>
                 <h4 class="sale-text font1 text-uppercase m-b-3">45<sup>%</sup><sub>off</sub></h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <a href="#" class="btn btn-dark btn-md font1">View Sale</a>

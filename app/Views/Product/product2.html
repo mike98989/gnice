@@ -1,11 +1,10 @@
-<main class="main" ng-controller="homeController" ng-init="fetch_single_product()">
+<main class="main" ng-controller="homeController" ng-init="fetch_single_product(); init_facebook_login()">
 
 	<div class="container">
 		<nav aria-label="breadcrumb" class="breadcrumb-nav">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
-				<li class="breadcrumb-item"><a href="#" class="sf-with-ul cabtn"
-						data-idc="{{product.category}}">{{product.productCategory}}</a></li>
+				<li class="breadcrumb-item"><a href="{{dirlocation}}"><i class="icon-home"></i></a></li>
+				<li class="breadcrumb-item"><a href="#" class="sf-with-ul cabtn">{{product.productCategory}}</a></li>
 				<li class="breadcrumb-item"><a href="#">{{ product.productSubCategory }}</a></li>
 				<li class="breadcrumb-item">
 					<a href=""><i class="breadcrumb-item active"></i>{{product.name }}</a>
@@ -15,18 +14,22 @@
 		<div class="product-single-container product-single-default">
 			<div class="row">
 				<div class="col-md-7 product-single-gallery">
-					<div class="card">
+					<div class="card" style="padding:0">
 						<div class="card-body">
 							<div id="custCarousel" class="carousel slide" data-ride="carousel">
 								<!-- slides -->
 								<div class="carousel-inner" style="height:450px;overflow:hidden"> 
-									<div class="carousel-item" ng-class="{'active' : $index=='1'}" ng-repeat="image in product_image">
-									<img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" style="width:100%"> 
+									<div class="carousel-item" ng-class="{'active' : $index=='0'}" ng-if="product_image.length>1" ng-repeat="image in product_image">
+									<img ng-click="open_image_modal(image)"src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" style="width:100%;cursor:pointer"> 
 									</div>
+									<div class="carousel-item active" ng-if="product_image.length==1" ng-repeat="image in product_image">
+										<img src="{{dirlocation}}public/assets/images/uploads/products/{{product_image[0]}}" style="width:100%"> 
+									</div>
+									
 								</div> <!-- Left right -->
 								<a class="carousel-control-prev" href="#custCarousel" data-slide="prev" style="margin-top: 25%;"> <span class="carousel-control-prev-icon"></span> </a> <a class="carousel-control-next" href="#custCarousel" data-slide="next"  style="margin-top: 25%;"> <span class="carousel-control-next-icon"></span> </a> <!-- Thumbnails -->
 								<ol class="carousel-indicators list-inline">
-									<li class="list-inline-item" ng-class="{'active' : $index=='1'}" ng-repeat="image in product_image" style="height:70px;background:transparent;overflow: hidden;">
+									<li class="list-inline-item" ng-class="{'active' : $index=='0n'}" ng-repeat="image in product_image" style="height:70px;background:transparent;overflow: hidden;">
 									<a id="carousel-selector-{{$index}}" ng-class="{'selected' : $index=='1'}" data-slide-to="{{$index}}" data-target="#custCarousel"> 
 									<img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" class="img-fluid"></a> 
 									</li>
@@ -36,6 +39,27 @@
 					</div>
 
 				</div><!-- End .product-single-gallery -->
+
+
+				<!-- The Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+			<img class="modal-content" id="img01">
+		</div>
+		
+	  </div>
+	</div>
+  </div>
+
 
 				<div class="col-md-5 product-single-details" style="margin-top:0;padding-top:0">
 					<div class="card">
@@ -64,8 +88,8 @@
 
 					<hr class="divider">
 					<div class="product-action">
-						<a href="cart.html" class="btn btn-dark btn-add-cart icon-shopping-cart btn-sm" title="Add to Cart">Show Contact</a>
-					
+						<button type="button" class="btn btn-info btn-sm" ng-click="showContact=true" title="Add to Cart">Show Contact</button>
+						<span ng-show="showContact" style="font-size:17px;font-weight: bold;">{{product.seller_phone}}</span>
 					</div><!-- End .product-action -->
 					<h4>Safety Tip</h4>
 					<ul>
@@ -80,14 +104,12 @@
 					
 					<div class="product-action">
 						<button class="btn btn-danger btn-bg-dark btn-sm">Report Abuse</button>
-						<button class="btn btn-success btn-sm">post ad like this</button>
+						<a href="{{dirlocation}}dashboard/add_product?category={{product.category}}" class="btn btn-success btn-sm">Post ad like this</a>
 						<button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">Leave Feedback</button>
 					</div>
 					<hr class="divider mb-1">
-
 					<div class="product-single-share">
 						<label class="sr-only">Share:</label>
-
 						<div class="social-icons mr-2">
 							<a href="#" class="social-icon social-facebook icon-facebook" target="_blank"
 								title="Facebook"></a>
@@ -120,7 +142,8 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content"
-							role="tab" aria-controls="product-reviews-content" aria-selected="false">Reviews (3)</a>
+							role="tab" aria-controls="product-reviews-content" aria-selected="false">
+							Reviews<span ng-show="product_reviews">({{product_reviews.length}})</span><span  ng-show="!product_reviews">(0)</span></a>
 					</li>
 				</ul>
 			<div class="tab-content">
@@ -157,7 +180,7 @@
 								product.internal_storage}}
 							</li>
 							<li ng-show="product.sim">
-								<i class="fa fa-check-circle"></i><span>Sim: </span>{{ product.sim }}
+								<i class="fa fa-check-circle"></i><span>Sim slot: </span>{{ product.sim }}
 							</li>
 							<li ng-show="product.resolution">
 								<i class="fa fa-check-circle"></i><span>Resolution: </span>{{ product.resolution }}
@@ -268,133 +291,50 @@
 				</div>
 				<!-- End .tab-pane -->
 
-
-
 				<div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
-					aria-labelledby="product-tab-reviews">
+					aria-labelledby="product-tab-reviews" ng-if="product" ng-init="get_product_reviews(product.id)">
 					<div class="product-reviews-content">
 						<div class="row">
 							<div class="col-xl-7">
-								<h2 class="reviews-title">
-									3 reviews for Product Long Name
+								<h2 class="reviews-title" ng-show="product_reviews">
+									{{product_reviews.length}} Reviews for {{product.name}}
 								</h2>
-
+								
 								<ol class="comment-list">
-									<li class="comment-container">
+									<li class="comment-container" ng-repeat="review in product_reviews">
 										<div class="comment-avatar">
-											<img src="{{dirlocation}}public/assets/images/avatar/avatar1.jpg" width="65"
-												height="65" alt="avatar" />
+											<img src="{{dirlocation}}public/assets/images/uploads/profile/{{review.image}}" style="width:65px;height:65px;float:left" alt="avatar" />
 										</div>
 										<!-- End .comment-avatar-->
-
+										
 										<div class="comment-box">
 											<div class="ratings-container">
 												<div class="product-ratings">
-													<span class="ratings" style="width: 80%"></span>
+													<span class="ratings" style="width: {{review.rating*20}}%"></span>
 													<!-- End .ratings -->
 												</div>
 												<!-- End .product-ratings -->
 											</div>
 											<!-- End .ratings-container -->
 
-											<div class="comment-info mb-1">
-												<h4 class="avatar-name">John Doe</h4>
+											<div class="comment-info">
+												<h4 class="avatar-name">{{review.fullname}}</h4>
 												-
-												<span class="comment-date">Novemeber 15, 2019</span>
+												<span class="comment-date">{{review.date}}</span>
 											</div>
 											<!-- End .comment-info -->
 
 											<div class="comment-text">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur
-													adipiscing elit, sed do eiusmod tempor
-													incididunt ut labore et dolore magna aliqua. Ut
-													enim ad minim veniam, quis nostrud exercitation
-													ullamco laboris nisi ut aliquip.
+												
+												<p style="width:100%">
+												{{review.review}}
 												</p>
 											</div>
 											<!-- End .comment-text -->
 										</div>
 										<!-- End .comment-box -->
 									</li>
-									<!-- comment-container -->
-
-									<li class="comment-container">
-										<div class="comment-avatar">
-											<img src="<?php echo APP_URL;?>/assets/images/avatar/avatar2.jpg" width="65"
-												height="65" alt="avatar" />
-										</div>
-										<!-- End .comment-avatar-->
-
-										<div class="comment-box">
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width: 80%"></span>
-													<!-- End .ratings -->
-												</div>
-												<!-- End .product-ratings -->
-											</div>
-											<!-- End .ratings-container -->
-
-											<div class="comment-info mb-1">
-												<h4 class="avatar-name">John Doe</h4>
-												-
-												<span class="comment-date">Novemeber 15, 2019</span>
-											</div>
-											<!-- End .comment-info -->
-
-											<div class="comment-text">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur
-													adipiscing elit, sed do eiusmod tempor
-													incididunt ut labore et dolore magna aliqua. Ut
-													enim ad minim veniam, quis nostrud exercitation
-													ullamco laboris nisi ut aliquip.
-												</p>
-											</div>
-											<!-- End .comment-text -->
-										</div>
-										<!-- End .comment-box -->
-									</li>
-									<!-- comment-container -->
-
-									<li class="comment-container">
-										<div class="comment-avatar">
-											<img src="<?php echo APP_URL;?>/assets/images/avatar/avatar3.jpg" width="65"
-												height="65" alt="avatar" />
-										</div>
-										<!-- End .comment-avatar-->
-
-										<div class="comment-box">
-											<div class="ratings-container">
-												<div class="product-ratings">
-													<span class="ratings" style="width: 80%"></span>
-													<!-- End .ratings -->
-												</div>
-												<!-- End .product-ratings -->
-											</div>
-											<!-- End .ratings-container -->
-
-											<div class="comment-info mb-1">
-												<h4 class="avatar-name">John Doe</h4>
-												-
-												<span class="comment-date">Novemeber 15, 2019</span>
-											</div>
-											<!-- End .comment-info -->
-
-											<div class="comment-text">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur
-													adipiscing elit, sed do eiusmod tempor
-													incididunt ut labore et dolore magna aliqua. Ut
-													enim ad minim veniam, quis nostrud exercitation
-													ullamco laboris nisi ut aliquip.
-												</p>
-											</div>
-											<!-- End .comment-text -->
-										</div>
-										<!-- End .comment-box -->
-									</li>
+									
 									<!-- comment-container -->
 								</ol>
 								<!-- End .comment-list -->
@@ -402,55 +342,42 @@
 
 							<div class="col-xl-5">
 								<div class="add-product-review">
-									<form action="#" class="comment-form m-0">
+									<button ng-if="!user_data" class="btn btn-flat btn-warning">Leave Feedback/Rating</button>
+									<form ng-if="user_data" ng-submit="save_product_review()" id="save_product_review" ng-init="rating='0'">
 										<h3 class="review-title">Add a Review</h3>
-
+										<div class="alert alert-info result" style="display:none"></div>
 										<div class="rating-form">
-											<label for="rating">Your rating</label>
+											<label for="rating">Your Rating</label>
 											<span class="rating-stars">
-												<a class="star-1" href="#">1</a>
-												<a class="star-2" href="#">2</a>
-												<a class="star-3" href="#">3</a>
-												<a class="star-4" href="#">4</a>
-												<a class="star-5" href="#">5</a>
+												<a class="star-1" ng-click="rating='1'" href="#">1</a>
+												<a class="star-2" ng-click="rating='2'" href="#">2</a>
+												<a class="star-3" ng-click="rating='3'" href="#">3</a>
+												<a class="star-4" ng-click="rating='4'" href="#">4</a>
+												<a class="star-5" ng-click="rating='5'" href="#">5</a>
 											</span>
-
-											<select name="rating" id="rating" required="" style="display: none">
-												<option value="">Rate…</option>
-												<option value="5">Perfect</option>
-												<option value="4">Good</option>
-												<option value="3">Average</option>
-												<option value="2">Not that bad</option>
-												<option value="1">Very poor</option>
-											</select>
-										</div>
-
-										<div class="form-group">
-											<label>Your Review</label>
-											<textarea cols="5" rows="6" class="form-control form-control-sm"></textarea>
 										</div>
 										<!-- End .form-group -->
-
 										<div class="row">
 											<div class="col-md-6 col-xl-12">
 												<div class="form-group">
 													<label>Your Name</label>
-													<input type="text" class="form-control form-control-sm" required />
-												</div>
-												<!-- End .form-group -->
-											</div>
-
-											<div class="col-md-6 col-xl-12">
-												<div class="form-group">
-													<label>Your E-mail</label>
-													<input type="text" class="form-control form-control-sm" required />
+													<input type="text" disabled value="<?php print_r($_SESSION['data']->fullname);?>" class="form-control form-control-sm" required />
 												</div>
 												<!-- End .form-group -->
 											</div>
 										</div>
 
-										<input type="submit" class="btn btn-dark ls-n-15" value="Submit" />
+										<div class="form-group">
+											<label>Your Review</label>
+											<textarea cols="5" name="review" required rows="6" class="form-control form-control-sm"></textarea>
+										</div>
+										<div class="alert alert-info result" style="display:none"></div>
+										<input type="text" style="display: none;" ng-model="rating" class="rating" name="rating">
+										<input type="hidden" name="product_id" value="{{product.id}}">
+										<input type="hidden" name="user_id" value="<?php print_r($_SESSION['data']->id);?>">
+										<button type="submit" class="btn btn-dark btn-md">Submit</button>
 									</form>
+									
 								</div>
 								<!-- End .add-product-review -->
 							</div>
@@ -498,7 +425,7 @@
 								<div class="category-wrap">
 									<div class="category-list">
 										<a href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}"
-											class="product-category">{{ relatedProduct.productSubCategory }}</a>
+											class="product-category">{{relatedProduct.productSubCategory}}</a>
 									</div>
 								</div>
 								<h3 class="product-title">
@@ -531,58 +458,51 @@
 			<!-- End .product-details -->
 		</div>
 	</div><!-- End .container -->
+
+	<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<h5>Signup Using</h5>
+			  <!-- <button class="btn btn-sm btn-primary" ng-click="checkLoginState()">
+				<img class="loader_fb_check" src="{{dirlocation}}public/assets/images/spinner.gif" style="float:left;width:10px;margin-top:5px;margin-right:4px;display:none">Facebook</button> -->
+				<button class="btn btn-sm btn-primary" ng-click="get_email_existence('Collins Greg','mike98989@gmail.com','989899884844')" style="float:none;margin: auto">
+					<img class="loader_fb_check" src="{{dirlocation}}public/assets/images/spinner.gif" style="float:left;width:10px;margin-top:5px;margin-right:4px;display:none">Facebook</button> 
+				
+
+			  <!-- <fb:login-button 
+	  scope="public_profile,email"
+	  onlogin="checkLoginState();">
+	</fb:login-button> -->
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+			  <a href="{{dirlocation}}signup" class="btn btn-sm btn-warning">Email</a>
+			</div>
+			
+		  </div>
+		</div>
+	  </div>
+
 </main><!-- End .main -->
 
-<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="modal-body" style="text-align: center;">
-			<h5>Signup Using</h5>
-		  <button class="btn btn-sm btn-primary">Facebook</button>
-		  <fb:login-button 
-  scope="public_profile,email"
-  onlogin="checkLoginState();">
-</fb:login-button>
-		  <button class="btn btn-sm btn-info">Google</button>
-		  <button class="btn btn-sm btn-secondary btn-fill">Email</button>
-		</div>
-		
-	  </div>
-	</div>
-  </div>
 
+<script src="https://apis.google.com/js/platform.js" async defer></script>
   
 <script>
-	window.fbAsyncInit = function() {
-	  FB.init({
-		appId      : '337212501249692',
-		cookie     : true,
-		xfbml      : true,
-		version    : 'v11.0'
-	  });
-		
-	  FB.AppEvents.logPageView();   
-		
-	};
-  
-	(function(d, s, id){
-	   var js, fjs = d.getElementsByTagName(s)[0];
-	   if (d.getElementById(id)) {return;}
-	   js = d.createElement(s); js.id = id;
-	   js.src = "https://connect.facebook.net/en_US/sdk.js";
-	   fjs.parentNode.insertBefore(js, fjs);
-	 }(document, 'script', 'facebook-jssdk'));
 
-function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-	  console.log(response);
-    statusChangeCallback(response);
-  });
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  $scope.update_google_data();
 }
+
   </script>

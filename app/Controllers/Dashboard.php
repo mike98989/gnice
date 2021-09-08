@@ -1,12 +1,14 @@
 <?php
 class Dashboard extends Controller
 {
+
   function __construct() {
     parent::__construct();
+    $query =  parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
     Session::init();
     if (!Session::get('loggedIn')) {
 			Session::destroy();
-			header('location:'.APP_URL.'/Login');
+			header('location:'.APP_URL.'/Login?redirectTo='.$_GET['url'].'&'.$query);
 			exit;
 		}
   }

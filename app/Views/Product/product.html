@@ -474,28 +474,30 @@
     <!-- End .product-single-tabs -->
     <div>
 
-    </div>
+      <div class="products-section pt-0">
+        <h2 class="section-title">Related Products</h2>
+        <div class=" ">
+          <div class="row">
+            <div class="col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
+              <div class="product-default inner-quickview inner-icon">
+                <figure>
+                  <a
+                    href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">
+                    <div ng-init="img = relatedProduct.image.split(',')"> <img
+                        style="width: 100%!important; height: 150px!important;"
+                        src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+                    </div>
 
-    <div class="products-section pt-0">
-      <h2 class="section-title">Related Products</h2>
-
-      <div class=" ">
-        <div class="row">
-          <div class="col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
-            <div class="product-default inner-quickview inner-icon">
-              <figure>
-                <a
-                  href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">
-                  <div ng-init="img = relatedProduct.image.split(',')"> <img
-                      style="width: 100%!important; height: 150px!important;"
-                      src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+                  </a>
+                  <div class="label-group">
+                    <!-- <span class="product-label label-sale">-20%</span> -->
                   </div>
 
-                </a>
-                <div class="label-group">
-                  <!-- <span class="product-label label-sale">-20%</span> -->
-                </div>
-                <!--
+                  </a>
+                  <div class="label-group">
+                    <!-- <span class="product-label label-sale">-20%</span> -->
+                  </div>
+                  <!--
                   <div class="btn-icon-group">
                     <button
                       class="btn-icon btn-add-cart"
@@ -506,45 +508,45 @@
                     </button>
                   </div>
                 -->
-              </figure>
-              <div class="product-details">
-                <div class="category-wrap">
-                  <div class="category-list">
-                    <a href="category.html" class="product-category">{{ relatedProduct.productSubCategory }}</a>
+                </figure>
+                <div class="product-details">
+                  <div class="category-wrap">
+                    <div class="category-list">
+                      <a href="category.html" class="product-category">{{ relatedProduct.productSubCategory }}</a>
+                    </div>
                   </div>
-                </div>
-                <h3 class="product-title">
-                  <a href="product.html">{{ relatedProduct.name }}</a>
-                </h3>
-                <div class="ratings-container">
-                  <div class="product-ratings">
-                    <span class="ratings" style="width: 100%"></span><!-- End .ratings -->
-                    <span class="tooltiptext tooltip-top"></span>
+                  <h3 class="product-title">
+                    <a href="product.html">{{ relatedProduct.name }}</a>
+                  </h3>
+                  <div class="ratings-container">
+                    <div class="product-ratings">
+                      <span class="ratings" style="width: 100%"></span><!-- End .ratings -->
+                      <span class="tooltiptext tooltip-top"></span>
+                    </div>
+                    <!-- End .product-ratings -->
                   </div>
-                  <!-- End .product-ratings -->
+                  <!-- End .ratings-container -->
+                  <div class="price-box">
+                    <span class="product-price">{{ relatedProduct.price }}</span>
+                  </div>
+                  <!-- End .product-details -->
                 </div>
-                <!-- End .ratings-container -->
-                <div class="price-box">
-                  <span class="product-price">{{ relatedProduct.price }}</span>
-                </div>
-                <!-- End .product-details -->
+
+                <!-- End .products-slider -->
               </div>
 
-              <!-- End .products-slider -->
             </div>
+            <dir-pagination-controls></dir-pagination-controls>
 
           </div>
-          <dir-pagination-controls></dir-pagination-controls>
-
+          <!-- End .product-details -->
         </div>
-        <!-- End .product-details -->
+
+        <!-- End .products-slider -->
       </div>
+      <!-- End .products-section -->
 
-      <!-- End .products-slider -->
+
     </div>
-    <!-- End .products-section -->
-
-
-  </div>
-  <!-- End .container -->
+    <!-- End .container -->
 </main>

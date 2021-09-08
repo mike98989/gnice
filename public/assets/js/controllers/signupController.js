@@ -62,6 +62,7 @@ module.controller("signupController", [
               $(".result").show();
               alert(msg.msg);
             }
+            $localStorage.$reset();
           },
         });
       } else {
@@ -72,7 +73,7 @@ module.controller("signupController", [
 
     $scope.localStorage_get = function (key) {
       $scope[key] = $localStorage[key];
-      $scope.$apply();
+      //$scope.$apply();
     };
 
     $scope.localStorage_save = function (key, value, url) {

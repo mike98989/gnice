@@ -40,6 +40,10 @@ module.controller("productController", [
 
     //  })
 
+    $scope.update_google_data = function () {
+      alert("googodd");
+    };
+
     $scope.add_product = function () {
       $(".loader").show();
       var formData = new FormData($("#add_product")[0]);
@@ -51,7 +55,8 @@ module.controller("productController", [
         async: true,
         cache: false,
         contentType: false,
-        headers: { "gnice-authenticate": $scope.user_token },
+        enctype: "multipart/form-data",
+        crossDomain: true,
         processData: false,
         success: function (answer) {
           //alert(JSON.stringify(answer));

@@ -1,162 +1,275 @@
-<div class="d-flex align-items-end flex-wrap">
-  <div class="mr-md-3 mr-xl-5">
-    <h3>ADD NEW PRODUCT</h3>
-    <p class="mb-md-0">Your analytics dashboard template.</p>
-  </div>
+<div class="main-content container-fluid">
+  <section class="section">
+    <div class="col-12 mt-3 mb-1">
+      <h4 class="section-title text-uppercase">New Products</h4>
+      <p class="text-subtitle text-muted">A good dashboard to display your statistics</p>
+    </div>
+    <div class="" ng-init="fetch_required_table(); fetch_all_product_of_seller()">
+      <div style="text-align: center;" class="loader">
+        <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
+      </div>
+      <div ng-show="user_remaining_product_slot > 0" class="col-lg-8 card">
+        <div class="card-body">
+          <form class="forms-sample" id="add_product" ng-submit="add_product()">
+            <div class="form-group">
+              <label for="category">CATEGORY</label>
+              <select required="" class="form-control" ng-init="fetch_all_categories_and_sub_categories()" id="category"
+                ng-model="categories" ng-change="onCategoryValueChange(categories)">
+                <option value="">SELECT CATEGORY</option>
+                <option ng-repeat="catSub in categories_and_sub track by $index" value="{{catSub}}"> {{ catSub.title }}
+                </option>
+              </select>
+            </div>
 
-</div>
-
-<div class="" ng-init="fetch_required_table(); fetch_all_product_of_seller()">
-  <div style="text-align: center;" class="loader">
-    <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
-  </div>
-  <div ng-show="user_remaining_product_slot > 0" class="col-lg-8"
-    style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 5px 0 rgba(0, 0, 0, 0.09);">
-    <div class="card-body">
-      <form class="forms-sample" id="add_product" ng-submit="add_product()">
-        <div class="form-group">
-          <label for="category">CATEGORY</label>
-          <select required="" class="form-control" ng-init="fetch_all_categories_and_sub_categories()" id="category"
-            ng-model="categories" ng-change="onCategoryValueChange(categories)">
-            <option value="">SELECT CATEGORY</option>
-            <option ng-repeat="catSub in categories_and_sub track by $index" value="{{catSub}}"> {{ catSub.title }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group" ng-if="categories">
-          <label for="sub_category">SUB CATEGORY</label>
-          <select required class="form-control" name="sub_category" id="sub_category" ng-model="subcat">
-            <option value="">SELECT SUB-CATEGORY</option>
-            <option ng-repeat="Sub in sub_category track by $index" value="{{ Sub.sub_id }}">{{ Sub.title }} </option>
-          </select>
-        </div>
+            <div class="form-group" ng-if="categories">
+              <label for="sub_category">SUB CATEGORY</label>
+              <select required class="form-control" name="sub_category" id="sub_category" ng-model="subcat">
+                <option value="">SELECT SUB-CATEGORY</option>
+                <option ng-repeat="Sub in sub_category track by $index" value="{{ Sub.sub_id }}">{{ Sub.title }}
+                </option>
+              </select>
+            </div>
 
 
-        <!-- <div class="form-group" ng-if="5==cate">
+
+            <!-- <div class="form-group" ng-if="5==cate">
                   <label for="brand">Brand</label>
                  <input type="text" name="brand" placeholder="Name of Brand" class="form-control">
                   </div>  -->
 
-        <div ng-if="selected_category.id=='1'"
-          ng-include="'../app/views/user/views/add_product_forms/new_product1.html'"></div>
-        <div ng-if="selected_category.id=='2'"
-          ng-include="'../app/views/user/views/add_product_forms/new_product2.html'"></div>
-        <div ng-if="selected_category.id=='3'"
-          ng-include="'../app/views/user/views/add_product_forms/new_product3.html'"></div>
-
-        <div ng-if="selected_category.id">
-          <div class="form-group">
-            <label for="color">Color</label>
-            <input type="text" name="color" placeholder="Color " class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Select Condition</label>
-            <select class="form-control" name="condition_state">
-              <option selected="" value="">Condition</option>
-              <option ng-repeat="condition in requiredCondition" value="{{ condition.state }}"> {{ condition.state }}
-              </option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="name">Title</label>
-            <input type="text" name="name" placeholder="Ads Title" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Price </label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">N</span>
-              </div>
-              <input type="" name="price" class="form-control" placeholder="Price">
+            <div ng-if="selected_category.id=='1'"
+              ng-include="'../app/views/user/views/add_product_forms/new_product1.html'">
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3">Negotiable</label>
-              <div class="col-sm-4">
-                <label>
-                  <input type="radio" name="negotiable" class="" value="0" checked>
-                  No
-                </label>
+            <div ng-if="selected_category.id=='2'"
+              ng-include="'../app/views/user/views/add_product_forms/new_product2.html'"></div>
+            <div ng-if="selected_category.id=='3'"
+              ng-include="'../app/views/user/views/add_product_forms/new_product3.html'"></div>
+            <div ng-if="selected_category.id">
+              <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" name="color" placeholder="Color " class="form-control">
               </div>
-              <div class="col-sm-5">
-                <label>
-                  <input type="radio" class="" value="1" name="negotiable">
-                  Yes
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3">Delivery Available</label>
-              <div class="col-sm-4">
-                <label>
-                  <input type="radio" name="delivery_available" class="" value="0" checked>
-                  No
-                </label>
-              </div>
-              <div class="col-sm-5">
-                <label>
-                  <input type="radio" class="" value="1" name="delivery_available">
-                  Yes
-                </label>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="form-group">
-            <label for="state">Select State Region</label>
-            <select required="" class="form-control" ng-model="state" name="state">
-              <option selected="" value="">State</option>
-              <option ng-repeat="states in  requiredState" value="{{ states.state }}"> {{ states.state }}</option>
-            </select>
-          </div>
-          <div ng-if="state">
-            <div class="form-group">
-              <select class="form-control" name="lga">
-                <label for="lga">Select Local RegionLGA</label>
-                <option value="" selected="">LGA</option>
-                <optgroup ng-repeat="states in  requiredState | filter : state">
-                  <option ng-repeat="local in  states.lgas | filter : state" value="{{ local.Lga }}"> {{ local.Lga}}
+              <div class="form-group">
+                <label>Select Condition</label>
+                <select class="form-control" name="condition_state">
+                  <option selected="" value="">Condition</option>
+                  <option ng-repeat="condition in requiredCondition" value="{{ condition.state }}"> {{ condition.state
+                    }}
                   </option>
-                </optgroup>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="landmark">Nearest LandMark</label>
-              <input type="text" name="land_mark" placeholder="LandMark" class="form-control">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleTextarea1">Description</label>
-            <textarea class="form-control" name="description" rows="4"></textarea>
-          </div>
+                </select>
+              </div>
 
+              <div class="form-group">
+                <label for="name">Title</label>
+                <input type="text" name="name" placeholder="Ads Title" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Price </label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">N</span>
+                  </div>
+                  <input type="" name="price" class="form-control" placeholder="Price">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group row">
+                  <label class="col-sm-4">Negotiable</label>
+                  <div class="col-sm-4">
+                    <label>
+                      <input type="radio" name="negotiable" class="" value="0" checked>
+                      No
+                    </label>
+                  </div>
+                  <div class="col-sm-4">
+                    <label>
+                      <input type="radio" class="" value="1" name="negotiable">
+                      Yes
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <div class="form-group row">
+                  <label class="col-sm-4">Delivery Available</label>
+                  <div class="col-sm-4">
+                    <label>
+                      <input type="radio" name="delivery_available" class="" value="0" checked>
+                      No
+                    </label>
+                  </div>
+                  <div class="col-sm-4">
+                    <label>
+                      <input type="radio" class="" value="1" name="delivery_available">
+                      Yes
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+
+              <div ng-if="selected_category.id">
+                <div class="form-group">
+                  <label for="color">Color</label>
+                  <input type="text" name="color" placeholder="Color " class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Select Condition</label>
+                  <select class="form-control" name="condition_state">
+                    <option selected="" value="">Condition</option>
+                    <option ng-repeat="condition in requiredCondition" value="{{ condition.state }}"> {{ condition.state
+                      }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="name">Title</label>
+                  <input type="text" name="name" placeholder="Ads Title" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Price </label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">N</span>
+                    </div>
+                    <input type="" name="price" class="form-control" placeholder="Price">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3">Negotiable</label>
+                    <div class="col-sm-4">
+                      <label>
+                        <input type="radio" name="negotiable" class="" value="0" checked>
+                        No
+                      </label>
+                    </div>
+                    <div class="col-sm-5">
+                      <label>
+                        <input type="radio" class="" value="1" name="negotiable">
+                        Yes
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3">Delivery Available</label>
+                    <div class="col-sm-4">
+                      <label>
+                        <input type="radio" name="delivery_available" class="" value="0" checked>
+                        No
+                      </label>
+                      <div class="form-group">
+                        <label for="state">Select State Region</label>
+                        <select required="" class="form-control" ng-model="state" name="state">
+                          <option selected="" value="">State</option>
+                          <option ng-repeat="states in  requiredState" value="{{ states.state }}"> {{ states.state }}
+                          </option>
+                        </select>
+                      </div>
+                      <div ng-if="state">
+                        <div class="form-group">
+                          <select class="form-control" name="lga">
+                            <label for="lga">Select Local RegionLGA</label>
+                            <option value="" selected="">LGA</option>
+                            <optgroup ng-repeat="states in  requiredState | filter : state">
+                              <option ng-repeat="local in  states.lgas | filter : state" value="{{ local.Lga }}"> {{
+                                local.Lga}}
+                              </option>
+                            </optgroup>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="landmark">Nearest LandMark</label>
+                          <input type="text" required name="land_mark" placeholder="LandMark" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" required name="description" rows="4"></textarea>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group">
+                      <label>File upload</label>
+                      <input required="" type="file" name="files[]" multiple class="form-control">
+                      <span style="font-size: 12px; color: red">* Upload multiple images</span>
+
+                    </div>
+                    <input type="hidden" name="seller_id" id="seller_id" value="{{user_data.seller_id}}">
+                    <input type="hidden" name="category" id="seller_id" value="{{selected_category.id}}">
+                    <button type="submit" class="btn btn-primary">
+                      <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader"
+                        style="width:25px;display:none">Submit</button>
+          </form>
         </div>
-
-        <div class="form-group">
-          <label>File upload</label>
-          <input required="" type="file" name="files[]" multiple class="form-control">
-          <span style="font-size: 12px; color: red">* Upload multiple images</span>
-
-        </div>
-        <input type="hidden" name="seller_id" id="seller_id" value="{{user_data.seller_id}}">
-        <input type="hidden" name="category" id="seller_id" value="{{selected_category.id}}">
-        <button type="submit" class="btn bg-gradient-warning mr-2">
-          <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader"
-            style="width:25px;display:none">Submit</button>
-      </form>
+      </div>
+      <div class="col-sm-5">
+        <label>
+          <input type="radio" class="" value="1" name="delivery_available">
+          Yes
+        </label>
+      </div>
     </div>
+</div>
+
+
+<div class="form-group">
+  <label for="state">Select State Region</label>
+  <select required="" class="form-control" ng-model="state" name="state">
+    <option selected="" value="">State</option>
+    <option ng-repeat="states in  requiredState" value="{{ states.state }}"> {{ states.state }}</option>
+  </select>
+</div>
+<div ng-if="state">
+  <div class="form-group">
+    <select class="form-control" name="lga">
+      <label for="lga">Select Local RegionLGA</label>
+      <option value="" selected="">LGA</option>
+      <optgroup ng-repeat="states in  requiredState | filter : state">
+        <option ng-repeat="local in  states.lgas | filter : state" value="{{ local.Lga }}"> {{ local.Lga}}
+        </option>
+      </optgroup>
+    </select>
   </div>
-  <div class="col-lg-6" ng-show="user_remaining_product_slot < 1" style="margin:0 auto;text-align: center;">
-    <img src="{{dirlocation}}public/assets/images/cancel_file.png" style="width:70px;float:none;margin:0 auto"><br />
-    Your have exceeded your account threshold. Please upgrade your account. You can aswell downgrade to a FREE ACCOUNT.
-    <br /><a href="{{dirlocation}}dashboard/account_packages"
-      class="btn btn-outline-light mr-2 bg-gradient-warning border-0" style="margin-top:10px">Upgrade</a>
+  <div class="form-group">
+    <label for="landmark">Nearest LandMark</label>
+    <input type="text" name="land_mark" placeholder="LandMark" class="form-control">
   </div>
+</div>
+<div class="form-group">
+  <label for="exampleTextarea1">Description</label>
+  <textarea class="form-control" name="description" rows="4"></textarea>
+</div>
+
+</div>
+
+<div class="form-group">
+  <label>File upload</label>
+  <input required="" type="file" name="files[]" multiple class="form-control">
+  <span style="font-size: 12px; color: red">* Upload multiple images</span>
+
+</div>
+<input type="hidden" name="seller_id" id="seller_id" value="{{user_data.seller_id}}">
+<input type="hidden" name="category" id="seller_id" value="{{selected_category.id}}">
+<button type="submit" class="btn bg-gradient-warning mr-2">
+  <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader"
+    style="width:25px;display:none">Submit</button>
+</form>
+</div>
+</div>
+<div class="col-lg-6" ng-show="user_remaining_product_slot < 1" style="margin:0 auto;text-align: center;">
+  <img src="{{dirlocation}}public/assets/images/cancel_file.png" style="width:70px;float:none;margin:0 auto"><br />
+  Your have exceeded your account threshold. Please upgrade your account. You can aswell downgrade to a FREE ACCOUNT.
+  <br /><a href="{{dirlocation}}dashboard/account_packages"
+    class="btn btn-outline-light mr-2 bg-gradient-warning border-0" style="margin-top:10px">Upgrade</a>
+</div>
+</div>
+
+</section>
 </div>

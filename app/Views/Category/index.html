@@ -1,7 +1,7 @@
-<main class="main"  ng-controller="homeController" >
-			<div class="category-banner-container bg-gray">
+<main class="main"  ng-controller="homeController">
+			<div class="category-banner-container bg-gray" style="display:none">
 				<div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('{{dirlocation}}public/assets/images/banners/banner-top.jpg');">
-					<div class="container position-relative"  ng-init="fetch_single_subcategory()" >
+					<div class="container position-relative">
 						<div class="row">
 							<div class="pl-lg-5 pb-5 pb-md-0 col-md-5 col-xl-4 col-lg-4 offset-1">
 								<h3 class="ml-lg-5 mb-2 ls-10">{{ singleSub.title }}<br>Deals</h3>
@@ -18,7 +18,7 @@
                     />
 
                 -->
-								<a href="Dashboard" class="ml-lg-5 btn btn-dark btn-black ls-10">Sell Products!</a>
+							<a href="Dashboard" class="ml-lg-5 btn btn-dark btn-black ls-10">Sell Products!</a>
 							</div>
 							<div class="pl-lg-5 col-md-4 offset-md-0 offset-1 pt-4">
 								
@@ -30,25 +30,24 @@
 
 			<div class="container" >
 				<nav aria-label="breadcrumb" class="breadcrumb-nav">
-					<ol class="breadcrumb" ng-init="fetch_single_subcategory()" >
+					<ol class="breadcrumb">
 						<li  class="breadcrumb-item"><a href="Home"><i class="icon-home"></i></a></li>
-						<li class="breadcrumb-item"><a href="" class="cabtn"  data-idc="{{singleSub.parent_id}}">{{ singleSub.parentCategory }}</a></li>
-						<li class="breadcrumb-item active" aria-current="page">{{ singleSub.title }}</li>
+						<li class="breadcrumb-item"><a href="#"><?php echo $_GET['cat'];?></a></li>
 					</ol>
 				</nav>
 
 				<div class="row">
 					<div class="col-lg-9 order-lg-1">
 						
-                          <div id="results" ng-init="filter_data()">
+                          <div id="results">
                           	<p id="textChange"></p>
-						<div class="row" ng-init="fetch_all_product_sub_category()" >
+						<div class="row" ng-init="fetch_all_product_category('<?php echo $_GET['id'];?>')" >
 						
-								<div class="col-6 col-sm-3" dir-paginate="allSubProduct in allSubProducts | filter : all |  itemsPerPage :catfilter">
+								<div class="col-6 col-sm-3" dir-paginate="product in allCatProducts | filter : all |  itemsPerPage :catfilter">
 								<div class="product-default inner-quickview inner-icon">
 									<figure>
-										<a href="#" class="pbtn" data-id1="{{allSubProduct.product_code}}">
-												<div ng-init="img = allSubProduct.image.split(',')"> <img   style="width: 200px!important; height: 150px!important;" src="{{dirlocation}}public/assets/images/uploads/products/{{ img[0] }}">
+										<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">
+												<div ng-init="img = product.image.split(',')"> <img   style="width: 200px!important; height: 150px!important;" src="{{dirlocation}}public/assets/images/uploads/products/{{ img[0] }}">
 										</div>
 										</a>
 										<!--
@@ -65,17 +64,15 @@
 									<div class="product-details">
 										<div class="category-wrap">
 											<div class="category-list">
-												<a href="" class="product-category">{{allSubProduct.productSubCategory}}</a>
+												<a href="" class="product-category">{{product.productSubCategory}}</a>
 											</div>
-										
 										</div>
 										<h2 class="product-title">
-											<a href="">{{allSubProduct.name}}</a>
+											<a href="">{{product.name}}</a>
 										</h2>
 										
-										
 										<div class="price-box">
-											<span class="product-price">{{allSubProduct.price | currency}} </span>
+											<span class="product-price">{{product.price | currency:'NGN '}} </span>
 										</div><!-- End .price-box -->
 									</div><!-- End .product-details -->
 								</div>

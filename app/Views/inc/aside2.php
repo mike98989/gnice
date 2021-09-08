@@ -2,19 +2,17 @@
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 	<aside class="sidebar-shop col-lg-3 mobile-sidebar">
 						<div class="sidebar-wrapper">
-							<div class="widget"  ng-init=" fetch_single_category()">
+							<div class="widget">
 								<h3 class="widget-title"  >
-									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Category</a>
+									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2"><?php echo $_GET['cat'];?></a>
 								</h3>
 
 								<div class="collapse show" id="widget-body-2"  >
 									<div class="widget-body">
-										<h5>
-									{{ singleCat.title }}
-								</h5>
-										<ul class="cat-list" ng-init="fetch_all_sub_category()">
+										
+										<ul class="cat-list" ng-init="fetch_all_sub_category_from_parent('<?php echo $_GET['id'];?>')">
 											<li ng-repeat="allSub in allSubs">
-											 <a href="#" class="cbtn" data-id4="{{allSub.sub_id}}"  data-id5="{{allSub.parent_id}}" >{{allSub.title}}</a></li>
+											 <a href="{{dirlocation}}category/sub_category?id={{allSub.sub_id}}&cat=<?php echo $_GET['cat'];?>&sub={{allSub.title}}" >{{allSub.title}}</a></li>
 											
 										</ul>
 									</div><!-- End .widget-body -->

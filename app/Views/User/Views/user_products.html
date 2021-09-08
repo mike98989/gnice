@@ -1,56 +1,53 @@
-<div class="d-flex align-items-end flex-wrap">
-  <div class="mr-md-3 mr-xl-5">
-    <h3>MY PRODUCTS</h3>
-    <p class="mb-md-0">Your analytics dashboard template.</p>
-  </div>
+<div class="main-content container-fluid">
+  <section id="groups" ng-init="fetch_all_product_of_seller()">
+    <div class="row match-height">
+      <div class="col-12 mt-3 mb-1">
+        <h4 class="section-title text-uppercase">My Products</h4>
+        <p class="text-subtitle text-muted">A good dashboard to display your statistics</p>
+      </div>
+    </div>
+    <div style="text-align: center;" class="loader">
+      <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="float:none;margin:0 auto;width:80px">
+    </div>
+    <div class="row" ng-if="products.length==0">
+      <div class="mt-5" style="text-align: center;">
+        <p>You have not uploaded any ads yet</p>
+        <a href="{{dirlocation}}dashboard/add_product" class="btn btn-primary btn-rounded">Add Product</a>
+      </div>
+    </div>
 
-</div>
+    <div class="row" ng-if="products.length!=0">
+      <div class="col-xl-4 col-md-6 col-sm-12" ng-repeat="sellerProduct in products">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <h4 class="card-title">{{ sellerProduct.name | limitTo: 50 }}{{sellerProduct.name.length > 50 ? '...' :
+                ''}}</h4>
+              <p class="card-text">
+                <span class="text-secondary" style="font-size: 13px; margin-top:-20px;"> {{sellerProduct.price |
+                  currency:'NGN '}} <br /><span
+                    style="font-size: 10px; color:#ccc">{{sellerProduct.date_added}}</span></span>
+              </p>
+            </div>
+            <div style="height:150px;overflow:hidden">
+              <img class="img-fluid" ng-init="img = sellerProduct.image.split(',')"
+                src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+            </div>
+          </div>
+          <div class="card-footer  d-flex justify-content-between">
+            <span>See Details</span>
+            <button class="btn btn-danger btn-sm" ng-click="delete_product(sellerProduct,$index)"><i
+                class="fa fa-times"></i></button>
+            <button class="btn btn-info btn-sm"
+              ng-click="localStorage_save('productDetails',sellerProduct,'edit_product')"><i
+                class="fa fa-edit"></i></button>
+            <button class="btn btn-warning btn-sm"><i class="fa fa-times"></i></button>
+          </div>
 
-<div ng-init="fetch_all_product_of_seller()">
-  <div style="text-align: center;" class="loader">
-    <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="float:none;margin:0 auto;width:80px">
-  </div>
-  <div class="row">
-    <div class="col-md-3" ng-repeat="sellerProduct in products">
-      <div class=""
-        style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);margin-bottom:15px;border-radius:5px;overflow:hidden">
-        <div style="height:150px;overflow:hidden">
-          <img ng-init="img = sellerProduct.image.split(',')" style="width: 100%"
-            src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
-        </div>
-        <div style="padding:7px 10px">
-          <p style="font-size: 18px;">
-            {{ sellerProduct.name | limitTo: 50 }}{{sellerProduct.name.length > 50 ? '...' : ''}}
-            <br>
-            <span class="text-secondary" style="font-size: 13px; margin-top:-20px;"> {{sellerProduct.price |
-              currency:'NGN '}} <br /><span
-                style="font-size: 10px; color:#ccc">{{sellerProduct.date_added}}</span></span>
-          </p>
-
-          <a href="#" ng-click="delete_product(sellerProduct,$index)">Delete</a>
-          <a href="#" ng-click="localStorage_save('productDetails',sellerProduct,'edit_product')"
-            class="btn btn-outline-secondary btn-sm">Edit</a>
-          <a href="#" class="btn btn-outline-primary btn-sm">Disable</a>
         </div>
       </div>
     </div>
 
+  </section>
 
-  </div>
-  <div ng-if="0 == status" class="mt-5">
-    <p><i style="font-size: 200px" class="mdi mdi-briefcase-upload"></i></p>
-    <p>You have not uploaded any ads yet</p>
-    <a href="addproduct" class="btn btn-primary btn-rounded btn-fw">Add Product</a>
-  </div>
-</div>
-</div>
-</div>
-
-
-</div>
-<div ng-if="0 == status" class="mt-5">
-  <p><i style="font-size: 200px" class="mdi mdi-briefcase-upload"></i></p>
-  <p>You have not uploaded any ads yet</p>
-  <a href="addproduct" class="btn btn-primary btn-rounded btn-fw">Add Product</a>
-</div>
 </div>

@@ -100,6 +100,13 @@ module.controller("loginController", [
     };
 
     $scope.user_login = function () {
+      redirectUrl = "dashboard/home";
+      const params = new URLSearchParams(window.location.search);
+      //alert(JSON.stringify(params)  );
+      ///return;
+      if (params.has("redirectTo")) {
+        redirectUrl = params.get("redirectTo");
+      }
       $(".loader").show();
       $(".result").hide();
       var username = $("#username").val();
@@ -138,7 +145,7 @@ module.controller("loginController", [
 
             $localStorage["user_data"] = msg.data;
             $localStorage["user_token"] = msg.token;
-            window.location.href = datagrab.completeUrlLocation + "dashboard";
+            window.location.href = datagrab.completeUrlLocation + redirectUrl;
           } else {
             $(".loader").hide();
             $(".result").html(msg.msg);
@@ -175,7 +182,7 @@ module.controller("loginController", [
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          // alert(answer);
+          //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

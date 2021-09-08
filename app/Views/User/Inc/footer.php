@@ -1,42 +1,29 @@
- <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-        <!--
-        <footer class="footer">
-          <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2021</span>
-           
-          </div>
-        </footer>
-    -->
-        <!-- partial -->
-      </div>
-      <!-- main-panel ends -->
+<footer>
+    <div class="footer clearfix mb-0 text-muted">
+        <div class="float-start">
+            <p>2020 &copy; Voler</p>
+        </div>
+        <div class="float-end">
+            <p>Crafted with <span class='text-danger'><i data-feather="heart"></i></span> by <a
+                    href="http://ahmadsaugi.com">Ahmad Saugi</a></p>
+        </div>
     </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  </div>
-  <!-- container-scroller -->
-<!-- container-scroller -->
-<!-- plugins:js -->
-<script src="<?php echo APP_URL; ?>/public/admin-assets/vendors/js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- Plugin js for this page -->
-<script src="<?php echo APP_URL; ?>/public/admin-assets/vendors/chart.js/Chart.min.js"></script>
-<!-- End plugin js for this page -->
-<!-- inject:js -->
-<script src="<?php echo APP_URL; ?>/public/admin-assets/js/off-canvas.js"></script>
-<script src="<?php echo APP_URL; ?>/public/admin-assets/js/hoverable-collapse.js"></script>
-<script src="<?php echo APP_URL; ?>/public/admin-assets/js/misc.js"></script>
-<!-- endinject -->
-<!-- Custom js for this page -->
-<script src="<?php echo APP_URL; ?>/public/admin-assets/js/dashboard.js"></script>
-<script src="<?php echo APP_URL; ?>/public/admin-assets/js/todolist.js"></script>
-<!-- End custom js for this page -->
+</footer>
+</div>
+
+
+<script src="<?php echo APP_URL;?>/public/assets/js/jquery.min.js"></script>
+<script src="<?php echo APP_URL;?>/public/assets/js/jquery-ui.min.js"></script>
+   
+<script src="<?php echo APP_URL; ?>/public/user-assets/js/feather-icons/feather.min.js"></script>
+<script src="<?php echo APP_URL; ?>/public/user-assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="<?php echo APP_URL; ?>/public/user-assets/js/app.js"></script>
+
+
+<script src="<?php echo APP_URL; ?>/public/user-assets/js/main.js"></script>
 
  <!-- Plugins JS File -->
-    <script src="<?php echo APP_URL;?>/public/assets/js/jquery.min.js"></script>
-     <script src="<?php echo APP_URL;?>/public/assets/js/jquery-ui.min.js"></script>
-   
+
    <!-- <script src="<?php echo APP_URL;?>/public/assets/custom-js/signup.js"></script> -->
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular.js"></script>
     <script src="<?php echo APP_URL; ?>/public/assets/js/angular/angular-route.js"></script>
@@ -68,6 +55,7 @@
 <script src="<?php echo APP_URL.'/public/assets/js/controllers/web/packageController.js';?>"></script>
 <script src="<?php echo APP_URL.'/public/assets/js/controllers/webapp.js';?>"></script>
 <script src="<?php echo APP_URL.'/public/assets/js/controllers/directives.js';?>"></script>
+
 </body>
 
 </html>
