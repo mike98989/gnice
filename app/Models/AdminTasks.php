@@ -71,6 +71,51 @@ class AdminTasks extends Model
         return $rows;
     }
 
+
+    public function homeStatistics()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("SELECT SUM(transactions.amount) AS total_amount, COUNT(transactions.amount) AS total_records FROM transactions WHERE transactions.trans_status = 'success'");
+                if ($this->db->execute()) {
+                    $row['transactions'] = $this->db->resultSet();
+                }
+
+                $this->db->query("SELECT COUNT(DISTINCT products.product_code) AS total_ads, COUNT(DISTINCT users.seller_id) AS total_sellers FROM products INNER JOIN users WHERE users.seller_id = products.seller_id ");
+                if ($this->db->resultSet()) {
+                    $row['ads'] = $this->db->resultSet();
+                }
+                $this->db->query("SELECT COUNT(DISTINCT users.seller_id) AS total_sellers, COUNT(DISTINCT users.email) AS total_users FROM users WHERE users.account_type > 0");
+                if ($this->db->resultSet()) {
+                    $row['sellers'] = $this->db->resultSet();
+                }
+                $this->db->query("SELECT COUNT(DISTINCT users.email) AS total_sellers FROM users WHERE users.account_type > 0");
+                if ($this->db->resultSet()) {
+                    $row['users'] = $this->db->resultSet();
+                }
+                if ($this->db->resultSet()) {
+                    $result['message'] = 'fetch successful';
+                    $result['data'] = $row;
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'fetch failed';
+                    $result['data'] = [];
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid session';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid header';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
     public function getAllProducts()
     {
         $header = apache_request_headers();

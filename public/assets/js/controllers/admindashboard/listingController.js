@@ -47,6 +47,8 @@ module.controller("listingController", [
       $scope.$apply();
     }, 0);
 
+    //! Starts
+
     $scope.get_all_products = function () {
       $(".loader").show();
       $(".result").hide();

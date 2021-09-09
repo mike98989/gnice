@@ -21,23 +21,104 @@ module.controller("homeController", [
   ) {
     $scope.fieldcounter = 1;
     //$('.loader').show();
+    var url = window.location.href;
+    if (url.indexOf("#") > 1) {
+      var page = window.location.href.split("#");
+      var pager = page[1].split("=").pop();
+
+      if (
+        pager == "" ||
+        pager == "undefined" ||
+        pager == null ||
+        pager == "0"
+      ) {
+        pager = "1";
+      }
+    } else {
+      pager = "1";
+    }
 
     $scope.dirlocation = datagrab.completeUrlLocation;
-    $scope.currentPage = 1;
-    $scope.pageSize = 30;
-    $(".result").hide();
+    $scope.currentPage = pager;
+    $scope.pageSize = 10;
+    $scope.admin_data = $localStorage.user_data;
+    $scope.admin_token = $localStorage.user_token;
+    setTimeout(function () {
+      $scope.$apply();
+    }, 0);
 
-    $scope.add = true;
+    $scope.home_stats = function () {
+      $(".loader").show(5000);
+      $(".result").hide();
+      alert("home");
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/home_statistics",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: {
+          "gnice-authenticate": $scope.admin_token,
+        },
+        processData: false,
+        success: function (result) {
+          console.log(result);
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
 
-    $scope.viewed = function () {
-      $scope.add = false;
-      $scope.view = true;
+          $(".loader").hide();
+          console.table(JSON.stringify(msg));
+          if (msg.status == "1") {
+            $scope.statistics = msg.data;
+            $scope.notification = msg.msg;
+            $scope.status == msg.status;
+            $scope.$apply();
+            $(".result").show();
+          } else {
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
     };
-    $scope.added = function () {
-      $scope.add = true;
-      $scope.view = false;
-    };
 
+    //! Starts
+
+    $scope.get_all_products = function () {
+      $(".loader").show();
+      $(".result").hide();
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/get_all_products",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: {
+          "gnice-authenticate":
+            $scope.admin_token + ":email:" + $scope.admin_data.email,
+        },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+
+          $(".loader").hide();
+          console.table(JSON.stringify(msg));
+          if (msg.status == "1") {
+            $scope.all_listings = msg.data;
+            $scope.notification = msg.msg;
+            $scope.status == msg.status;
+            $scope.$apply();
+            $(".result").show();
+          } else {
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
+    };
     $("body").delegate(".cbtn", "click", function (event) {
       event.preventDefault();
       var cid1 = $(this).attr("data-cid1");
@@ -434,5 +515,6 @@ module.controller("homeController", [
         });
       });
     };
+    //* Ends
   },
 ]);
