@@ -49,7 +49,7 @@ class AdminAuth extends Controller
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-
+            // die;
             $result = $this->model('AdminTasks')->changeAdminPassword($_POST);
             header('Content-Type: application/json');
             print_r(json_encode($result));

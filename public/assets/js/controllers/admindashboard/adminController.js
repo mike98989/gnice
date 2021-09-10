@@ -227,47 +227,47 @@ module.controller("adminController", [
         },
       });
     };
-    $scope.change_admin_password = function () {
-      var formData = new FormData($("#change_password")[0]);
-      $.ajax({
-        url: $scope.dirlocation + "adminauth/change_admin_password",
-        type: "POST",
-        data: formData,
-        async: true,
-        cache: false,
-        contentType: false,
-        headers: { "gnice-authenticate": $scope.admin_token },
-        processData: false,
-        success: function (answer) {
-          console.log(answer);
-          // return;
-          var response = JSON.stringify(answer);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(parsed);
-          $(".loader").hide();
-          if (msg.status == "1") {
-            $(".result").addClass("alert-success");
-            $(".result").html(msg.message);
-            $scope.$apply();
-            $(".result").show(500);
-            setTimeout(() => {
-              $(".result").hide("500");
-            }, 3000);
-            $scope.toggle_password_form();
-            $("#create_new_admin_form")[0].reset();
-          } else {
-            $(".loader").hide();
-            $(".result").addClass("alert-danger");
-            $(".result").html(msg.message);
-            $scope.$apply();
-            $(".result").show(500);
-            setTimeout(() => {
-              $(".result").hide("500");
-            }, 3000);
-          }
-        },
-      });
-    };
+    // $scope.change_admin_password = function () {
+    //   var formData = new FormData($("#change_password")[0]);
+    //   $.ajax({
+    //     url: $scope.dirlocation + "adminauth/change_admin_password",
+    //     type: "POST",
+    //     data: formData,
+    //     async: true,
+    //     cache: false,
+    //     contentType: false,
+    //     headers: { "gnice-authenticate": $scope.admin_token },
+    //     processData: false,
+    //     success: function (answer) {
+    //       console.log(answer);
+    //       // return;
+    //       var response = JSON.stringify(answer);
+    //       var parsed = JSON.parse(response);
+    //       var msg = angular.fromJson(parsed);
+    //       $(".loader").hide();
+    //       if (msg.status == "1") {
+    //         $(".result").addClass("alert-success");
+    //         $(".result").html(msg.message);
+    //         $scope.$apply();
+    //         $(".result").show(500);
+    //         setTimeout(() => {
+    //           $(".result").hide("500");
+    //         }, 3000);
+    //         $scope.toggle_password_form();
+    //         $("#create_new_admin_form")[0].reset();
+    //       } else {
+    //         $(".loader").hide();
+    //         $(".result").addClass("alert-danger");
+    //         $(".result").html(msg.message);
+    //         $scope.$apply();
+    //         $(".result").show(500);
+    //         setTimeout(() => {
+    //           $(".result").hide("500");
+    //         }, 3000);
+    //       }
+    //     },
+    //   });
+    // };
     $scope.clear_storage = function () {
       $localStorage["fullname_checked"] = false;
       window.location.reload();

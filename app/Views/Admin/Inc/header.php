@@ -83,6 +83,7 @@
                                     <img src="{{dirlocation}}public/assets/images/uploads/profile/{{info.image}}"
                                         class="card-img-top w-25 " alt="{{ info.fullname }}" loading="lazy">
                                 </figure>
+                                <p class="result" style="display:none;"></p>
                                 <div class="password_form_inverse">
                                     <div class=" px-3 d-flex flex-row justify-content-start">
                                         <div class="pr-5">
@@ -158,7 +159,7 @@
                                                 id="confirm_new_password" required>
                                         </div>
                                         <button class="btn btn-sm btn-info m-1 " type="submit"><i
-                                                class="mdi mdi-update mr-1"></i>Reset
+                                                class="mdi mdi-update mr-2"></i>Reset
                                             Password</button>
                                         <a class="btn btn-sm btn-light m-1 " ng-click="toggle_password_form()">
                                             <i class="mdi mdi-cancel mr-1"></i>Cancel</a>

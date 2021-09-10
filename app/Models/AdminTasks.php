@@ -97,6 +97,22 @@ class AdminTasks extends Model
                 if ($this->db->resultSet()) {
                     $row['users'] = $this->db->resultSet();
                 }
+                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
+                if ($this->db->resultSet()) {
+                    $row['package_one'] = $this->db->resultSet();
+                }
+                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 2 ORDER BY P.date_added DESC");
+                if ($this->db->resultSet()) {
+                    $row['package_two'] = $this->db->resultSet();
+                }
+                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 3 ORDER BY P.date_added DESC");
+                if ($this->db->resultSet()) {
+                    $row['package_three'] = $this->db->resultSet();
+                }
+                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
+                if ($this->db->resultSet()) {
+                    $row['package_four'] = $this->db->resultSet();
+                }
                 if ($this->db->resultSet()) {
                     $result['message'] = 'fetch successful';
                     $result['data'] = $row;
