@@ -1087,4 +1087,54 @@ class AdminTasks extends Model
         }
         return $result;
     }
+
+    public function fetchAllBanner()
+    {
+
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("SELECT * FROM banners");
+                $row = $this->db->resultSet();
+                if ($this->db->rowCount() > 0) {
+                    $result['rowCount'] = $this->db->rowCount();
+                    $result['data'] = $row;
+                    $result['message'] = 'all banners fetched successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'all banners fetching failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid header';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
+    public function AddBanner()
+    {
+        $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $this->db->query('INSERT INTO banners (title) VALUES (:title)');
+        $this->db->bind(':title', $data['title']);
+        if ($this->db->execute()) {
+            $result['rowCount'] = $this->db->rowCount();
+            $result['message'] = 'banner added';
+            $result['status'] = 1;
+        } else {
+            $result['message'] = 'banner failed';
+            $result['status'] = 0;
+            // return false;
+        }
+        return $result;
+    }
 }

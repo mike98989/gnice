@@ -10,13 +10,13 @@
 
 
   <aside class="d-flex justify-content-end">
-    <p class="alert alert-info result text-center" style="display: non">Lorem ipsum dolor sit, amet consectetur
+    <p class="alert alert-info result text-center" style="display: none">Lorem ipsum dolor sit, amet consectetur
       adipisicing.</p>
   </aside>
   <div class="loader text-center">
     <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
   </div>
-  <section class="row" ng-init="get_all_admins()">
+  <section class="row">
 
     <article class="col-12 grid-margin">
       <div class="card">
@@ -29,7 +29,7 @@
                   <i class="input-group-text border-0 mdi mdi-account-search"></i>
                 </div>
                 <input type="text" class="form-control bg-transparent border-0"
-                  placeholder="search for an admin account " ng-model="adminSearch">
+                  placeholder="search for an admin account " ng-model="bannerSearch">
               </div>
             </form>
           </div>
@@ -46,13 +46,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr dir-paginate="admin in all_admins | filter:adminSearch | itemsPerPage: pageSize"
+                <tr dir-paginate="banner in all_banners | filter:bannerSearch | itemsPerPage: pageSize"
                   current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{admin.image}}" class="mr-2" />
+                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{banner.image}}" class="mr-2" />
                     <span>
-                      {{admin.fullname}}
+                      {{banner.title}}
                     </span>
 
                     <span ng-switch="admin.activated">

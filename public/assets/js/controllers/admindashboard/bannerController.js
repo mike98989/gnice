@@ -55,8 +55,35 @@ module.controller("bannerController", [
     //* Start
 
     $scope.fetch_all_banners = function () {
-      alert("bannerController");
-      console.log("banner");
+      $(".loader").show();
+      $(".result").hide();
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/fetch_all_banners",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: {
+          "gnice-authenticate": $scope.admin_token,
+        },
+        processData: false,
+        success: function (result) {
+          console.log(result);
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.all_banners = msg.data;
+            $scope.$apply();
+            $(".result").html(msg.message);
+            $(".result").show();
+          } else {
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
     };
 
     //* End

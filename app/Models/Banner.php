@@ -4,10 +4,7 @@ class Banner extends Model
 {
     public function getAllBanner()
     {
-        $this->db->query("SELECT title, status
-                            FROM banners
-                            ORDER BY banners.title DESC
-                            ");
+        $this->db->query("SELECT * FROM banners ORDER BY banners.title DESC");
 
         if ($this->db->resultSet()) {
             $result['rowCount'] = $this->db->rowCount();

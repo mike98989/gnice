@@ -22,6 +22,18 @@ class AdminApi extends Controller
             exit;
         }
     }
+    public function fetch_all_banners()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->fetchAllBanner();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function get_all_users()
     {
         $header = apache_request_headers();
