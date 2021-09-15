@@ -107,7 +107,25 @@ module.controller("listingController", [
           if (msg.status == "1") {
             listing.status = code;
             $scope.$apply();
-            $(".result").show();
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
@@ -115,7 +133,6 @@ module.controller("listingController", [
 
     $scope.append_modal_value = function (value) {
       $scope.listingValue = value;
-      // alert(JSON.stringify($scope.listingValue));
     };
   },
 ]);

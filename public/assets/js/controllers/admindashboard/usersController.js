@@ -1,5 +1,5 @@
 ///////////// THIS IS THE USE CONTROLLER///////
-///// THIS CONTROLS EVERY ACTIVITY ON THE USE PAGE
+///// THIS CONTROLS EVERY ACTIVITY ON THE USER PAGE
 /////////////////////////
 
 module.controller("usersController", [
@@ -73,8 +73,14 @@ module.controller("usersController", [
             $scope.$apply();
             $(".result").show();
           } else {
+            $(".loader").hide();
             $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
             $(".result").show();
+            setTimeout(() => {
+              $(".result").removeClass("alert alert-info");
+              $(".result").hide("500");
+            }, 3000);
           }
         },
       });
@@ -99,43 +105,52 @@ module.controller("usersController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader2_" + user.id).hide();
+          $(".loader" + user.id).hide();
           if (msg.status == "1") {
             user.status = code;
             $scope.$apply();
-            $(".result").show();
+
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
     };
-    //! TODO: save and retrieved data from localStorage
+
     $scope.localStorage_get = function (key) {
       $scope[key] = $localStorage[key];
-      // alert($localStorage[key]);
-      // $scope.$apply();
     };
 
     $scope.localStorage_save = function (key, value, url) {
       $localStorage[key] = value;
-      // $scope[key] = $localStorage[key];
-      // alert(JSON.stringify(value));
-      // return;
       if (url != "") {
         $scope.go_to_url(url);
       }
     };
     $scope.go_to_url = function (url) {
-      //alert($scope.dirlocation+'admindashboard/'+url);
       window.location.href = $scope.dirlocation + "admindashboard/" + url;
     };
-
-    //! important functions above
 
     //* more data into modal window
     $scope.append_modal_info = function (value) {
       $scope.info = value;
-      // console.log(JSON.stringify($scope.info));
-      //$scope.get_all_users();
     };
 
     //! get all listings of a seller

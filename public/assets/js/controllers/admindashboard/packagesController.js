@@ -171,27 +171,30 @@ module.controller("packagesController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
+
           if (msg.status == "1") {
+            $scope.all_packages[index] = msg.data;
             $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").addClass("alert-success");
-            $(".result").show();
-            // console.log($scope.all_packages[index]);
-            $scope.all_packages[index] = msg.data;
-            // $scope.$apply();
-            // $scope.get_all_account_packages();
-            // $(".result").hide();
-            setTimeout(() => {
-              // $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
 
+            setTimeout(() => {
               $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
             }, 3000);
+
             $("#edit_package_" + id)[0].reset();
           } else {
             $(".loader").hide();
-            $(".result").addClass("alert-danger");
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
@@ -203,9 +206,6 @@ module.controller("packagesController", [
 
       formData.append("status", code);
       formData.append("id", info.package_id);
-
-      console.log("packagesController");
-      console.table(code, info);
       // return;
       $.ajax({
         url: $scope.dirlocation + "adminapi/toggle_package_status",
@@ -224,11 +224,25 @@ module.controller("packagesController", [
           if (msg.status == "1") {
             info.status = code;
             $scope.$apply();
+            $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           } else {
+            $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
@@ -257,11 +271,25 @@ module.controller("packagesController", [
           if (msg.status == "1") {
             info.status = code;
             $scope.$apply();
+            $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           } else {
+            $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });

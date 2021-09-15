@@ -1121,6 +1121,53 @@ class AdminTasks extends Model
         return $result;
     }
 
+    public function createNewBanner()
+    {
+
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            // $image_url = image();
+            // $image = $image_url['image_name'];
+            $image = resizer(1, 700, 350);
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+
+
+
+            if ($this->verifyToken($token) == true) {
+
+
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                print_r($image);
+                die();
+
+                $this->db->query("SELECT * FROM banners");
+                $row = $this->db->resultSet();
+                if ($this->db->rowCount() > 0) {
+                    $result['rowCount'] = $this->db->rowCount();
+                    $result['data'] = $row;
+                    $result['message'] = 'all banners fetched successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'all banners fetching failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['message'] = 'invalid token';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['message'] = 'invalid header';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
+
+
     public function AddBanner()
     {
         $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

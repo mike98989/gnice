@@ -8,8 +8,7 @@
         </h3>
     </div>
     <aside class="d-flex justify-content-end">
-        <p class="alert alert-info result text-center" style="display: none">Lorem ipsum dolor sit, amet consectetur
-            adipisicing.</p>
+        <p class="result text-center" style="display: none"></p>
     </aside>
     <div class="loader text-center">
         <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
@@ -106,7 +105,7 @@
                                             </span>
                                         </div>
                                         <article style="display: none;" class="form_{{ admin.id }} w-100">
-                                            <form ng-submit="update_admin_privilege(admin.id, $index)"
+                                            <form ng-submit="update_admin_privilege(admin, $index)"
                                                 id=" update_admin_privilege_form_{{ admin.id}}">
                                                 <input type="text" hidden value="{{ admin.id }}" name="admin_id">
                                                 <div class=" input-group" style="min-width:200px">
@@ -382,6 +381,9 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-title p-2 mb-4">Create new Admin Account</h4>
+                    <aside class="d-flex justify-content-end">
+                        <p class="result_create text-center" style="display: none"></p>
+                    </aside>
                     <form ng-submit="create_new_admin()" id="create_new_admin_form">
                         <div class="form-group">
                             <label>Name:</label>

@@ -7,8 +7,9 @@
       Account Types
     </h3>
   </div>
-  <p class="alert text-center w-50 mx-auto mb-5 result " style="display: none">
-  </p>
+  <aside class="d-flex justify-content-end">
+    <p class="result text-center" style="display: none"></p>
+  </aside>
   <div class="row" ng-init="get_all_account_packages()">
     <div class="col-sm-12 col-md-6 grid-margin" ng-repeat="package in all_packages">
       <div class="card">

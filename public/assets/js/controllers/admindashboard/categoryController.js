@@ -96,8 +96,8 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          alert(JSON.stringify(answer));
-          console.log(answer);
+          // alert(JSON.stringify(answer));
+          // console.log(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -138,6 +138,7 @@ module.controller("categoryController", [
           $(".loader").hide();
           if (msg.status == "1") {
             $scope.get_all_cat_and_sub_cat();
+            $scope.$apply();
             $(".loader").hide();
             $(".result").html(msg.message);
             alert(msg.message);
@@ -172,26 +173,28 @@ module.controller("categoryController", [
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
           if (msg.status == "1") {
+            $scope.all_cat_and_sub[index] = msg.data;
+            $scope.$apply();
             $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").addClass("alert-success");
-            $(".result").show();
-            // console.log($scope.all_packages[index]);
-            $scope.all_cat_and_sub[index] = msg.data;
-            // $scope.$apply();
-            // $scope.get_all_account_packages();
-            // $(".result").hide();
-            setTimeout(() => {
-              // $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
 
+            setTimeout(() => {
               $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
             }, 3000);
             $("#update_sub_category_" + id)[0].reset();
           } else {
             $(".loader").hide();
-            $(".result").addClass("alert-danger");
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
@@ -210,7 +213,7 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          alert(JSON.stringify(answer));
+          // alert(JSON.stringify(answer));
           // console.log(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
@@ -218,15 +221,27 @@ module.controller("categoryController", [
           $(".loader").hide();
           if (msg.status == "1") {
             $scope.get_all_cat_and_sub_cat();
+            $scope.$apply();
             $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
             $("#addSubCategory")[0].reset();
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
-            //alert(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
@@ -258,8 +273,6 @@ module.controller("categoryController", [
             var msg = angular.fromJson(parsed);
             $(".loader2_" + user.id).hide();
             if (msg.status == "1") {
-              alert(index, code);
-              // all_users[index].status = code;
               user.status = code;
               $scope.$apply();
               $(".result").html(msg.message);
@@ -292,8 +305,25 @@ module.controller("categoryController", [
           if (msg.status == "1") {
             sub.status = code;
             $scope.$apply();
+            $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });

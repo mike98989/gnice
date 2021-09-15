@@ -7,6 +7,9 @@
             Profile | {{ userInfo.fullname | uppercase}} <small class="text-muted">({{ userInfo.seller_id}})</small>
         </h3>
     </div>
+    <aside class="d-flex justify-content-end">
+        <p class="result text-center" style="display: none"></p>
+    </aside>
 
     <div class="row" ng-init="fetch_all_product_of_seller(userInfo.seller_id)">
         <div class="col-12 grid-margin">

@@ -10,8 +10,7 @@
 
 
   <aside class="d-flex justify-content-end">
-    <p class="alert alert-info result text-center" style="display: none">Lorem ipsum dolor sit, amet consectetur
-      adipisicing.</p>
+    <p class="result text-center" style="display: none"></p>
   </aside>
   <div class="loader text-center">
     <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
@@ -54,18 +53,7 @@
                     <span>
                       {{banner.title}}
                     </span>
-
-                    <span ng-switch="admin.activated">
-                      <span ng-switch-when="1">
-                        <i class="mdi mdi-shield text-success"></i>
-                      </span>
-                      <span ng-switch-when="0">
-                        <i class="mdi mdi-shield-outline text-danger"></i>
-                      </span>
-                      <span ng-switch-default>
-                      </span>
-                    </span>
-                    <span ng-switch="admin.status">
+                    <span ng-switch="banner.status">
                       <span ng-switch-when="1">
                         <i class="mdi mdi-lock-open text-success"></i>
                       </span>
@@ -79,66 +67,38 @@
                   </td>
 
                   <td>
-                    <span>
-                      {{admin.email}}
-                      <br>
-                      <small class="text-muted">{{ admin.phone }}</small>
-                    </span>
+                    {{ banner.description }}
                   </td>
                   <td>
 
-                    <div ng-switch="admin.privilege" class="form_inverse_{{ admin.id }}">
+                    <div ng-switch="banner.type">
                       <span ng-switch-when="1">
-                        <i class="mdi mdi-star text-success"></i>
+                        Top
                       </span>
                       <span ng-switch-when="2">
-                        <i class="mdi mdi-star text-success"></i>
-                        <i class="mdi mdi-star text-success"></i>
+                        Main
                       </span>
                       <span ng-switch-when="3">
-                        <i class="mdi mdi-star text-success"></i>
-                        <i class="mdi mdi-star text-success"></i>
-                        <i class="mdi mdi-star text-success"></i>
+                        Side
                       </span>
                       <span ng-switch-default>
                         none
                       </span>
                     </div>
-                    <article style="display: none;" class="form_{{ admin.id }} w-100">
-                      <form ng-submit="update_admin_privilege(admin.id, $index)"
-                        id=" update_admin_privilege_form_{{ admin.id}}">
-                        <input type="text" hidden value="{{ admin.id }}" name="admin_id">
-                        <div class=" input-group" style="min-width:200px">
-                          <select class="form-control form-control-sm" name="privilege" id="privilege_{{ admin.id }}"
-                            required>
-                            <option value="">SELECT PRIVILEGE LEVEL</option>
-                            <option value="1">Basic (single star)</option>
-                            <option value="2">Advanced (double star)</option>
-                            <option value="3">Ultra (triple star)</option>
-                          </select>
-                          <div class="input-group-append">
-                            <button class="btn btn-sm btn-gradient-success" type="submit"
-                              ng-click="toggle_form( admin.id )">
-                              <i class=" mdi mdi-content-save-settings"></i>
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-                    </article>
                   </td>
-                  <td>{{admin.last_login}}</td>
+                  <td>{{banner.status}}</td>
                   <td>
                     <!-- toggle enable account buttons -->
-                    <span ng-switch="admin.status" class="mr-1 form_inverse_{{ admin.id }}" data-toggle="modal"
+                    <span ng-switch="banner.status" class="mr-1 form_inverse_{{ banner.id }}" data-toggle="modal"
                       data-target=".disable-modal" ng-click="append_modal_info(admin)">
                       <span ng-switch-when="1">
                         <button class="badge badge-warning">
-                          <i class="mdi mdi-account-convert mr-1"></i> Disable
+                          <i class="mdi mdi-account-convert mr-1"></i> Deactivate
                         </button>
                       </span>
                       <span ng-switch-when="0">
                         <button class="badge badge-success">
-                          <i class="mdi mdi-account-convert mr-1"></i> Enable
+                          <i class="mdi mdi-account-convert mr-1"></i> Activate
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -152,8 +112,8 @@
                       data-target=".delete-user-modal" ng-click="append_modal_info(admin)">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
                     </button>
-                    <button class="badge badge-info form_inverse_{{ admin.id }}" ng-click="toggle_form( admin.id )">
-                      <i class="mdi mdi-pencil-lock mr-1"></i> Privilege
+                    <button class="badge badge-info form_inverse_{{ admin.id }}" ng-click="toggle_form( banner.id )">
+                      <i class="mdi mdi-pencil-lock mr-1"></i> Edit
                     </button>
                   </td>
                 </tr>
@@ -270,32 +230,38 @@
           <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
         </div>
         <div class="card-body">
-          <h4 class="card-title p-2 mb-4">Create new Admin Account</h4>
-          <form ng-submit="create_new_admin()" id="create_new_admin_form">
-            <div class="form-group">
-              <label>Name:</label>
-              <input type="text" class="form-control " placeholder="admin name" name="name" id="name" required>
+          <h4 class="card-title p-2 mb-4">Create New Banner</h4>
+          <form ng-submit="create_new_banner()" id="create_new_banner">
+
+            <div class="form-group ">
+              <label " for=" banner_type">Banner Type</label>
+              <select class="form-control" name="banner_type" id="banner_type" required>
+                <option value="">SELECT BANNER TYPE</option>
+                <option value="1">Top Banner</option>
+                <option value="2">Main Banner</option>
+                <option value="3">Side Banner</option>
+              </select>
             </div>
             <div class="form-group">
-              <label>Email:</label>
-              <input type="email" class="form-control" placeholder="admin email" name="email" id="email" required>
+              <label for="title">Title:</label>
+              <input type="text" class="form-control " placeholder="banner title" name="title" id="title" required>
             </div>
             <div class="form-group">
-              <label>Tel:</label>
-              <input type="tel" class="form-control" placeholder="admin tel" name="phone">
-            </div>
-            <input type="text" name="image" value="default.png" id="image" hidden>
-            <input type="text" name="activated" value="1" id="activated" hidden>
-            <div class="form-group">
-              <label>Password:</label>
-              <input type="password" class="form-control" placeholder="admin password" id="password" name="password"
-                required>
+              <label for="sub">Sub title:</label>
+              <input type="text" class="form-control " placeholder="banner sub title" name="sub" id="sub" required>
             </div>
             <div class="form-group">
-              <label>Confirm Password:</label>
-              <input type="password" class="form-control" placeholder="confirm password" name="cpassword" id="cpassword"
-                required>
+              <label for="description">Description:</label>
+              <input type="text" class="form-control " placeholder="banner description" name="description"
+                id="description" required>
             </div>
+            <div class="form-group mt-2">
+
+              <label>Image</label>
+              <input type="file" name="image" id="image" multiple class="form-control file-upload-info"
+                placeholder="Upload Image" required>
+            </div>
+
             <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-book-plus mr-2"></i>Submit</button>
           </form>
         </div>
