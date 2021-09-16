@@ -70,23 +70,35 @@
                     {{ banner.description }}
                   </td>
                   <td>
-
                     <div ng-switch="banner.type">
                       <span ng-switch-when="1">
-                        Top
+                        <span class="badge badge-info">TOP</span>
                       </span>
                       <span ng-switch-when="2">
-                        Main
+                        <span class="badge badge-success">MAIN</span>
                       </span>
                       <span ng-switch-when="3">
-                        Side
+                        <span class="badge badge-danger">SIDE</span>
                       </span>
                       <span ng-switch-default>
                         none
                       </span>
                     </div>
                   </td>
-                  <td>{{banner.status}}</td>
+                  <td>
+                    <span ng-switch="banner.status">
+                      <span ng-switch-when="1">
+                        <i class="mdi mdi-lock-open text-success"></i>
+                      </span>
+                      <span ng-switch-when="0">
+                        <i class="mdi mdi mdi-lock text-warning"></i>
+                      </span>
+                      <span ng-switch-default>
+                        none
+                      </span>
+                    </span>
+
+                  </td>
                   <td>
                     <!-- toggle enable account buttons -->
                     <span ng-switch="banner.status" class="mr-1 form_inverse_{{ banner.id }}" data-toggle="modal"
@@ -247,13 +259,15 @@
               <input type="text" class="form-control " placeholder="banner title" name="title" id="title" required>
             </div>
             <div class="form-group">
-              <label for="sub">Sub title:</label>
-              <input type="text" class="form-control " placeholder="banner sub title" name="sub" id="sub" required>
+              <label for="sub_title">Sub title:</label>
+              <input type="text" class="form-control " placeholder="banner sub title" name="sub_title" id="sub_title"
+                required>
             </div>
             <div class="form-group">
               <label for="description">Description:</label>
-              <input type="text" class="form-control " placeholder="banner description" name="description"
-                id="description" required>
+              <textarea type="text" class="form-control " placeholder="banner description" name="description"
+                id="description" required></textarea>
+
             </div>
             <div class="form-group mt-2">
 

@@ -1126,9 +1126,6 @@ class AdminTasks extends Model
 
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            // $image_url = image();
-            // $image = $image_url['image_name'];
-            $image = resizer(1, 700, 350);
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
 
@@ -1139,19 +1136,42 @@ class AdminTasks extends Model
 
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                print_r($image);
-                die();
+                $banner_type = $_POST['banner_type'];
+                $title = $_POST['title'];
+                $description = $_POST['description'];
+                $sub_title = $_POST['sub_title'];
+                $status = 1;
+                $max_resolution = null;
 
-                $this->db->query("SELECT * FROM banners");
-                $row = $this->db->resultSet();
-                if ($this->db->rowCount() > 0) {
-                    $result['rowCount'] = $this->db->rowCount();
-                    $result['data'] = $row;
-                    $result['message'] = 'all banners fetched successfully';
+
+                if (isset($_FILES['image'])) {
+                    if ($banner_type == '1') {
+                        $max_resolution = 200;
+                    } elseif ($banner_type == '2') {
+                        $max_resolution = 700;
+                    } elseif ($banner_type == '3') {
+                        $max_resolution = 400;
+                    }
+                }
+                $image_resizer = resizer(1, $max_resolution, 'banners');
+                $image = $image_resizer['success'];
+
+
+                $this->db->query("INSERT INTO banners (title, description, image, sub_title, type, status) VALUES (:title, :description, :image, :sub_title,:type, :status)");
+                $this->db->bind(':title', $title);
+                $this->db->bind(':description', $description);
+                $this->db->bind(':image', $image);
+                $this->db->bind(':sub_title', $sub_title);
+                $this->db->bind(':type', $banner_type);
+                $this->db->bind(':status', $status);
+
+                if ($this->db->execute()) {
+                    $result['message'] = 'new banner created  successfully';
                     $result['status'] = '1';
                 } else {
                     $result['data'] = [];
-                    $result['message'] = 'all banners fetching failed';
+                    $result['message'] = 'new banner creation failed';
+                    $result['errors'] = $image_resizer['image_error'];
                     $result['status'] = '0';
                 }
             } else {

@@ -341,3 +341,162 @@ function resize_image($file, $max_resolution)
         }
     }
 }
+
+
+function image($target_width, $target_height)
+{
+    if (is_array($_FILES)) {
+        $file = $_FILES['image']['tmp_name'];
+        $source_properties = getimagesize($file);
+        $image_type = $source_properties[2];
+        if ($image_type == IMAGETYPE_JPEG) {
+            $image_resource_id = imagecreatefromjpeg($file);
+            $target_layer = imagecreatetruecolor($target_width, $target_height);
+            imagecopyresampled($target_layer, $image_resource_id, 0, 0, 0, 0, $target_width, $target_height, $target_width, $target_height);
+            imagejpeg($target_layer, $_FILES['image']['name'] . "_thump.jpg");
+
+            return $target_layer;
+        } elseif ($image_type == IMAGETYPE_GIF) {
+            $image_resource_id = imagecreatefromgif($file);
+            $target_layer = fn_resize($image_resource_id, $source_properties[0], $source_properties[1]);
+            imagegif($target_layer, $_FILES['image']['name'] . "_thump.gif");
+        } elseif ($image_type == IMAGETYPE_PNG) {
+            $image_resource_id = imagecreatefrompng($file);
+            $target_layer = fn_resize($image_resource_id, $source_properties[0], $source_properties[1]);
+            imagepng($target_layer, $_FILES['image']['name'] . "_thump.png");
+        }
+    }
+}
+function fn_resize($image_resource_id, $width, $height)
+{
+    $target_width = 700;
+    $target_height = 350;
+    $target_layer = imagecreatetruecolor($target_width, $target_height);
+    imagecopyresampled($target_layer, $image_resource_id, 0, 0, 0, 0, $target_width, $target_height, $width, $height);
+    return $target_layer;
+}
+
+/**
+ *resize image based on user input
+ */
+
+
+
+function resizer($size, $max_resolution, $location)
+{
+    $failed = [];
+
+    if (!empty($_FILES['image']['name'][0])) {
+        $file = $_FILES['image'];
+
+        $sizeLimit = round($size * 1024 * 1024, 4);
+        $fileName = $file['name'];
+        $fileTmp = $file['tmp_name'];
+        $fileSize = $file['size'];
+        $fileError = $file['error'];
+        $image_properties = getimagesize($fileTmp);
+        $image_type = $image_properties[2];
+
+        // print_r($image_properties[2]);
+        // print_r($image_type);
+        // die;
+
+        $fileExtention = explode('.', $fileName);
+        $fileExtention = strtolower(end($fileExtention));
+        if ($fileError === 0) {
+
+            if ($fileSize <= $sizeLimit) {
+
+                $folder = "public/assets/images/uploads/$location/";
+
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+
+                if ($image_type == IMAGETYPE_JPEG) {
+                    $original_image = imagecreatefromjpeg($fileTmp);
+                    // resolutions 
+                    $original_width = imagesx($original_image);
+                    $original_height = imagesy($original_image);
+
+                    //try width first
+                    $ratio = $max_resolution / $original_width;
+                    $new_width = $max_resolution;
+                    $new_height = $original_height * $ratio;
+
+                    //if that didnt work
+                    if ($new_height > $max_resolution) {
+                        $ratio = $max_resolution / $original_height;
+                        $new_height = $max_resolution;
+                        $new_width = $original_width * $ratio;
+                    }
+                    $target_image = imagecreatetruecolor($new_width, $new_height);
+                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height,);
+                    imagejpeg($target_image, $folder . $fileName);
+
+                    $result['success'] = $file['name'];
+
+                    imagedestroy($target_image);
+                } elseif ($image_type == IMAGETYPE_GIF) {
+
+                    $original_image = imagecreatefromgif($fileTmp);
+                    // resolutions 
+                    $original_width = imagesx($original_image);
+                    $original_height = imagesy($original_image);
+
+                    //try width first
+                    $ratio = $max_resolution / $original_width;
+                    $new_width = $max_resolution;
+                    $new_height = $original_height * $ratio;
+
+                    //if that didnt work
+                    if ($new_height > $max_resolution) {
+                        $ratio = $max_resolution / $original_height;
+                        $new_height = $max_resolution;
+                        $new_width = $original_width * $ratio;
+                    }
+                    $target_image = imagecreatetruecolor($new_width, $new_height);
+                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height,);
+                    imagegif($target_image, $folder . $fileName);
+                    imagedestroy($target_image);
+
+                    $result['success'] = $file['name'];
+                } elseif ($image_type == IMAGETYPE_PNG) {
+                    $original_image = imagecreatefrompng($fileTmp);
+                    // resolutions
+                    $original_width = imagesx($original_image);
+                    $original_height = imagesy($original_image);
+
+                    //try width first
+                    $ratio = $max_resolution / $original_width;
+                    $new_width = $max_resolution;
+                    $new_height = $original_height * $ratio;
+
+                    //if that didnt work
+                    if ($new_height > $max_resolution) {
+                        $ratio = $max_resolution / $original_height;
+                        $new_height = $max_resolution;
+                        $new_width = $original_width * $ratio;
+                    }
+                    $target_image = imagecreatetruecolor($new_width, $new_height);
+                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height,);
+                    imagepng($target_image, $folder . $fileName);
+                    imagedestroy($target_image);
+
+                    $result['success'] = $file['name'];
+                } else {
+                    $failed = "{$fileName} image type not support";
+                }
+            } else {
+                $failed = "{$fileName} exceeds {$size}mb";
+            }
+        } else {
+            $failed = "{$fileName} errored with code {$fileError}";
+        }
+    } else {
+        $failed = " image was not found";
+    }
+    $result['image_error'] = implode(',', $failed);
+
+    return $result;
+}

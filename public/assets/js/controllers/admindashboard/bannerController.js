@@ -98,7 +98,6 @@ module.controller("bannerController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          alert(JSON.stringify(answer));
           console.log(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
@@ -106,7 +105,6 @@ module.controller("bannerController", [
           $(".loader").hide();
           if (msg.status == "1") {
             alert(msg);
-            $scope.get_all_cat_and_sub_cat();
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").show();
