@@ -1,4 +1,4 @@
-<main class="content-wrapper" ng-init="fetch_all_banners()">
+<main class="content-wrapper" ng-init="fetch_all_banners()" ng-controller="usersController">
 
   <div class="page-header">
     <h3 class="page-title">
@@ -49,7 +49,7 @@
                   current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
-                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{banner.image}}" class="mr-2" />
+                    <img src="{{dirlocation}}/public/assets/images/uploads/banners/{{banner.image}}" class="mr-2" />
                     <span>
                       {{banner.title}}
                     </span>
@@ -67,7 +67,8 @@
                   </td>
 
                   <td>
-                    {{ banner.description }}
+
+                    {{ banner.description | limitTo : 25 }}{{ banner.description.length > 25 ? "..." : '' }}
                   </td>
                   <td>
                     <div ng-switch="banner.type">
@@ -88,10 +89,10 @@
                   <td>
                     <span ng-switch="banner.status">
                       <span ng-switch-when="1">
-                        <i class="mdi mdi-lock-open text-success"></i>
+                        <i class="mdi mdi-eye text-success"></i>
                       </span>
                       <span ng-switch-when="0">
-                        <i class="mdi mdi mdi-lock text-warning"></i>
+                        <i class="mdi mdi-eye-off text-warning"></i>
                       </span>
                       <span ng-switch-default>
                         none
@@ -101,16 +102,16 @@
                   </td>
                   <td>
                     <!-- toggle enable account buttons -->
-                    <span ng-switch="banner.status" class="mr-1 form_inverse_{{ banner.id }}" data-toggle="modal"
-                      data-target=".disable-modal" ng-click="append_modal_info(admin)">
+                    <span ng-switch="banner.status" class="mr-1 " data-toggle="modal"
+                      data-target=".disable-banner-modal" ng-click="append_modal_info(banner)">
                       <span ng-switch-when="1">
                         <button class="badge badge-warning">
-                          <i class="mdi mdi-account-convert mr-1"></i> Deactivate
+                          <i class="mdi mdi-account-convert mr-1"></i> Disable
                         </button>
                       </span>
                       <span ng-switch-when="0">
                         <button class="badge badge-success">
-                          <i class="mdi mdi-account-convert mr-1"></i> Activate
+                          <i class="mdi mdi-account-convert mr-1"></i> Enable
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -118,20 +119,20 @@
                       </span>
                     </span>
 
-
                     <!-- delete user account control -->
-                    <button class="badge badge-danger form_inverse_{{ admin.id }}" data-toggle="modal"
-                      data-target=".delete-user-modal" ng-click="append_modal_info(admin)">
+                    <button class="badge badge-danger  mr-1" data-toggle="modal" data-target=".delete-banner-modal"
+                      ng-click="append_modal_info(banner)">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
                     </button>
-                    <button class="badge badge-info form_inverse_{{ admin.id }}" ng-click="toggle_form( banner.id )">
-                      <i class="mdi mdi-pencil-lock mr-1"></i> Edit
+                    <button class="badge badge-info mr-1" data-toggle="modal" data-target=".edit-modal"
+                      ng-click="append_modal_info(banner)">
+                      <i class="mdi  mdi-pencil-lock mr-1"></i> Edit
                     </button>
                   </td>
                 </tr>
               </tbody>
-              <!-- disable user modal -->
-              <div class="modal fade disable-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+              <!-- disable banner modal -->
+              <div class="modal fade disable-banner-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
@@ -157,7 +158,7 @@
                             </span>
                           </span>
                           <span class="text-info">
-                            {{ info.fullname | uppercase}}
+                            {{ info.title| uppercase}}
                           </span>
                         </p>
                       </div>
@@ -166,13 +167,13 @@
                         <!-- call disable_enable() -->
                         <span ng-switch="info.status" class="mr-1">
                           <span ng-switch-when="1">
-                            <button ng-click="enable_or_disable_admin(0,info, $index)" class="btn btn-warning btn-sm"
+                            <button ng-click="enable_or_disable_banner(0,info, $index)" class="btn btn-warning btn-sm"
                               data-dismiss="modal">
                               Disable
                             </button>
                           </span>
                           <span ng-switch-when="0">
-                            <button ng-click="enable_or_disable_admin(1,info,$index)" class="btn btn-success btn-sm"
+                            <button ng-click="enable_or_disable_banner(1,info,$index)" class="btn btn-success btn-sm"
                               data-dismiss="modal">
                               Enable
                             </button>
@@ -189,10 +190,10 @@
                   </div>
                 </div>
               </div>
-              <!-- end disable admin modal -->
+              <!-- end disable banner modal -->
 
-              <!-- delete admin modal -->
-              <div class="modal fade delete-user-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+              <!-- delete banner modal -->
+              <div class="modal fade delete-banner-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
@@ -208,16 +209,15 @@
                         <p class="display-4 text-center">
                           You are about to DETETE
                           <span class="text-danger">
-                            {{ info.fullname | uppercase}}
+                            {{ info.title | uppercase}}
                           </span>
                         </p>
                       </div>
                       <div class="modal-footer">
 
                         <!-- call delete function() -->
-                        <button ng-click="delete_admin_account_and_ads(info.id)" class="btn btn-danger btn-sm"
-                          data-dismiss="modal">
-                          Delete admin
+                        <button ng-click="delete_bannners(info.id)" class="btn btn-danger btn-sm" data-dismiss="modal">
+                          Delete banner
                         </button>
                         <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
                           <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
@@ -226,7 +226,70 @@
                   </div>
                 </div>
               </div>
-              <!-- end delete modal -->
+              <!-- end delete banner modal -->
+
+
+              <!--  edit modal -->
+
+
+              <div class="modal fade edit-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="card">
+
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <img src="{{dirlocation}}/public/assets/images/uploads/banners/{{info.image}}"
+                          alt="{{ info.title }}" loading="lazy" class=" d-block w-50 mx-auto" />
+                        <div class="card p-3">
+                          <form id="update_banner" ng-submit="update_banner()">
+                            <div class="row">
+                              <div class="col-12">
+                                <input type="text" name="id" id="id" hidden value="{{ info.id }}" required />
+
+                                <div class="form-group">
+                                  <label for="title"> Title</label>
+                                  <input type="text" class="form-control" name="title" id="title"
+                                    placeholder="banner title" value="{{ info.title }}" required />
+                                </div>
+                                <div class="form-group">
+                                  <label for="sub_title"> Sub Title</label>
+                                  <input type="text" class="form-control" name="sub_title" id="sub_title"
+                                    placeholder="banner sub title" value="{{ info.sub_title }}" />
+
+                                </div>
+                                <div class="form-group">
+                                  <label for="description"> Description</label>
+                                  <textarea type="text" class="form-control" name="description" id="description"
+                                    placeholder="banner title">{{ info.description }}</textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <span>
+
+
+                                <button type="submit" class="btn btn-info btn-sm">
+                                  Update
+                                </button>
+                              </span>
+                              <button type="button" class="btn btn-light btn-sm ml-5" data-dismiss="modal">
+                                <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- end edit modal -->
+              </div>
 
             </table>
             <dir-pagination-controls boundary-links="true" template-url="" style="float: right">

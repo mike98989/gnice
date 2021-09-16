@@ -233,6 +233,43 @@ class AdminTasks extends Model
 
         return $result;
     }
+    public function disableEnableBanner()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $status = $_POST['status'];
+            $id = $_POST['banner_id'];
+            $type = $_POST['banner_type'];
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("UPDATE banners SET status = :status WHERE id = :id");
+                $this->db->bind(':id', $id);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $result['message'] = 'Task operation successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'Task operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'invalid token, login to continue task';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'invalid';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
+
     public function disableEnableAdmin()
     {
         $header = apache_request_headers();
@@ -592,6 +629,45 @@ class AdminTasks extends Model
                         $result['status'] = 0;
                         // return false;
                     }
+                }
+            } else {
+                $result['message'] = 'Category failed';
+                $result['status'] = 0;
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
+
+    // FIXME: update banner
+
+    public function updateBanner()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $title = trim($_POST['title']);
+
+                $this->db->query('UPDATE banners SET title = :title,image = :image WHERE id = :id');
+                $this->db->bind(':id', $id);
+                $this->db->bind(':title', $title);
+                $this->db->bind(':image', $image);
+                if ($this->db->execute()) {
+                    $result['rowCount'] = $this->db->rowCount();
+                    $result['message'] = 'Category Updated';
+                    $result['status'] = 1;
+                } else {
+                    $result['message'] = 'Category failed';
+                    $result['status'] = 0;
+                    // return false;
                 }
             } else {
                 $result['message'] = 'Category failed';

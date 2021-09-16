@@ -136,6 +136,21 @@ class AdminApi extends Controller
             exit;
         }
     }
+    public function update_banner()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $result = $this->model('Admintasks')->updateBanner($_POST);
+
+            header('Content-Type: application/json');
+
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function disable_enable_account()
     {
         $header = apache_request_headers();
@@ -153,6 +168,18 @@ class AdminApi extends Controller
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Admintasks')->disableEnableAdmin($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    public function disable_enable_banner()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->disableEnableBanner($_POST);
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {

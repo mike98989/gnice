@@ -68,7 +68,6 @@ module.controller("bannerController", [
         },
         processData: false,
         success: function (result) {
-          console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -76,11 +75,19 @@ module.controller("bannerController", [
           if (msg.status == "1") {
             $scope.all_banners = msg.data;
             $scope.$apply();
-            $(".result").html(msg.message);
-            $(".result").show();
+            $(".loader").hide();
+            // $(".result").html(msg.message);
+            // $(".result").show();
           } else {
+            $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
@@ -98,62 +105,122 @@ module.controller("bannerController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          console.log(answer);
+          // console.log(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
           if (msg.status == "1") {
-            alert(msg);
             $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            $scope.fetch_all_banners();
+            $scope.$apply();
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
             $("#addCategory")[0].reset();
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
-            //alert(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });
     };
-    //* End
-    // $scope.update_category = function () {
-    //   $(".loader").show();
-    //   var formData = new FormData($("#updateCategory")[0]);
-    //   $.ajax({
-    //     url: $scope.dirlocation + "adminapi/update_category",
-    //     type: "POST",
-    //     data: formData,
-    //     async: true,
-    //     cache: false,
-    //     contentType: false,
-    //     headers: { "gnice-authenticate": $scope.admin_token },
-    //     processData: false,
-    //     success: function (answer) {
-    //       var response = JSON.stringify(answer);
-    //       var parsed = JSON.parse(response);
-    //       var msg = angular.fromJson(parsed);
-    //       console.log(JSON.stringify(msg));
-    //       $(".loader").hide();
-    //       if (msg.status == "1") {
-    //         $scope.get_all_cat_and_sub_cat();
-    //         $(".loader").hide();
-    //         $(".result").html(msg.message);
-    //         alert(msg.message);
-    //         $(".result").show();
-    //         $("#updateCategory")[0].reset();
-    //       } else {
-    //         $scope.get_all_cat_and_sub_cat();
-    //         alert(msg.message);
-    //         $(".loader").hide();
-    //         $(".result").html(msg.message);
-    //         $(".result").show();
-    //       }
-    //     },
-    //   });
-    // };
+    $scope.enable_or_disable_banner = function (code, banner, $index) {
+      $(".loader").show();
+      var formData = new FormData();
+
+      formData.append("status", code);
+      formData.append("banner_id", banner.id);
+      formData.append("banner_type", banner.type);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/disable_enable_banner",
+        data: formData,
+        type: "POST",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            banner.status = code;
+            $scope.$apply();
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          }
+        },
+      });
+    };
+
+    $scope.update_banner = function () {
+      $(".loader").show();
+      var formData = new FormData($("#update_banner")[0]);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/update_banner",
+        type: "POST",
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (answer) {
+          var response = JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          // console.log(JSON.stringify(msg));
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.fetch_all_banners();
+            $scope.$apply();
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            alert(msg.message);
+            $(".result").show();
+            $("#updateCategory")[0].reset();
+          } else {
+            $scope.get_all_cat_and_sub_cat();
+            alert(msg.message);
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").show();
+          }
+        },
+      });
+    };
     // $scope.update_sub_category = function (id, index) {
     //   $(".loader").show();
     //   var formData = new FormData($("#update_sub_category_" + id)[0]);
