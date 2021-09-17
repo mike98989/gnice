@@ -1,4 +1,4 @@
-<main class="content-wrapper" ng-init="fetch_all_banners()" ng-controller="usersController">
+<main class="content-wrapper" ng-controller="usersController">
 
   <div class="page-header">
     <h3 class="page-title">
@@ -15,7 +15,7 @@
   <div class="loader text-center">
     <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
   </div>
-  <section class="row">
+  <section class="row" ng-init="fetch_all_banners()">
 
     <article class="col-12 grid-margin">
       <div class="card">
@@ -27,8 +27,8 @@
                 <div class="input-group-prepend bg-transparent">
                   <i class="input-group-text border-0 mdi mdi-account-search"></i>
                 </div>
-                <input type="text" class="form-control bg-transparent border-0"
-                  placeholder="search for an admin account " ng-model="bannerSearch">
+                <input type="text" class="form-control bg-transparent border-0" placeholder="search for banner "
+                  ng-model="bannerSearch">
               </div>
             </form>
           </div>
@@ -120,10 +120,10 @@
                     </span>
 
                     <!-- delete user account control -->
-                    <button class="badge badge-danger  mr-1" data-toggle="modal" data-target=".delete-banner-modal"
+                    <!-- <button class="badge badge-danger  mr-1" data-toggle="modal" data-target=".delete-banner-modal"
                       ng-click="append_modal_info(banner)">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
-                    </button>
+                    </button> -->
                     <button class="badge badge-info mr-1" data-toggle="modal" data-target=".edit-modal"
                       ng-click="append_modal_info(banner)">
                       <i class="mdi  mdi-pencil-lock mr-1"></i> Edit
@@ -207,7 +207,7 @@
                       <div class="modal-body">
                         <p class=" text-center display-1 text-danger"><i class="mdi mdi-delete"></i></p>
                         <p class="display-4 text-center">
-                          You are about to DETETE
+                          You are about to DELETE
                           <span class="text-danger">
                             {{ info.title | uppercase}}
                           </span>
@@ -227,69 +227,6 @@
                 </div>
               </div>
               <!-- end delete banner modal -->
-
-
-              <!--  edit modal -->
-
-
-              <div class="modal fade edit-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="card">
-
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <img src="{{dirlocation}}/public/assets/images/uploads/banners/{{info.image}}"
-                          alt="{{ info.title }}" loading="lazy" class=" d-block w-50 mx-auto" />
-                        <div class="card p-3">
-                          <form id="update_banner" ng-submit="update_banner()">
-                            <div class="row">
-                              <div class="col-12">
-                                <input type="text" name="id" id="id" hidden value="{{ info.id }}" required />
-
-                                <div class="form-group">
-                                  <label for="title"> Title</label>
-                                  <input type="text" class="form-control" name="title" id="title"
-                                    placeholder="banner title" value="{{ info.title }}" required />
-                                </div>
-                                <div class="form-group">
-                                  <label for="sub_title"> Sub Title</label>
-                                  <input type="text" class="form-control" name="sub_title" id="sub_title"
-                                    placeholder="banner sub title" value="{{ info.sub_title }}" />
-
-                                </div>
-                                <div class="form-group">
-                                  <label for="description"> Description</label>
-                                  <textarea type="text" class="form-control" name="description" id="description"
-                                    placeholder="banner title">{{ info.description }}</textarea>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <span>
-
-
-                                <button type="submit" class="btn btn-info btn-sm">
-                                  Update
-                                </button>
-                              </span>
-                              <button type="button" class="btn btn-light btn-sm ml-5" data-dismiss="modal">
-                                <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- end edit modal -->
-              </div>
 
             </table>
             <dir-pagination-controls boundary-links="true" template-url="" style="float: right">
@@ -322,14 +259,9 @@
               <input type="text" class="form-control " placeholder="banner title" name="title" id="title" required>
             </div>
             <div class="form-group">
-              <label for="sub_title">Sub title:</label>
-              <input type="text" class="form-control " placeholder="banner sub title" name="sub_title" id="sub_title"
-                required>
-            </div>
-            <div class="form-group">
               <label for="description">Description:</label>
               <textarea type="text" class="form-control " placeholder="banner description" name="description"
-                id="description" required></textarea>
+                id="description"></textarea>
 
             </div>
             <div class="form-group mt-2">
@@ -345,3 +277,51 @@
       </div>
     </article>
   </section>
+  <!--  edit modal -->
+  <div class="modal fade edit-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="card">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img src="{{dirlocation}}/public/assets/images/uploads/banners/{{info.image}}" alt="{{ info.title }}"
+              loading="lazy" class=" d-block w-50 mx-auto" />
+            <div class="card p-3">
+              <aside class="d-flex justify-content-end">
+                <p class="result text-center" style="display: none"></p>
+              </aside>
+              <form ng-submit="update_banner()" id="update_banner">
+                <div class="col-12">
+                  <input type="text" name="id" hidden value="{{ info.id }}" required />
+                  <div class="form-group">
+                    <label for="title"> Title</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="banner title"
+                      value="{{ info.title }}" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="description"> Description</label>
+                    <textarea type="text" class="form-control" name="description" id="description"
+                      placeholder="banner description">{{ info.description }}</textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-info btn-sm">
+                    Update
+                  </button>
+                  <button type="button" class="btn btn-light btn-sm ml-auto" data-dismiss="modal">
+                    <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end edit modal -->

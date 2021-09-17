@@ -643,7 +643,6 @@ class AdminTasks extends Model
     }
 
 
-    // FIXME: update banner
 
     public function updateBanner()
     {
@@ -655,22 +654,23 @@ class AdminTasks extends Model
             if ($this->verifyToken($token) == true) {
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $title = trim($_POST['title']);
+                $description = trim($_POST['description']);
+                $id = trim($_POST['id']);
 
-                $this->db->query('UPDATE banners SET title = :title,image = :image WHERE id = :id');
+                $this->db->query('UPDATE banners SET title = :title, description = :description WHERE id = :id');
                 $this->db->bind(':id', $id);
                 $this->db->bind(':title', $title);
-                $this->db->bind(':image', $image);
+                $this->db->bind(':description', $description);
                 if ($this->db->execute()) {
-                    $result['rowCount'] = $this->db->rowCount();
-                    $result['message'] = 'Category Updated';
+                    $result['message'] = 'update sucessful';
                     $result['status'] = 1;
                 } else {
-                    $result['message'] = 'Category failed';
+                    $result['message'] = 'update failed';
                     $result['status'] = 0;
                     // return false;
                 }
             } else {
-                $result['message'] = 'Category failed';
+                $result['message'] = 'token failed';
                 $result['status'] = 0;
             }
         } else {
@@ -1215,7 +1215,6 @@ class AdminTasks extends Model
                 $banner_type = $_POST['banner_type'];
                 $title = $_POST['title'];
                 $description = $_POST['description'];
-                $sub_title = $_POST['sub_title'];
                 $status = 1;
                 $max_resolution = null;
 
@@ -1233,11 +1232,10 @@ class AdminTasks extends Model
                 $image = $image_resizer['success'];
 
 
-                $this->db->query("INSERT INTO banners (title, description, image, sub_title, type, status) VALUES (:title, :description, :image, :sub_title,:type, :status)");
+                $this->db->query("INSERT INTO banners (title, description, image, type, status) VALUES (:title, :description, :image, :sub_title, :status)");
                 $this->db->bind(':title', $title);
                 $this->db->bind(':description', $description);
                 $this->db->bind(':image', $image);
-                $this->db->bind(':sub_title', $sub_title);
                 $this->db->bind(':type', $banner_type);
                 $this->db->bind(':status', $status);
 
@@ -1259,25 +1257,6 @@ class AdminTasks extends Model
             $result['status'] = '0';
         }
 
-        return $result;
-    }
-
-
-
-    public function AddBanner()
-    {
-        $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $this->db->query('INSERT INTO banners (title) VALUES (:title)');
-        $this->db->bind(':title', $data['title']);
-        if ($this->db->execute()) {
-            $result['rowCount'] = $this->db->rowCount();
-            $result['message'] = 'banner added';
-            $result['status'] = 1;
-        } else {
-            $result['message'] = 'banner failed';
-            $result['status'] = 0;
-            // return false;
-        }
         return $result;
     }
 }

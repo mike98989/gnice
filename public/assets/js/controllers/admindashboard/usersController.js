@@ -69,7 +69,6 @@ module.controller("usersController", [
           $(".loader").hide();
           if (msg.status == "1") {
             $scope.all_users = msg.data;
-            console.log(JSON.stringify(msg.data));
             $scope.$apply();
             $(".result").show();
           } else {
@@ -153,7 +152,6 @@ module.controller("usersController", [
       $scope.info = value;
     };
 
-    //! get all listings of a seller
     $scope.fetch_all_product_of_seller = function (seller_id) {
       $.ajax({
         url:
@@ -178,8 +176,14 @@ module.controller("usersController", [
             $scope.$apply();
             $(".result").show();
           } else {
+            $(".loader").hide();
             $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
             $(".result").show();
+            setTimeout(() => {
+              $(".result").removeClass("alert alert-info");
+              $(".result").hide("500");
+            }, 3000);
           }
         },
       });
@@ -202,7 +206,6 @@ module.controller("usersController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          console.log(JSON.stringify(msg));
           // alert(msg);
           // alert(msg.status);
           $(".loader").hide();

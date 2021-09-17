@@ -134,7 +134,7 @@ module.controller("categoryController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          console.log(JSON.stringify(msg));
+          // console.log(JSON.stringify(msg));
           $(".loader").hide();
           if (msg.status == "1") {
             $scope.get_all_cat_and_sub_cat();
@@ -145,8 +145,6 @@ module.controller("categoryController", [
             $(".result").show();
             $("#updateCategory")[0].reset();
           } else {
-            $scope.get_all_cat_and_sub_cat();
-            alert(msg.message);
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").show();
