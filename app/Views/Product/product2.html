@@ -1,29 +1,31 @@
+
 <main class="main" ng-controller="homeController" ng-init="fetch_single_product(); init_facebook_login()">
 
-	<div class="container">
+	<div class="container" ng-if="product" ng-init="get_product_reviews(product.id)">
 		<nav aria-label="breadcrumb" class="breadcrumb-nav">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{dirlocation}}"><i class="icon-home"></i></a></li>
-				<li class="breadcrumb-item"><a href="#" class="sf-with-ul cabtn">{{product.productCategory}}</a></li>
-				<li class="breadcrumb-item"><a href="#">{{ product.productSubCategory }}</a></li>
+				<li class="breadcrumb-item"><a href="{{dirlocation}}category?id={{product.category}}&cat={{product.productCategory}}" class="sf-with-ul cabtn">{{product.productCategory}}</a></li>
+				<li class="breadcrumb-item"><a href="{{dirlocation}}category/sub_category?id={{product.sub_category}}&cat={{product.productCategory}}&sub={{sub.title}}">{{product.productSubCategory}}</a></li>
+				
 				<li class="breadcrumb-item">
-					<a href=""><i class="breadcrumb-item active"></i>{{product.name }}</a>
+					<a href=""><i class="breadcrumb-item active"></i>{{product.name}}</a>
 				</li>
 			</ol>
 		</nav>
 		<div class="product-single-container product-single-default">
 			<div class="row">
 				<div class="col-md-7 product-single-gallery">
-					<div class="card" style="padding:0">
-						<div class="card-body">
+					<div class="card" style="padding-top:0;padding-bottom:0">
+						<div class="card-body" style="padding:0;">
 							<div id="custCarousel" class="carousel slide" data-ride="carousel">
 								<!-- slides -->
-								<div class="carousel-inner" style="height:450px;overflow:hidden"> 
+								<div class="carousel-inner">
 									<div class="carousel-item" ng-class="{'active' : $index=='0'}" ng-if="product_image.length>1" ng-repeat="image in product_image">
-									<img ng-click="open_image_modal(image)"src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" style="width:100%;cursor:pointer"> 
+									<img ng-click="open_image_modal($index)" src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" style="width:100%;cursor:pointer"> 
 									</div>
 									<div class="carousel-item active" ng-if="product_image.length==1" ng-repeat="image in product_image">
-										<img src="{{dirlocation}}public/assets/images/uploads/products/{{product_image[0]}}" style="width:100%"> 
+										<img ng-click="open_image_modal($index)" src="{{dirlocation}}public/assets/images/uploads/products/{{product_image[0]}}" style="width:100%;cursor:pointer"> 
 									</div>
 									
 								</div> <!-- Left right -->
@@ -43,34 +45,43 @@
 
 				<!-- The Modal -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-	  <div class="modal-content">
+<div class="modal fade" id="productImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background:transparent;border:none">
+	<div class="modal-dialog" role="document" style="background:transparent;border:none">
+	  <div class="modal-content" style="background:transparent;border:none">
 		<div class="modal-header">
 		  
 		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
+			<span aria-hidden="true" style="font-size:26px">&times;</span>
 		  </button>
 		</div>
-		<div class="modal-body">
-			<img class="modal-content" id="img01">
+		<div class="modal-body" style="padding:0;background: transparent;border:none">
+			
+			<div id="productCarousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner" style="height: 100%">
+					<div class="carousel-item" ng-repeat="image in product_image" ng-class="{'active' : $index=='0'}" ng-if="product_image.length>1">
+					<img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" style="width:100%;cursor:pointer"> 
+					</div>
+					<div class="carousel-item active" ng-if="product_image.length==1" ng-repeat="image in product_image">
+						<img src="{{dirlocation}}public/assets/images/uploads/products/{{product_image[0]}}" style="width:100%;cursor:pointer"> 
+					</div>
+				</div> <!-- Left right -->
+				<a class="carousel-control-prev" href="#productCarousel" data-slide="prev" style="margin-top: 0;"> <span class="carousel-control-prev-icon"></span> </a> <a class="carousel-control-next" href="#productCarousel" data-slide="next"  style="margin-top: 0;"> <span class="carousel-control-next-icon"></span> </a> <!-- Thumbnails -->
+			</div>
 		</div>
 		
 	  </div>
 	</div>
   </div>
-
-
-				<div class="col-md-5 product-single-details" style="margin-top:0;padding-top:0">
+			<div class="col-md-5 product-single-details" style="margin-top:0;padding-top:0">
 					<div class="card">
 						<div class="card-body">
 					<h1 class="product-title" style="padding-top: 0;margin-top: 0;">{{product.name}}</h1>
 					<div class="ratings-container">
-						<div class="product-ratings">
-							<span class="ratings" style="width:60%"></span><!-- End .ratings -->
+						<div class="product-ratings" ng-show="product_reviews.length">
+							<span class="ratings" style="width: {{average_review_rate*20}}%"></span><!-- End .ratings -->
 						</div><!-- End .product-ratings -->
 
-						<a href="#" class="rating-link">( 6 Reviews )</a>
+						<a href="#" class="rating-link" ng-show="product_reviews.length">( {{product_reviews.length}} Review(s) )</a>
 					</div><!-- End .ratings-container -->
 
 					<hr class="short-divider">
@@ -85,15 +96,21 @@
 							<a href="#" ng-show="product.description.length>300">(Read more)</a>
 						</p>
 					</div><!-- End .product-desc -->
-
+					<hr class="divider" ng-show="product.seller_fullname">
+					<div class="product-desc" ng-show="product.seller_fullname" style="padding-bottom:0;margin-bottom:0">
+						<table>
+							<tr>
+							<td><img style="width:60px;height:60px;border-radius: 50%"src="{{dirlocation}}public/assets/images/uploads/profile/{{product.seller_image}}"></td>
+							<td><b style="font-size: 15px;line-height: 0">{{product.seller_fullname}}</b><br/>{{product.seller_email}}</td>
+							<td style="padding-left:10px"><button type="button" class="btn btn-info btn-sm" ng-click="showContact=true"><span ng-if="!showContact">Show Contact</span> <span ng-if="showContact" style='font-size:15px;font-weight: bold'>{{product.seller_phone}}</span></button></td>
+							<tr/>
+							
+						</table>
+					</div><!-- End .product-desc -->
 					<hr class="divider">
-					<div class="product-action">
-						<button type="button" class="btn btn-info btn-sm" ng-click="showContact=true" title="Add to Cart">Show Contact</button>
-						<span ng-show="showContact" style="font-size:17px;font-weight: bold;">{{product.seller_phone}}</span>
-					</div><!-- End .product-action -->
+					
 					<h4>Safety Tip</h4>
 					<ul>
-
 						<li> <i class="fa fa-check-circle"></i> <span>Do not Pay in advance even for the delivery</span>
 						</li>
 						<li> <i class="fa fa-check-circle"></i><span> Try to meet at a safe, public location</span></li>
@@ -103,8 +120,8 @@
 
 					
 					<div class="product-action">
-						<button class="btn btn-danger btn-bg-dark btn-sm">Report Abuse</button>
-						<a href="{{dirlocation}}dashboard/add_product?category={{product.category}}" class="btn btn-success btn-sm">Post ad like this</a>
+						<button class="btn btn-danger btn-bg-dark btn-sm" ng-click="reportAbuse=true"  data-toggle="modal" data-target="#reportAbuseModal">Report Abuse</button>
+						<button ng-click="localStorage_save('ads_category',product.category,'dashboard/add_product')" class="btn btn-success btn-sm">Post ad like this</button>
 						<button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">Leave Feedback</button>
 					</div>
 					<hr class="divider mb-1">
@@ -126,9 +143,9 @@
 					</div><!-- End .product single-share -->
 				</div><!-- End .product-single-details -->
 				</div>
-				</div>
-			</div><!-- End .row -->
-		</div><!-- End .product-single-container -->
+			</div>
+		</div><!-- End .row -->
+	</div><!-- End .product-single-container -->
 
 		<div class="product-single-tabs">
 					<ul class="nav nav-tabs" role="tablist">
@@ -274,7 +291,7 @@
 										</div>
 										<div class="alert alert-info result" style="display: none;"></div>
 										<!-- End .form-group -->
-										<button type="submit" class="btn btn-dark" value="Submit">
+										<button type="submit" class="btn bg-info btn-md text-white" value="Submit">
 											<img src="{{dirlocation}}public/assets/images/spinner2.gif"
 												style="width:25px;float:left;margin-top:-5px;margin-right:3px;display:none"
 												class="loader">
@@ -292,7 +309,7 @@
 				<!-- End .tab-pane -->
 
 				<div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
-					aria-labelledby="product-tab-reviews" ng-if="product" ng-init="get_product_reviews(product.id)">
+					aria-labelledby="product-tab-reviews" ng-if="product">
 					<div class="product-reviews-content">
 						<div class="row">
 							<div class="col-xl-7">
@@ -302,9 +319,9 @@
 								
 								<ol class="comment-list">
 									<li class="comment-container" ng-repeat="review in product_reviews">
-										<div class="comment-avatar">
-											<img src="{{dirlocation}}public/assets/images/uploads/profile/{{review.image}}" style="width:65px;height:65px;float:left" alt="avatar" />
-										</div>
+										
+											<img src="{{dirlocation}}public/assets/images/uploads/profile/{{review.image}}" style="width:65px;height:65px;float:left;margin-right:7px" alt="avatar" />
+										
 										<!-- End .comment-avatar-->
 										
 										<div class="comment-box">
@@ -320,7 +337,7 @@
 											<div class="comment-info">
 												<h4 class="avatar-name">{{review.fullname}}</h4>
 												-
-												<span class="comment-date">{{review.date}}</span>
+												<span class="comment-date" style="font-size:10px">{{review.date}}</span>
 											</div>
 											<!-- End .comment-info -->
 
@@ -342,7 +359,7 @@
 
 							<div class="col-xl-5">
 								<div class="add-product-review">
-									<button ng-if="!user_data" class="btn btn-flat btn-warning">Leave Feedback/Rating</button>
+									<button ng-if="!user_data" class="btn btn-flat bg-primary btn-md text-white">Leave Feedback/Rating</button>
 									<form ng-if="user_data" ng-submit="save_product_review()" id="save_product_review" ng-init="rating='0'">
 										<h3 class="review-title">Add a Review</h3>
 										<div class="alert alert-info result" style="display:none"></div>
@@ -375,7 +392,7 @@
 										<input type="text" style="display: none;" ng-model="rating" class="rating" name="rating">
 										<input type="hidden" name="product_id" value="{{product.id}}">
 										<input type="hidden" name="user_id" value="<?php print_r($_SESSION['data']->id);?>">
-										<button type="submit" class="btn btn-dark btn-md">Submit</button>
+										<button type="submit" class="btn btn-md bg-primary btn-md text-white">Submit</button>
 									</form>
 									
 								</div>
@@ -395,51 +412,26 @@
 
 			<div class="col-lg-10">
 				<div class="row">
-					<div class="col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
-						<div class="product-default inner-quickview inner-icon">
-							<figure>
+					<div class="col-6 col-sm-4 col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
+						<div class="product-default inner-quickview inner-icon" style="background-color: #fff;border-radius:10px;">
+							<figure style="padding:0;">
 								<a
 									href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">
-									<div ng-init="img = relatedProduct.image.split(',')"> <img
-											style="width: 100%!important; height: 150px!important;"
+									<div style="height:130px;overflow:hidden" ng-init="img = relatedProduct.image.split(',')"> <img
+											style="width: 100%!important; border-top-right-radius: 10px; border-top-left-radius: 10px; "
 											src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
 									</div>
 
 								</a>
-								<div class="label-group">
-									<!-- <span class="product-label label-sale">-20%</span> -->
-								</div>
-								<!--
-						  <div class="btn-icon-group">
-							<button
-							  class="btn-icon btn-add-cart"
-							  data-toggle="modal"
-							  data-target="#addCartModal"
-							>
-							  <i class="icon-shopping-cart"></i>
-							</button>
-						  </div>
-						-->
 							</figure>
-							<div class="product-details">
-								<div class="category-wrap">
-									<div class="category-list">
-										<a href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}"
-											class="product-category">{{relatedProduct.productSubCategory}}</a>
-									</div>
-								</div>
-								<h3 class="product-title">
+							<div style="padding:7px">
+
+								<h3 class="product-title" style="padding-top:0;margin-top:0">
 									<a
 										href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">{{
 										relatedProduct.name }}</a>
 								</h3>
-								<div class="ratings-container">
-									<div class="product-ratings">
-										<span class="ratings" style="width: 100%"></span><!-- End .ratings -->
-										<span class="tooltiptext tooltip-top"></span>
-									</div>
-									<!-- End .product-ratings -->
-								</div>
+								<span style="font-size:10px"><i class="fa fa-map-marker"></i> {{relatedProduct.land_mark}}</span>
 								<!-- End .ratings-container -->
 								<div class="price-box">
 									<span class="product-price">{{ relatedProduct.price | currency:"NGN " }}</span>
@@ -489,6 +481,41 @@
 		</div>
 	  </div>
 
+
+	  <div class="modal fade bd-example-modal-sm" id="reportAbuseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h3 class="modal-title" id="exampleModalLabel">Report Abuse</h3>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body" ng-init="fetch_report_reasons()" style="padding:0 25px;text-align: center;">
+			<h4>Report Abuse for</h4>
+			<h5>{{product.name}}</h5>
+			<form ng-submit="report_abuse()" id="report_abuse">
+			<div class="alert alert-info result" style="display:none"></div>		
+			<select required="" name="report_title" class="form-control">
+           <option value="">REPORT REASON</option>
+           <option value="{{reason.reason}}" ng-repeat="reason in report_reasons">{{reason.reason}}</option>
+            </select> 	
+			<div class="form-group">
+			<textarea rows="4" name="report_content" class="form-control form-control-sm" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-block bg-info btn-md text-white">
+			<img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="float:left;width:20px;">Submit
+			</button>
+			<input type="hidden" name="product_id" value="{{product.id}}">
+			<input type="hidden" name="user_id" value="{{user_data.id}}">
+			<input type="hidden" name="date" value="<?php echo date('Y-m-d');?>">
+			</form>
+			</div>
+			
+		  </div>
+		</div>
+	  </div>
+
 </main><!-- End .main -->
 
 
@@ -504,5 +531,11 @@ function onSignIn(googleUser) {
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   $scope.update_google_data();
 }
+ </script>
 
-  </script>
+ <style>
+
+.modal-backdrop{
+   opacity:0.8 !important;
+}
+ </style>

@@ -18,7 +18,7 @@
 				</div>
 			</div>
 
-			<div class="container"ng-init="fetch_all_product_sub_category('<?php echo $_GET['id'];?>')">
+			<div class="container" ng-init="fetch_all_product_sub_category('<?php echo $_GET['id'];?>')">
 				<nav aria-label="breadcrumb" class="breadcrumb-nav">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="{{dirlocation}}"><i class="icon-home"></i></a></li>
@@ -28,41 +28,49 @@
 				</nav>
 
 				
-                
-				<div class="row mx-0 divide-line up-effect">
-					<div class="col-6 col-sm-4 col-md-3 product-default inner-quickview inner-icon" ng-repeat="product in allSubProducts">
-						<figure>
-							<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">
-                                <div ng-init="img = product.image.split(',')"> <img   style="width: 100%!important; height: 150px!important;" src="{{dirlocation}}public/assets/images/uploads/products/{{ img[0] }}">
-                                </div>
-							</a>
-						</figure>
-						<div class="product-details">
-							<div class="category-wrap">
-								<div class="category-list">
-									<a href="category.html" class="product-category">{{product.productSubCategory}}</a>
-								</div>
-								
+				<div class="row">
+					<div class="col-lg-9 order-lg-1">
+						<h2 class="section-title" style="padding-top:15px;margin-top:0;margin-bottom:0"><?php echo $_GET['sub'];?> Ads</h2>
+						<div class="row">
+
+							<div class="col-lg-12"  ng-cloak ng-if="allSubProducts.length==0" style="text-align:center;padding-top:20px">
+									<img src="{{dirlocation}}public/assets/images/cancel_file.png" style="width:80px;float:none;margin:0 auto">
+							No Item uploaded to this sub category yet. Please try again later.	
+							
 							</div>
-							<h2 class="product-title">
-								<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">{{product.name}}</a>
-							</h2>
-							<div class="ratings-container">
-								<div class="product-ratings">
-									<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-									<span class="tooltiptext tooltip-top"></span>
-								</div><!-- End .product-ratings -->
-							</div><!-- End .product-container -->
-							<div class="price-box">
-								<span class="product-price">{{product.price | currency:'NGN '}}</span>
-							</div><!-- End .price-box -->
-						</div><!-- End .product-details -->
-					</div><!-- End .product-default -->
 
+							<div class="row" ng-cloak ng-if="allSubProducts.length!=0">
+					<div class="col-6 col-sm-3" dir-paginate="product in allSubProducts | filter : all |  itemsPerPage :catfilter">
+								<div class="product-default inner-quickview inner-icon" style="background-color: #fff;border-radius:10px;">
+									<figure style="padding:0;">
+										<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">
+												<div style="height:130px;overflow:hidden" ng-init="img = product.image.split(',')">
+													<img style="width: 100%!important; border-top-right-radius: 10px; border-top-left-radius: 10px; " src="{{dirlocation}}public/assets/images/uploads/products/{{ img[0] }}">
+										</div>
+										</a>
+										<div style="padding:7px">
+											<h2 class="product-title" style="margin-top:3px;margin-bottom:3px">
+											<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">{{product.name}}</a>
+											</h2>
+											<span style="font-size:10px"><i class="fa fa-map-marker"></i> {{product.land_mark}}</span>
+											<div class="price-box">
+												<span class="product-price text-primary">{{product.price | currency:"NGN "}}</span>
+											</div><!-- End .price-box -->
+										</div><!-- End .product-details -->
+									</figure>
+									
+								</div>
+							</div><!-- End .col-sm-4 -->
+						</div>
+						</div>
 				</div><!-- End .row -->
-                
+               
+				<!-- <div class="sidebar-overlay"></div>
+				<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div> -->
+				<?php require_once './app/views/inc/aside4.php';?>
+			</div>
+			<!-- End .container -->
+		</div>
 
-			</div><!-- End .container -->
-
-			<div class="mb-3"></div><!-- margin -->
+			
 		</main><!-- End .main -->

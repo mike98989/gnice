@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Voler Admin Dashboard</title>
+    <title>Gnice - User Dashboard</title>
 
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/user-assets/css/bootstrap.css">
 
@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/user-assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/user-assets/css/app.css">
-    <link rel="shortcut icon" href="<?php echo APP_URL; ?>/public/user-assets/images/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo APP_URL; ?>/public/assets/images/gnice_logo.png" type="image/x-icon">
 </head>
 <body ng-app="gnice">
 <base href="<?php echo APP_URL.'/'.$url[1];?>/"> 

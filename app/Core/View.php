@@ -91,6 +91,7 @@ class View
                 //require('./app/views/inc/header.php');
                 require('./app/views/inc/navbar.php');
                 require "./app/Views/" . $name . ".html";
+                require('./app/views/inc/footer.php');
                 require('./app/views/inc/footer1.php');
             }
         }

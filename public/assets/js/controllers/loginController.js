@@ -41,23 +41,19 @@ module.controller("loginController", [
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          //alert(answer);
+          alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
+          var msg = angular.fromJson(parsed);
           $(".loader").hide();
+          $(".result").html(msg.msg);
+          $(".result").show();
           if (msg.status == "1") {
             $localStorage.recovery_token = msg.token;
-            //alert(JSON.stringify($localStorage.recovery_token));
-            window.location.href =
-              datagrab.completeUrlLocation + "ConfirmRecovery";
-          } else {
-            $(".loader").hide();
-            $(".result").html(msg.msg);
-            $(".result").show();
-            //alert(msg.msg);
-            //$('.signup_loader').hide();
-            //$('.alert').html(answer);
+            setTimeout(function(){ 
+               window.location.href = datagrab.completeUrlLocation + "confirmrecovery"; 
+            }, 5000);
+           
           }
         },
       });
@@ -66,6 +62,15 @@ module.controller("loginController", [
     $scope.confirm_password_recovery_code = function () {
       $(".loader").show();
       $(".result").hide();
+      alert($localStorage.recovery_token);
+      var password = $('#password').val();
+      var confirm_password = $('#confirm_password').val();
+      if(password!==confirm_password){
+        alert("Passwords do not match");
+       $('.result').html("Passwords do not match!");
+       $(".result").show();
+       return; 
+      }
       var formData = new FormData($("#confirm_password_recovery_code")[0]);
       $.ajax({
         url: $scope.dirlocation + "api/confirm_password_recovery_code",
@@ -80,24 +85,25 @@ module.controller("loginController", [
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          //alert(answer);
+          alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
+          var msg = angular.fromJson(parsed);
           $(".loader").hide();
+          $(".result").html(msg.msg);
+          $(".result").show();
           if (msg.status == "1") {
-            window.location.href = datagrab.completeUrlLocation + "Login";
-          } else {
-            $(".loader").hide();
-            $(".result").html(msg.msg);
-            $(".result").show();
-            //alert(msg.msg);
-            //$('.signup_loader').hide();
-            //$('.alert').html(answer);
-          }
+            setTimeout(function(){ 
+              window.location.href = datagrab.completeUrlLocation + "Login"; 
+            }, 5000);
+
+            
+          } 
         },
       });
     };
+
+
 
     $scope.user_login = function () {
       redirectUrl = "dashboard/home";

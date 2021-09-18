@@ -28,6 +28,7 @@ class Api extends Controller
         }
     }
 
+
     public function admin_login()
     {
         $header = apache_request_headers();
@@ -231,6 +232,20 @@ class Api extends Controller
         }
     }
 
+     public function fetch_report_reasons()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Misc')->getAllReportReasons();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+
+    
     public function fetch_all_sub_category()
     {
         $header = apache_request_headers();
@@ -266,6 +281,25 @@ class Api extends Controller
             $result = $this->model('Authenticate')->verifyToken($token,'users');
             if($result){
             $result = $this->model('Product')->addProduct();
+            }else{
+            $result['status']='0';
+            $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit();
+        }
+    }
+
+    public function report_abuse()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
+            if($result){
+            $result = $this->model('Product')->reportAbuse();
             }else{
             $result['status']='0';
             $result['msg']='Invalid token';
@@ -440,11 +474,39 @@ class Api extends Controller
 
     }
 
+    public function fetch_transaction_by_reference()
+    {
+       $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Authenticate')->fetch_transaction_by_reference();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+
+    }
+
+    
+
     public function password_recovery()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $result = $this->model('Authenticate')->password_recovery();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
+
+    public function resend_confirmation_code()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Authenticate')->generateConfirmationCode();
             print_r(json_encode($result));
         } else {
             echo "invalid request";
@@ -683,6 +745,18 @@ class Api extends Controller
         }
     }
 
+    public function submit_newsletter()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Misc')->saveNewsletter();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
     public function fetch_related_products()
     {
         $header = apache_request_headers();
@@ -694,6 +768,19 @@ class Api extends Controller
             exit;
         }
     }
+
+    public function fetch_top_rated_products()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getAllTopRatedProducts();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+    
 
     public function fetch_all_wishlist()
     {

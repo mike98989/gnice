@@ -324,8 +324,14 @@ module.controller("productController", [
     $scope.onCategoryValueChange = function (value) {
       let objectval = JSON.parse(value);
       $scope.selected_category = objectval;
-      $scope.sub_category = objectval.subcategory;
-    };
+      $scope.sub_categories = objectval.subcategory;
+    }
+
+    $scope.onSubCategoryValueChange = function(value){
+      let objectval = JSON.parse(value);   
+      $scope.selected_subcategory = objectval;
+      //$scope.sub_category = objectval.subcategory;
+    }
 
     $scope.fetch_all_categories_and_sub_categories = function () {
       $.ajax({
@@ -338,22 +344,78 @@ module.controller("productController", [
         headers: { "gnice-authenticate": "gnice-web" },
         processData: false,
         success: function (result) {
-          //alert(JSON.stringify(result));
-          var response = JSON.stringify(result);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(parsed);
+        //alert(JSON.stringify(result));
+       var response=JSON.stringify(result);
+       var parsed = JSON.parse(response);
+       var msg=angular.fromJson(parsed);
+       
+       console.log(msg);
+       //alert(msg.data[0].title);
+   //alert(msg.data[0].subcategory[6].parent_id);
+       $('.loader').hide(); 
+       if(msg.status=='1'){  
+       $scope.categories_and_sub =msg.data;
+    
+       $scope.$apply();
+       //alert(JSON.stringify($scope.categories));
+       }
+       
+        }
+      });
+    }
 
-          console.log(msg);
-          //alert(msg.data[0].title);
-          //alert(msg.data[0].subcategory[6].parent_id);
-          $(".loader").hide();
-          if (msg.status == "1") {
-            $scope.categories_and_sub = msg.data;
+    
 
-            $scope.$apply();
-            //alert(JSON.stringify($scope.categories));
-          }
-        },
+     $scope.searchCat = function () {
+      var cad = $('#cat').val();
+      if (cad == "" ) {
+      
+     } else {
+      var splits = cad.split(",");
+      $localStorage.valueToShare4 = splits[0];
+      $localStorage.valueToShare5 = splits[1];
+
+       window.location.assign(
+                    'Category');
+     }
+      
+     }
+
+     
+      $scope.fetch_product_by_term = function(){
+      var formData = new FormData($('#fetch_product_by_term')[0]);
+      $.ajax({
+        url: $scope.dirlocation+'api/fetch_product_by_term',
+           type: 'GET',
+              method : "post",
+             transformRequest: angular.identity,
+               //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+               headers:{'gnice-authenticate':'gnice-web'}, 
+               data: formData,
+               async: true,
+               cache: false,
+               contentType: false,
+                transformRequest: angular.identity,
+               enctype: 'multipart/form-data',
+              
+               crossDomain: true,
+               processData: false,
+        success: function (result3) {
+        alert(result3);
+       var response3=JSON.stringify(result3);
+       var parsed3 = JSON.parse(response3);
+       var msg3=angular.fromJson(response3);
+       console.log(msg3);
+       $('.loader').hide(); 
+       if(msg3.status=='1'){  
+        alert(msg3);
+        console.log(msg3.data.image);
+       $scope.singleUser = msg3.data;
+      
+       $scope.$apply();
+       //alert(JSON.stringify($scope.categories));
+       }
+        }
       });
     };
 
@@ -463,7 +525,10 @@ module.controller("productController", [
       });
     };
 
-    $scope.localStorage_get = function (key) {
+
+    
+
+    $scope.localStorage_get = function(key){
       $scope[key] = $localStorage[key];
       $scope.$apply();
     };

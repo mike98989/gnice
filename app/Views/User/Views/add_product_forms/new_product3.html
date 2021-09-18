@@ -1,11 +1,11 @@
 <div class="form-group"  >
-    <select required=""  class="form-control" ng-model="phone" name="brand">
+    <select required=""  class="form-control" ng-model="phone" name="brand" ng-show="selected_subcategory.sub_id!=10 && selected_subcategory.sub_id!=11" ng-disabled="selected_subcategory.sub_id==10 && selected_subcategory.sub_id==11">
      <option selected="" value="">PHONE MAKE</option>
     <option  ng-repeat="phones in requiredPhone"  value="{{phones.make}}"> {{phones.make}} </option>
    </select>
  </div>
 <div class="form-group" ng-if="phone">
-<select id="model" name="model" class="form-control" required>
+<select id="model" name="model" class="form-control" required ng-show="selected_subcategory.sub_id!=10 && selected_subcategory.sub_id!=11" ng-disabled="selected_subcategory.sub_id==10 && selected_subcategory.sub_id==11">
 <optgroup  ng-repeat="phones in  requiredPhone | filter : {make:phone}" label="PHONE MODEL" >
 <option  ng-repeat="models in  phones.phone_models"  value="{{models.model}}"> {{ models.model}}             
 </option>

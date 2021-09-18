@@ -1,5 +1,5 @@
 
- <div class="main-content container-fluid">
+ <div class="main-content container-fluid" ng-init="init()">
   <div class="page-title">
       <div class="row">
           <div class="col-12 col-md-6 order-md-1 order-last">
@@ -18,7 +18,26 @@
       </div>
 
   </div>
-  <section class="section" ng-init="fetch_account_packages()">
+  <section class="section" ng-if="paymentResponseWindow">
+    <div class="col-lg-5" style="float:none;margin:0 auto">
+    <div style="text-align:center" ng-show="reference_check">
+    <h5>  
+    <span ng-show="reference_data.trans_status=='success'">
+    Your Transaction was successful. Your transaction reference is {{reference_data.trans_reference}}.<br/><br/>
+    <p style="margin-top:10px"> Your account have been migrated to a <span class="badge bg-secondary">{{user_data.seller_account_details.title | uppercase}}</span> successfully
+    </p>
+    </span>
+    </h5>
+    <span ng-show="reference_data.trans_status!='success'">
+    <img src="{{dirlocation}}public/assets/images/cancel_file.png" style="width:70px;float:none;margin:0 auto"><br/>  
+    Your Transaction was <span style="color:#f30">NOT</span> successful. Your transaction reference is {{reference_data.trans_reference}}
+    </span>
+    </div>
+    <h4 style="text-align:center" ng-show="!reference_check">This transaction reference {{routeParams.reference}} is invalid.</h4>
+  </div>
+  </section>
+
+  <section class="section" ng-init="fetch_account_packages()" ng-if="!paymentResponseWindow">
     <div style="text-align: center;" class="loader">
       <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
     </div>
@@ -47,8 +66,10 @@
               </div>
           </div>
       </div>
-      <div class="col-lg-12" style="text-align: center;margin-top:15px">
-        <button type="button" ng-click="payWithPaystack()" ng-show="selectedOption" class="btn btn-primary" id="">CONTINUE</button></div>
+      <div class="col-lg-12" style="text-align: center;margin-top:15px" ng-show="selectedOption">
+        <button type="button" ng-click="payWithPaystack()" class="btn btn-primary" id=""><img src="{{dirlocation}}public/assets/images/spinner2.gif" class="pay_loader" style="width:15px;display:none"> MAKE PAYMENT</button><br/>
+        <img src="{{dirlocation}}public/assets/images/paystack_secured.png" style="margin-top:25px">
+      </div>
 </div>
 <script src="https://js.paystack.co/v1/inline.js"></script>
           

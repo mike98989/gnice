@@ -210,7 +210,52 @@ class Product extends Model
             }
             // $row = $this->db->singleResult();
             if ($this->db->execute()) {
-                $result['message'] = 'product review saved successfully';
+                $result['message'] = 'Product Review saved successfully';
+                $result['status'] = '1';
+            } else {
+                $result['message'] = 'Something went wrong. Please try again later.';
+                $result['status'] = '0';
+                //return false;
+            }
+            return $result;
+        }
+    }
+
+
+    public function reportAbuse()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST['date'] = date('Y-m-d');
+            $data = filter_var_array($_POST);
+            $data = array_map('trim', array_filter($data));
+            $excluded = ['files'];
+            // print_r($data);
+            // exit();
+            foreach (array_keys($data) as $key) {
+                if (!in_array($key, $excluded)) {
+                    $fields[] = $key;
+                    $key_fields[] = ':' . $key;
+                    $fields_imploded = implode(',', $fields);
+                    $keys_imploded = implode(',', $key_fields);
+                }
+            }
+            $this->db->query(
+                'INSERT INTO abuse_report (' .
+                    $fields_imploded .
+                    ') VALUES (' .
+                    $keys_imploded .
+                    ')'
+            );
+            foreach (array_keys($data) as $key) {
+                if (!in_array($key, $excluded)) {
+                    $this->db->bind(':' . $key, $data[$key]);
+                }
+            }
+            // $row = $this->db->singleResult();
+            if ($this->db->execute()) {
+                $result['message'] = 'Abuse report sent successfully.';
                 $result['status'] = '1';
             } else {
                 $result['message'] = 'Something went wrong. Please try again later.';
@@ -341,7 +386,7 @@ class Product extends Model
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
                         LEFT JOIN users ON users.seller_id = products.seller_id
-                        WHERE products.product_code!=:product_code AND products.sub_category = :sub_category_id OR products.brand=:brand AND products.status='1'");
+                        WHERE products.product_code!=:product_code AND products.sub_category = :sub_category_id AND products.status=1 OR products.brand=:brand AND products.status=1");
 
             $this->db->bind(':sub_category_id', $sub_category_id);
             $this->db->bind(':brand', $brand);
@@ -358,12 +403,21 @@ class Product extends Model
         }
     }
 
-
-
+    
+    /////////////GET ALL TOP RATED  PRODUCTS
+    public function getAllTopRatedProducts()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $this->db->query("SELECT SUM(P1.rating) as rate, P1.*, P2.* FROM product_reviews P1 INNER JOIN products P2 ON P1.product_id=P2.id GROUP BY P1.product_id ORDER BY rate DESC");
+           $row = $this->db->resultSet();
+           $result['data'] = $row;
+            $result['status'] = '1';
+             return $result;
+        }
+    }
 
     /////////////GET ALL RELATED PRODUCTS 
-
-
     public function wishLists()
     {
         $header = apache_request_headers();
@@ -444,16 +498,7 @@ class Product extends Model
     
     public function getAllProductOfaSubCategory($sub_category_id)
     {
-        /////// THIS IS A REFERENCE TO GETTING A PRODUCT FROM A DIFFERENT SUB CATEGORY
-        /////// WHEN A SUB CATEGORY RETURNS 0
-        // $this->db->query("SELECT products.*,
-        //                 category.title as productCategory,
-        //                 sub_category.title as productSubCategory
-        //                 FROM products
-        //                 INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
-        //                 INNER JOIN category ON category.id = products.category
-        //                 WHERE products.sub_category = :sub_category_id
-        //                     ");
+        
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $this->db
@@ -461,7 +506,7 @@ class Product extends Model
                         sub_category.title as productSubCategory
                         FROM products
                         INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
-                        WHERE products.sub_category = :sub_category_id
+                        WHERE products.sub_category = :sub_category_id AND products.status=1
                         ");
 
             $this->db->bind(':sub_category_id', $sub_category_id);
@@ -509,8 +554,36 @@ class Product extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $searchTerm = trim($_POST['search']);
+            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+            $searchTerm = trim($_GET['query']);
+            $explode = explode(' ',$searchTerm);
+            $query = '';
+            $sub_category = '';
+            for($a=0;$a<count($explode);$a++){
+                if((isset($_GET))&&($_GET['sub_category']!='')){
+                $sub_category .= ' AND sub_category=:sub_category'.$a;    
+                }
+                $query .= ' OR name LIKE :search'.$a.$sub_category;
+                $query .= ' OR brand LIKE :brand'.$a.$sub_category;
+            }
+            
+           
+            $query = substr($query, 3);
+            //echo $query;exit;
+
+
+            // foreach (array_keys($data) as $key) {
+            //             $fields[] = $key;
+            //             $key_fields[] = ':' . $key;
+            //             $fields_imploded = implode(',', $fields);
+            //             $keys_imploded = implode(',', $key_fields);
+            //         }
+            //         $this->db->query(
+            //             'INSERT INTO messages (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')'
+            //         );
+            //         foreach (array_keys($data) as $key) {
+            //             $this->db->bind(':' . $key, $data[$key]);
+            //         }
 
             $this->db->query("SELECT *
                         /* category.title AS productCategory, */
@@ -518,8 +591,17 @@ class Product extends Model
                         FROM products
                         /* LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category */
                         /* LEFT JOIN category ON category.id = products.category */
-                        WHERE name LIKE :search OR brand LIKE :search");
-            $this->db->bind(':search', '%' . $searchTerm . '%');
+                        WHERE status='1' AND ".$query." GROUP BY id");
+            for ($b=0;$b<count($explode);$b++) {
+            $this->db->bind(':search'.$b, '%'.$explode[$b].'%');
+            $this->db->bind(':brand'.$b, '%'.$explode[$b].'%');
+            if((isset($_GET))&&($_GET['sub_category']!='')){
+            $this->db->bind(':sub_category'.$b, $_GET['sub_category']);  
+            }
+            }
+            
+
+            //$this->db->bind(':search', '%' . $searchTerm . '%');
 
             if ($this->db->resultSet()) {
                 $result['rowCount'] = $this->db->rowCount();
