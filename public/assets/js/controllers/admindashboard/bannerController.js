@@ -1,8 +1,8 @@
-///////////// THIS IS THE USE CONTROLLER///////
-///// THIS CONTROLS EVERY ACTIVITY ON THE USER PAGE
+///////////// THIS IS THE BANNER CONTROLLER///////
+///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
 /////////////////////////
 
-module.controller("usersController", [
+module.controller("bannerController", [
   "$scope",
   "$sce",
   "$http",
@@ -40,59 +40,112 @@ module.controller("usersController", [
 
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = pager;
-    $scope.pageSize = 10;
+    $scope.pageSize = 5;
     $scope.admin_data = $localStorage.user_data;
     $scope.admin_token = $localStorage.user_token;
     setTimeout(function () {
       $scope.$apply();
     }, 0);
 
-    $scope.get_all_users = function () {
+    $scope.toggle_form = function (id) {
+      $(".form_" + id).toggle(500);
+      $(".btn_" + id).toggle(500);
+    };
+
+    //* Start
+
+    $scope.fetch_all_banners = function () {
       $(".loader").show();
       $(".result").hide();
       $.ajax({
-        url: $scope.dirlocation + "adminapi/get_all_users",
+        url: $scope.dirlocation + "adminapi/fetch_all_banners",
         type: "GET",
         async: true,
         cache: false,
         contentType: false,
         headers: {
-          "gnice-authenticate":
-            $scope.admin_token + ":email:" + $scope.admin_data.email,
+          "gnice-authenticate": $scope.admin_token,
         },
         processData: false,
         success: function (result) {
-          // alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
           if (msg.status == "1") {
-            $scope.all_users = msg.data;
+            $scope.all_banners = msg.data;
             $scope.$apply();
-            $(".result").show();
+            $(".loader").hide();
+            // $(".result").html(msg.message);
+            // $(".result").show();
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
-            $(".result").show();
+            $(".result").show(500);
+
             setTimeout(() => {
-              $(".result").removeClass("alert alert-info");
               $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
             }, 3000);
           }
         },
       });
     };
+    $scope.create_new_banner = function () {
+      $(".loader").show();
+      var formData = new FormData($("#create_new_banner")[0]);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/create_new_banner",
+        type: "POST",
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (answer) {
+          // console.log(answer);
+          var response = JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
 
-    $scope.enable_or_disable = function (code, user, $index) {
-      $(".loader2_" + user.fullname).show();
+            $scope.fetch_all_banners();
+            $scope.$apply();
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+            $("#addCategory")[0].reset();
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          }
+        },
+      });
+    };
+    $scope.enable_or_disable_banner = function (code, banner, $index) {
+      $(".loader").show();
       var formData = new FormData();
 
       formData.append("status", code);
-      formData.append("seller_id", user.seller_id);
+      formData.append("banner_id", banner.id);
+      formData.append("banner_type", banner.type);
       $.ajax({
-        url: $scope.dirlocation + "adminapi/disable_enable_account",
+        url: $scope.dirlocation + "adminapi/disable_enable_banner",
         data: formData,
         type: "POST",
         async: true,
@@ -104,118 +157,77 @@ module.controller("usersController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader" + user.id).hide();
-          if (msg.status == "1") {
-            user.status = code;
-            $scope.$apply();
-
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
-
-            setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
-            }, 3000);
-          } else {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
-
-            setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
-            }, 3000);
-          }
-        },
-      });
-    };
-
-    $scope.localStorage_get = function (key) {
-      $scope[key] = $localStorage[key];
-    };
-
-    $scope.localStorage_save = function (key, value, url) {
-      $localStorage[key] = value;
-      if (url != "") {
-        $scope.go_to_url(url);
-      }
-    };
-    $scope.go_to_url = function (url) {
-      window.location.href = $scope.dirlocation + "admindashboard/" + url;
-    };
-
-    //* more data into modal window
-    $scope.append_modal_info = function (value) {
-      $scope.info = value;
-    };
-
-    $scope.fetch_all_product_of_seller = function (seller_id) {
-      $.ajax({
-        url:
-          $scope.dirlocation +
-          "adminapi/fetch_all_product_of_seller?seller_id=" +
-          seller_id,
-        type: "GET",
-        async: true,
-        cache: false,
-        contentType: "application/json",
-        headers: { "gnice-authenticate": $scope.admin_token },
-        processData: false,
-        success: function (result) {
-          var response = JSON.stringify(result);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(parsed);
-          console.log(msg);
           $(".loader").hide();
           if (msg.status == "1") {
-            $scope.all_user_ads = msg.data;
-            $scope.rowCount = msg.rowCounts;
+            banner.status = code;
             $scope.$apply();
-            $(".result").show();
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
-            $(".result").show();
+            $(".result").show(500);
+
             setTimeout(() => {
-              $(".result").removeClass("alert alert-info");
               $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
             }, 3000);
           }
         },
       });
     };
-    $scope.delete_user_account_and_ads = function (seller_id) {
-      // alert($scope.admin_token);
-      // return;
+
+    $scope.update_banner = function () {
+      $(".loader").show();
+      var formData = new FormData($("#update_banner")[0]);
+
       $.ajax({
-        url:
-          $scope.dirlocation +
-          "adminapi/delete_user_account_and_ads?seller_id=" +
-          seller_id,
-        type: "GET",
+        url: $scope.dirlocation + "adminapi/update_banner",
+        type: "POST",
+        data: formData,
         async: true,
         cache: false,
         contentType: false,
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
-        success: function (result) {
-          var response = JSON.stringify(result);
+        success: function (answer) {
+          var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          // alert(msg);
-          // alert(msg.status);
           $(".loader").hide();
           if (msg.status == "1") {
-            $scope.get_all_users();
+            $scope.fetch_all_banners();
             $scope.$apply();
-            $(".result").show();
-          } else {
+            $(".loader").hide();
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+            $scope.fetch_all_banners();
+            $scope.$apply();
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+            $("#update_banner")[0].reset();
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
           }
         },
       });

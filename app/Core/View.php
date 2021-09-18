@@ -14,7 +14,6 @@ class View
 
     public function render($name, $noInclude, $message)
     {
-
         if ($noInclude == true) {
             $js = null;
             $external_js = null;

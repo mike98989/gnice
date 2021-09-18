@@ -18,15 +18,15 @@
                     />
 
                 -->
-								<a href="dashboard" class="ml-lg-5 btn btn-dark btn-black ls-10">Sell Products!</a>
-							</div>
-							<div class="pl-lg-5 col-md-4 offset-md-0 offset-1 pt-4">
-								
-							</div>
-						</div>
+						<a href="dashboard" class="ml-lg-5 btn btn-dark btn-black ls-10">Sell Products!</a>
+					</div>
+					<div class="pl-lg-5 col-md-4 offset-md-0 offset-1 pt-4">
+
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
 
 			<div class="container">
 				<nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -52,27 +52,35 @@
 										<div class="btn-icon-group">
 											<button class="btn-icon btn-add-cart" title="Number" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
 										</div>
-									</figure>
-									<div class="product-details">
+									</a>
+									<div class="label-group">
+										<div class="product-label label-hot">10X VIP TOP+</div>
+									</div>
+									<div class="btn-icon-group">
+										<button class="btn-icon btn-add-cart" title="Number" data-toggle="modal"
+											data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
+									</div>
+								</figure>
+								<div class="product-details">
 									<div class="category-list">
 										<a href="" class="product-category">{{allSubProduct.productSubCategory}}</a>
 									</div>
 									<h2 class="product-title">
 										<a href="">{{allSubProduct.name}}</a>
 									</h2>
-									
-									
+
+
 									<div class="price-box">
 										<span class="product-price">{{allSubProduct.price | currency}}</span>
 									</div>
 									<div class="product-action">
-										
-										{{allSubProduct.lga}}, 
+
+										{{allSubProduct.lga}},
 										<a href="#">{{allSubProduct.state}}</a>
-										
+
 									</div>
 								</div>
-									<!--
+								<!--
 									<div class="product-details">
 
 										<div class="category-wrap">
@@ -92,7 +100,7 @@
 							-->
 							</div><!-- End .col-md-3 -->
 						</div>
-                           <!--
+						<!--
 							<div class="col-6 col-sm-4 product-default left-details product-list mb-4" ng-repeat="allSubProduct in allCatProducts | filter : all">
 								<figure>
 									<a href="#" class="pbtn" data-id1="{{allSubProduct.product_code}}">
@@ -130,14 +138,13 @@
 						
 						
 
-					</div><!-- End .col-lg-9 -->
+			</div><!-- End .col-lg-9 -->
 
-					<div class="sidebar-overlay"></div>
-					<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
-				<?php require_once '../app/views/inc/aside4.php';?>
-				</div><!-- End .row -->
-			</div><!-- End .container -->
+			<div class="sidebar-overlay"></div>
+			<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
+			<?php require_once '../app/views/inc/aside4.php';?>
+		</div><!-- End .row -->
+	</div><!-- End .container -->
 
-			<div class="mb-3"></div><!-- margin -->
-		</main><!-- End .main -->
-			
+	<div class="mb-3"></div><!-- margin -->
+</main><!-- End .main -->

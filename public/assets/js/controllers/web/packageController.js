@@ -1,14 +1,32 @@
-    ///////////// THIS IS THE INDEXPAGE CONTROLLER///////
-    ///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
-    /////////////////////////
+///////////// THIS IS THE INDEXPAGE CONTROLLER///////
+///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
+/////////////////////////
 
-  module.controller('packageController', ['$scope','$filter','$sce','$http','infogathering','$routeParams','$localStorage','$sessionStorage', function($scope, $filter, $sce, $http, datagrab,$routeParams,$localStorage,$sessionStorage) {
-    $scope.dirlocation=datagrab.completeUrlLocation;
+module.controller("packageController", [
+  "$scope",
+  "$filter",
+  "$sce",
+  "$http",
+  "infogathering",
+  "$routeParams",
+  "$localStorage",
+  "$sessionStorage",
+  function (
+    $scope,
+    $filter,
+    $sce,
+    $http,
+    datagrab,
+    $routeParams,
+    $localStorage,
+    $sessionStorage
+  ) {
+    $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = 1;
-    $scope.pageSize = 30; 
-    $scope.user_data  = $localStorage.user_data;
-    $scope.user_token  = $localStorage.user_token;
-
+    $scope.pageSize = 30;
+    $scope.user_data = $localStorage.user_data;
+    $scope.user_token = $localStorage.user_token;
+    
     $scope.init = function(){
       //alert(JSON.stringify($routeParams));
       if(($routeParams.reference)&&($routeParams.reference!='')){
@@ -84,25 +102,32 @@
         if($scope.selectedOption.value!='0'){
           
         var handler = PaystackPop.setup({
-            key: 'pk_test_ba985e21c8a78ea8da3609b479b2f087944dcb00',
-            email: $scope.user_data.email,
-            amount: $scope.selectedOption.value+'00',
-            currency: "NGN",
-            //ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-            metadata: {
-               custom_fields: [
-                  {
-                      display_name: $scope.user_data.email,
-                      variable_name: $scope.user_data.email,
-                      value: $scope.user_data.phone
-                  }
-               ]
-            },
-            callback: function(response){
-                $scope.paystackResponse = response.reference;
-                $http({method: "GET", url: $scope.dirlocation+"api/verify_transaction?reference="+$scope.paystackResponse+"&&source=browser"
-                }).then(function(response) {
-                var resp=JSON.stringify(response);
+          key: "pk_test_ba985e21c8a78ea8da3609b479b2f087944dcb00",
+          email: $scope.user_data.email,
+          amount: $scope.selectedOption.value + "00",
+          currency: "NGN",
+          //ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+          metadata: {
+            custom_fields: [
+              {
+                display_name: $scope.user_data.email,
+                variable_name: $scope.user_data.email,
+                value: $scope.user_data.phone,
+              },
+            ],
+          },
+          callback: function (response) {
+            $scope.paystackResponse = response.reference;
+            $http({
+              method: "GET",
+              url:
+                $scope.dirlocation +
+                "api/verify_transaction?reference=" +
+                $scope.paystackResponse +
+                "&&source=browser",
+            }).then(
+              function (response) {
+                var resp = JSON.stringify(response);
                 var parsed = JSON.parse(resp);
                 var msg=angular.fromJson(parsed);
                 //$scope.paymentResponse = msg;
@@ -111,22 +136,23 @@
                 }else{
                     alert('Something went wrong! Please try again');
                 }
-                
-                },function errorCallback(response) {
-                  return response.status;
-                  }); 
+              },
+              function errorCallback(response) {
+                return response.status;
+              }
+            );
 
-                alert('success. transaction ref is ' + $scope.paystackResponse);
-            },
-            onClose: function(){
-                alert('window closed');
-            }
-          });
-          handler.openIframe();
-        }else{
-            $scope.update_user_account_package('');
-        }
+            alert("success. transaction ref is " + $scope.paystackResponse);
+          },
+          onClose: function () {
+            alert("window closed");
+          },
+        });
+        handler.openIframe();
+      } else {
+        $scope.update_user_account_package();
       }
+    };
 
 
     $scope.update_user_account_package = function(successRedirectionUrl){
@@ -166,10 +192,9 @@
             $('.result').html(msg.message);  
             $('.result').show();
             alert(msg.message);
-            }
-    
-            }
-            });   
-    }
-
-  }]);
+          }
+        },
+      });
+    };
+  },
+]);

@@ -30,7 +30,10 @@
             </div><!-- End .banner -->
 
             <div class="banner d-flex flex-column align-items-center">
-                <h3 class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase"><em class="pt-3 ls-0">Sale</em>Many Item</h3>
+                <h3
+                    class="badge-sale bg-primary d-flex flex-column align-items-center justify-content-center text-uppercase">
+                    <em class="pt-3 ls-0">Sale</em>Many Item
+                </h3>
                 <h4 class="sale-text font1 text-uppercase m-b-3">45<sup>%</sup><sub>off</sub></h4>
                 <p>Get an awoof discounted rate this EMBER Month.</p>
                 <a href="#" class="btn btn-dark btn-md font1">View Sale</a>
@@ -79,7 +82,8 @@
                     </h2>
 
                     <div class="post-content">
-                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per incep tos himens.</p>
+                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent
+                            per conubia nostra, per incep tos himens.</p>
 
                         <a href="single.html" class="read-more">read more <i class="icon-right-open"></i></a>
                     </div><!-- End .post-content -->
@@ -103,7 +107,8 @@
                     </h2>
 
                     <div class="post-content">
-                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per incep tos himens.</p>
+                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent
+                            per conubia nostra, per incep tos himens.</p>
 
                         <a href="single.html" class="read-more">read more <i class="icon-right-open"></i></a>
                     </div><!-- End .post-content -->
@@ -127,7 +132,8 @@
                     </h2>
 
                     <div class="post-content">
-                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per incep tos himens.</p>
+                        <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent
+                            per conubia nostra, per incep tos himens.</p>
 
                         <a href="single.html" class="read-more">read more <i class="icon-right-open"></i></a>
                     </div><!-- End .post-content -->

@@ -3,14 +3,15 @@
 class Controller
 {
     //load model
-    function __construct() {
-		$url=$_SERVER['REQUEST_URI'];
-		$url = rtrim($url, '/');
-		$url = explode('/', $url);
-		$this->url = $url;
-		$this->view = new View();
-	}
-    
+    function __construct()
+    {
+        $url = $_SERVER['REQUEST_URI'];
+        $url = rtrim($url, '/');
+        $url = explode('/', $url);
+        $this->url = $url;
+        $this->view = new View();
+    }
+
     public function model($model)
     {
         // require model file
@@ -24,7 +25,7 @@ class Controller
     // {
     //     //check for view file
     //     //print_r($_SESSION);exit;
-        
+
     //     if (file_exists('../app/Views/' . $view . '.html')) {
     //         if(!isset($_SESSION)){
     //         if ($include_header == true) {

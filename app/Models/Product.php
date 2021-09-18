@@ -46,8 +46,8 @@ class Product extends Model
             //             LEFT JOIN products ON products.id = saved_products.product_id 
             //             WHERE saved_products.user_id=:user_id AND saved_products.status='1'  ORDER BY products.id DESC");
 
-        $this->db
-        ->query("SELECT saved_products.*, products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen FROM saved_products INNER JOIN products ON saved_products.product_id= products.id LEFT JOIN users ON users.seller_id = products.seller_id  WHERE saved_products.user_id=:user_id");
+            $this->db
+                ->query("SELECT saved_products.*, products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen FROM saved_products INNER JOIN products ON saved_products.product_id= products.id LEFT JOIN users ON users.seller_id = products.seller_id  WHERE saved_products.user_id=:user_id");
             $this->db->bind(':user_id', $user_id);
             if ($this->db->resultSet()) {
                 $result['data'] = $this->db->resultSet();
@@ -150,8 +150,8 @@ class Product extends Model
         }
     }
 
-    
-    public function deleteProduct($product_id,$seller_id)
+
+    public function deleteProduct($product_id, $seller_id)
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
@@ -163,18 +163,18 @@ class Product extends Model
             $row = $this->db->singleResult();
             //print_r($row->image);exit; 
             //$delete_image = deleteImage($row->image, 'public/assets/images/uploads/products');
-            $delete_image = deleteFile($row->image,'products');
+            $delete_image = deleteFile($row->image, 'products');
             $this->db->query("DELETE FROM products WHERE id = :product_id AND seller_id=:seller_id");
             $this->db->bind(':product_id', $product_id);
             $this->db->bind(':seller_id', $seller_id);
             $this->db->execute();
             $result['message'] = 'Product details deleted!';
             $result['status'] = '1';
-        }else{
+        } else {
             $result['message'] = 'Invalid request';
             $result['status'] = '0';
         }
-    return $result;
+        return $result;
     }
 
     public function saveProductReview()
@@ -271,35 +271,35 @@ class Product extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
-            
+
             $this->db->query(" SELECT * FROM saved_products WHERE product_id = :product_id AND user_id=:user_id AND status = 1");
             $this->db->bind(':product_id', $data['product_id']);
             $this->db->bind(':user_id', $data['user_id']);
             $this->db->execute();
-        if ($this->db->rowCount() == 0) {
-            $this->db->query(
-                'INSERT INTO saved_products (product_id, user_id, date_saved) VALUES (:product_id, :user_id, now())');
-            $this->db->bind(':product_id', $data['product_id']);
-            $this->db->bind(':user_id', $data['user_id']);
-            if ($this->db->execute()) {
-                $result['message'] = 'product saved successfully';
-                $result['status'] = '1';
+            if ($this->db->rowCount() == 0) {
+                $this->db->query(
+                    'INSERT INTO saved_products (product_id, user_id, date_saved) VALUES (:product_id, :user_id, now())'
+                );
+                $this->db->bind(':product_id', $data['product_id']);
+                $this->db->bind(':user_id', $data['user_id']);
+                if ($this->db->execute()) {
+                    $result['message'] = 'product saved successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'something went wrong';
+                    $result['status'] = '0';
+                }
             } else {
-                $result['message'] = 'something went wrong';
+                $result['message'] = 'Item already saved by user';
                 $result['status'] = '0';
             }
-            
-        }else{
-        $result['message'] = 'Item already saved by user';
-        $result['status'] = '0';
+        } else {
+            $result['message'] = 'Invalid request';
+            $result['status'] = '0';
         }
-    }else{
-        $result['message'] = 'Invalid request';
-        $result['status'] = '0';
+        return $result;
     }
-    return $result;
-}
-    
+
 
     public function mostViewedProduct()
     {
@@ -341,7 +341,6 @@ class Product extends Model
                             INNER JOIN category ON category.id = products.category
                            INNER JOIN product_ratings ON product_ratings.product_code = products.product_code
                             ");
-
             if ($this->db->resultSet()) {
                 $result['rowCount'] = $this->db->rowCount();
                 $rows['data'] = $this->db->resultSet();
@@ -620,18 +619,17 @@ class Product extends Model
     {
         $header = apache_request_headers();
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
-            $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1 ORDER BY id DESC");
-            $this->db->bind(':seller_id', $seller_id);
-            if ($this->db->resultSet()) {
-                $result['rowCounts'] = $this->db->rowCount();
-                $result['data'] = $this->db->resultSet();
-                $result['status'] = '1';
-            } else {
-                $result['data'] = [];
-                $result['status'] = '0';
-            }
-            return $result;
-        
+        $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1 ORDER BY id DESC");
+        $this->db->bind(':seller_id', $seller_id);
+        if ($this->db->resultSet()) {
+            $result['rowCounts'] = $this->db->rowCount();
+            $result['data'] = $this->db->resultSet();
+            $result['status'] = '1';
+        } else {
+            $result['data'] = [];
+            $result['status'] = '0';
+        }
+        return $result;
     }
 
     public function messageProductSeller()
@@ -646,7 +644,7 @@ class Product extends Model
         $_POST['date'] = $date;
         $product_code = $_POST['product_code'];
         $seller_id = $_POST['seller_id'];
-       
+
         if (isset($header['gnice-authenticate'])) {
 
             if (!(empty($sender_tel) || empty($sender_name) || empty($sender_name) || empty($message) || empty($product_code) || empty($seller_id))) {
@@ -736,18 +734,18 @@ class Product extends Model
             if (!(empty($id) || empty($product_code))) {
 
                 //get renamed pictures from helper functions
-                if(isset($_FILES['files'])){
-                $uploader = uploadMultiple('pro', 'products', 2);
-                $image = $uploader['imageUrl'];
+                if (isset($_FILES['files'])) {
+                    $uploader = uploadMultiple('pro', 'products', 2);
+                    $image = $uploader['imageUrl'];
 
-                // $product_code = rand(1000000, 100000000);
-                $_POST['image'] = $image;
+                    // $product_code = rand(1000000, 100000000);
+                    $_POST['image'] = $image;
                 }
                 // $_POST['product_code'] = rand(1000000, 100000000);
                 $data = filter_var_array($_POST);
                 $data = array_map('trim', array_filter($data));
                 $id = $data['edit'];
-                $excluded = ['files','edit','seller_id'];
+                $excluded = ['files', 'edit', 'seller_id'];
                 $updateString = "";
                 $params = [];
                 foreach (array_keys($data) as $key) {
@@ -781,6 +779,4 @@ class Product extends Model
         }
         return $result;
     }
-
-
 }

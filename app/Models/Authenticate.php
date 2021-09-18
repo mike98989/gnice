@@ -24,8 +24,8 @@ class Authenticate extends Model
                         $msg['msg'] = "Your account is not yet active. Please click on the validation link sent to your email or contact administrator!";
                     } else {
                         $row->password = null;
-                        if(($row->seller=='1')&&($row->account_type!='0')){
-                        $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                        if (($row->seller == '1') && ($row->account_type != '0')) {
+                            $row->seller_account_details = $this->getUserAccountType($row->account_type);
                         }
                         $updated_token = $this->updateUserToken($row->id, 'users');
                         if ((isset($_POST['source'])) && ($_POST['source'] == 'browser')) {
@@ -131,7 +131,7 @@ class Authenticate extends Model
         }
     }
 
-    
+
 
 
     public function updateUserAccountType()
@@ -139,7 +139,7 @@ class Authenticate extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token,'users');
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
             $email = filter_var(strtolower($_POST['email_to_be_activated']), FILTER_VALIDATE_EMAIL);
             $selectedOption = filter_var($_POST['selectedOption']);
@@ -156,13 +156,13 @@ class Authenticate extends Model
                 }
                 $this->db->bind(':account_type', $selectedOption);
 
-                $this->db->bind(':id', $check_email->id);
-                if ($this->db->execute()) {
-                    $check_email_again = $this->findUserByEmail($email, 'users');
-                    $check_email_again->seller_account_details = $this->getUserAccountType($check_email_again->account_type);
-                    $msg['data'] = $check_email_again;
-                    $msg['msg'] = "Successfully updated user account type!";
-                    $msg['status'] = '1';
+                    $this->db->bind(':id', $check_email->id);
+                    if ($this->db->execute()) {
+                        $check_email_again = $this->findUserByEmail($email, 'users');
+                        $check_email_again->seller_account_details = $this->getUserAccountType($check_email_again->account_type);
+                        $msg['data'] = $check_email_again;
+                        $msg['msg'] = "Successfully updated user account type!";
+                        $msg['status'] = '1';
                     } else {
                         return false;
                     }
@@ -170,11 +170,10 @@ class Authenticate extends Model
                     $msg['msg'] =  "invalid email address";
                     $msg['status'] = '0';
                 }
-            }else {
+            } else {
                 $msg['msg'] =  "invalid token";
                 $msg['status'] = '0';
             }
-            
         } else {
             $msg['msg'] =  "invalid request";
             $msg['status'] = '0';
@@ -345,10 +344,10 @@ class Authenticate extends Model
                     if ($this->db->execute()) {
                         //$update = $this->updateUserAccountType($email,'2');
                     }
-                   
-                    if((isset($_GET['source']))&&($_GET['source']=='browser')){  
-                    print_r(json_encode($result)); 
-                    return;   
+
+                    if ((isset($_GET['source'])) && ($_GET['source'] == 'browser')) {
+                        print_r(json_encode($result));
+                        return;
                     }
                     header('location:https://gnice.com.ng/dashboard/transactionstatus?ref=' . $result['data']['reference']);
                 }
@@ -373,7 +372,7 @@ class Authenticate extends Model
                         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                         $data['signup_date'] = date('Y-m-d');
                         $data['status'] = '1';
-                        $data['image']='default.png';
+                        $data['image'] = 'default.png';
                         $exclude = array('confirm_password');
 
                         ////////////GENERATE CONFIRMATION CODE AND SEND EMAIL
@@ -707,17 +706,17 @@ class Authenticate extends Model
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
-            $verifyToken = $this->verifyToken($token,'users');
+            $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $seller_id = $_POST['seller_id'];
-            $email = trim($_POST['email']);
-            $phone = trim($_POST['phone']);
-            $fullname = trim($_POST['fullname']);
-            $phone = trim($_POST['phone']);
-            $state = trim($_POST['state']);
-            $uploader = uploadMultiple('pro', 'products', 2);
-            //Filter sanitize all input as string to remove all unwanted scripts and tags
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $seller_id = $_POST['seller_id'];
+                $email = trim($_POST['email']);
+                $phone = trim($_POST['phone']);
+                $fullname = trim($_POST['fullname']);
+                $phone = trim($_POST['phone']);
+                $state = trim($_POST['state']);
+                $uploader = uploadMultiple('pro', 'products', 2);
+                //Filter sanitize all input as string to remove all unwanted scripts and tags
 
                 if (!(empty($email) || empty($seller_id) || empty($fullname) || empty($phone) || empty($state))) {
                     $is_email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -772,9 +771,9 @@ class Authenticate extends Model
                     $result['error'] = ' all * fields are required';
                     $result['status'] = '0';
                 }
-            }else{
-                $result['status']='0';
-                $result['msg']='Invalid token';    
+            } else {
+                $result['status'] = '0';
+                $result['msg'] = 'Invalid token';
             }
         } else {
             echo 'invalid request';
@@ -783,49 +782,51 @@ class Authenticate extends Model
         return $result;
     }
 
-    public function uploadProfileImage(){
+    public function uploadProfileImage()
+    {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-        $token = filter_var($header['gnice-authenticate']);
-        $verifyToken = $this->verifyToken($token,'users');
-        if ($verifyToken) {
-            $uploader = uploadMultiple('profile', 'profile', 2);
-            $image = $uploader['imageUrl'];
-            if(isset($image) && strlen($image) > 0){
-                $this->db->query("UPDATE users SET image = :image WHERE email = :email AND status = 1");
-                $this->db->bind(':image', $image);
-                $this->db->bind(':email', $verifyToken->email);
-                if($this->db->execute()){
-                    $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token, 'users');
+            if ($verifyToken) {
+                $uploader = uploadMultiple('profile', 'profile', 2);
+                $image = $uploader['imageUrl'];
+                if (isset($image) && strlen($image) > 0) {
+                    $this->db->query("UPDATE users SET image = :image WHERE email = :email AND status = 1");
+                    $this->db->bind(':image', $image);
                     $this->db->bind(':email', $verifyToken->email);
-                    $row = $this->db->singleResult();
-                    $row->seller_account_details = $this->getUserAccountType($row->account_type);
-                    $result['data']=$row;
-                    $result['message'] = 'profile picture update successfully';
-                    $result['status'] = '1';
-                    $result['errors'] = $uploader['image_error'];
-                } else{
-                    $result['message'] = 'profile picture update failed';
+                    if ($this->db->execute()) {
+                        $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+                        $this->db->bind(':email', $verifyToken->email);
+                        if ($this->db->execute()) {
+                            $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+                            $this->db->bind(':email', $verifyToken->email);
+                            $row = $this->db->singleResult();
+                            $row->seller_account_details = $this->getUserAccountType($row->account_type);
+                            $result['data'] = $row;
+                            $result['message'] = 'profile picture update successfully';
+                            $result['status'] = '1';
+                            $result['errors'] = $uploader['image_error'];
+                        } else {
+                            $result['message'] = 'profile picture update failed';
+                            $result['status'] = '0';
+                            $result['errors'] = $uploader['image_error'];
+                        }
+                    } else {
+                        $result['message'] = 'select a picture';
+                        $result['status'] = '0';
+                    }
+                } else {
                     $result['status'] = '0';
-                    $result['errors'] = $uploader['image_error'];
-
+                    $result['msg'] = 'Invalid token';
                 }
-            }else {
-                $result['message'] = 'select a picture';
-                $result['status'] = '0';
+            } else {
+                echo 'invalid request';
+                exit();
             }
-
-            }else{
-            $result['status']='0';
-            $result['msg']='Invalid token';    
-            }
-        } else {
-            echo 'invalid request';
-            exit();
+            return $result;
         }
-       return $result;
-    } 
-
+    }
     public function loginAdmin()
     {
         $header = apache_request_headers();
@@ -849,10 +850,10 @@ class Authenticate extends Model
                             unset($row->password, $row->id);
                             @session_start();
                             Session::init();
-                            Session::set('loggedIn',true);
-                            Session::set('loggedType','admin');
-                            Session::set('token',$updated_token);
-                            Session::set('data',$row);
+                            Session::set('loggedIn', true);
+                            Session::set('loggedType', 'admin');
+                            Session::set('token', $updated_token);
+                            Session::set('data', $row);
                             $result['status'] = '1';
                             $result['data'] = $row;
                             $result['token'] = $updated_token;
@@ -890,17 +891,24 @@ class Authenticate extends Model
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-            if ($_SESSION['privilege'] == 3) {
-                $data = filter_var_array($_POST);
-                $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
-                if ($email == true) {
-                    $data['email']  = $email;
-                    $check_email = $this->findUserByEmail($email, 'admins');
-                    if ($check_email == false) {
-                        $data['status'] = 1;
-                        $data['reset_password'] = rand(1000, 10000);
-                        $subject = "Welcome to Gnice";
-                        $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
+            // if ($_SESSION['privilege'] == 3) {
+            $data = filter_var_array($_POST);
+            $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
+            if ($email == true) {
+                $data['email']  = $email;
+                $check_email = $this->findUserByEmail($email, 'admin');
+                if ($check_email == false) {
+                    // if ($data['password'] === $data['confirm_password']) {
+                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                    $data['status'] = '1';
+                    $data['image'] = 'default.png';
+                    //$exclude = array('confirm_password');
+                    $data['status'] = 1;
+                    $reset['reset_password'] = rand(1000, 10000);
+                    // $data['reset_password'] = rand(1000, 10000);
+                    $subject = "Welcome to Gnice";
+                    $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
                      <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
                      <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
                      <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
@@ -908,10 +916,10 @@ class Authenticate extends Model
                      </div>
                      <div style='background:#fff;padding:10px'>
                      <div style='text-align:left;font-size:14px;padding:0 20px'>
-                     <h3 style='color:#666666'>Hello  " . $data['name'] . " </h3>
+                     <h3 style='color:#666666'>Hello  " . $data['fullname'] . " </h3>
                      <p style='line-height:20px'>
                      Welcome to <strong>Gnice Market Place</strong>. We bring you a world of possibilities. Get ready to explore.To validate your account, please complete your profile by entering this; <br/>
-                     <h1>" . $data['reset_password'] . "</h1><br/>
+                     <h1>" . $reset['reset_password'] . "</h1><br/>
                      <hr style='border:none; border-bottom:1px solid #E7E7E7' />
                      </p>
                      <p style='line-height:15px;text-align:left;font-size:12px;margin-top:15px'>
@@ -921,41 +929,40 @@ class Authenticate extends Model
                      </div>
                      </div>
                      </div>";
-                        $send_mail = $this->send_mail($email, $data['name'], $subject, $html_message);
-                        foreach (array_keys($data) as $key) {
-                            $fields[] = $key;
-                            $key_fields[] = ":" . $key;
-                            $fields_imploded = implode(",", $fields);
-                            $keys_imploded = implode(",", $key_fields);
-                        }
+                    $send_mail = $this->send_mail($email, $data['fullname'], $subject, $html_message);
+                    foreach (array_keys($data) as $key) {
+                        $fields[] = $key;
+                        $key_fields[] = ":" . $key;
+                        $fields_imploded = implode(",", $fields);
+                        $keys_imploded = implode(",", $key_fields);
+                    }
 
-                        $this->db->query('INSERT INTO admins (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
-                        foreach (array_keys($data) as $key) {
-                            $this->db->bind(":" . $key, $data[$key]);
-                        }
-                        if ($this->db->execute()) {
-                            $result['message'] =  "New Admin account created. Please check your mail for confirmation code.";
-                            $result['status'] = '1';
-                            $result['code'] = $data['reset_password'];
-                        } else {
-                            $result['message'] = 'try again something went wrong!';
-                            $result['status'] = '0';
-                        }
+                    $this->db->query('INSERT INTO admin (' . $fields_imploded . ') VALUES (' . $keys_imploded . ')');
+                    foreach (array_keys($data) as $key) {
+                        $this->db->bind(":" . $key, $data[$key]);
+                    }
+                    if ($this->db->execute()) {
+                        $result['message'] =  "New Admin account created. Please check your mail for confirmation code.";
+                        $result['status'] = '1';
                     } else {
-                        $result['message'] = 'Please a email is already in use';
+                        $result['message'] = 'try again something went wrong!';
                         $result['status'] = '0';
                     }
                 } else {
-                    $result['message'] = 'Please a provide email ';
+                    $result['message'] = 'Please a email is already in use';
                     $result['status'] = '0';
                 }
             } else {
-                $result['message'] = 'not allowed, upgrade account';
+                $result['message'] = 'Please a provide email ';
                 $result['status'] = '0';
             }
         } else {
-            $result['message'] = 'invalid request ';
+            $result['message'] = 'not allowed, upgrade account';
+            $result['status'] = '0';
         }
+        // } else {
+        //     $result['message'] = 'invalid request ';
+        // }
 
         return $result;
     }
@@ -966,7 +973,7 @@ class Authenticate extends Model
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
 
-            $verifyCode = $this->verifyResetCode($data['reset_code'], 'admins');
+            $verifyCode = $this->verifyResetCode($data['reset_code'], 'admin');
             if ($verifyCode) {
                 if ($verifyCode->status != '0') {
                     if ($data['password'] == $data['confirm_password']) {
@@ -1025,7 +1032,7 @@ class Authenticate extends Model
         $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
         if ($email == true) {
             $data['email']  = $email;
-            $check_email = $this->findUserByEmail($email, 'admins');
+            $check_email = $this->findUserByEmail($email, 'admin');
             if ($check_email == true) {
                 $data['status'] = 1;
                 $data['reset_password'] = rand(1000, 10000);
@@ -1052,7 +1059,7 @@ class Authenticate extends Model
                      </div>
                      </div>";
                 $send_mail = $this->send_mail($email, $data['name'], $subject, $html_message);
-                $this->db->query('UPDATE admins SET resest_password = :resest_password WHERE email = :email');
+                $this->db->query('UPDATE admin SET resest_password = :resest_password WHERE email = :email');
                 $this->db->bind(':email', $email);
                 $this->db->bind(':reset_password', $data['reset_password']);
                 if ($this->db->execute()) {

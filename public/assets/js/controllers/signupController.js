@@ -1,11 +1,26 @@
-    ///////////// THIS IS THE INDEXPAGE CONTROLLER///////
-    ///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
-    /////////////////////////
+///////////// THIS IS THE INDEXPAGE CONTROLLER///////
+///// THIS CONTROLS EVERY ACTIVITY ON THE INDEX PAGE
+/////////////////////////
 
-  module.controller('signupController', ['$scope','$sce','$http','infogathering','$routeParams','$localStorage','$sessionStorage', function($scope, $sce, $http, datagrab,$routeParams,$localStorage,$sessionStorage) {
-    
-    //$('.loader').show();  
-    $scope.dirlocation=datagrab.completeUrlLocation;
+module.controller("signupController", [
+  "$scope",
+  "$sce",
+  "$http",
+  "infogathering",
+  "$routeParams",
+  "$localStorage",
+  "$sessionStorage",
+  function (
+    $scope,
+    $sce,
+    $http,
+    datagrab,
+    $routeParams,
+    $localStorage,
+    $sessionStorage
+  ) {
+    //$('.loader').show();
+    $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = 1;
     $scope.pageSize = 30;
     
@@ -57,23 +72,23 @@
             $('.result').html('PASSWORDS DO NOT MATCH!');  
             $('.result').show(); 
             }
-    }
+            $localStorage.$reset();
+    },
+        
 
-
-    
-    $scope.localStorage_get = function(key){
+    $scope.localStorage_get = function (key) {
       $scope[key] = $localStorage[key];
       //$scope.$apply();
-    }
+    };
 
-  $scope.localStorage_save = function(key,value,url){
+    $scope.localStorage_save = function (key, value, url) {
       $localStorage[key] = value;
       //$scope[key] = $localStorage[key];
       //alert(JSON.stringify($localStorage[key]));
       if(url!=''){
           $scope.go_to_url(url);
       }
-  }
+    };
 
   $scope.go_to_url = function (url){
       window.location.href=$scope.dirlocation+url;
@@ -168,11 +183,53 @@ $scope.resend_confirmation_code = function(){
              });
     }
 
+    $scope.confirm_user_signup = function () {
+      $(".loader").show();
+      $(".result").hide();
+      //var email = $('#email').val();
+      //var confirm_code = $('#confirm_code').val();
+      //alert(confirm_code);
+      var formData = new FormData($("#confirm_user_signup")[0]);
+      $.ajax({
+        url: $scope.dirlocation + "api/confirm_user_signup",
+        type: "POST",
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        enctype: "multipart/form-data",
+        headers: { "gnice-authenticate": "gnice-web" },
+        crossDomain: true,
+        processData: false,
+        success: function (answer) {
+          alert(answer);
+          var response = JSON.stringify(answer);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          alert(msg.msg);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $(".loader").hide();
+            $(".result").html(msg.msg);
+            $(".result").show();
+            alert(msg.msg);
+            window.location.href = datagrab.completeUrlLocation + "Welcome";
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.msg);
+            $(".result").show();
 
+            //$('.signup_loader').hide();
+            //$('.alert').html(answer);
+          }
+        },
+      });
+    };
 
-    $scope.clear_storage = function(){
-      $localStorage['fullname_checked']=false;
+    $scope.clear_storage = function () {
+      $localStorage["fullname_checked"] = false;
       window.location.reload();
-    }
-   
-    }]);
+    };
+  },
+]);

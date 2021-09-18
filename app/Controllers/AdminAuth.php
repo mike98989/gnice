@@ -13,8 +13,7 @@ class AdminAuth extends Controller
     {
         $data = [];
         $this->view->js = ['controllers/loginController.js'];
-        $this->view->render('Admin/gnice_login',true,'');
-        
+        $this->view->render('Admin/gnice_login', true, '');
     }
 
     public function login_admin()
@@ -26,15 +25,38 @@ class AdminAuth extends Controller
         // redirect('admin/dashboad');
     }
 
-    public function signup_admin()
+    // public function signup_admin()
+    // {
+    //     $result = $this->model('Authenticate')->registerAdmin();
+    //     print_r(json_encode($_SESSION));
+    // }
+    public function create_new_admin_admin()
     {
-        $result = $this->model('Authenticate')->registerAdmin();
-        print_r(json_encode($_SESSION));
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            // print_r($_POST);
+            // die();
+            $result = $this->model('AdminTasks')->createAdminAccount($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
     }
     public function change_admin_password()
     {
-        $result = $this->model('Authenticate')->changeAdminPassword();
-        print_r(json_encode($result));
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            // die;
+            $result = $this->model('AdminTasks')->changeAdminPassword($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid response';
+            exit;
+        }
     }
     public function send_admin_reset_code()
     {
