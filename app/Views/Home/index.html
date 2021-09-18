@@ -71,7 +71,7 @@
 								</div><!-- End .home-slide -->
 							</div><!-- End .home-slider -->
 							
-							<div ng-if="banners.main_banner.length!=0">
+							<div ng-if="banners.main_banner.length!=0" ng-cloak>
 							<img src="{{dirlocation}}public/assets/images/uploads/banners/{{banners.main_banner[0].image}}" style="border-radius:15px;width:100%"/>	
 							</div>
 
@@ -136,7 +136,7 @@
 									<div class="product-column">
 										<h3 class="section-sub-title ls-n-20">Latest Products</h3>
 	
-	<div class="widget">
+	<div class="widget" ng-cloak>
 			<div class="owl-carousel owl-theme">
 	
 				<div class="banner" ng-repeat="product in products | limitTo:5:0" style="border:none;background-color:none">
