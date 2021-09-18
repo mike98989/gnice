@@ -1,7 +1,3 @@
-
-
-
-
 <main class="main"  ng-controller="homeController">
 			<div class="category-banner-container bg-gray">
 				<div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('assets/images/banners/banner-top.jpg');">
@@ -32,7 +28,7 @@
 				</div>
 			</div>
 
-			<div class="container" >
+			<div class="container">
 				<nav aria-label="breadcrumb" class="breadcrumb-nav">
 					<ol class="breadcrumb"  ng-init=" fetch_single_category()">
 						<li  class="breadcrumb-item"><a href="Home"><i class="icon-home"></i></a></li>
@@ -40,12 +36,9 @@
 					</ol>
 				</nav>
 
-				<div class="row">
-					<div class="col-lg-9 order-lg-1">
-					
+				<div class="row mx-0 divide-line up-effect">
+				<div class="col-lg-9 order-lg-1" ng-init="fetch_all_product_category()">
 
-	<div class="row pb-4" ng-init="fetch_all_product_category()">
-					<div class="row">
 							<div class="col-6 col-sm-4 col-md-3" ng-repeat="allSubProduct in allCatProducts | filter : all">
 								<div class="product-default inner-quickview inner-icon">
 									<figure>
@@ -135,8 +128,7 @@
 						-->
 
 						
-						</div>
-					</div>
+						
 
 					</div><!-- End .col-lg-9 -->
 

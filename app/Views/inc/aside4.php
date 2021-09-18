@@ -1,10 +1,10 @@
-<div class="sidebar-overlay"></div>
+ <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 	<aside class="sidebar-shop col-lg-3 mobile-sidebar">
-						<div class="sidebar-wrapper">
+						<div class="sidebar-wrapper" style="border-top:none;background-color: #fff;">
 							<div class="widget"  ng-init=" fetch_single_category()">
 								<h3 class="widget-title"  >
-									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Category</a>
+									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Sub Category</a>
 								</h3>
 
 								<div class="collapse show" id="widget-body-2"  >

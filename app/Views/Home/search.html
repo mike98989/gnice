@@ -1,0 +1,51 @@
+
+<main class="main" ng-controller="homeController">
+			<div class="container mb-2">
+				<div class="row">
+					<div class="col-lg-9">
+						<h2 class="section-title" style="padding-top:15px;margin-top:0;margin-bottom:0">Search Result for <?php echo $_GET['query'];?></h2>
+						
+                        <div ng-init="fetch_product_by_term('<?php echo $_GET['query'];?>','<?php echo $_GET['sub_cat'];?>')">
+
+							<div class="products_loader" style="text-align:center">
+								<img src="{{dirlocation}}public/assets/images/spinner.gif" style="width:40px;float:none;margin:0 auto">
+							</div>
+
+							<div class="row" ng-cloak ng-if="products.length==0">
+								<div class="col-lg-12" style="text-align:center;padding-top:20px">
+									<img src="{{dirlocation}}public/assets/images/cancel_file.png" style="width:80px;float:none;margin:0 auto">
+							No Item matching your search. Please try again.	</div>
+							</div>
+							<div class="row" ng-cloak ng-if="products.length!=0" style="padding-top:10px">
+									
+							<div class="col-6 col-sm-4 col-md-3" ng-repeat="product in products ">
+								<div class="product-default inner-quickview inner-icon" style="background-color: #fff;border-radius:10px;">
+									<figure style="padding:0;">
+										<a href="#" ng-init="img = product.image.split(',')">
+											<div style="height:130px;overflow:hidden">
+											<img  style="width: 100%!important; border-top-right-radius: 10px; border-top-left-radius: 10px; " src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+										</div>
+										</a>
+										<div style="padding:7px">
+											<h2 class="product-title" style="margin-top:3px;margin-bottom:3px">
+											<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}">{{product.name}}</a>
+											</h2>
+											<span style="font-size:10px"><i class="fa fa-map-marker"></i> {{product.land_mark}}</span>
+											<div class="price-box">
+												<span class="product-price text-primary">{{product.price | currency:"NGN "}}</span>
+											</div><!-- End .price-box -->
+										</div><!-- End .product-details -->
+									</figure>
+									
+								</div>
+							</div><!-- End .col-md-3 -->
+						</div>
+
+						
+
+					</div>
+					</div><!-- End .col-lg-9 -->
+				<?php require_once './app/views/inc/aside.php';?>
+				</div><!-- End .row -->
+			</div><!-- End .container -->
+		</main><!-- End .main -->

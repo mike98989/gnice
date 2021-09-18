@@ -1,8 +1,73 @@
 
-  <div class="container-scroller"  ng-controller="loginController">
+  <main class="main" ng-controller="loginController">
+      <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{dirlocation}}"><i class="icon-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Login</li>
+          </ol>
+        </div><!-- End .container -->
+      </nav>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 card" style="padding:0 35px;float:none;margin:0 auto">
+            <div class="heading">
+              <h2 class="title">Welcome Back!</h2>
+              <p>If you have an account with us, please log in.</p>
+            </div><!-- End .heading -->
+
+            <form class="pt-3 card-details"  ng-submit="user_login()" id="user_login">
+                <div class="alert alert-info result" style="display:none"></div>
+                <div class="form-group">
+                  <label for="exampleInputEmail">Username</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="fa fa-user text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg border-left-0" type="email" name="username" id="username" placeholder="Email Address">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword">Password</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="fa fa-key text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control form-control-lg border-left-0" name="password" id="password"  placeholder="Password">                        
+                  </div>
+                </div>
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                  
+                  <a href="{{dirlocation}}recovery" class="auth-link text-black">Forgot password?</a>
+                </div>
+                <div class="my-3">
+                  <input type="hidden" value="browser" name="source">
+                    <button class="btn bg-primary btn-md text-white" type="submit">
+                     <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="float:left;width:15px;margin-right:5px;display:none"> LOGIN</button>
+                </div>
+           
+                <div class="text-center mt-4 font-weight-light">
+                  Don't have an account? <a href="SignUp" class="text-primary">Create</a>
+                </div>
+              </form>
+          </div><!-- End .col-md-6 -->
+
+          </div><!-- End .col-md-6 -->
+        </div><!-- End .row -->
+      </div><!-- End .container -->
+
+      <div class="mb-5"></div><!-- margin -->
+    </main><!-- End .main -->
+
+  <div class="container-scroller"  ng-controller="loginController" style="display:none">
     <div class="container-fluid page-body-wrapper full-page-wrapper" >
       <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
-        <div class="row flex-grow">
+        <div class="row">
           <div class="col-lg-6 d-flex align-items-center justify-content-center" style="float:none;margin:0 auto">
             <div class="auth-form-transparent text-left p-3">
               <div class="brand-logo">

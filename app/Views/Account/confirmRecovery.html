@@ -3,43 +3,33 @@
 
 
 
-  <div class="container-scroller"  ng-controller="signupController">
+  <div class="container-scroller"  ng-controller="loginController">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="content-wrapper d-flex align-items-center auth lock-full-bg">
         <div class="row w-100">
-          <div class="col-lg-4 mx-auto">
+          <div class="col-lg-4 card mx-auto">
             <div class="auth-form-transparent text-white text-left p-5 text-center">
-              <h2 class="title">Confirm password recovery code</h2>
+              <h4 class="title">Recover Account Password</h4>
              
-              
-                 <form action="" class="pt-5" id="confirm_password_recovery_code" ng-submit="confirm_password_recovery_code()"  method="POST">  
-     
-        
-        
-                <div class="form-group">
-              <input
-            type="text"
-            name="confirm_code"
-            id="confirm_code"
-            class="form-control"
-            placeholder="Confirmation Code"
-            required
-          />
-                </div>
+              <p class="text-info">Please enter confirmation code and password.</p>
+                 <form id="confirm_password_recovery_code" ng-submit="confirm_password_recovery_code()">  
+              <div class="alert alert-info result" style="display:none"></div>
+              <div class="form-group">
+              <input type="text" name="confirm_code" id="confirm_code" class="form-control" placeholder="Confirmation Code" required/>
+              </div>
 
                 <div class="form-group">
-                    <input
-            type="password"
-            name="password"
-            id="password"
-            class="form-control"
-            placeholder="New Password"
-            required
-          />
+                <input type="password" name="password" id="password" class="form-control" placeholder="New Password" required/>
                 </div>
-                <div class="mt-5">
-                   <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"> Confirm Account</button>
+
+
+                <div class="form-group">
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm New Password" required/>
                 </div>
+                
+
+                   <button class="btn btn-block bg-primary text-white btn-lg font-weight-medium auth-form-btn" type="submit"> Confirm Account</button>
+                
               
               </form>
             </div>

@@ -312,7 +312,13 @@
     $scope.onCategoryValueChange = function(value){
       let objectval = JSON.parse(value);   
       $scope.selected_category = objectval;
-      $scope.sub_category = objectval.subcategory;
+      $scope.sub_categories = objectval.subcategory;
+    }
+
+    $scope.onSubCategoryValueChange = function(value){
+      let objectval = JSON.parse(value);   
+      $scope.selected_subcategory = objectval;
+      //$scope.sub_category = objectval.subcategory;
     }
 
 
@@ -346,6 +352,8 @@
         }
       });
     }
+
+    
 
      $scope.searchCat = function () {
       var cad = $('#cat').val();
@@ -454,6 +462,9 @@
         }
       });
     }
+
+
+    
 
     $scope.localStorage_get = function(key){
       $scope[key] = $localStorage[key];

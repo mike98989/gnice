@@ -67,7 +67,7 @@
                     crossDomain: true,
                     processData: false,
                     success: function (answer) {
-                    alert(answer);
+                    //alert(answer);
                     var response=JSON.stringify(answer);
                     var parsed = JSON.parse(response);
                     var msg=angular.fromJson(parsed);
@@ -76,10 +76,8 @@
                     $('.loader').hide();    
                     $('.result').html(msg.msg);  
                     $('.result').show();
-                    $localStorage["user_data"] = msg.data;
-                    $scope.user_data  = $localStorage.user_data;
-                    alert(msg.msg);
-                    
+                    document.getElementById("update_password").reset();
+                    //alert(msg.msg);
                     }else{
                     $('.loader').hide();    
                     $('.result').html(msg.message);  
@@ -91,7 +89,7 @@
                     });
                 }else{
                 var msg = "Passwords do not match";    
-                alert(msg);
+                //alert(msg);
                 $('.loader').hide(); 
                 $('.result').html(msg);  
                 $('.result').show();

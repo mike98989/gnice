@@ -146,7 +146,7 @@ class Authenticate extends Model
             $check_email = $this->findUserByEmail($email, 'users');
             if ($check_email !== false) {
                 if ($check_email->seller_id == null) {
-                    $seller_id = 'AG-' . rand(1000000, 10000000);
+                    $seller_id = 'AG-' . rand(10000000, 100000000);
                     $date = date('Y-m-d');
                     $this->db->query('UPDATE users SET account_type = :account_type,account_type_activation_date=:account_type_activation_date, seller_id=:seller_id WHERE id = :id ');
                     $this->db->bind(':seller_id', $seller_id);
@@ -269,6 +269,40 @@ class Authenticate extends Model
         return $msg;
     }
 
+
+    public function fetch_transaction_by_reference()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $data = filter_var_array($_GET);
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token, 'users');
+            if ($verifyToken) {
+            $this->db->query('SELECT * FROM  transactions WHERE trans_reference = :reference');
+            $this->db->bind(':reference', $data['id']);
+            $row = $this->db->singleResult();
+            if ($this->db->rowCount() > 0) {
+            $msg['data']=$row;
+            $msg['status'] = '1';
+            } else {
+            $msg['status'] = '0';
+            $msg['msg'] = 'Reference ID not found!';
+            }
+                
+            } else {
+                $msg['msg'] =  "Invalid token";
+                $msg['status'] = '-1';
+            }
+        } else {
+            $msg['msg'] =  "invalid request";
+            $msg['status'] = '0';
+        }
+        return $msg;
+    }
+
+
+
+
     public function verify_transaction()
     {
 
@@ -298,7 +332,7 @@ class Authenticate extends Model
             $result = json_decode($response, true);
             $email = $result['data']['customer']['email'];
 
-            if ($result['data']['status'] == 'success') {
+            //if ($result['data']['status'] == 'success') {
                 $check_email = $this->findUserByEmail($email, 'users');
                 if ($check_email != false) {
                     $this->db->query("INSERT INTO transactions (trans_reference,amount,currency,user_email,trans_date,trans_status) VALUES (:reference,:amount,:currency,:email,:trans_date,:status)");
@@ -318,7 +352,7 @@ class Authenticate extends Model
                     }
                     header('location:https://gnice.com.ng/dashboard/transactionstatus?ref=' . $result['data']['reference']);
                 }
-            }
+            //}
             //header('Location:http://localhost/gnice/transactionstatus');
         }
     }
@@ -608,7 +642,7 @@ class Authenticate extends Model
                             $this->db->bind(':email', $email);
                             $this->db->bind(':activated', '1');
                             $this->db->execute();
-                            $msg['msg'] = "Successfully confirmed your account.";
+                            $msg['msg'] = "Successfully confirmed your account. Please use the login Link to signin to your account.";
                             $msg['status'] = '1';
                         } else {
                             $msg['msg'] = "Invalid CONFIRMATION CODE";
@@ -1040,12 +1074,72 @@ class Authenticate extends Model
         return $result;
     }
 
+
+    public function generateConfirmationCode()
+    {
+        $data = filter_var_array($_POST);
+        $email = filter_var(strtolower(trim($data['email'])), FILTER_VALIDATE_EMAIL);
+        if ($email == true) {
+            $data['email']  = $email;
+            $check_email = $this->findUserByEmail($email, 'users');
+            if ($check_email == true) {
+                if($check_email->activated!='1'){
+                $confirmation_code= rand(1000, 10000);
+                $subject = "GNICE Confirm Account";
+                $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
+                     <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
+                     <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
+                     <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
+
+                     </div>
+                     <div style='background:#fff;padding:10px'>
+                     <div style='text-align:left;font-size:14px;padding:0 20px'>
+                     <h3 style='color:#666666'>Hello  " . $check_email->fullname . " </h3>
+                     <p style='line-height:20px'>
+                     <strong>Gnice Market Place</strong> is committed in giving you the best shopping experience. Here is your confirmation code to enable you activate your account. <br/>
+                     <h1>" . $confirmation_code . "</h1><br/>
+                     <hr style='border:none; border-bottom:1px solid #E7E7E7' />
+                     </p>
+                     <p style='line-height:15px;text-align:left;font-size:12px;margin-top:15px'>
+                     If you did not associate your address with a Gnice account, please ignore this message.
+                     </p>
+                     </div>
+                     </div>
+                     </div>
+                     </div>";
+                $send_mail = $this->send_mail($email, $check_email->fullname, $subject, $html_message);
+                $this->db->query('UPDATE users SET user_confirm_id = :confirm_id WHERE email = :email');
+                $this->db->bind(':email', $email);
+                $this->db->bind(':confirm_id', $confirmation_code);
+                if ($this->db->execute()) {
+                    $result['message'] = 'Confirmation code sent successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['message'] = 'try again';
+                    $result['status'] = '0';
+                }
+            }else{
+                $result['message'] = 'This account is already activated.';
+                $result['status'] = '0';
+            }
+        }
+        else {
+                $result['message'] = 'Email address not found. Please signup.';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['msg'] =  "Please enter a valid email.";
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
     // TODO: admin logout
     public function adminLogout()
     {
         $header = apache_request_headers();
         if (isset($header['gnice-authenticate'])) {
-
             session_destroy();
             // redirect('users/login');
         }

@@ -12,14 +12,14 @@ class Category extends Controller
     {
         $data = [];
         $this->view->js = ['controllers/web/homeController.js'];
-        $this->view->render('Category/index', true, '');
+        $this->view->render('Category/index', false, '');
     }
 
     public function sub_category()
     {
         $data = [];
         $this->view->js = ['controllers/web/homeController.js'];
-        $this->view->render('Category/sub_category', true, '');
+        $this->view->render('Category/sub_category', false, '');
     }
 
 }

@@ -1,7 +1,7 @@
 <div class="sidebar-overlay"></div>
 <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 	<aside class="sidebar-shop col-lg-3 mobile-sidebar">
-						<div class="sidebar-wrapper">
+						<div class="sidebar-wrapper" style="border-top:none;background-color: #fff;">
 							<div class="widget">
 								<h3 class="widget-title"  >
 									<a  data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2"><?php echo $_GET['cat'];?></a>

@@ -23,18 +23,19 @@
                 <a href="#">Links</a>
                 <div class="header-menu">
                   <ul>
-                  <li ng-if="user_data">
-                  <a href="{{dirlocation}}dashboard/home">
-                <img src="{{dirlocation}}public/assets/images/uploads/profile/{{user_data.image}}" style="width:30px;height:30px;border-radius:20px;border:1px solid #fff"/>
-                    {{user_data.fullname}}
-                  </a>
-                  </li>  
+
+                  
                   <li><a href="<?php echo APP_URL;?>/home">Home</a></li>
                     <li><a href="<?php echo APP_URL;?>/about">About</a></li>
                     <li><a href="#">Blog</a></li>
                     <li><a href="{{dirloation}}contact">Contact</a></li>
                     <li><a href="<?php echo APP_URL;?>/dashboard/add_product">Sell</a></li>
-
+                    <li ng-if="user_data">
+                  <a href="{{dirlocation}}dashboard/home">
+                <img src="{{dirlocation}}public/assets/images/uploads/profile/{{user_data.image}}" style="width:25px;height:25px;border-radius:20px;border:1px solid #fff"/>
+                    
+                  </a>
+                  </li>  
                   </ul>
                 </div>
                 <!-- End .header-menu -->
@@ -67,7 +68,7 @@
           <!-- End .container -->
         </div>
         <!-- End .header-top -->
-    <?php if($url[1]=='home'){?>
+    <?php if(($url[1]=='home')||($url[1]=='')){?>
         <div class="header-middle" style="display:nne;height:auto;padding-bottom:0;padding-top:0">
           <div class="container">
             <div class="header-left col-lg-3 w-auto pl-0" style="text-align: center;">
@@ -82,23 +83,21 @@
                   Search For Anything
                 </h6>
                 <a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
+                <form method="get" action="<?php echo APP_URL;?>/search">
                   <div class="header-search-wrapper">
-                    <input ng-model="searchText" type="text" class="form-control" name="q" id="q" placeholder="Search..."/>
+                    <input ng-model="searchText" type="text" required class="form-control" name="query" placeholder="Search..."/>
                     <div class="select-custom" >
-                      <select id="cat" name="cat"  ng-init="fetch_all_categories_and_sub_categories()" >
+                      <select id="cat" name="sub_cat"  ng-init="fetch_all_categories_and_sub_categories()" >
                         <option   value="">All Categories</option>
                         <optgroup  ng-repeat="catSub in catSubs" label=" - {{catSub.title}}">
-                          <option  ng-repeat="sub in catSub.subcategory" value="{{ sub.sub_id }},{{ sub.parent_id }}">{{ sub.title }}</option>
+                          <option  ng-repeat="sub in catSub.subcategory" value="{{ sub.sub_id }}">{{ sub.title }}</option>
                         </optgroup>
                        
                       </select>
                     </div>
-                    <!-- End .select-custom -->
-                    <button
-                      class="btn p-0 icon-search-3"
-                       ng-click="searchCat()"
-                    ></button>
+                    <button class="btn2 p-0 icon-search-3" style="cursor: pointer" type="submit"></button>
                   </div>
+                </form>
                   <!-- End .header-search-wrapper -->
            
               </div>
@@ -124,6 +123,41 @@
         </div>
         <!-- End .header-middle -->
 </div>
+<?php }else{?>
+<div class="header-middle text-dark">
+        <div class="container">
+          
+          <div class="header-right w-lg-max pl-2">
+            <div class="header-search header-icon header-search-inline header-search-category w-lg-max mr-lg-4">
+              <a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
+              <form method="get" action="<?php echo APP_URL;?>/search">
+                <div class="header-search-wrapper">
+                  <input type="search" class="form-control" name="query" required id="q" placeholder="Search Products, Brands and Categories" value="<?php if(isset($_GET['query'])){echo $_GET['query'];}?>" required>
+                  <div class="select-custom">
+                    <select id="cat" name="sub_cat" ng-init="fetch_all_categories_and_sub_categories()" >
+                        <option   value="">All Categories</option>
+                        <optgroup  ng-repeat="catSub in catSubs" label=" - {{catSub.title}}">
+                          <option  ng-repeat="sub in catSub.subcategory" value="{{ sub.sub_id }}">{{ sub.title }}</option>
+                        </optgroup>
+                      </select>
+                  </div><!-- End .select-custom -->
+                  <button class="btn2 p-0 icon-search-3" style="cursor: pointer" type="submit"></button>
+                </div><!-- End .header-search-wrapper -->
+              </form>
+            </div><!-- End .header-search -->
+
+            <div class="d-none d-lg-flex align-items-center">
+              <a ng-if="!user_data" href="{{dirlocation}}login">Sign In</a>
+              <a ng-if="!user_data" href="{{dirlocation}}signup"> &nbsp; | Registration &nbsp; &nbsp;</a>
+              <button type="button" class="btn btn-primary btn-sm" style="border-radius: 25px;"><a href="{{dirlocation}}dashboard/add_product">SELL</a></button>
+            </div>
+          
+            <!-- End .header-contact -->
+
+          </div><!-- End .header-right -->
+        </div><!-- End .container -->
+      </div><!-- End .header-middle -->
+
 <?php }?>
         <!-- <div class="sticky-header d-none d-lg-block" ng-init="fetch_all_categories_and_sub_categories()">
           <div class="container">

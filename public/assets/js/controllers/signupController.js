@@ -42,7 +42,8 @@
               $('.loader').hide();    
               $('.result').html(msg.msg);  
               $('.result').show();
-              window.location.href=datagrab.completeUrlLocation+'Confirm'
+              window.location.href=datagrab.completeUrlLocation+'Confirm';
+              return;
               }else{
               $('.loader').hide();    
               $('.result').html(msg.msg);  
@@ -50,7 +51,7 @@
               alert(msg.msg);
               } 
               $localStorage.$reset();
-               }
+              }
              });
             }else{
             $('.result').html('PASSWORDS DO NOT MATCH!');  
@@ -68,30 +69,25 @@
   $scope.localStorage_save = function(key,value,url){
       $localStorage[key] = value;
       //$scope[key] = $localStorage[key];
-      //alert(JSON.stringify(value));
+      //alert(JSON.stringify($localStorage[key]));
       if(url!=''){
           $scope.go_to_url(url);
       }
   }
 
   $scope.go_to_url = function (url){
-      //alert($scope.dirlocation+'admindashboard/'+url);
-      window.location.href=$scope.dirlocation+'admindashboard/'+url;
+      window.location.href=$scope.dirlocation+url;
   }
 
 
-
-    $scope.confirm_user_signup = function(){
+$scope.resend_confirmation_code = function(){
     $('.loader').show();    
          $('.result').hide(); 
-          //var email = $('#email').val();
-          //var confirm_code = $('#confirm_code').val();
-          //alert(confirm_code);
-          var formData = new FormData($('#confirm_user_signup')[0]);
+          var formData = new FormData($('#resend_confirmation_code_form')[0]);
+          var email = $('#email').val();
           $.ajax({
-               url: $scope.dirlocation+'api/confirm_user_signup',
+               url: $scope.dirlocation+'api/resend_confirmation_code',
                type: 'POST',
-               //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
                data: formData,
                async: true,
                cache: false,
@@ -101,18 +97,64 @@
                crossDomain: true,
                processData: false,
                success: function (answer) {
-              alert(answer);
+                //alert(answer);
                var response=JSON.stringify(answer);
                var parsed = JSON.parse(response);
                var msg=angular.fromJson(parsed);
-               alert(msg.msg);
+               //alert(msg.msg);
                $('.loader').hide();  
               if(msg.status == '1'){
-                 $('.loader').hide();    
+              $('.loader').hide();    
+              $('.result').html(msg.message);  
+              $('.result').show();
+              $scope.localStorage_save('user_email',email,'confirm');
+              }else{
+              $('.loader').hide();    
+              $('.result').html(msg.message);  
+              $('.result').show();
+            
+              //$('.signup_loader').hide();
+              //$('.alert').html(answer);
+              }
+              
+               }
+             });
+    }
+
+
+
+    $scope.confirm_user_signup = function(){
+    $('.loader').show();    
+         $('.result').hide(); 
+          var formData = new FormData($('#confirm_user_signup')[0]);
+          $.ajax({
+               url: $scope.dirlocation+'api/confirm_user_signup',
+               type: 'POST',
+               data: formData,
+               async: true,
+               cache: false,
+               contentType: false,
+               enctype: 'multipart/form-data',
+               headers:{'gnice-authenticate':'gnice-web'},
+               crossDomain: true,
+               processData: false,
+               success: function (answer) {
+                //alert(answer);
+               var response=JSON.stringify(answer);
+               var parsed = JSON.parse(response);
+               var msg=angular.fromJson(parsed);
+               //alert(msg.msg);
+               $('.loader').hide();  
+              if(msg.status == '1'){
+              $('.loader').hide();    
               $('.result').html(msg.msg);  
               $('.result').show();
-               alert(msg.msg);
-             window.location.href=datagrab.completeUrlLocation+'Welcome'
+              setTimeout(function(){ 
+                //alert('got here');
+                window.location.href=datagrab.completeUrlLocation+'dashboard/welcome'
+                
+               }, 5000);
+              
               }else{
               $('.loader').hide();    
               $('.result').html(msg.msg);  

@@ -4,16 +4,17 @@
           <h4 class="section-title text-uppercase">New Products</h4>
           <p class="text-subtitle text-muted">A good dashboard to display your statistics</p>
       </div>
-           <div class=""  ng-init="fetch_required_table(); fetch_all_product_of_seller()">
+           <div class=""  ng-init="fetch_required_table(); fetch_all_product_of_seller();localStorage_get('ads_category')">
             <div style="text-align: center;" class="loader">
               <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
               </div>
               <div  ng-show="user_remaining_product_slot > 0" class="col-lg-8 card">
                 <div class="card-body">
+                  <div class="alert alert-info result" style="display:none;"></div>
                   <form class="forms-sample" id="add_product" ng-submit="add_product()">
                 <div class="form-group">
-                  <label for="category">CATEGORY</label>
-                 <select required="" class="form-control"   ng-init="fetch_all_categories_and_sub_categories()" id="category" ng-model="categories" ng-change="onCategoryValueChange(categories)">
+                  <label for="category">CATEGORY {{ads_category}}</label>
+                 <select required="" class="form-control"   ng-init="fetch_all_categories_and_sub_categories();" id="category" ng-model="categories" ng-change="onCategoryValueChange(categories)">
                    <option value="">SELECT CATEGORY</option>
                    <option   ng-repeat="catSub in categories_and_sub track by $index"  value="{{catSub}}"> {{ catSub.title }}</option>
                   </select>   
@@ -21,13 +22,12 @@
                   
                  <div class="form-group" ng-if="categories">
                   <label for="sub_category">SUB CATEGORY</label>
-               <select required  class="form-control" name="sub_category" id="sub_category"  ng-model="subcat">
+               <select required  class="form-control" id="sub_category"  ng-model="subcategories" ng-change="onSubCategoryValueChange(subcategories)">
                 <option value="">SELECT SUB-CATEGORY</option>   
-                <option  ng-repeat="Sub in sub_category track by $index"   value="{{ Sub.sub_id }}">{{ Sub.title }} </option> 
+                <option  ng-repeat="Sub in sub_categories track by $index"   value="{{ Sub }}">{{ Sub.title }}</option> 
                  </select>
                   </div>
-                   
-
+                 
                    <!-- <div class="form-group" ng-if="5==cate">
                   <label for="brand">Brand</label>
                  <input type="text" name="brand" placeholder="Name of Brand" class="form-control">
@@ -138,7 +138,10 @@
                      
                     </div>
                     <input type="hidden" name="seller_id" id="seller_id" value="{{user_data.seller_id}}"> 
-                    <input type="hidden" name="category" id="seller_id" value="{{selected_category.id}}"> 
+                    <input type="hidden" name="category" id="seller_id" value="{{selected_category.id}}">
+                    <input type="hidden" name="sub_category" id="seller_id" value="{{selected_subcategory.sub_id}}"> 
+                    <div class="alert alert-info result" style="display:none;"></div>
+
                     <button type="submit" class="btn btn-primary">
                       <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="width:25px;display:none">Submit</button>
                   </form>
@@ -147,7 +150,7 @@
               <div  class="col-lg-6" ng-show="user_remaining_product_slot < 1" style="margin:0 auto;text-align: center;">
                 <img src="{{dirlocation}}public/assets/images/cancel_file.png" style="width:70px;float:none;margin:0 auto"><br/>
                 Your have exceeded your account threshold. Please upgrade your account. You can aswell downgrade to a FREE ACCOUNT.
-                <br/><a href="{{dirlocation}}dashboard/account_packages" class="btn btn-outline-light mr-2 bg-gradient-warning border-0" style="margin-top:10px">Upgrade</a>
+                <br/><a href="{{dirlocation}}dashboard/account_packages" class="btn btn-secondary" style="margin-top:10px">Upgrade</a>
               </div>
             </div>
     </section>
