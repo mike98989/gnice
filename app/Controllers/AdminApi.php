@@ -161,6 +161,18 @@ class AdminApi extends Controller
             exit;
         }
     }
+    public function disable_enable_category()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->disableEnableCategory($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
     public function disable_enable_admin_account()
     {
         $header = apache_request_headers();

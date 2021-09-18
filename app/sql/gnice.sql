@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2021 at 09:16 AM
+-- Generation Time: Sep 18, 2021 at 05:29 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `gnice`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `abuse_report`
+--
+
+CREATE TABLE `abuse_report` (
+  `report_id` int(11) NOT NULL,
+  `product_id` varchar(25) DEFAULT NULL,
+  `user_id` varchar(25) DEFAULT NULL,
+  `report_title` tinytext DEFAULT NULL,
+  `report_content` tinytext DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `abuse_report`
+--
+
+INSERT INTO `abuse_report` (`report_id`, `product_id`, `user_id`, `report_title`, `report_content`, `date`, `status`) VALUES
+(1, NULL, NULL, NULL, NULL, '2021-09-16', 1),
+(2, NULL, '67', 'The Ad is a spam', 'This ad is a spam', '2021-09-16', 1),
+(3, '48', '67', 'The price is wrong', 'This is a spam message you get', '2021-09-16', 1),
+(4, '48', '65', 'The Category is wrong', 'This category is very wrong', '2021-09-18', 1);
 
 -- --------------------------------------------------------
 
@@ -46,7 +72,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `fullname`, `email`, `phone`, `image`, `password`, `token`, `last_login`, `privilege`, `activated`, `status`) VALUES
-(1, 'Admin Admin', 'admin@test.com', '0703300000', NULL, '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', 'd76881832aeb74dc452ba7589c436d50d880569c2d525a5aaa657542875c35dec2859bc89540a274be8f559e434b3c240baf66e8a1bb1fca47f308d31b36a832', '2021-08-19 08:15:14', 1, 1, 1);
+(1, 'Admin Admin', 'admin@test.com', '0703300000', NULL, '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', '0edb52ea0868ef0fd27af9a5c8c255198d324cf12673a5a5b69d48fb390306cc722c723568857daad70a30fdaed2342bb4799609051689f98af74de83ea71c0c', '2021-08-23 17:36:26', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2467,6 +2493,37 @@ INSERT INTO `lga` (`State`, `Lga`, `Lgaid`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `message_id` int(11) NOT NULL,
+  `sender_name` tinytext DEFAULT NULL,
+  `sender_email` varchar(150) DEFAULT NULL,
+  `sender_phone` varchar(150) DEFAULT NULL,
+  `message` tinytext DEFAULT NULL,
+  `seller_id` varchar(25) NOT NULL,
+  `product_code` varchar(25) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`message_id`, `sender_name`, `sender_email`, `sender_phone`, `message`, `seller_id`, `product_code`, `date`, `status`) VALUES
+(1, 'Michael Akpobome', 'mike98989@gmail.com', '07060678275', 'asdfasdfasdf', 'AG-3195923', '66591601', '2021-08-19 16:10:19', 0),
+(2, 'Michael Akpobome', 'mike98989@gmail.com', '07060678275', 'This is the main message. Regards', 'AG-9420882', '66591601', '2021-08-19 16:11:36', 0),
+(3, 'James Arthur', 'james@arthur.com', '07060678275', 'This is my message to you\r\nFrom Arthur.', 'AG-3195923', '40174810', '2021-08-23 01:20:04', 0),
+(4, 'Collins Nwoko', 'collns@collinsg.coom', '07060678275', 'This is my message', 'AG-3195923', '88230249', '2021-08-23 18:45:53', 0),
+(5, 'Michael Akpobome', 'mike98989@gmail.com', '07060678275', 'asdfasdfasf asdfasdfasdf', 'AG-3195923', '28584409', '2021-08-26 10:03:38', 0),
+(6, 'Michael Akpobome', 'mike98989@gmail.com', '07060678275', 'This is another message from thesame client', 'AG-3195923', '28584409', '2021-08-26 10:09:13', 0),
+(7, 'Client 1', 'mike98989@gmail.com', '07060678275', 'THis is the message from the client', 'AG-3195923', '26723216', '2021-09-12 19:14:32', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `most_view`
 --
 
@@ -2485,6 +2542,29 @@ INSERT INTO `most_view` (`id`, `product_code`, `view_count`, `status`) VALUES
 (1, 12344, 100, 1),
 (3, 646376, 6, 1),
 (4, 66554, 200, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `newsletter`
+--
+
+CREATE TABLE `newsletter` (
+  `newsletter_id` int(11) NOT NULL,
+  `email` tinytext DEFAULT NULL,
+  `date` varchar(25) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `newsletter`
+--
+
+INSERT INTO `newsletter` (`newsletter_id`, `email`, `date`, `status`) VALUES
+(1, 'mike98989@gmail.com', '2021-09-08', 1),
+(2, 'michael.akpobome@gmail.com', '2021-09-08', 1),
+(3, 'admin@test.com', '2021-09-09', 1),
+(4, 'mike98989444@gmail.com', '2021-09-11', 1);
 
 -- --------------------------------------------------------
 
@@ -6875,7 +6955,7 @@ CREATE TABLE `products` (
   `year_of_manufacture` int(11) DEFAULT NULL,
   `operating_system` varchar(255) DEFAULT NULL,
   `hard_drive_size` varchar(255) DEFAULT NULL,
-  `fuel` varchar(255) DEFAULT NULL,
+  `mileage` varchar(255) DEFAULT NULL,
   `seats_vehicle` int(11) DEFAULT NULL,
   `property_size` varchar(255) DEFAULT NULL,
   `number_of_bedrooms` int(11) DEFAULT NULL,
@@ -6888,10 +6968,9 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `lga`, `land_mark`, `model`, `condition_state`, `ram`, `internal_storage`, `resolution`, `sim`, `battery`, `exchange_possible`, `main_camera`, `selfie_camera`, `negotiable`, `delivery_available`, `second_condition`, `transmission_type_vehicle`, `mileage_vehicle`, `registered_vehicle`, `vin_vehicle`, `horse_power_vehicle`, `engine-size`, `year_of_manufacture`, `operating_system`, `hard_drive_size`, `fuel`, `seats_vehicle`, `property_size`, `number_of_bedrooms`, `property_type`, `number_of_bathrooms`, `status`) VALUES
-(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'lorem ipsum long description long', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
-(5, 'Samsung', '29287074', 'black', 'samsung s20', 'lorem ipsum long description long', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
-(6, 'Xaiomi', '37341927', 'red, black', 'xaiomi redmi 6', 'lorem ipsum long description long', '3', '7', 'pro60d1ce643456c000000001.jpg,pro60d1ce6434af9001000000.jpg', '90000', '2021-06-22 12:49:56', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `description`, `category`, `sub_category`, `image`, `price`, `date_added`, `seller_id`, `state`, `lga`, `land_mark`, `model`, `condition_state`, `ram`, `internal_storage`, `resolution`, `sim`, `battery`, `exchange_possible`, `main_camera`, `selfie_camera`, `negotiable`, `delivery_available`, `second_condition`, `transmission_type_vehicle`, `mileage_vehicle`, `registered_vehicle`, `vin_vehicle`, `horse_power_vehicle`, `engine-size`, `year_of_manufacture`, `operating_system`, `hard_drive_size`, `mileage`, `seats_vehicle`, `property_size`, `number_of_bedrooms`, `property_type`, `number_of_bathrooms`, `status`) VALUES
+(4, 'Apple', '88230249', 'ashes', 'Iphone 12', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolre eu fugiat nulla pariatur excepteur sint occaecat cupidatat non. Duis aute irure dolor in reprehenderit in voluptate velit esse', '3', '7', 'pro60d1cdd08c3f6000100000.jpg,pro60d1cdd0901ae100000000.jpg,pro60d1cdd0906da100000000.jpg', '100000', '2021-06-22 12:47:28', 'AG-3195923', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
+(5, 'Samsung', '29287074', 'black', 'samsung s20', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolre eu fugiat nulla pariatur excepteur sint occaecat cupidatat non. Duis aute irure dolor in reprehenderit in voluptate velit esse', '3', '7', 'pro60d1ce26eb2c9000001000.jpg,pro60d1ce26eb814000001000.jpg,pro60d1ce26ebd5c000000100.jpg', '90000', '2021-06-22 12:48:54', 'AG-3195923', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (7, 'HP', '19678428', 'silver', 'HP laptop envy', 'lorem ipsum long description long', '8', '12', 'pro60d1d058e959f000001000.jpg,pro60d1d058e9aa7000100000.jpg,pro60d1d058e9f8a000001000.jpg', '90000', '2021-06-22 12:58:16', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (8, 'Lenovo', '55860887', 'silver', 'Silver m4', 'lorem ipsum long description long', '8', '12', 'pro60d1d0843ccb5000010000.jpg,pro60d1d0843d251010000000.jpg,pro60d1d0843d76c000010000.jpg', '70000', '2021-06-22 12:59:00', 'AG-90470554', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (9, 'Apple', '36376549', 'silver', 'macbook pro', 'lorem ipsum long description long', '8', '12', 'pro60d1d0cf8926e000001000.jpg,pro60d1d0cf89786010000000.jpg,pro60d1d0cf89bd0000100000.jpg', '70000', '2021-06-22 13:00:15', 'AG-42990797', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
@@ -6901,16 +6980,26 @@ INSERT INTO `products` (`id`, `brand`, `product_code`, `color`, `name`, `descrip
 (13, 'Beats by Dre', '55598537', 'black, red', 'Headset', 'lorem ipsum long description long', '8', '19', 'pro60d1d286d5ee6000001000.jpg,pro60d1d286d63f7000010000.jpg', '8000', '2021-06-22 13:07:34', 'AG-79867936', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (14, 'Airpods', '57247936', 'white', 'Headset', 'lorem ipsum long description long', '3', '10', 'pro60d1d53f72083000100000.jpg', '80000', '2021-06-22 13:19:11', 'AG-67980776', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
 (15, 'Apple', '3875669', 'white', 'airpod max', 'lorem ipsum long description long', '8', '19', 'pro60d1d5bea2bcf001000000.jpg', '80000', '2021-06-22 13:21:18', 'AG-67743888', '', '', '', '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, '', '', 0, 0, 0, '', '', 0, '', '', '', 0, '', 0, '', 0, 1),
-(28, NULL, '59344874', NULL, 'Xaomi Phone', NULL, '2', NULL, 'pro60e9aea659bfb001000000.jpg', '12000', NULL, 'AG-3195923', '27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(29, NULL, '34605763', NULL, 'Land for Sale in Jos', NULL, '1', '2', 'pro60e9b050529ae000010000.jpg,pro60e9b05052b9f000000100.jpg', '13000000', NULL, 'AG-3195923', '5', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(30, NULL, '77954049', NULL, 'Land For Sale', NULL, '1', NULL, 'pro60e9cd38db2f1001000000.jpg,pro60e9cd38db6cd000000010.jpg', '200000', NULL, 'AG-3195923', '6', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'undefined', NULL, '2', NULL, 0),
-(31, NULL, '4926210', NULL, 'New gold Ring', NULL, '5', '38', 'pro60ebfa5392ec9000000100.jpg,pro60ebfa5393013000000001.jpg', '12000', NULL, 'AG-3195923', '6', '4', 'undefined', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(32, NULL, '66452675', NULL, 'This  is the Title', NULL, '5', '39', 'pro60eca73b194d8000000001.jpg,pro60eca73b19b50000000001.jpg', '2200', NULL, 'AG-3195923', NULL, NULL, 'undefined', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (33, NULL, '20262119', NULL, 'Free ADs placement', NULL, '3', '8', 'pro60eceaa1f0ab8000001000.jpg,pro60eceaa1f138f100000000.jpg', NULL, NULL, 'AG-7220781', '3', '5', 'Legushi Beach', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (34, NULL, '99439101', NULL, 'Bentley For Sale', NULL, '1', '29', 'pro60f2b3c59c00e000001000.jpg,pro60f2b3c59c915000000100.jpg,pro60f2b3c59cafc010000000.jpg', '4000000', NULL, 'AG-5710843', '5', '3', 'Police Station', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (35, NULL, '70544642', NULL, 'Nigerian Land', NULL, '2', '42', 'pro60f34058c9afa000000001.jpg,pro60f34058ca39b000100000.jpg', '2000000', NULL, 'AG-5710843', '5', '4', 'Hungarian', NULL, 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'undefined', NULL, '5', NULL, 0),
 (36, '61', '66204491', NULL, 'Toyota Corolla For Sale', NULL, '1', '27', 'pro60f5aaa03a548000000010.jpg,pro60f5aaa03accd000100000.jpg,pro60f5aaa03ae16000001000.jpg', '2000000', NULL, 'AG-9648945', '9', '25', 'Ugborokoko', '8', 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(37, '61', '66591601', NULL, 'New Car for sale', 'lorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description longlorem ipsum long description long', '1', '27', 'pro60f6b74a631d1000000010.jpg,pro60f6b74a63b3b010000000.jpg,pro60f6b74a63da2000100000.jpg', '2000000', NULL, 'AG-9420882', '9', '25', 'Refinery road', '8', 'undefined', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+(39, 'Chevrolet', '50720438', 'Blue', 'Ferarri', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolre eu fugiat nulla pariatur excepteur sint occaecat cupidatat non. Duis aute irure dolor in reprehenderit in voluptate velit esse', '1', '27', 'pro611feb01ef230000001000.jpg,pro611ffd51c23be000100000.jpg', '300000', '2021-08-22 23:42:17', NULL, 'Akwa Ibom', 'Mkpat enin', 'Mkpat Enin', 'APV Cargo', 'Refurbished', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, 'Manual', NULL, NULL, NULL, NULL, NULL, 2020, NULL, NULL, '10000', NULL, NULL, NULL, NULL, NULL, 1),
+(44, NULL, '12787387', 'Brown', 'Woman Sweater', 'Women Sweaters', '5', '36', 'pro6122cbec93b5a000000010.jpg,pro6122cbec93fdf000010000.jpg,pro6122cbec9455b001000000.jpg', '4000', '2021-08-22 23:42:13', 'AG-3195923', 'Delta', 'Ethiope east', 'Warri', NULL, 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(45, NULL, '40174810', 'Brown', 'Hectares of Land For Sale', 'Lands For Sale in Kubwa at a very affordable price, build and stay', '2', '44', 'pro6122d06520e5e000000001.jpg,pro6122d06521377000100000.jpg,pro6122d06521922100000000.jpg', '2000000', '2021-08-22 23:42:01', 'AG-3195923', 'F.C.T.', 'AMAC', 'Kubwa', NULL, 'Refurbished', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '500sqm', NULL, 'Commercial Land', NULL, 1),
+(46, 'Dodge', '5580751', 'Red', 'New Dodge for sale', 'This is the content of my ads', '1', '27', 'pro6123d1cba4726001000000.png,pro6123d1cba4f75000100000.png,pro6123d1cba5a42001000000.png', '600000', '2021-08-23 00:00:00', 'AG-3195923', 'F.C.T.', 'AMAC', 'Kubwa', 'D350 Regular Cab', 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, 'Brand New', NULL, NULL, NULL, NULL, NULL, 2021, NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, 1),
+(47, 'BlackBerry', '38944999', 'White', 'AllView Phone', 'Best phone Ever', '3', '7', 'pro6124d526a4709000000001.jpeg,pro6124d526a4c55000000001.jpg', '40000', '2021-08-24 00:00:00', 'AG-3195923', 'Bayelsa', 'Ekeremor', 'Bayelsa Roundabout', '4G LTE Playbook', 'Brand New', 2, 4, '7&#34;', '1', 400, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(48, 'Chevrolet', '28584409', 'Brown', 'CHEVROLET REGULAR CAB', 'This is the description I got.', '1', '27', 'pro612567f0c8891001000000.jpg,pro612567f0c8c99000100000.jpg,pro612567f0c916a001000000.jpg', '5000', '2021-08-24 00:00:00', 'AG-3195923', 'Nasarawa', 'Obi', 'Nassarawa Park', '3500 HD Regular Cab', 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, 'Semi-automatic', NULL, NULL, NULL, NULL, NULL, 2001, NULL, NULL, '1000', NULL, NULL, NULL, NULL, NULL, 1),
+(49, 'Acura', '26723216', 'Red', 'Latest Car For Sale', 'This is the description', '1', '27', 'pro6131e1e36e249100000000.jpg,pro6131e1e36e7a9000000001.png,pro6131e1e36ee45000010000.png', '20000', '2021-09-03 00:00:00', 'AG-3195923', 'F.C.T.', 'AMAC', 'Kubwa', 'Vigor', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, 'Manual', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1200', NULL, NULL, NULL, NULL, NULL, 1),
+(50, NULL, '70129778', NULL, 'Exquisite Apartment for Sale', 'This is the description of the content. nice one', '2', '42', 'pro61322e2c8617b000100000.jpg,pro61322e2c86722000000001.jpg,pro61322e2c86ceb010000000.jpg,pro61322e2c878e8010000000.jpg,pro61322e2c87fd9010000000.jpg,pro61322e2c89ab6100000000.jpg,pro61322e2c8a07c000100000.jpg', '23000000', '2021-09-03 00:00:00', 'AG-3195923', 'Delta', 'Warri south', 'Effurun Roundabout', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '500sqm', 4, 'Residential Land', 3, 1),
+(51, NULL, '37742365', 'Red', 'Brand New Shoe', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.', '5', '39', 'pro6137e75d0f354100000000.png', '15000', '2021-09-08 00:00:00', 'AG-3195923', 'F.C.T.', 'AMAC', 'Karu', NULL, 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(52, NULL, '42605776', 'Brown', '500sqm Land for Sale', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.', '2', '46', 'pro6137ebbc149b5001000000.jpg,pro6137ebbc171a6100000000.jpg', '200000', '2021-09-08 00:00:00', 'AG-76213616', 'Anambra', 'Ihiala', 'Awka', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '500sqm', 2, 'Farm Land', 2, 1),
+(53, NULL, '28475470', 'Black', 'Gucci Black Viton Bag', 'This is the description', '5', '35', 'pro613d201af1510100000000.png', '200000', '2021-09-11 00:00:00', 'AG-76213616', 'F.C.T.', 'AMAC', 'Orji River', NULL, 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(54, 'Chevrolet', '21614710', 'Black', 'New Car For Sale', 'This is the description of the car', '1', '27', 'pro613e3adf22da3000000001.png,pro613e3adf23ae3000000100.jpg', '2000000', '2021-09-12 00:00:00', 'AG-53574404', 'Delta', 'Warri south', 'Effurun Roundabout', 'Astro Cargo', 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, 'Brand New', NULL, NULL, NULL, NULL, NULL, 2005, NULL, NULL, '1200', NULL, NULL, NULL, NULL, NULL, 1),
+(55, NULL, '83432895', 'Black', 'Mens Cotton Singlet', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolre eu fugiat nulla pariatur excepteur sint occaecat cupidatat non. Duis aute irure dolor in reprehenderit in voluptate velit esse', '5', '56', 'pro61426339b8f1f000001000.jpg,pro61426339b942f000100000.jpg,pro61426339b9a07010000000.jpg', '1500', '2021-09-15 00:00:00', 'AG-53574404', 'Lagos', 'Ikorodu', 'Ikorodu', NULL, 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(56, 'BlackBerry', '20305568', NULL, 'Android Phone Universal Charger', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolre eu fugiat nulla pariatur excepteur sint occaecat cupidatat non. Duis aute irure dolor in reprehenderit in voluptate velit esse', '3', '10', 'pro614265d1808f7000000001.jpg,pro614265d180c4e001000000.jpg', '1000', '2021-09-15 00:00:00', 'AG-53574404', 'Bayelsa', 'Sagbama', 'Sagbama Yellow Stop', '4G LTE Playbook', NULL, NULL, NULL, NULL, NULL, NULL, 0, 'No', 'No', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(57, NULL, '2173748', NULL, 'Sweetened Yoghurt', 'Farmfresh unsweetened yoghurt is a natural yoghurt drink that contains no sugar. It is a very good choice for Farmfresh lovers who are on a sugar free', '12', '68', 'pro614267e5861f2000001000.jpg,pro614267e58679f001000000.jpg', '1200', '2021-09-15 00:00:00', 'AG-53574404', 'Gombe', 'Balanga', 'Balanga', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(58, NULL, '75832363', 'Brown', 'Security Doors', 'Israeli doors for house and office use, comes in different sizes, 900x2100. 1200x2100. 1500x2100!! even in extra height too.', '9', '50', 'pro61426a1e89374000000100.jpg', '1200', '2021-09-15 00:00:00', 'AG-53574404', 'Lagos', 'Epe', 'Epe', NULL, 'Brand New', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -6986,6 +7075,49 @@ CREATE TABLE `product_ratings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_reviews`
+--
+
+CREATE TABLE `product_reviews` (
+  `review_id` int(11) NOT NULL,
+  `product_id` varchar(25) DEFAULT NULL,
+  `user_id` varchar(25) DEFAULT NULL,
+  `rating` int(11) NOT NULL DEFAULT 0,
+  `review` text DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_reviews`
+--
+
+INSERT INTO `product_reviews` (`review_id`, `product_id`, `user_id`, `rating`, `review`, `date`, `status`) VALUES
+(1, '48', '38', 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.', '2021-09-01 15:46:30', 1),
+(4, '48', '60', 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.', '2021-09-01 00:00:00', 1),
+(5, '48', '60', 5, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.', '2021-09-01 00:00:00', 1),
+(6, '48', '60', 3, 'Lorem ipsum dolor sit amet, ', '2021-09-01 00:00:00', 1),
+(7, '47', '60', 5, 'This should be my first review for this product', '2021-09-02 00:00:00', 1),
+(11, '46', '60', 2, 'this is my review', '2021-09-02 00:00:00', 1),
+(12, '48', '60', 3, 'This is my new review', '2021-09-02 00:00:00', 1),
+(13, '46', '60', 5, 'collins rating', '2021-09-02 00:00:00', 1),
+(14, '7', '60', 3, 'My review is here. Take it', '2021-09-07 00:00:00', 1),
+(15, '14', '60', 5, 'This is a good review', '2021-09-07 00:00:00', 1),
+(16, '47', '60', 5, 'Fantistic Review', '2021-09-07 00:00:00', 1),
+(17, '47', '60', 5, 'Powerful review. goes here', '2021-09-07 00:00:00', 1),
+(18, '47', '60', 5, 'This is nice', '2021-09-07 00:00:00', 1),
+(19, '47', '60', 5, 'Enter another one', '2021-09-07 00:00:00', 1),
+(20, '5', '60', 4, 'This is my reveiw', '2021-09-07 00:00:00', 1),
+(21, '7', '60', 4, 'this is another review', '2021-09-07 00:00:00', 1),
+(22, '52', '65', 4, 'No Price on the ads', '2021-09-08 00:00:00', 1),
+(23, '10', '65', 4, 'This is my product review', '2021-09-09 00:00:00', 1),
+(24, '39', '67', 3, 'This is my review for this product', '2021-09-12 00:00:00', 1),
+(25, '48', '67', 1, 'My expereince with this customer is not soo good', '2021-09-15 00:00:00', 1),
+(26, '53', '67', 4, 'Good product', '2021-09-15 00:00:00', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `property_types`
 --
 
@@ -7010,6 +7142,32 @@ INSERT INTO `property_types` (`type_id`, `type`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `report_reason`
+--
+
+CREATE TABLE `report_reason` (
+  `reason_id` int(11) NOT NULL,
+  `reason` tinytext DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `report_reason`
+--
+
+INSERT INTO `report_reason` (`reason_id`, `reason`, `status`) VALUES
+(1, 'The Ad is a spam', 1),
+(2, 'The price is wrong', 1),
+(3, 'It is a Fraud/ It is Illegal', 1),
+(4, 'The Category is wrong', 1),
+(5, 'Seller is unreachable', 1),
+(6, 'Seller is asking for prepayment', 1),
+(7, 'It is sold already', 1),
+(8, 'Other', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `saved_products`
 --
 
@@ -7029,7 +7187,8 @@ INSERT INTO `saved_products` (`saved_id`, `product_id`, `user_id`, `date_saved`,
 (1, '37', '58', '2021-07-14 14:37:44', 1),
 (3, '14', '58', '2021-07-20 16:41:22', 1),
 (4, '15', '58', '2021-07-20 16:42:08', 1),
-(5, '7', '58', '2021-07-20 16:51:20', 1);
+(5, '7', '58', '2021-07-20 16:51:20', 1),
+(6, '4', '60', '2021-08-26 11:27:17', 1);
 
 -- --------------------------------------------------------
 
@@ -7042,6 +7201,8 @@ CREATE TABLE `seller_account_packages` (
   `title` varchar(255) NOT NULL,
   `body` text NOT NULL,
   `value` varchar(50) NOT NULL,
+  `product_count` int(11) NOT NULL,
+  `duration_in_days` int(11) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -7049,11 +7210,49 @@ CREATE TABLE `seller_account_packages` (
 -- Dumping data for table `seller_account_packages`
 --
 
-INSERT INTO `seller_account_packages` (`package_id`, `title`, `body`, `value`, `status`) VALUES
-(1, 'Free', '{\r\n                    title:\'Product upload\',\r\n                    body:\'Maximun of 50 products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'unpredicted product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'No ads slot. Your Ads will be paid by you\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'No whatsapp link on your product page\'\r\n                },\r\n                {\r\n                    price:\'Free\',\r\n                   \r\n                }', '0', 1),
-(2, 'Basic', ' {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Product reach of about 5000 to 150000 customers\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Your ads runs freely for a certain period\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link activated on your product page\'\r\n                },\r\n                {\r\n                    price:\'N5,000/mo\',\r\n                    \r\n                }', '500000', 1),
-(3, 'Super', '      {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Unlimited product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Unlimited ads slot and unlimited ads reach\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link active on product page\'\r\n                },\r\n                {\r\n                    title:\'Product Index\',\r\n                    body:\'Your products are seen before others\'\r\n                },\r\n                {\r\n                    price:\'N7000/mo\',\r\n                    \r\n                }', '700000', 1),
-(4, 'Advance', 'body:[\r\n                {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Unlimited product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Your ads runs freely for a certain period\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link activated on your product page\'\r\n                },\r\n                {\r\n                    title:\'Product Index\',\r\n                    body:\'Your products remains at the top search rank.\'\r\n                },\r\n                {\r\n                    price:\'N10,000/mo\',\r\n                }', '1000000', 1);
+INSERT INTO `seller_account_packages` (`package_id`, `title`, `body`, `value`, `product_count`, `duration_in_days`, `status`) VALUES
+(1, 'Free', '{\r\n                    title:\'Product upload\',\r\n                    body:\'Maximun of 50 products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'unpredicted product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'No ads slot. Your Ads will be paid by you\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'No whatsapp link on your product page\'\r\n                },\r\n                {\r\n                    price:\'Free\',\r\n                   \r\n                }', '0', 5, 0, 1),
+(2, 'Basic', ' {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Product reach of about 5000 to 150000 customers\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Your ads runs freely for a certain period\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link activated on your product page\'\r\n                },\r\n                {\r\n                    price:\'N5,000/mo\',\r\n                    \r\n                }', '5000', 10, 30, 1),
+(3, 'Super', '      {\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Unlimited product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Unlimited ads slot and unlimited ads reach\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link active on product page\'\r\n                },\r\n                {\r\n                    title:\'Product Index\',\r\n                    body:\'Your products are seen before others\'\r\n                },\r\n                {\r\n                    price:\'N7000/mo\',\r\n                    \r\n                }', '7000', 20, 30, 1),
+(4, 'Advance', '{\r\n                    title:\'Product upload\',\r\n                    body:\'Unlimited products upload\'\r\n                },\r\n                {\r\n                    title:\'Reach\',\r\n                    body:\'Unlimited product reach\'\r\n                },\r\n                {\r\n                    title:\'Ads\',\r\n                    body:\'Your ads runs freely for a certain period\'\r\n                },\r\n                {\r\n                    title:\'Whatsapp\',\r\n                    body:\'Whatsapp link activated on your product page\'\r\n                },\r\n                {\r\n                    title:\'Product Index\',\r\n                    body:\'Your products remains at the top search rank.\'\r\n                },\r\n                {\r\n                    price:\'N10,000/mo\',\r\n                }', '10000', 40, 30, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seller_account_packages_content`
+--
+
+CREATE TABLE `seller_account_packages_content` (
+  `content_id` int(11) NOT NULL,
+  `package_id` varchar(25) DEFAULT NULL,
+  `content_title` tinytext DEFAULT NULL,
+  `content_body` tinytext DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `seller_account_packages_content`
+--
+
+INSERT INTO `seller_account_packages_content` (`content_id`, `package_id`, `content_title`, `content_body`, `status`) VALUES
+(1, '1', 'Product upload', 'Maximun of 50 products upload', 1),
+(2, '1', 'Reach', 'Unpredicted product reach', 1),
+(3, '1', 'Ads', 'No ads slot. Your Ads will be paid by you', 1),
+(4, '1', 'whatsapp', 'No whatsapp link on your product page', 1),
+(5, '2', 'Product upload', 'Unlimited products upload', 1),
+(6, '2', 'Reach', 'Product reach of about 5000 to 150000 customers', 1),
+(7, '2', 'Ads', 'Your ads runs freely for a certain period', 1),
+(8, '2', 'Whatsapp', 'Whatsapp link activated on your product page', 1),
+(9, '3', 'Product upload', 'Unlimited products upload', 1),
+(10, '3', 'Reach', 'Unlimited product reach', 1),
+(11, '3', 'Ads', 'Unlimited ads slot and unlimited ads reach', 1),
+(12, '3', 'Whatsapp', 'Whatsapp link active on product page', 1),
+(13, '3', 'Product Index', 'Your products are seen before others', 1),
+(14, '4', 'Product upload', 'Unlimited products upload', 1),
+(15, '4', 'Reach', 'Unlimited product reach', 1),
+(16, '4', 'Ads', 'Your ads runs freely for a certain period', 1),
+(17, '4', 'Whatsapp', 'Whatsapp link activated on your product page', 1),
+(18, '4', 'Product Index', 'Your products remains at the top search rank', 1);
 
 -- --------------------------------------------------------
 
@@ -7281,7 +7480,46 @@ INSERT INTO `transactions` (`trans_id`, `trans_reference`, `amount`, `currency`,
 (33, 'ap217mx7yd', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-17T17:10:11.000Z', 'success', 1),
 (34, 'rewolevief', '500000', 'NGN', 'mike98989@gmail.com', '2021-07-19T16:36:40.000Z', 'success', 1),
 (35, 'nnaurrph1z', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-20T11:28:29.000Z', 'success', 1),
-(36, 'a1qj74bgx2', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-20T11:41:42.000Z', 'success', 1);
+(36, 'a1qj74bgx2', '700000', 'NGN', 'mike98989@gmail.com', '2021-07-20T11:41:42.000Z', 'success', 1),
+(37, 'T326684671846979', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:00:34.000Z', 'success', 1),
+(38, 'T003690578732476', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:02:18.000Z', 'success', 1),
+(39, 'T289177181959054', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:03:59.000Z', 'success', 1),
+(40, 'T289177181959054', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:03:59.000Z', 'success', 1),
+(41, 'T112670352281538', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:23:56.000Z', 'success', 1),
+(42, 'T801625854974904', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:25:24.000Z', 'success', 1),
+(43, 'T380287413892886', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:26:41.000Z', 'success', 1),
+(44, 'T810527405163443', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:27:06.000Z', 'success', 1),
+(45, 'T256527841752777', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:28:07.000Z', 'success', 1),
+(46, 'T623245697226549', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:28:53.000Z', 'success', 1),
+(47, 'T959217869423027', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:30:38.000Z', 'success', 1),
+(48, 'T287897079314522', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:31:29.000Z', 'success', 1),
+(49, 'T870637758689769', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:46:46.000Z', 'success', 1),
+(50, 'T019992963220620', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:47:42.000Z', 'success', 1),
+(51, 'T436115916492002', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:50:50.000Z', 'success', 1),
+(52, 'T547789448868059', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:53:48.000Z', 'success', 1),
+(53, 'T143803503974354', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:55:40.000Z', 'success', 1),
+(54, 'T932211444410624', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T01:59:24.000Z', 'success', 1),
+(55, 'T960316058924555', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T02:02:43.000Z', 'success', 1),
+(56, 'T254011839270772', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T02:04:08.000Z', 'success', 1),
+(57, 'T963706884495460', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T02:05:42.000Z', 'success', 1),
+(58, 'T486813240874858', '10000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T02:08:55.000Z', 'success', 1),
+(59, 'T887783451858537', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T02:11:33.000Z', 'success', 1),
+(60, 'T472712162123417', '10000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T02:19:28.000Z', 'success', 1),
+(61, 'T565762618620937', '5000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T02:25:10.000Z', 'success', 1),
+(62, 'T071606914181182', '7000000', 'NGN', 'mike98989@gmail.com', '2021-08-21T23:41:51.000Z', 'success', 1),
+(63, 'T822548377369198', '500000', 'NGN', 'mike98989@gmail.com', '2021-08-22T21:03:52.000Z', 'success', 1),
+(64, 'T517156791295092', '500000', 'NGN', 'mike98989@gmail.com', '2021-08-23T16:38:20.000Z', 'success', 1),
+(65, 'T553950665741036', '500000', 'NGN', 'mike98989@gmail.com', '2021-08-23T16:58:37.000Z', 'success', 1),
+(66, 'T907790326294268', '500000', 'NGN', 'mike98989@gmail.com', '2021-09-03T14:10:11.000Z', 'success', 1),
+(67, 'T380782081976167', '700000', 'NGN', 'mike98989@gmail.com', '2021-09-03T14:12:49.000Z', 'success', 1),
+(68, 'T404656024006636', '500000', 'NGN', 'mike98989@gmail.com', '2021-09-07T17:05:47.000Z', 'success', 1),
+(69, 'T708870747178491', '700000', 'NGN', 'michael.akpobome@gmail.com', '2021-09-11T23:05:18.000Z', 'success', 1),
+(70, 'T131177339731795', '500000', 'NGN', 'michael.akpobome@gmail.com', '2021-09-11T23:39:00.000Z', 'success', 1),
+(71, 'T409220640197478', '700000', 'NGN', 'michael.akpobome@gmail.com', '2021-09-11T23:45:36.000Z', 'success', 1),
+(72, 'T577245879126360', '500000', 'NGN', 'michael.akpobome@gmail.com', '2021-09-11T23:49:57.000Z', 'success', 1),
+(73, 'T960793369208927', '500000', 'NGN', 'mike98989@gmail.com', '2021-09-12T16:45:57.000Z', 'success', 1),
+(74, 'T097031303470930', '700000', 'NGN', 'mike98989@gmail.com', '2021-09-12T17:17:18.000Z', 'success', 1),
+(75, 'T320137534768154', '500000', 'NGN', 'mike98989@gmail.com', '2021-09-12T17:35:22.000Z', 'success', 1);
 
 -- --------------------------------------------------------
 
@@ -7304,8 +7542,10 @@ CREATE TABLE `users` (
   `image` tinytext DEFAULT NULL,
   `password` tinytext DEFAULT NULL,
   `token` tinytext DEFAULT NULL,
+  `user_fb_id` varchar(255) DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
   `signup_date` date DEFAULT NULL,
+  `account_type_activation_date` date DEFAULT NULL,
   `user_confirm_id` varchar(25) DEFAULT NULL,
   `user_recover_id` varchar(15) DEFAULT NULL,
   `activated` int(11) NOT NULL DEFAULT 0,
@@ -7316,15 +7556,18 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `email`, `phone`, `state`, `country`, `whatsapp`, `mobile1`, `seller`, `seller_id`, `account_type`, `image`, `password`, `token`, `last_login`, `signup_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
-(1, 'Michael Akpobome', 'mike98989gg@gmail.com', '07060678275', 'Delta', '', '', '', 1, 'AG-9420882', 3, 'default.png', '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', '963c0c4f2bbbda47b659449734e24e529e4e27616f8206cf53a482664236e8313c076d1f694fbd514ddfeabfacd86834ca5f4e1ba6e8d88e7f5d29b96a16744b', '2021-07-08 10:10:25', '2019-09-12', '58642', '1341', 1, 1),
-(38, 'John Doe', 'test@test.com', '08174077714', 'Fct', '', '', '', 1, 'AG-91933000', 1, 'default2.png', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'fbc7b152f7ad9094a9a1d527eecf64a83e7c184109e7a30494020deec154bf15f2a15046f569446a031aa9ca71f2efb25b87757cf7c693ebe3d1fdd7bf2d2422', '2021-08-18 12:41:50', '2020-04-29', '63258', '', 1, 1),
-(39, 'Sunday', 'test3@test.com', '0703300000', '', 'Nigeria', '', '', 0, '', 3, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '2021-04-12 15:02:15', '0000-00-00', '', '', 1, 1),
-(40, 'George', 'directorate@test.com', '0703300000', '37', '', '', '', 0, '', 1, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '2021-04-12 15:35:33', '0000-00-00', '', '', 1, 1),
-(54, 'Jonathan Michael', 'mike98989ddd@gmail.com', '07060678275', NULL, NULL, '08174077714', NULL, 1, 'AG-5710843', 1, 'profile60f35fcb5ece1000000001.jpg', '$2y$10$M1Ir7cffmUhAwzp3oRd7n.Tl8fOSlbcue78AOBihOZGuoqAJh9tee', '6e87a2f6ee524f437b806fc7dd419c4474f3f3c134f25a74e2dfa142918fc7e97879d73d0eee9a29685647aeef4addf65a486663763e5ca1179dc44b32907e60', '2021-07-19 15:23:50', '2021-07-13', '9213', '5102', 1, 1),
-(56, 'Mike Doe', 'mike98989rr@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-9648945', 3, 'default.png', '$2y$10$KzjeR0NUIV3nldS0At6Z6OzjQ9YTdiVLwpixw/8Cj8X0R29VUJ3zS', 'caee79441454b68f0397483bc8bc84eddc57c381436454e23ae975b75a415f78570a9ec5cc63105222d2f24593e84f505e7e64aba86511e1c0edd4adfc12aedf', '2021-07-20 12:37:23', '2021-07-19', '4882', NULL, 1, 1),
-(58, 'Mike Doe', 'mike98989fff@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-5117377', 1, 'profile60f6b6a53c3c7000000010.jpg', '$2y$10$71PallMVusrx.xLSTBx6yue4zl4S7ybiXxG92M5d621RqRAfxvyAe', '50eff5fd5c4163fb2c9a7e4e1d394197b170af55aa8eea4363bd5ffd82ff3d799b35df31399d552809c61ad632c6bc407e443225d5c41996500bcb5394adb261', '2021-07-20 16:06:30', '2021-07-20', '2601', NULL, 1, 1),
-(60, 'Michael Akpobome', 'mike98989@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, NULL, 0, 'default.png', '$2y$10$GazVNvb.pn05TuKtEZeyd.8tz5jdzus5kDOkhR2DOiZtpVBBjgBF6', '3a2280d5c0d4ed763cfaa3ac0db516d52543ae603b4ca58d25db7e5866a30a4fa0fbf8117e8e9d0adaf38a855869adef9199cb2125e4663055e852223f2fe8fa', '2021-08-19 08:11:40', '2021-08-18', '7918', NULL, 1, 1);
+INSERT INTO `users` (`id`, `fullname`, `email`, `phone`, `state`, `country`, `whatsapp`, `mobile1`, `seller`, `seller_id`, `account_type`, `image`, `password`, `token`, `user_fb_id`, `last_login`, `signup_date`, `account_type_activation_date`, `user_confirm_id`, `user_recover_id`, `activated`, `status`) VALUES
+(1, 'Michael Akpobome', 'mike98989gg@gmail.com', '07060678275', 'Delta', '', '', '', 1, 'AG-9420882', 0, 'default.png', '$2y$10$cdsQoJrHlQ6G5fXxhcbUo.r2Q3AAGIcit603WthEGFHGtRxIA9c32', '963c0c4f2bbbda47b659449734e24e529e4e27616f8206cf53a482664236e8313c076d1f694fbd514ddfeabfacd86834ca5f4e1ba6e8d88e7f5d29b96a16744b', '', '2021-07-08 10:10:25', '2019-09-12', NULL, '58642', '1341', 1, 1),
+(38, 'John Doe', 'test@test.com', '08174077714', 'Fct', '', '', '', 1, 'AG-91933000', 1, 'default2.png', '$2y$10$KDrBTneo/7jCyLGcd6exr.9ZO7Y8FKPPezs1G/lcy2NMaToBfBldu', 'ae7f9bf9fa2d33b499d10e1cdc57c160cec913c90830e80e81796c82459d505fa28058d0bc5fdd01f727ad8405c5b6bbfb7729870942dd553053521ffd4b241f', '', '2021-08-20 19:48:27', '2020-04-29', NULL, '63258', '', 1, 1),
+(39, 'Sunday', 'test3@test.com', '0703300000', '', 'Nigeria', '', '', 0, '', 3, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '5f5833dcfb04705fb94237628ada4c953d134c756694b1b204cbc3adf50a6b3a388fc690b53468d682c365bac2ab4ec4b4d900fa11f39bfc130049f0b86c7203', '', '2021-04-12 15:02:15', '0000-00-00', NULL, '', '', 1, 1),
+(40, 'George', 'directorate@test.com', '0703300000', '37', '', '', '', 0, '', 1, 'default.png', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'df7c9ee838f7f1a0cd60c1d9436033c31544e39196f515b622f3d3f3a72639d6fe89548f67f11e9fe588659e1cd7bd1eef0d1230d586a6a918e5afde71ded70f', '', '2021-04-12 15:35:33', '0000-00-00', NULL, '', '', 1, 1),
+(54, 'Jonathan Michael', 'mike98989ddd@gmail.com', '07060678275', NULL, NULL, '08174077714', NULL, 1, 'AG-5710843', 1, 'profile60f35fcb5ece1000000001.jpg', '$2y$10$M1Ir7cffmUhAwzp3oRd7n.Tl8fOSlbcue78AOBihOZGuoqAJh9tee', '6e87a2f6ee524f437b806fc7dd419c4474f3f3c134f25a74e2dfa142918fc7e97879d73d0eee9a29685647aeef4addf65a486663763e5ca1179dc44b32907e60', '', '2021-07-19 15:23:50', '2021-07-13', NULL, '9213', '5102', 1, 1),
+(56, 'Mike Doe', 'mike98989rr@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-9648945', 3, 'default.png', '$2y$10$KzjeR0NUIV3nldS0At6Z6OzjQ9YTdiVLwpixw/8Cj8X0R29VUJ3zS', 'caee79441454b68f0397483bc8bc84eddc57c381436454e23ae975b75a415f78570a9ec5cc63105222d2f24593e84f505e7e64aba86511e1c0edd4adfc12aedf', '', '2021-07-20 12:37:23', '2021-07-19', NULL, '4882', NULL, 1, 1),
+(58, 'Mike Doe', 'mike98989fff@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-5117377', 1, 'profile60f6b6a53c3c7000000010.jpg', '$2y$10$71PallMVusrx.xLSTBx6yue4zl4S7ybiXxG92M5d621RqRAfxvyAe', '50eff5fd5c4163fb2c9a7e4e1d394197b170af55aa8eea4363bd5ffd82ff3d799b35df31399d552809c61ad632c6bc407e443225d5c41996500bcb5394adb261', '', '2021-07-20 16:06:30', '2021-07-20', NULL, '2601', NULL, 1, 1),
+(60, 'Michael Akpobome', 'mike98989gg@gmail.com', '070606782758', NULL, NULL, '08174077714', NULL, 1, 'AG-3195923', 2, 'profile61376a1924a43100000000.jpg', '$2y$10$TyVVqJ1xDjim7SJdFsb9/OiS/i08ozScgKo4QfH4btJD.9cqAIESG', 'f1886e6e30fef7aa0c2df112dbf1f010049fd279da532ec624b6c95015f764410a954ae7e68b18971dd34c94ecfd7988175d448ef146f39a2c3b7c8fcff98e73', '989899884844', '2021-09-11 14:15:24', '2021-08-18', '2021-08-22', '7918', NULL, 1, 1),
+(65, 'Michael Akpobome', 'michael.akpobome@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-76213616', 2, 'profile613d20626bda0100000000.jpg', '$2y$10$ldH81ACQ4qnMWb1m.Lq5QecH11KH0UH39e1DTm0jh1VRlpma30O/e', '8cbee405b95d88ffa3ae831f1d5a609af5e73c2882e0935232eebf5b84062e7c9164a7783a01b9dce050342cbf65a184a2e6d9152f9bc9a5004a421b0f7d1e01', '', '2021-09-18 14:54:13', '2021-09-07', '2021-09-07', '7006', '2484', 1, 1),
+(67, 'Michael Akpobome4', 'mike98989ff@gmail.com', '07060678275', NULL, NULL, '08174077714', NULL, 1, 'AG-53574404', 2, 'default.png', '$2y$10$LsyGY.UqXVUx9tuLdK.30OPIqEvY..8TmdXYV6GU6gPoP9/Vu5kw.', '701cb05030b622ffb95d5f48080a6a2273e86e17405472ac8cc1389a335f1837755dcc688393c53dc9f69001f86af20fb8e8d3aa40373b7eaaef6c93b8714e6e', '', '2021-09-16 22:33:07', '2021-09-12', '2021-09-12', '6634', '6722', 1, 1),
+(71, 'Michael Akpobome', 'mike98989@gmail.com', '07060678275', NULL, NULL, NULL, NULL, 1, 'AG-75234583', 1, 'default.png', '$2y$10$eF3RxgUzE0J7g7QvPED8ZuqPIv85BlZuujuNOvthGOrtdBlRmf5hi', 'cbda3ca6a8ad576f236dbb95e1873ea3943ff2e452d80ed7255844591b2acd4152cdcd3a61d91b9e60013c05a616ffbf9027c9fa88c1c75b0b3f430ad0b0f701', '', '2021-09-18 16:18:35', '2021-09-18', '2021-09-18', '8373', NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -7343,6 +7586,12 @@ CREATE TABLE `wishlist` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `abuse_report`
+--
+ALTER TABLE `abuse_report`
+  ADD PRIMARY KEY (`report_id`);
 
 --
 -- Indexes for table `admin`
@@ -7407,10 +7656,22 @@ ALTER TABLE `lga`
   ADD KEY `state` (`State`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`message_id`);
+
+--
 -- Indexes for table `most_view`
 --
 ALTER TABLE `most_view`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `newsletter`
+--
+ALTER TABLE `newsletter`
+  ADD PRIMARY KEY (`newsletter_id`);
 
 --
 -- Indexes for table `pages`
@@ -7463,10 +7724,22 @@ ALTER TABLE `product_ratings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD PRIMARY KEY (`review_id`);
+
+--
 -- Indexes for table `property_types`
 --
 ALTER TABLE `property_types`
   ADD PRIMARY KEY (`type_id`);
+
+--
+-- Indexes for table `report_reason`
+--
+ALTER TABLE `report_reason`
+  ADD PRIMARY KEY (`reason_id`);
 
 --
 -- Indexes for table `saved_products`
@@ -7479,6 +7752,12 @@ ALTER TABLE `saved_products`
 --
 ALTER TABLE `seller_account_packages`
   ADD PRIMARY KEY (`package_id`);
+
+--
+-- Indexes for table `seller_account_packages_content`
+--
+ALTER TABLE `seller_account_packages_content`
+  ADD PRIMARY KEY (`content_id`);
 
 --
 -- Indexes for table `seller_ratings`
@@ -7520,6 +7799,12 @@ ALTER TABLE `wishlist`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `abuse_report`
+--
+ALTER TABLE `abuse_report`
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -7582,10 +7867,22 @@ ALTER TABLE `lga`
   MODIFY `Lgaid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=828;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `most_view`
 --
 ALTER TABLE `most_view`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `newsletter`
+--
+ALTER TABLE `newsletter`
+  MODIFY `newsletter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -7615,7 +7912,7 @@ ALTER TABLE `phone_models2`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `products2`
@@ -7636,22 +7933,40 @@ ALTER TABLE `product_ratings`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT for table `property_types`
 --
 ALTER TABLE `property_types`
   MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `report_reason`
+--
+ALTER TABLE `report_reason`
+  MODIFY `reason_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `saved_products`
 --
 ALTER TABLE `saved_products`
-  MODIFY `saved_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `saved_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `seller_account_packages`
 --
 ALTER TABLE `seller_account_packages`
   MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `seller_account_packages_content`
+--
+ALTER TABLE `seller_account_packages_content`
+  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `seller_ratings`
@@ -7675,13 +7990,13 @@ ALTER TABLE `sub_category`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `wishlist`

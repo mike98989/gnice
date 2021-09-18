@@ -43,12 +43,12 @@
                   ng-click="append_modal_info(package)" class="price_inverse_{{ package.package_id }}">
                   <span ng-switch-when="1">
                     <button class="btn btn-sm btn-gradient-warning">
-                      <i class="mdi mdi-autorenew"></i>
+                      <i class="mdi mdi-toggle-switch-off"></i>
                     </button>
                   </span>
                   <span ng-switch-when="0">
                     <button class="btn btn-sm btn-gradient-success">
-                      <i class="mdi mdi-autorenew"></i>
+                      <i class="mdi mdi-toggle-switch"></i>
                     </button>
                   </span>
                   <span ng-switch-default>
@@ -100,17 +100,42 @@
             <h5 class="card-title text-center price_inverse_{{ package.package_id }} ">{{ package.value | currency :
               "NGN "}}</h5>
             <article class="form-package price_{{ package.package_id }}" style="display:none">
-              <form ng-submit="edit_package(package.package_id, $index)" id=" edit_package_{{ package.package_id
+              <form ng-submit="edit_package(package, $index)" id=" edit_package_{{ package.package_id
                 }}">
                 <div class=" d-flex m-2">
                   <input type="text" class="form-control" value="{{ package.package_id}}" name="package_id" hidden>
-                  <input type="text" class="form-control" value="{{ package.title}}" name="title">
-                  <input type="text" class="form-control" value="{{ package.value}}" name="value">
-                  <button type="submit" class="btn btn-sm btn-gradient-success"
-                    ng-click="toggle_form( package.package_id )">
-                    <i class=" mdi mdi-content-save-settings"></i>
-                  </button>
+                 
                 </div>
+                <div class=" d-flex m-2">
+                  <div class="mx-1"> 
+                    <label for="title" class="mb-0"> <small >Package name</small></label>
+                    <input type="text" class="form-control"  value="{{ package.title}}" name="title">
+                  </div>
+
+                  <div class="mx-1">
+
+                    <label for="value" class="mb-0"> <small >Price (number)</small></label>
+                    <input type="number" class="form-control" value="{{ package.value}}" name="value">
+                  </div>
+
+                </div>
+                <div class=" d-flex m-2">
+                  <div class="mx-1">
+                    <label for="product_count" class="mb-0"> <small >Maximum number of ads (number)</small></label>
+                    <input type="number" class="form-control" value="{{ package.product_count}}" name="product_count">
+                  </div>
+
+                  <div class="mx-1">
+
+                    <label for="duration_in_days" class="mb-0"> <small >Duration in days (number)</small></label>
+                    <input type="number" class="form-control" value="{{ package.duration_in_days}}"
+                      name="duration_in_days">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-sm btn-gradient-success mx-3"
+                  ng-click="toggle_form( package.package_id )">
+                  <i class=" mdi mdi-content-save-settings"></i>
+                </button>
               </form>
             </article>
           </div>
@@ -156,13 +181,13 @@
                   ng-click="append_modal_info(item)" class="form_inverse_{{item.content_id}}">
 
                   <span ng-switch-when="1">
-                    <button class="btn btn-sm btn-gradient-warning" type="button">
-                      <i class="mdi mdi-autorenew"></i>
+                    <button class="btn btn-sm btn-warning" type="button">
+                      <i class="mdi mdi-toggle-switch-off"></i>
                     </button>
                   </span>
                   <span ng-switch-when="0">
-                    <button class="btn btn-sm btn-gradient-success" type="button">
-                      <i class="mdi mdi-autorenew"></i>
+                    <button class="btn btn-sm btn-success" type="button">
+                      <i class="mdi mdi-toggle-switch"></i>
                     </button>
                   </span>
                   <span ng-switch-default>

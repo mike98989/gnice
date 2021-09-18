@@ -81,12 +81,12 @@ module.controller("packagesController", [
         },
         processData: false,
         success: function (result) {
-          // alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
+          // alert(JSON.stringify(result));
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
-          console.log(JSON.stringify(msg.data));
+          // console.log(JSON.stringify(msg.data));
           if (msg.status == "1") {
             $scope.all_packages = msg.data;
             // $(".result").html(msg.message);
@@ -129,11 +129,11 @@ module.controller("packagesController", [
             //   $(".result").html(msg.message);
             //   $(".result").show();
             // }
-            $(".result").addClass("alert-danger");
+            $(".result").addClass("alert alert-info");
             $(".result").show();
             // console.log($scope.all_packages[index]);
             $scope.all_packages[index] = msg.data;
-            // $scope.$apply();
+            $scope.$apply();
             // $scope.get_all_account_packages();
             // $(".result").hide();
             setTimeout(() => {
@@ -152,9 +152,9 @@ module.controller("packagesController", [
       });
     };
 
-    $scope.edit_package = function (id, index) {
+    $scope.edit_package = function (package, index) {
       // $(".loader").show();
-      var formData = new FormData($("#edit_package_" + id)[0]);
+      var formData = new FormData($("#edit_package_" + package.package_id)[0]);
       // return;
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_package",
@@ -173,7 +173,9 @@ module.controller("packagesController", [
           $(".loader").hide();
 
           if (msg.status == "1") {
-            $scope.all_packages[index] = msg.data;
+            // $scope.get_all_account_packages();
+            // $scope.$apply();
+            
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");

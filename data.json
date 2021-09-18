@@ -1,0 +1,44 @@
+{
+    "message": "fetch successful",
+    "data": {
+      "transactions": [
+        {
+          "total_amount": "187500000",
+          "total_records": "75",
+          "$$hashKey": "object:16"
+        }
+      ],
+      "success_transactions": [
+        {
+          "total_success_amount": "175800000",
+          "total_success_records": "54"
+        }
+      ],
+      "failed_transactions": [
+        {
+          "total_failed_amount": "11700000",
+          "total_failed_records": "21"
+        }
+      ],
+      "ads": [
+        {
+          "total_ads": "20",
+          "total_sellers": "5",
+          "$$hashKey": "object:12"
+        }
+      ],
+      "sellers": [
+        {
+          "total_sellers": "9",
+          "total_users": "10",
+          "$$hashKey": "object:14"
+        }
+      ],
+      "users": [
+        {
+          "total_sellers": "10"
+        }
+      ]
+    },
+    "status": "1"
+  }

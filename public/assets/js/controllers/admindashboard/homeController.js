@@ -66,7 +66,7 @@ module.controller("homeController", [
           var msg = angular.fromJson(parsed);
 
           $(".loader").hide();
-          console.table(JSON.stringify(msg));
+          // console.log(msg);
           if (msg.status == "1") {
             $scope.statistics = msg.data;
             $scope.notification = msg.msg;

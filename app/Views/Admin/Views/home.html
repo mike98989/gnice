@@ -51,11 +51,20 @@
         <div class="card-body">
           <img src="{{dirlocation}}/public/admin-assets/images/dashboard/circle.png" class="card-img-absolute"
             alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Total Transactions<i
+          <h5 class="font-weight-normal">Total Transactions<i
               class="mdi mdi-cash-multiple mdi-24px float-right"></i>
+          </h5>
+          <h3 class="mb-0"> {{ item.total_amount | currency :'NGN '}}</h3>
+          <small class="card-text">Total number of transactions : {{ item.total_records }}</small>
+
+          <br>
+
+          <div ng-repeat="success in statistics.success_transactions" class="mt-4">
+            <h4 class="font-weight-normal"> Success Transactions
           </h4>
-          <h2 class="mb-5">{{ item.total_amount | currency :'NGN '}}</h2>
-          <h6 class="card-text">counts : {{ item.total_records }}</h6>
+            <h5 class="mb-0"> {{ success.total_success_amount | currency :'NGN '}}</h5>
+            <small class="card-text">Total number of successful transactions : {{ success.total_success_records }}</small>
+          </div>
         </div>
       </div>
     </div>
@@ -135,12 +144,12 @@
                       data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
                       <span ng-switch-when="1">
                         <button class="badge badge-warning">
-                          <i class="mdi mdi-autorenew mr-1"></i>Disable
+                          <i class="mdi mdi-toggle-switch-off mr-1"></i>Disable
                         </button>
                       </span>
                       <span ng-switch-when="0">
                         <button class="badge badge-success">
-                          <i class="mdi mdi-autorenew mr-1"></i>Enable
+                          <i class="mdi mdi-toggle-switch mr-1"></i>Enable
                         </button>
                       </span>
                       <span ng-switch-default>
