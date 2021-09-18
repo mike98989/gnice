@@ -243,17 +243,18 @@
         </div>
         <div class="card-body">
           <h4 class="card-title p-2 mb-4">Create New Banner</h4>
+          <div class="alert alert-warning result2" style="display: none;"></div>
           <form ng-submit="create_new_banner()" id="create_new_banner">
 
-            <div class="form-group ">
+            <div class="form-group " ng-init="fetch_banner_types()">
               <label " for=" banner_type">Banner Type</label>
-              <select class="form-control" name="banner_type" id="banner_type" required>
+              <select class="form-control" ng-model="banner_type" ng-change="onBannerValueChange(banner_type)" id="banner_type" required>
                 <option value="">SELECT BANNER TYPE</option>
-                <option value="1">Top Banner</option>
-                <option value="2">Main Banner</option>
-                <option value="3">Side Banner</option>
+                <option value="{{type}}" ng-repeat="type in banner_types">{{type.title}}</option>
               </select>
             </div>
+           
+            <div class="alert alert-info" ng-show="selected_banner">{{selected_banner.description}}</div>
             <div class="form-group">
               <label for="title">Title:</label>
               <input type="text" class="form-control " placeholder="banner title" name="title" id="title" required>
@@ -267,10 +268,12 @@
             <div class="form-group mt-2">
 
               <label>Image</label>
-              <input type="file" name="image" id="image" multiple class="form-control file-upload-info"
+              <input type="file" name="files[]" id="image" multiple class="form-control file-upload-info"
                 placeholder="Upload Image" required>
             </div>
-
+            <input type="hidden" value="{{selected_banner.type_id}}" name="banner_type">
+            <input type="hidden" value="{{selected_banner.width}}" name="banner_width">
+            <input type="hidden" value="{{selected_banner.height}}" name="banner_height">
             <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-book-plus mr-2"></i>Submit</button>
           </form>
         </div>

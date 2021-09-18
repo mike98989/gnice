@@ -518,17 +518,17 @@ class Api extends Controller
 
     // Hero apis
 
-    public function fetch_all_hero()
-    {
-        $header = apache_request_headers();
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Hero')->getAllHero();
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
+    // public function fetch_all_hero()
+    // {
+    //     $header = apache_request_headers();
+    //     if (isset($header['gnice-authenticate'])) {
+    //         $result = $this->model('Hero')->getAllHero();
+    //         print_r(json_encode($result));
+    //     } else {
+    //         echo "invalid request";
+    //         exit;
+    //     }
+    // }
 
     //Banner apis
     public function fetch_all_banners()

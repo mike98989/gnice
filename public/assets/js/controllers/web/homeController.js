@@ -39,6 +39,31 @@ module.controller("homeController", [
 
     //  })
 
+    $scope.fetch_all_banners = function(){
+      $.ajax({
+        url: $scope.dirlocation + "api/fetch_all_banners",
+        type: "GET",
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers: { "gnice-authenticate": "gnice-web" },
+        processData: false,
+        success: function (result) {
+          alert(result);
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.banners = msg.data;
+            $scope.$apply();
+            //alert(JSON.stringify($scope.categories));
+          }
+        },
+      });
+    }
+
     $scope.split_image = function (images) {
       return images.split(",");
     };
@@ -532,7 +557,7 @@ module.controller("homeController", [
           $(".products_loader").hide();
           if (msg2.status == "1") {
             $scope.products = msg2.data;
-
+            //alert(JSON.stringify($scope.products));
             $scope.$apply();
 
             //alert(JSON.stringify($scope.categories));

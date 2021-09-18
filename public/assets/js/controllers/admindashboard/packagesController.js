@@ -154,6 +154,7 @@ module.controller("packagesController", [
 
     $scope.edit_package = function (id, index) {
       // $(".loader").show();
+      //alert(JSON.stringify($scope.all_packages[index]));return;
       var formData = new FormData($("#edit_package_" + id)[0]);
       // return;
       $.ajax({
@@ -166,22 +167,26 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          console.log(answer);
+          //console.log(answer);
+          //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
 
           if (msg.status == "1") {
-            $scope.all_packages[index] = msg.data;
+            //alert(JSON.stringify(msg.data));
+            
+            //$scope.all_packages[index] = msg.data;
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              //$(".result").hide("500");
+              //$(".result").removeClass("alert alert-info");
+              window.location.reload();
             }, 3000);
 
             $("#edit_package_" + id)[0].reset();

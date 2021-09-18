@@ -147,7 +147,7 @@ class AdminTasks extends Model
                         FROM products
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.date_added DESC");
+                        LEFT JOIN users ON users.seller_id = products.seller_id ORDER BY products.id DESC");
 
                 if ($this->db->resultSet()) {
                     $result['rowCounts'] = $this->db->rowCount();
@@ -242,9 +242,9 @@ class AdminTasks extends Model
             $token = $splitHeader[0];
             $status = $_POST['status'];
             $id = $_POST['banner_id'];
-            $type = $_POST['banner_type'];
+            //$type = $_POST['banner_type'];
             if ($this->verifyToken($token) == true) {
-                $this->db->query("UPDATE banners SET status = :status WHERE id = :id");
+                $this->db->query("UPDATE banners SET status = :status WHERE banner_id = :id");
                 $this->db->bind(':id', $id);
                 $this->db->bind(':status', $status);
                 if ($this->db->execute()) {
@@ -997,9 +997,11 @@ class AdminTasks extends Model
                 $this->db->bind(':content_title', $content_title);
                 $this->db->bind(':content_body', $content_body);
                 $this->db->bind(':id', $id);
-                $row = $this->db->singleResult();
+                //$row = $this->db->singleResult();
                 if ($this->db->execute()) {
-                    $result['data'] = $row;
+                    // $this->db->query("SELECT * FROM seller_account_packages_content WHERE content_id = :id");
+                    // $this->db->bind(':id', $id);
+                    // $result['data'] = $this->db->singleResult();
                     $result['message'] = 'Package content updated successfully';
                     $result['status'] = 1;
                 } else {
@@ -1035,9 +1037,13 @@ class AdminTasks extends Model
                 $this->db->bind(':title', $title);
                 $this->db->bind(':value', $value);
                 $this->db->bind(':id', $id);
-                $row = $this->db->singleResult();
+
+                //$row = $this->db->singleResult();
+                //print_r($row);
                 if ($this->db->execute()) {
-                    $result['data'] = $row;
+                    // $this->db->query("SELECT * FROM seller_account_packages WHERE package_id = :id");
+                    // $this->db->bind(':id', $id);
+                    // $result['data'] = $this->db->singleResult();
                     $result['message'] = 'Package updated successfully';
                     $result['status'] = 1;
                 } else {
@@ -1164,6 +1170,24 @@ class AdminTasks extends Model
         return $result;
     }
 
+    
+
+    public function fetchBannerTypes()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+                $this->db->query("SELECT * FROM banner_types WHERE status='1'");
+                $row = $this->db->resultSet();
+                $result['data'] = $row;
+                $result['status'] = '1';
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
     public function fetchAllBanner()
     {
 
@@ -1182,7 +1206,7 @@ class AdminTasks extends Model
                     $result['status'] = '1';
                 } else {
                     $result['data'] = [];
-                    $result['message'] = 'all banners fetching failed';
+                    $result['message'] = 'No banner uploaded yet!';
                     $result['status'] = '0';
                 }
             } else {
@@ -1205,49 +1229,64 @@ class AdminTasks extends Model
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
 
-
-
             if ($this->verifyToken($token) == true) {
-
-
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
                 $banner_type = $_POST['banner_type'];
                 $title = $_POST['title'];
+                $recommended_width = $_POST['banner_width'];
+                $recommended_height = $_POST['banner_height'];
                 $description = $_POST['description'];
                 $status = 1;
                 $max_resolution = null;
 
+                if (isset($_FILES['files'])) {
+                $original_image = getimagesize($_FILES['files']["tmp_name"][0]);
+                $image_width = $original_image[0];
+                $image_height = $original_image[1];
+                
+                if($recommended_width==$image_width){
+                    if($recommended_height==$image_height){
+                    $uploadImage = uploadMultiple('banner_','banners',4);
+                    $image = $uploadImage['imageUrl'];
+                     //print_r($_POST);exit;
+                     if($uploadImage['imageUrl']){
+                    $this->db->query("INSERT INTO banners (title, description, image, type, status) VALUES (:title, :description, :image,:type,:status)");
+                    $this->db->bind(':title', $title);
+                    $this->db->bind(':description', $description);
+                    $this->db->bind(':image', $image);
+                    $this->db->bind(':type', $banner_type);
+                    $this->db->bind(':status', $status);
 
-                if (isset($_FILES['image'])) {
-                    if ($banner_type == '1') {
-                        $max_resolution = 200;
-                    } elseif ($banner_type == '2') {
-                        $max_resolution = 700;
-                    } elseif ($banner_type == '3') {
-                        $max_resolution = 400;
+                    if ($this->db->execute()) {
+                        $result['message'] = 'New Banner image uploaded successfully';
+                        $result['status'] = '1';
+                        } else {
+                            $result['message'] = 'Banner creation failed';
+                            $result['errors'] = $uploadImage['image_error'];
+                            $result['status'] = '0';
                     }
-                }
-                $image_resizer = resizer(1, $max_resolution, 'banners');
-                $image = $image_resizer['success'];
-
-
-                $this->db->query("INSERT INTO banners (title, description, image, type, status) VALUES (:title, :description, :image, :sub_title, :status)");
-                $this->db->bind(':title', $title);
-                $this->db->bind(':description', $description);
-                $this->db->bind(':image', $image);
-                $this->db->bind(':type', $banner_type);
-                $this->db->bind(':status', $status);
-
-                if ($this->db->execute()) {
-                    $result['message'] = 'new banner created  successfully';
-                    $result['status'] = '1';
-                } else {
-                    $result['data'] = [];
-                    $result['message'] = 'new banner creation failed';
-                    $result['errors'] = $image_resizer['image_error'];
+                     }else{
+                    $result['message'] = 'Something went wrong!';
+                    $result['status'] = '0';
+                     }
+                    
+                    }else{
+                    $result['message'] = 'Image height does not match with recommended height';
+                    $result['status'] = '0';
+                    }
+                }else{
+                    $result['message'] = 'Image width does not match with recommended width';
                     $result['status'] = '0';
                 }
+                //print_r($original_image);
+                }else{
+                    $result['message'] = 'Please attach an image file';
+                    $result['status'] = '0';
+                }
+                return $result;
+                exit;
+
+                
             } else {
                 $result['message'] = 'invalid token';
                 $result['status'] = '0';

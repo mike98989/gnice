@@ -1,6 +1,6 @@
 
-<main class="main" ng-controller="homeController">
-	<div class="jumbotron jumbotron-fluid" ng-init="getAllHero()" style="background-image: url('{{dirlocation}}public/assets/images/uploads/hero/{{heros.image}}');display:none">
+<main class="main" ng-controller="homeController" ng-init="fetch_all_banners()">
+	<div class="jumbotron jumbotron-fluid" style="background-image: url('{{dirlocation}}public/assets/images/uploads/hero/{{heros.image}}');display:none">
 	  <div class="container">
 	   <h2 class="text-white" style="margin-bottom: 5px !important;">{{ heros.title }}</h4>
 	   <div class="text-dark">
@@ -70,7 +70,11 @@
 									</div><!-- End .banner-layer -->
 								</div><!-- End .home-slide -->
 							</div><!-- End .home-slider -->
-	
+							
+							<div ng-if="banners.main_banner.length!=0">
+							<img src="{{dirlocation}}public/assets/images/uploads/banners/{{banners.main_banner[0].image}}" style="border-radius:15px;width:100%"/>	
+							</div>
+
 							<h2 class="section-title" style="padding-top:15px;margin-top:0;margin-bottom:0">Trending Ads</h2>
 							
 							<div  ng-init="fetch_all_product()">

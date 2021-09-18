@@ -54,6 +54,53 @@ module.controller("bannerController", [
 
     //* Start
 
+    $scope.onBannerValueChange = function (value) {
+      //alert(JSON.stringify(value));
+      let objectval = JSON.parse(value);
+      $scope.selected_banner = objectval;
+      //$scope.sub_categories = objectval.subcategory;
+    }
+
+    $scope.fetch_banner_types = function () {
+      $(".loader").show();
+      $(".result").hide();
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/fetch_banner_types",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: {
+          "gnice-authenticate": $scope.admin_token,
+        },
+        processData: false,
+        success: function (result) {
+          //alert(result);
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          $(".loader").hide();
+          if (msg.status == "1") {
+            $scope.banner_types = msg.data;
+            $scope.$apply();
+            $(".loader").hide();
+            // $(".result").html(msg.message);
+            // $(".result").show();
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          }
+        },
+      });
+    };
+
     $scope.fetch_all_banners = function () {
       $(".loader").show();
       $(".result").hide();
@@ -106,43 +153,46 @@ module.controller("bannerController", [
         processData: false,
         success: function (answer) {
           // console.log(answer);
+          //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
           if (msg.status == "1") {
             $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
-
+            $(".result2").html(msg.message);
+            $(".result2").addClass("alert alert-info");
+            $(".result2").show(500);
+            document.getElementById("create_new_banner").reset();
             $scope.fetch_all_banners();
             $scope.$apply();
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
-            }, 3000);
+              $(".result2").hide("500");
+              $(".result2").removeClass("alert alert-info");
+            }, 4000);
             $("#addCategory")[0].reset();
           } else {
             $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
+            $(".result2").html(msg.message);
+            $(".result2").addClass("alert alert-info");
+            $(".result2").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              $(".result2").hide("500");
+              $(".result2").removeClass("alert alert-info");
             }, 3000);
           }
         },
       });
     };
+
+
     $scope.enable_or_disable_banner = function (code, banner, $index) {
       $(".loader").show();
       var formData = new FormData();
 
       formData.append("status", code);
-      formData.append("banner_id", banner.id);
+      formData.append("banner_id", banner.banner_id);
       formData.append("banner_type", banner.type);
       $.ajax({
         url: $scope.dirlocation + "adminapi/disable_enable_banner",
@@ -154,6 +204,7 @@ module.controller("bannerController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
