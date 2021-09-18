@@ -326,5 +326,55 @@ module.controller("categoryController", [
         },
       });
     };
+    $scope.enable_or_disable_cat = function (code, cat) {
+      $(".loader").show();
+      var formData = new FormData();
+      // alert('hello');
+      // return;
+
+      formData.append("status", code);
+      formData.append("category_id", cat.id);
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/disable_enable_category",
+        data: formData,
+        type: "POST",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          console.log(result);
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+         // $(".loader" + cat.id).hide();
+          if (msg.status == "1") {
+            cat.status = code;
+            $scope.$apply();
+
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          }
+        },
+      });
+    };
   },
 ]);

@@ -80,10 +80,25 @@ class AdminTasks extends Model
             $token = $splitHeader[0];
 
             if ($this->verifyToken($token) == true) {
-                $this->db->query("SELECT SUM(transactions.amount) AS total_amount, COUNT(transactions.amount) AS total_records FROM transactions WHERE transactions.trans_status = 'success'");
+                // $this->db->query("SELECT SUM(transactions.amount) AS total_amount, COUNT(transactions.amount) AS total_records FROM transactions WHERE transactions.trans_status = 'success'");
+                // if ($this->db->execute()) {
+                //     $row['transactions'] = $this->db->resultSet();
+                // }
+                $this->db->query("SELECT SUM(transactions.amount) AS total_amount, COUNT(transactions.amount) AS total_records FROM transactions");
                 if ($this->db->execute()) {
                     $row['transactions'] = $this->db->resultSet();
                 }
+                $this->db->query("SELECT SUM(transactions.amount) AS total_success_amount, COUNT(transactions.amount) AS total_success_records FROM transactions WHERE transactions.trans_status = 'success'");
+                if ($this->db->execute()) {
+                    $row['success_transactions'] = $this->db->resultSet();
+                }
+                $this->db->query("SELECT SUM(transactions.amount) AS total_failed_amount, COUNT(transactions.amount) AS total_failed_records FROM transactions WHERE NOT transactions.trans_status = 'success'");
+                if ($this->db->execute()) {
+                    $row['failed_transactions'] = $this->db->resultSet();
+                }
+
+                $this->db->query("SELECT COUNT(users.seller_id) A");
+                
 
                 $this->db->query("SELECT COUNT(DISTINCT products.product_code) AS total_ads, COUNT(DISTINCT users.seller_id) AS total_sellers FROM products INNER JOIN users WHERE users.seller_id = products.seller_id ");
                 if ($this->db->resultSet()) {
@@ -97,22 +112,22 @@ class AdminTasks extends Model
                 if ($this->db->resultSet()) {
                     $row['users'] = $this->db->resultSet();
                 }
-                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
-                if ($this->db->resultSet()) {
-                    $row['package_one'] = $this->db->resultSet();
-                }
-                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 2 ORDER BY P.date_added DESC");
-                if ($this->db->resultSet()) {
-                    $row['package_two'] = $this->db->resultSet();
-                }
-                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 3 ORDER BY P.date_added DESC");
-                if ($this->db->resultSet()) {
-                    $row['package_three'] = $this->db->resultSet();
-                }
-                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
-                if ($this->db->resultSet()) {
-                    $row['package_four'] = $this->db->resultSet();
-                }
+                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
+                // if ($this->db->resultSet()) {
+                //     $row['package_one'] = $this->db->resultSet();
+                // }
+                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 2 ORDER BY P.date_added DESC");
+                // if ($this->db->resultSet()) {
+                //     $row['package_two'] = $this->db->resultSet();
+                // }
+                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 3 ORDER BY P.date_added DESC");
+                // if ($this->db->resultSet()) {
+                //     $row['package_three'] = $this->db->resultSet();
+                // }
+                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
+                // if ($this->db->resultSet()) {
+                //     $row['package_four'] = $this->db->resultSet();
+                // }
                 if ($this->db->resultSet()) {
                     $result['message'] = 'fetch successful';
                     $result['data'] = $row;
@@ -233,6 +248,41 @@ class AdminTasks extends Model
 
         return $result;
     }
+    public function disableEnableCategory()
+    {
+        $header = apache_request_headers();
+        if (isset($header['gnice-authenticate'])) {
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            $status = $_POST['status'];
+            $category_id = $_POST['category_id'];
+            if ($this->verifyToken($token) == true) {
+                $this->db->query("UPDATE category SET status = :status WHERE id = :id");
+                $this->db->bind(':id', $category_id);
+                $this->db->bind(':status', $status);
+                if ($this->db->execute()) {
+                    $result['message'] = 'Category operation successfully';
+                    $result['status'] = '1';
+                } else {
+                    $result['data'] = [];
+                    $result['message'] = 'Category operation failed';
+                    $result['status'] = '0';
+                }
+            } else {
+                $result['data'] = [];
+                $result['message'] = 'Invalid token, login to continue task';
+                $result['status'] = '0';
+            }
+        } else {
+            $result['data'] = [];
+            $result['message'] = 'Invalid request';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
     public function disableEnableBanner()
     {
         $header = apache_request_headers();
@@ -922,7 +972,7 @@ class AdminTasks extends Model
 
             if ($this->verifyToken($token) == true) {
 
-                $this->db->query("SELECT package_id,title,value,status FROM seller_account_packages");
+                $this->db->query("SELECT package_id,title,duration_in_days,product_count,value,status FROM seller_account_packages");
                 $packages = $this->db->resultSet();
                 $count = $this->db->rowCount();
                 for ($a = 0; $a < $count; $a++) {
@@ -1031,11 +1081,15 @@ class AdminTasks extends Model
                 $id = trim($_POST['package_id']);
                 $title = trim($_POST['title']);
                 $value = trim($_POST['value']);
+                $duration = trim($_POST['duration_in_days']);
+                $product_count = trim($_POST['product_count']);
                 // print_r(json_encode("got"));
                 // die();
-                $this->db->query("UPDATE seller_account_packages SET title = :title, value = :value WHERE package_id = :id");
+                $this->db->query("UPDATE seller_account_packages SET title = :title,  value = :value, duration_in_days = :duration, product_count = :count WHERE package_id = :id");
                 $this->db->bind(':title', $title);
                 $this->db->bind(':value', $value);
+                $this->db->bind(':duration', $duration);
+                $this->db->bind(':count', $product_count);
                 $this->db->bind(':id', $id);
 
                 //$row = $this->db->singleResult();

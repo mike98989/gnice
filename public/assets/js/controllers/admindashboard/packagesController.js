@@ -81,12 +81,13 @@ module.controller("packagesController", [
         },
         processData: false,
         success: function (result) {
-          // alert(JSON.stringify(result));
+          //alert(JSON.stringify(result));
+
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".loader").hide();
-          console.log(JSON.stringify(msg.data));
+          // console.log(JSON.stringify(msg.data));
           if (msg.status == "1") {
             $scope.all_packages = msg.data;
             // $(".result").html(msg.message);
@@ -101,6 +102,7 @@ module.controller("packagesController", [
     };
 
     $scope.edit_package_content = function (id, index) {
+      
       $(".loader").show();
       var formData = new FormData($("#edit_package_content_" + id)[0]);
       $.ajax({
@@ -129,11 +131,11 @@ module.controller("packagesController", [
             //   $(".result").html(msg.message);
             //   $(".result").show();
             // }
-            $(".result").addClass("alert-danger");
+            $(".result").addClass("alert alert-info");
             $(".result").show();
             // console.log($scope.all_packages[index]);
             $scope.all_packages[index] = msg.data;
-            // $scope.$apply();
+            $scope.$apply();
             // $scope.get_all_account_packages();
             // $(".result").hide();
             setTimeout(() => {
@@ -152,10 +154,11 @@ module.controller("packagesController", [
       });
     };
 
-    $scope.edit_package = function (id, index) {
+    $scope.edit_package = function (package, index) {
       // $(".loader").show();
+      
       //alert(JSON.stringify($scope.all_packages[index]));return;
-      var formData = new FormData($("#edit_package_" + id)[0]);
+      var formData = new FormData($("#edit_package_" + package.package_id)[0]);
       // return;
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_package",
@@ -187,7 +190,7 @@ module.controller("packagesController", [
               //$(".result").hide("500");
               //$(".result").removeClass("alert alert-info");
               window.location.reload();
-            }, 3000);
+            },2000);
 
             $("#edit_package_" + id)[0].reset();
           } else {
