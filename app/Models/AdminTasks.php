@@ -97,37 +97,27 @@ class AdminTasks extends Model
                     $row['failed_transactions'] = $this->db->resultSet();
                 }
 
-                $this->db->query("SELECT COUNT(users.seller_id) A");
-                
 
-                $this->db->query("SELECT COUNT(DISTINCT products.product_code) AS total_ads, COUNT(DISTINCT users.seller_id) AS total_sellers FROM products INNER JOIN users WHERE users.seller_id = products.seller_id ");
+                $this->db->query("SELECT S.title, COUNT(U.seller_id) AS number_of_sellers FROM users AS U LEFT JOIN seller_account_packages AS S ON U.account_type = S.package_id GROUP BY title  HAVING COUNT(U.seller_id) > 0");
+                if ($this->db->resultSet()) {
+                    $row['packages_and_sellers'] = $this->db->resultSet();
+                }
+
+                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers_with_ads FROM products AS P LEFT JOIN users AS U ON P.seller_id = U.seller_id");
                 if ($this->db->resultSet()) {
                     $row['ads'] = $this->db->resultSet();
                 }
+
                 $this->db->query("SELECT COUNT(DISTINCT users.seller_id) AS total_sellers, COUNT(DISTINCT users.email) AS total_users FROM users WHERE users.account_type > 0");
                 if ($this->db->resultSet()) {
                     $row['sellers'] = $this->db->resultSet();
                 }
+                
                 $this->db->query("SELECT COUNT(DISTINCT users.email) AS total_sellers FROM users WHERE users.account_type > 0");
                 if ($this->db->resultSet()) {
                     $row['users'] = $this->db->resultSet();
                 }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_one'] = $this->db->resultSet();
-                // }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 2 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_two'] = $this->db->resultSet();
-                // }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 3 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_three'] = $this->db->resultSet();
-                // }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_four'] = $this->db->resultSet();
-                // }
+                
                 if ($this->db->resultSet()) {
                     $result['message'] = 'fetch successful';
                     $result['data'] = $row;
@@ -899,7 +889,7 @@ class AdminTasks extends Model
                 $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id ORDER BY date_added DESC");
                 $this->db->bind(':seller_id', $seller_id);
                 $row = $this->db->resultSet();
-                if ($this->db->rowCount() > 0) {
+                if ($this->db->execute()) {
                     $result['rowCounts'] = $this->db->rowCount();
                     $result['data'] = $row;
                     $result['message'] = 'all ads fetched successfully';

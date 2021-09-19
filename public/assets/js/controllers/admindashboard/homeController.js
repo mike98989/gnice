@@ -61,12 +61,13 @@ module.controller("homeController", [
         },
         processData: false,
         success: function (result) {
+          console.log(result);
+          // return;
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
 
           $(".loader").hide();
-          // console.log(msg);
           if (msg.status == "1") {
             $scope.statistics = msg.data;
             $scope.notification = msg.msg;

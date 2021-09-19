@@ -174,7 +174,7 @@ module.controller("usersController", [
             $scope.all_user_ads = msg.data;
             $scope.rowCount = msg.rowCounts;
             $scope.$apply();
-            $(".result").show();
+            // $(".result").show();
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);

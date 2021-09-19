@@ -21,28 +21,32 @@
     <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 20px" />
   </div>
   <div class="row" ng-init="home_stats()">
-    <div class="col-md-4 stretch-card grid-margin" ng-repeat="ad in statistics.ads ">
+    <div class="col-md-4 stretch-card grid-margin" ng-repeat="ads in statistics.ads ">
       <div class="card bg-gradient-danger card-img-holder text-white">
         <div class="card-body">
           <img src="{{dirlocation}}/public/admin-assets/images/dashboard/circle.png" class="card-img-absolute"
             alt="circle-image" />
           <h4 class="font-weight-normal mb-3">Total Ads <i class="mdi mdi-presentation-play mdi-24px float-right"></i>
           </h4>
-          <h2 class="mb-5">{{ ad.total_ads }}</h2>
-          <h6 class="card-text">by {{ ad.total_sellers }} sellers</h6>
+          <h2 class="mb-5">{{ ads.total_ads }}</h2>
+          <h6 class="card-text">Placed by : <strong>{{ ads.total_sellers_with_ads }}</strong> sellers </h6>
         </div>
       </div>
     </div>
-    <div class="col-md-4 stretch-card grid-margin" ng-repeat="seller in statistics.sellers">
+    <div class="col-md-4 stretch-card grid-margin" >
       <div class="card bg-gradient-info card-img-holder text-white">
         <div class="card-body">
           <img src="{{dirlocation}}/public/admin-assets/images/dashboard/circle.png" class="card-img-absolute"
             alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Total Sellers <i
+          <h4 class="font-weight-normal mb-5">Packages with number of users <i
               class="mdi mdi-account-multiple-outline  mdi-24px float-right"></i>
           </h4>
-          <h2 class="mb-5">{{ seller.total_sellers }}</h2>
-          <h6 class="card-text"></h6>
+          <div class="d-flex justify-content-between align-content-end" ng-repeat="package_seller in statistics.packages_and_sellers">
+
+            <h6 ng-if="package_seller.title != null ">{{ package_seller.title }}</h6>
+           
+            <h4 ng-if="package_seller.title != null ">{{ package_seller.number_of_sellers }}</h4>
+          </div>
         </div>
       </div>
     </div>
