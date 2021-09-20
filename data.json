@@ -19,7 +19,7 @@
         "total_failed_records": "21"
       }
     ],
-    "packages_with_sellers": [
+    "packages_and_sellers": [
       {
         "title": "Advance",
         "number_of_sellers": "1"
@@ -39,8 +39,8 @@
     ],
     "ads": [
       {
-        "total_sellers_with_ads": "10",
-        "total_ads": "20"
+        "total_ads": "31",
+        "total_sellers_with_ads": "5"
       }
     ],
     "sellers": [
