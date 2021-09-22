@@ -52,8 +52,12 @@ module.controller("categoryController", [
       $(".btn_" + id).toggle(500);
     };
 
+    $scope.loader_control = function(e){
+      $(e).hide(1000);
+    };
+
     $scope.get_all_cat_and_sub_cat = function () {
-      $(".loader").show();
+      $("#category_loader").show();
       $(".result").hide();
 
       $.ajax({
@@ -70,9 +74,11 @@ module.controller("categoryController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $scope.loader_control('#category_loader');
+         
           if (msg.status == "1") {
             $scope.all_cat_and_sub = msg.data;
+
             $scope.$apply();
             $(".result").hide();
           } else {
@@ -84,7 +90,7 @@ module.controller("categoryController", [
     };
 
     $scope.add_new_category = function () {
-      $(".loader").show();
+      $("#add_cat_loader").show();
       var formData = new FormData($("#addCategory")[0]);
       $.ajax({
         url: $scope.dirlocation + "adminapi/add_category",
@@ -101,9 +107,8 @@ module.controller("categoryController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $scope.loader_control('#add_cat_loader');
           if (msg.status == "1") {
-            alert(msg);
             $scope.get_all_cat_and_sub_cat();
             $(".loader").hide();
             $(".result").html(msg.message);
@@ -113,13 +118,13 @@ module.controller("categoryController", [
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").show();
-            //alert(msg.message);
           }
         },
       });
     };
-    $scope.update_category = function () {
-      $(".loader").show();
+    $scope.update_category = function (id) {
+      $(".edit_"+ id).show();
+      $(".icon_"+ id).hide();
       var formData = new FormData($("#updateCategory")[0]);
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_category",
@@ -135,17 +140,16 @@ module.controller("categoryController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           // console.log(JSON.stringify(msg));
-          $(".loader").hide();
+          $scope.loader_control('.edit_'+ id);
+          $(".icon_"+ id).hide();
           if (msg.status == "1") {
             $scope.get_all_cat_and_sub_cat();
             $scope.$apply();
-            $(".loader").hide();
+           
             $(".result").html(msg.message);
-            alert(msg.message);
             $(".result").show();
             $("#updateCategory")[0].reset();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").show();
           }
@@ -153,7 +157,8 @@ module.controller("categoryController", [
       });
     };
     $scope.update_sub_category = function (id, index) {
-      $(".loader").show();
+      $(".sub_edit_loader_"+ id).show();
+      $(".icon_"+ id).hide();
       var formData = new FormData($("#update_sub_category_" + id)[0]);
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_sub_category",
@@ -169,11 +174,12 @@ module.controller("categoryController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".sub_edit_loader_"+ id).hide(500);
+          $(".icon_"+ id).show(500);
           if (msg.status == "1") {
-            $scope.all_cat_and_sub[index] = msg.data;
-            $scope.$apply();
-            $(".loader").hide();
+            console.log(msg.message);
+            // $scope.all_cat_and_sub[index] = msg.data;
+            // $scope.$apply();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -184,7 +190,6 @@ module.controller("categoryController", [
             }, 3000);
             $("#update_sub_category_" + id)[0].reset();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -198,7 +203,7 @@ module.controller("categoryController", [
       });
     };
     $scope.add_new_sub_category = function () {
-      $(".loader").show();
+      $(".add_sub_cat_loader").show();
       var formData = new FormData($("#addSubCategory")[0]);
 
       $.ajax({
@@ -211,12 +216,11 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          // alert(JSON.stringify(answer));
-          // console.log(answer);
+        
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".add_sub_cat_loader").hide(500);
           if (msg.status == "1") {
             $scope.get_all_cat_and_sub_cat();
             $scope.$apply();
@@ -245,43 +249,10 @@ module.controller("categoryController", [
       });
     };
 
-    // TODO: check code below
-    $scope.enable_or_disable = function (code, user, index) {
-      var conf = confirm(
-        "DO YOU WANT DISABLE/ENABLE THIS USER '" + user.fullname + "'?"
-      );
-      // alert(index);
-      if (conf) {
-        $(".loader2_" + user.fullname).show();
-        var formData = new FormData();
-        formData.append("status", code);
-        formData.append("seller_id", user.seller_id);
-        $.ajax({
-          url: $scope.dirlocation + "adminapi/disable_enable_account",
-          data: formData,
-          type: "POST",
-          async: true,
-          cache: false,
-          contentType: false,
-          headers: { "gnice-authenticate": $scope.admin_token },
-          processData: false,
-          success: function (result) {
-            var response = JSON.stringify(result);
-            var parsed = JSON.parse(response);
-            var msg = angular.fromJson(parsed);
-            $(".loader2_" + user.id).hide();
-            if (msg.status == "1") {
-              user.status = code;
-              $scope.$apply();
-              $(".result").html(msg.message);
-              $(".result").show();
-            }
-          },
-        });
-      }
-    };
+    
     $scope.enable_disable_sub = function (code, sub) {
-      // $(".loader" + sub.title).show();
+      $('.sub_loader_'+ sub.sub_id).show();
+      $('.icon_'+ sub.sub_id).hide();
       var formData = new FormData();
 
       formData.append("status", code);
@@ -299,11 +270,11 @@ module.controller("categoryController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader2_" + sub.id).hide();
+          $scope.loader_control('.sub_loader_'+ sub.sub_id);
+          $('.icon_'+ sub.sub_id).show();
           if (msg.status == "1") {
             sub.status = code;
             $scope.$apply();
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -313,7 +284,7 @@ module.controller("categoryController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
+    
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -327,7 +298,10 @@ module.controller("categoryController", [
       });
     };
     $scope.enable_or_disable_cat = function (code, cat) {
-      $(".loader").show();
+      $(".cat_loader_"+ cat.id).show(1000);
+      $(".icon_"+ cat.id).hide(1000);
+      // alert("#cat_loader_"+ cat.id);
+      
       var formData = new FormData();
       // alert('hello');
       // return;
@@ -344,11 +318,12 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
-          console.log(result);
+          // console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-         // $(".loader" + cat.id).hide();
+          $scope.loader_control('.cat_loader_'+ cat.id);
+          $(".icon_"+ cat.id).show();
           if (msg.status == "1") {
             cat.status = code;
             $scope.$apply();

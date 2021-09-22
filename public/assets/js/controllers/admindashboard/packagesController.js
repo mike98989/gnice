@@ -65,10 +65,8 @@ module.controller("packagesController", [
     };
 
     $scope.get_all_account_packages = function () {
-      $(".loader").show();
+      $("#account_loader").show(500);
       $(".result").hide();
-      // alert("got here");
-      // alert(JSON.stringify($scope.admin_data.email));
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_account_packages",
         type: "GET",
@@ -85,8 +83,8 @@ module.controller("packagesController", [
           var parsed = JSON.parse(response);
           // alert(JSON.stringify(result));
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
-          // console.log(JSON.stringify(msg.data));
+          $("#account_loader").hide(500);
+          $(".result").show();
           if (msg.status == "1") {
             $scope.all_packages = msg.data;
             // $(".result").html(msg.message);
@@ -94,14 +92,16 @@ module.controller("packagesController", [
             $scope.$apply();
           } else {
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").show(500);
           }
         },
       });
     };
 
     $scope.edit_package_content = function (id, index) {
-      $(".loader").show();
+      $(".content_loader_"+ id).show(500);
+      $(".icon_content_"+ id).hide();
+
       var formData = new FormData($("#edit_package_content_" + id)[0]);
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_package_content",
@@ -113,29 +113,21 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          console.log(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".content_loader_"+ id).hide(500);
+          $(".icon_content_"+ id).show(500);
           if (msg.status == "1") {
-            $(".loader").hide();
+          
             $(".result").html(msg.message);
-            //   $(".result").show(500);
-            //   console.log($scope.all_packages[index]);
-            //   $scope.all_packages[index] = msg.data;
-            // } else {
-            //   $(".loader").hide();
-            //   $(".result").html(msg.message);
-            //   $(".result").show();
-            // }
+            
             $(".result").addClass("alert alert-info");
             $(".result").show();
-            // console.log($scope.all_packages[index]);
+           
             $scope.all_packages[index] = msg.data;
             $scope.$apply();
-            // $scope.get_all_account_packages();
-            // $(".result").hide();
+           
             setTimeout(() => {
               // $(".result").html(msg.message);
 
@@ -143,7 +135,6 @@ module.controller("packagesController", [
             }, 3000);
             $("#edit_package_content" + id)[0].reset();
           } else {
-            $(".loader").hide();
             $(".result").addClass("alert-success");
             $(".result").html(msg.message);
             $(".result").show();
@@ -153,7 +144,8 @@ module.controller("packagesController", [
     };
 
     $scope.edit_package = function (package, index) {
-      // $(".loader").show();
+      $(".account_loader_"+ package.package_id).show();
+      $(".icon_loader_"+ package.package_id).hide();
       var formData = new FormData($("#edit_package_" + package.package_id)[0]);
       // return;
       $.ajax({
@@ -170,13 +162,14 @@ module.controller("packagesController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+         
+          $(".account_loader_"+ package.package_id).hide(500);
+          $(".icon_loader_"+ package.package_id).show(500);
 
           if (msg.status == "1") {
             // $scope.get_all_account_packages();
             // $scope.$apply();
             
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -188,7 +181,6 @@ module.controller("packagesController", [
 
             $("#edit_package_" + id)[0].reset();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -203,7 +195,8 @@ module.controller("packagesController", [
     };
 
     $scope.toggle_package_status = function (code, info) {
-      // $(".loader" + sub.title).show();
+      $(".account_status_loader_"+ info.package_id).show();
+      $(".icon_status_"+ info.package_id).hide();
       var formData = new FormData();
 
       formData.append("status", code);
@@ -224,9 +217,12 @@ module.controller("packagesController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           if (msg.status == "1") {
+
+            $(".account_status_loader_"+ info.package_id).show();
+            $(".icon_loader_"+ info.package_id).hide();
             info.status = code;
             $scope.$apply();
-            $(".loader").hide();
+        
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -236,7 +232,7 @@ module.controller("packagesController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
+    
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -250,8 +246,9 @@ module.controller("packagesController", [
       });
     };
     $scope.toggle_package_content_status = function (code, info) {
+      $(".content_status_loader_"+ info.content_id).show();
+      $(".icon_content_status_"+ info.content_id).hide();
       var formData = new FormData();
-      // $(".loader" + sub.title).show();
       formData.append("status", code);
       formData.append("id", info.content_id);
 
@@ -266,14 +263,15 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
-          console.log(result);
+         
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
+          $(".content_status_loader_"+ info.content_id).hide(500);
+          $(".icon_content_status_"+ info.content_id).show(500);
           if (msg.status == "1") {
             info.status = code;
             $scope.$apply();
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -283,7 +281,6 @@ module.controller("packagesController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);

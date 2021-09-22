@@ -55,7 +55,7 @@ module.controller("bannerController", [
     //* Start
 
     $scope.fetch_all_banners = function () {
-      $(".loader").show();
+      $("#banner_loader").show(500);
       $(".result").hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/fetch_all_banners",
@@ -71,15 +71,12 @@ module.controller("bannerController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $("#banner_loader").hide(500);
           if (msg.status == "1") {
             $scope.all_banners = msg.data;
             $scope.$apply();
-            $(".loader").hide();
-            // $(".result").html(msg.message);
-            // $(".result").show();
           } else {
-            $(".loader").hide();
+           
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -138,7 +135,9 @@ module.controller("bannerController", [
       });
     };
     $scope.enable_or_disable_banner = function (code, banner, $index) {
-      $(".loader").show();
+      $(".banner_loader_"+ banner.id).show(500);
+      $(".icon_"+ banner.id).hide(100);
+      alert('here');
       var formData = new FormData();
 
       formData.append("status", code);
@@ -157,11 +156,11 @@ module.controller("bannerController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".banner_loader_"+ banner.id).hide(500);
+          $(".icon_"+ banner.id).show();
           if (msg.status == "1") {
             banner.status = code;
             $scope.$apply();
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -171,7 +170,6 @@ module.controller("bannerController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -185,8 +183,9 @@ module.controller("bannerController", [
       });
     };
 
-    $scope.update_banner = function () {
-      $(".loader").show();
+    $scope.update_banner = function (id) {
+      $(".banner_edit_loader_"+ id).show();
+      $(".icon_edit_"+ id).hide();
       var formData = new FormData($("#update_banner")[0]);
 
       $.ajax({
@@ -203,11 +202,12 @@ module.controller("bannerController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".banner_edit_loader_"+ id).hide(500);
+          $(".icon_edit_"+ id).show();
           if (msg.status == "1") {
             $scope.fetch_all_banners();
             $scope.$apply();
-            $(".loader").hide();
+          
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -220,7 +220,6 @@ module.controller("bannerController", [
             }, 3000);
             $("#update_banner")[0].reset();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);

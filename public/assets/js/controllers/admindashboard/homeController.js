@@ -46,10 +46,13 @@ module.controller("homeController", [
     setTimeout(function () {
       $scope.$apply();
     }, 0);
-
+    $scope.loader_control = function(e){
+      $(e).hide(1000);
+    };
     $scope.home_stats = function () {
-      $(".loader").show(5000);
       $(".result").hide();
+
+      $('#home_loader').show();
       $.ajax({
         url: $scope.dirlocation + "adminapi/home_statistics",
         type: "GET",
@@ -61,24 +64,23 @@ module.controller("homeController", [
         },
         processData: false,
         success: function (result) {
-          console.log(result);
           // return;
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
 
-          $(".loader").hide();
+          $('#home_loader').hide(500);
+
           if (msg.status == "1") {
+            // $scope.loader_control('#home_loader');
             $scope.statistics = msg.data;
             $scope.notification = msg.msg;
             $scope.status == msg.status;
             $scope.$apply();
-            $(".result").show();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
-            $(".result").show();
+            $(".result").show(500);
             setTimeout(() => {
               $(".result").removeClass("alert alert-info");
               $(".result").hide("500");
@@ -91,8 +93,9 @@ module.controller("homeController", [
     //! Starts
 
     $scope.get_all_products = function () {
-      $(".loader").show();
-      $(".result").hide();
+
+      $('#listing_loader').show(500);
+      
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_products",
         type: "GET",
@@ -109,7 +112,7 @@ module.controller("homeController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
 
-          $(".loader").hide();
+          $('#listing_loader').hide(500);
           if (msg.status == "1") {
             $scope.all_listings = msg.data;
             $scope.notification = msg.msg;

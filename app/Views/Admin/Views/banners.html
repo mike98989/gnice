@@ -7,14 +7,15 @@
       </span> Banners
     </h3>
   </div>
-
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <div class="spinner-border text-info spinner-border-sm" role="status" id="banner_loader" style="display: none;">
+      <span class="sr-only">...loading</span>
+    </div>
+  </div>
 
   <aside class="d-flex justify-content-end">
     <p class="result text-center" style="display: none"></p>
   </aside>
-  <div class="loader text-center">
-    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
-  </div>
   <section class="row" ng-init="fetch_all_banners()">
 
     <article class="col-12 grid-margin">
@@ -106,12 +107,18 @@
                       data-target=".disable-banner-modal" ng-click="append_modal_info(banner)">
                       <span ng-switch-when="1">
                         <button class="badge badge-warning">
-                          <i class="mdi mdi-toggle-switch-off mr-1"></i> Disable
+                          <span class="spinner-border text-light spinner-border-sm banner_loader_{{ banner.id }}" role="status" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ banner.id }}"></i> Disable
                         </button>
                       </span>
                       <span ng-switch-when="0">
                         <button class="badge badge-success">
-                          <i class="mdi mdi-toggle-switch-off mr-1"></i> Enable
+                          <span class="spinner-border text-light spinner-border-sm banner_loader_{{ banner.id }}" role="status" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ banner.id }}"></i> Enable
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -126,7 +133,10 @@
                     </button> -->
                     <button class="badge badge-info mr-1" data-toggle="modal" data-target=".edit-modal"
                       ng-click="append_modal_info(banner)">
-                      <i class="mdi  mdi-pencil-lock mr-1"></i> Edit
+                      <span class="spinner-border text-light spinner-border-sm banner_edit_loader_{{ banner.id }}" role="status" style="display: none;">
+                        <span class="sr-only">...loading</span>
+                      </span>
+                      <i class="mdi  mdi-pencil-lock mr-1 icon_edit_{{ banner.id }}"></i> Edit
                     </button>
                   </td>
                 </tr>
@@ -220,6 +230,9 @@
                           Delete banner
                         </button>
                         <button type="button" class="btn btn-light btn-sm " data-dismiss="modal">
+                          <span class="spinner-border text-light spinner-border-sm banner_edit_loader_{{ info.id }}" role="status" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
                           <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
                       </div>
                     </div>
@@ -238,8 +251,10 @@
 
     <article class="col-sm-12 col-md-8 grid-margin">
       <div class="card">
-        <div class="loader" style="text-align: center">
-          <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+        <div class="d-flex justify-content-center align-items-center mt-4">
+          <div class="spinner-border text-info spinner-border-sm" role="status" id="banner_loader" style="display: nne;">
+            <span class="sr-only">...loading</span>
+          </div>
         </div>
         <div class="card-body">
           <h4 class="card-title p-2 mb-4">Create New Banner</h4>
@@ -296,7 +311,7 @@
               <aside class="d-flex justify-content-end">
                 <p class="result text-center" style="display: none"></p>
               </aside>
-              <form ng-submit="update_banner()" id="update_banner">
+              <form ng-submit="update_banner(info.id)" id="update_banner">
                 <div class="col-12">
                   <input type="text" name="id" hidden value="{{ info.id }}" required />
                   <div class="form-group">
@@ -315,6 +330,7 @@
                     Update
                   </button>
                   <button type="button" class="btn btn-light btn-sm ml-auto" data-dismiss="modal">
+                    
                     <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
                 </div>
               </form>

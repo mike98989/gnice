@@ -47,8 +47,12 @@ module.controller("usersController", [
       $scope.$apply();
     }, 0);
 
+    // $scope.loader_control = function(e){
+    //   $(e).hide(1000);
+    // };
+
     $scope.get_all_users = function () {
-      $(".loader").show();
+      $("#user_loader").show();
       $(".result").hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_users",
@@ -66,13 +70,13 @@ module.controller("usersController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $("#user_loader").hide(500);
+
           if (msg.status == "1") {
             $scope.all_users = msg.data;
             $scope.$apply();
             $(".result").show();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show();
@@ -86,7 +90,8 @@ module.controller("usersController", [
     };
 
     $scope.enable_or_disable = function (code, user, $index) {
-      $(".loader2_" + user.fullname).show();
+      $(".user_loader_"+user.id).show();
+      $(".icon_"+user.id).hide();
       var formData = new FormData();
 
       formData.append("status", code);
@@ -104,12 +109,11 @@ module.controller("usersController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader" + user.id).hide();
+          $(".user_loader_"+user.id).hide(500);
+          $(".icon_"+user.id).show(500);
           if (msg.status == "1") {
             user.status = code;
             $scope.$apply();
-
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -119,7 +123,6 @@ module.controller("usersController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -174,9 +177,7 @@ module.controller("usersController", [
             $scope.all_user_ads = msg.data;
             $scope.rowCount = msg.rowCounts;
             $scope.$apply();
-            // $(".result").show();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show();

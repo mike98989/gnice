@@ -48,7 +48,7 @@ module.controller("transactionController", [
     }, 0);
 
     $scope.get_all_transactions = function () {
-      $(".loader").show();
+      $("#transaction_loader").show();
       $(".result").hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/fetch_all_transactions",
@@ -65,17 +65,21 @@ module.controller("transactionController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $("#transaction_loader").hide(500);
           if (msg.status == "1") {
             $scope.all_transactions = msg.data;
             console.table(JSON.stringify(msg.data));
             $scope.notification = msg.msg;
             $scope.status == msg.status;
             $scope.$apply();
-            $(".result").show();
           } else {
             $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
             $(".result").show();
+            setTimeout(() => {
+              $(".result").removeClass("alert alert-info");
+              $(".result").hide("500");
+            }, 3000);
           }
         },
       });

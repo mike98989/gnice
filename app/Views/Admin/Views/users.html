@@ -10,8 +10,10 @@
   <aside class="d-flex justify-content-end">
     <p class="result text-center" style="display: none"></p>
   </aside>
-  <div class="loader text-center">
-    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <div class="spinner-border text-info spinner-border-sm" role="status" id="user_loader" style="display: none;">
+      <span class="sr-only">...loading</span>
+    </div>
   </div>
   <div class="row" ng-init="get_all_users()">
 
@@ -21,7 +23,7 @@
         <div class="card-body">
           <h4 class="card-title">All Users</h4>
           <div class="search-field d-none d-md-block my-3">
-            <form class="d-flex align-items-center h-100" action="#">
+            <form class="d-flex align-items-center h-100">
               <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
                   <i class="input-group-text border-0 mdi mdi-account-search"></i>
@@ -112,13 +114,19 @@
                     <span ng-switch="user.status" class="mr-1" data-toggle="modal" data-target=".disable-modal"
                       ng-click="append_modal_info(user)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-warning">
-                          <i class="mdi mdi-toggle-switch-off mr-1"></i> Disable
+                        <button class="badge badge-warning ">
+                          <span class="spinner-border text-light spinner-border-sm user_loader_{{ user.id }}" role="status" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch-off mr-1  icon_{{ user.id }}"></i> Disable
                         </button>
                       </span>
                       <span ng-switch-when="0">
-                        <button class="badge badge-success">
-                          <i class="mdi mdi-toggle-switch mr-1"></i> Enable
+                        <button class="badge badge-success ">
+                          <span class="spinner-border text-light spinner-border-sm user_loader_{{ user.id }}" role="status" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ user.id }}"></i> Enable
                         </button>
                       </span>
                       <span ng-switch-default>

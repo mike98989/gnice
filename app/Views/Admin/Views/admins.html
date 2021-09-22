@@ -10,9 +10,11 @@
     <aside class="d-flex justify-content-end">
         <p class="result text-center" style="display: none"></p>
     </aside>
-    <div class="loader text-center">
-        <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
-    </div>
+    <div class="d-flex justify-content-center align-items-center mb-2">
+        <div class="spinner-border text-info spinner-border-sm" role="status" id="admin_loader" style="display: none;">
+          <span class="sr-only">...loading</span>
+        </div>
+      </div>
     <section class="row" ng-init="get_all_admins()">
 
         <article class="col-12 grid-margin" ng-if="admin_data.privilege == ultra">
@@ -74,10 +76,7 @@
                                             </span>
                                         </span>
                                     </td>
-                                    <!-- <td>
-                                                {{user.email}}<br /><span class="text-muted" style="font-size: 12px">{{user.phone}}</span><br />
-                                                <span class="text-muted" style="font-size: 12px">{{user.whatsapp}}</span>
-                                              </td> -->
+                                    
                                     <td>
                                         <span>
                                             {{admin.email}}
@@ -134,12 +133,18 @@
                                             ng-click="append_modal_info(admin)">
                                             <span ng-switch-when="1">
                                                 <button class="badge badge-warning">
-                                                    <i class="mdi mdi-toggle-switch-off mr-1"></i> Disable
+                                                    <span class="spinner-border text-light spinner-border-sm admin_loader_{{ admin.id }}" role="status" style="display: none;">
+                                                        <span class="sr-only">...loading</span>
+                                                      </span>
+                                                    <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ admin.id }}"></i> Disable
                                                 </button>
                                             </span>
                                             <span ng-switch-when="0">
                                                 <button class="badge badge-success">
-                                                    <i class="mdi mdi-toggle-switch mr-1"></i> Enable
+                                                    <span class="spinner-border text-light spinner-border-sm admin_loader_{{ admin.id }}" role="status" style="display: none;">
+                                                        <span class="sr-only">...loading</span>
+                                                      </span>
+                                                    <i class="mdi mdi-toggle-switch mr-1 icon_{{ admin.id }}"></i> Enable
                                                 </button>
                                             </span>
                                             <span ng-switch-default>
@@ -156,7 +161,10 @@
                                         </button> -->
                                         <button class="badge badge-info form_inverse_{{ admin.id }}"
                                             ng-click="toggle_form( admin.id )">
-                                            <i class="mdi mdi-pencil-lock mr-1"></i> Privilege
+                                            <span class="spinner-border text-light spinner-border-sm admin_privilege_loader_{{ admin.id }}" role="status" style="display: none;">
+                                                <span class="sr-only">...loading</span>
+                                              </span>
+                                            <i class="mdi mdi-pencil-lock mr-1 icon_privilege_{{ admin.id }}"></i> Privilege
                                         </button>
                                     </td>
                                 </tr>
@@ -272,113 +280,9 @@
                 </div>
             </div>
         </article>
-        <!-- <article class="col-sm-12 col-md-4 grid-margin">
-            <div class="card">
-                <div class="loader" style="text-align: center">
-                    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
-                </div>
-                <figure class="d-flex justify-content-center align-items-center">
-                    <img src="{{dirlocation}}public/assets/images/uploads/profile/{{admin_data.image}}"
-                        class="card-img-top w-50 w-sm-100 mt-4 " alt="{{ admin_data.fullname }}" loading="lazy"
-                        width="100">
-                </figure>
-
-                <div class="card-body pt-3">
-                    <div class="password_form_inverse">
-                        <h4 class="card-title text-center">{{ admin_data.fullname | uppercase }}</h4>
-                        <p class="card-text"><span>Email: </span> <span>{{ admin_data.email }}</span></p>
-                        <p class="card-text"><span>Phone: </span> <span>{{ admin_data.phone}}</span></p>
-                        <p class="card-text"><span>Privilege: </span>
-                            <span ng-switch="admin_data.privilege">
-                                <span ng-switch-when="1">
-                                    <i class="mdi mdi-star text-success"></i>
-                                </span>
-                                <span ng-switch-when="2">
-                                    <i class="mdi mdi-star text-success"></i>
-                                    <i class="mdi mdi-star text-success"></i>
-                                </span>
-                                <span ng-switch-when="3">
-                                    <i class="mdi mdi-star text-success"></i>
-                                    <i class="mdi mdi-star text-success"></i>
-                                    <i class="mdi mdi-star text-success"></i>
-                                </span>
-                                <span ng-switch-default>
-                                    none
-                                </span>
-                            </span>
-                        </p>
-                        <p class="card-text"><span>Activated: </span>
-                            <span ng-switch="admin_data.activated">
-                                <span ng-switch-when="1">
-                                    <i class="mdi mdi-shield text-success"></i>
-                                </span>
-                                <span ng-switch-when="0">
-                                    <i class="mdi mdi-shield-outline text-danger"></i>
-                                </span>
-                                <span ng-switch-default>
-                                    none
-                                </span>
-                            </span>
-                        </p>
-                        <p class="card-text">
-                            <span>Status: </span>
-                            <span ng-switch="admin_data.status">
-                                <span ng-switch-when="1">
-                                    <i class="mdi mdi-lock-open text-success"></i>
-                                </span>
-                                <span ng-switch-when="0">
-                                    <i class="mdi mdi mdi-lock text-warning"></i>
-                                </span>
-                                <span ng-switch-default>
-                                    none
-                                </span>
-                            </span>
-                        </p>
-                    </div>
-                    <div class="password_form mt-2" style="display: none;">
-                        <h4 class="lead mb-4">Change your sccount password</h4>
-                        <form ng-submit="change_admin_password()" id="change_password">
-                            <input type="text" name="verify_email" hidden value="{{admin_data.email}}" id="verify_email"
-                                required>
-                            <div class="form-group">
-                                <label for="current_password">Current password</label>:</label>
-                                <input type="password" class="form-control " placeholder="current password"
-                                    name="current_password" id="current_password" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="new_password">New Password</label>:</label>
-                                <input type="password" class="form-control " placeholder="new password"
-                                    name="new_password" id="new_password" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm_new_password">Confirm new password</label>
-                                <input type="password" class="form-control " placeholder="confirm new password"
-                                    name="confirm_new_password" id="confirm_new_password" required>
-                            </div>
-                            <button class="btn btn-sm btn-gradient-warning m-1 " type="submit"><i
-                                    class="mdi mdi-update mr-1"></i>Reset
-                                Password</button>
-                            <a class="btn btn-sm btn-light m-1 " ng-click="toggle_password_form()">
-                                <i class="mdi mdi-cancel mr-1"></i>Cancel</a>
-                        </form>
-
-                    </div>
-                </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-sm btn-gradient-danger m-1 password_form_inverse"
-                        ng-click="toggle_password_form()"><i class="mdi mdi-adjust mr-1"></i>Change
-                        Password</button>
-                    <button class="btn btn-sm btn-gradient-info m-1"><i class="mdi mdi-pen-plus mr-1"></i>Update
-                        Profile</button>
-                    <small class="text-muted">Last updated 3 mins ago</small> 
-                </div>
-            </div>
-        </article> -->
+       
         <article class="col-sm-12 col-md-8 grid-margin" ng-if="admin_data.privilege == ultra">
             <div class="card">
-                <div class="loader" style="text-align: center">
-                    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
-                </div>
                 <div class="card-body">
                     <h4 class="card-title p-2 mb-4">Create new Admin Account</h4>
                     <aside class="d-flex justify-content-end">
@@ -411,8 +315,12 @@
                             <input type="password" class="form-control" placeholder="confirm password" name="cpassword"
                                 id="cpassword" required>
                         </div>
-                        <button type="submit" class="btn btn-info btn-sm"><i
-                                class="mdi mdi-book-plus mr-2"></i>Submit</button>
+                        <button type="submit" class="btn btn-info btn-sm">
+                            <span class="spinner-border text-light spinner-border-sm admin_create_loader" role="status" style="display: none;">
+                                <span class="sr-only">...loading</span>
+                              </span>
+                            
+                            <i class="mdi mdi-book-plus mr-2 icon_create"></i>Submit</button>
                     </form>
                 </div>
             </div>

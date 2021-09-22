@@ -6,7 +6,9 @@
         <i class="mdi mdi-home"></i>
       </span> Dashboard
     </h3>
-    <p class="alert alert-info" style="display: none;"></p>
+
+    
+      <p class="alert alert-info" style="display: none;"></p>
     <!-- <nav aria-label="breadcrumb">
       <ul class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">
@@ -14,12 +16,14 @@
         </li>
       </ul>
     </nav> -->
-
-
   </div>
-  <div class="loader text-center">
-    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 20px" />
+
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <div class="spinner-border text-info spinner-border-sm" role="status" id="home_loader" style="display: none;">
+      <span class="sr-only">...loading</span>
+    </div>
   </div>
+  
   <div class="row" ng-init="home_stats()">
     <div class="col-md-4 stretch-card grid-margin" ng-repeat="ads in statistics.ads ">
       <div class="card bg-gradient-danger card-img-holder text-white">
@@ -78,8 +82,11 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">All listings</h4>
-          <div class="loader" style="text-align: center">
-            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+
+          <div class="d-flex justify-content-center align-items-center mb-2">
+            <div class="spinner-border text-info spinner-border-sm" role="status" id="listing_loader" style="display: none;">
+              <span class="sr-only">...loading</span>
+            </div>
           </div>
 
           <div class="search-field d-none d-md-block my-3">
@@ -148,12 +155,19 @@
                       data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
                       <span ng-switch-when="1">
                         <button class="badge badge-warning">
-                          <i class="mdi mdi-toggle-switch-off mr-1"></i>Disable
+                          <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ listing.id }}" ></i>Disable
                         </button>
                       </span>
                       <span ng-switch-when="0">
+
                         <button class="badge badge-success">
-                          <i class="mdi mdi-toggle-switch mr-1"></i>Enable
+                          <span class="spinner-border  text-light spinner-border-sm " role="status" id="loader_{{ listing.id }}" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ listing.id }}"></i>Enable
                         </button>
                       </span>
                       <span ng-switch-default>
