@@ -124,12 +124,12 @@ module.controller("packagesController", [
             
             $(".result").addClass("alert alert-info");
             $(".result").show();
-            $scope.get_all_account_packages()
-           
-           
+            
+            
             setTimeout(() => {
-
+              
               $(".result").hide("500");
+              $scope.get_all_account_packages()
             }, 3000);
           } else {
             $(".result").addClass("alert-success");
@@ -164,17 +164,17 @@ module.controller("packagesController", [
           $(".icon_loader_"+ package.package_id).show(500);
 
           if (msg.status == "1") {
-            $scope.get_all_account_packages();
             // $scope.get_all_account_packages();
             // $scope.$apply();
             
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
-
+            
             setTimeout(() => {
               $(".result").hide("500");
               $(".result").removeClass("alert alert-info");
+              $scope.get_all_account_packages();
             }, 3000);
 
             // $("#edit_package_" + id)[0].reset();
