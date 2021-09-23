@@ -102,6 +102,10 @@ class AdminTasks extends Model
                 if ($this->db->resultSet()) {
                     $row['packages_and_sellers'] = $this->db->resultSet();
                 }
+                // $this->db->query("SELECT R*, P.image,P.brand,U.fullname FROM abuse_report AS R LEFT JOIN products AS P LEFT JOIN users AS U WHERE R.product_code = P.product_code ");
+                // if ($this->db->resultSet()) {
+                //     $row['abuse'] = $this->db->resultSet();
+                // }
 
                 $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers_with_ads FROM products AS P LEFT JOIN users AS U ON P.seller_id = U.seller_id");
                 if ($this->db->resultSet()) {

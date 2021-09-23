@@ -46,9 +46,9 @@ module.controller("homeController", [
     setTimeout(function () {
       $scope.$apply();
     }, 0);
-    $scope.loader_control = function(e){
-      $(e).hide(1000);
-    };
+    // $scope.loader_control = function(e){
+    //   $(e).hide(1000);
+    // };
     $scope.home_stats = function () {
       $(".result").hide();
 
@@ -64,10 +64,11 @@ module.controller("homeController", [
         },
         processData: false,
         success: function (result) {
-          // return;
+         
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
+
 
           $('#home_loader').hide(500);
 

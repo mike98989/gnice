@@ -49,9 +49,9 @@ module.controller("listingController", [
 
     //! Starts
 
-    $scope.loader_control = function(e){
-      $(e).hide(500);
-    };
+    // $scope.loader_control = function(e){
+    //   $(e).hide(500);
+    // };
 
     $scope.get_all_products = function () {
       $(".result").hide();
@@ -72,17 +72,17 @@ module.controller("listingController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
 
-          $(".loader").hide();
-          console.table(JSON.stringify(msg));
+          $('#listing_loader').hide(500);
+          // console.table(JSON.stringify(msg));
           if (msg.status == "1") {
-            $scope.loader_control('#listing_loader');
+            // $scope.loader_control('#listing_loader');
             $scope.all_listings = msg.data;
             $scope.notification = msg.msg;
             $scope.status == msg.status;
             $scope.$apply();
             $(".result").show();
           } else {
-            $scope.loader_control('#' + listing.id);
+            // $scope.loader_control('#' + listing.id);
             $(".result").html(msg.message);
             $(".result").show();
           }
@@ -110,9 +110,11 @@ module.controller("listingController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
+
+          $('#loader_'+listing.id).hide(500);
+          $('.icon_'+listing.id).show();
           if (msg.status == "1") {
-            $scope.loader_control('#' + listing.id);
-            $('.'+listing.id).show();
+            
             listing.status = code;
             $scope.$apply();
             $(".result").html(msg.message);

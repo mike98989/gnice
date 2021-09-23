@@ -34,6 +34,7 @@ class AdminApi extends Controller
             exit;
         }
     }
+    
     public function create_new_banner()
     {
         $header = apache_request_headers();

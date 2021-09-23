@@ -9,13 +9,7 @@
 
     
       <p class="alert alert-info" style="display: none;"></p>
-    <!-- <nav aria-label="breadcrumb">
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">
-          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-        </li>
-      </ul>
-    </nav> -->
+    
   </div>
 
   <div class="d-flex justify-content-center align-items-center mb-2">
@@ -154,7 +148,7 @@
                     <span ng-switch="listing.status" class="mr-1" data-toggle="modal"
                       data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-warning">
+                        <button class="btn btn-warning btn-sm">
                           <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
@@ -163,7 +157,7 @@
                       </span>
                       <span ng-switch-when="0">
 
-                        <button class="badge badge-success">
+                        <button class="btn btn-success btn-sm">
                           <span class="spinner-border  text-light spinner-border-sm " role="status" id="loader_{{ listing.id }}" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
@@ -177,14 +171,14 @@
 
                     <!-- view user profile details -->
 
-                    <button href="#" class="badge badge-info mr-1"
+                    <button href="#" class="btn btn-info btn-sm"
                       ng-click="localStorage_save('adsInfo',listing,'single_listing')" ng-controller="usersController">
                       <i class=" mdi mdi-eye-check mr-1"></i> View
                     </button>
 
                     <!-- delete user account control -->
                     <view ng-if="admin_data.privilege == ultra" ng-controller="adminController">
-                      <button class="badge badge-danger" data-toggle="modal" data-target=".delete-user-modal"
+                      <button class="btn btn-sm btn-danger" data-toggle="modal" data-target=".delete-user-modal"
                         ng-click="append_modal_info(listing)">
                         <i class="mdi mdi-delete-forever mr-1"></i> Delete
                       </button>
