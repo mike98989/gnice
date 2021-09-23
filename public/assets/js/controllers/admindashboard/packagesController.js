@@ -164,6 +164,7 @@ module.controller("packagesController", [
           $(".icon_loader_"+ package.package_id).show(500);
 
           if (msg.status == "1") {
+            $scope.get_all_account_packages();
             // $scope.get_all_account_packages();
             // $scope.$apply();
             
@@ -176,7 +177,7 @@ module.controller("packagesController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
 
-            $("#edit_package_" + id)[0].reset();
+            // $("#edit_package_" + id)[0].reset();
           } else {
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
@@ -209,7 +210,7 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
-          console.log(result);
+      
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
