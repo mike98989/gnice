@@ -74,7 +74,8 @@ module.controller("categoryController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $scope.loader_control('#category_loader');
+          // $scope.loader_control('#category_loader');
+          $("#category_loader").hide(500);
          
           if (msg.status == "1") {
             $scope.all_cat_and_sub = msg.data;
@@ -102,12 +103,11 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          // alert(JSON.stringify(answer));
-          // console.log(answer);
+         
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $scope.loader_control('#add_cat_loader');
+          $("#add_cat_loader").hide(500);
           if (msg.status == "1") {
             $scope.get_all_cat_and_sub_cat();
             $(".loader").hide();
@@ -139,9 +139,10 @@ module.controller("categoryController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          // console.log(JSON.stringify(msg));
-          $scope.loader_control('.edit_'+ id);
-          $(".icon_"+ id).hide();
+         
+          $(".edit_"+ id).hide(500);
+          $(".icon_"+ id).show();
+         
           if (msg.status == "1") {
             $scope.get_all_cat_and_sub_cat();
             $scope.$apply();
@@ -175,11 +176,9 @@ module.controller("categoryController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".sub_edit_loader_"+ id).hide(500);
-          $(".icon_"+ id).show(500);
+          $(".icon_"+ id).show();
           if (msg.status == "1") {
-            console.log(msg.message);
-            // $scope.all_cat_and_sub[index] = msg.data;
-            // $scope.$apply();
+           
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -270,7 +269,7 @@ module.controller("categoryController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $scope.loader_control('.sub_loader_'+ sub.sub_id);
+          $('.sub_loader_'+ sub.sub_id).hide(500);
           $('.icon_'+ sub.sub_id).show();
           if (msg.status == "1") {
             sub.status = code;
@@ -298,13 +297,11 @@ module.controller("categoryController", [
       });
     };
     $scope.enable_or_disable_cat = function (code, cat) {
-      $(".cat_loader_"+ cat.id).show(1000);
-      $(".icon_"+ cat.id).hide(1000);
-      // alert("#cat_loader_"+ cat.id);
+      $(".cat_loader_"+ cat.id).show(500);
+      $(".icon_"+ cat.id).hide(100);
       
       var formData = new FormData();
-      // alert('hello');
-      // return;
+     
 
       formData.append("status", code);
       formData.append("category_id", cat.id);
@@ -322,13 +319,12 @@ module.controller("categoryController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $scope.loader_control('.cat_loader_'+ cat.id);
-          $(".icon_"+ cat.id).show();
+         
+          $(".cat_loader_"+ cat.id).hide(500);
+          $(".icon_"+ cat.id).show(100);
           if (msg.status == "1") {
             cat.status = code;
             $scope.$apply();
-
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -338,7 +334,6 @@ module.controller("categoryController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);

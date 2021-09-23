@@ -88,7 +88,7 @@
                     <span ng-switch="listing.status" class="mr-1" data-toggle="modal"
                       data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-warning">
+                        <button class="btn btn-sm btn-warning">
                           <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
@@ -96,7 +96,7 @@
                         </button>
                       </span>
                       <span ng-switch-when="0">
-                        <button class="badge badge-success">
+                        <button class="btn btn-sm btn-success">
                           <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
@@ -110,7 +110,7 @@
 
                     <!-- view user profile details -->
 
-                    <button href="#" class="badge badge-info mr-1"
+                    <button href="#" class="btn btn-sm btn-info"
                       ng-click="localStorage_save('adsInfo',listing,'single_listing')"">
                        <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
                         <span class="sr-only">...loading</span>

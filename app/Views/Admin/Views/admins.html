@@ -11,7 +11,7 @@
         <p class="result text-center" style="display: none"></p>
     </aside>
     <div class="d-flex justify-content-center align-items-center mb-2">
-        <div class="spinner-border text-info spinner-border-sm" role="status" id="admin_loader" style="display: none;">
+        <div class="spinner-border text-info spinner-border-sm admin_loader" role="status" style="display: none;">
           <span class="sr-only">...loading</span>
         </div>
       </div>
@@ -132,7 +132,7 @@
                                             data-toggle="modal" data-target=".disable-modal"
                                             ng-click="append_modal_info(admin)">
                                             <span ng-switch-when="1">
-                                                <button class="badge badge-warning">
+                                                <button class="btn btn-warning btn-sm">
                                                     <span class="spinner-border text-light spinner-border-sm admin_loader_{{ admin.id }}" role="status" style="display: none;">
                                                         <span class="sr-only">...loading</span>
                                                       </span>
@@ -140,7 +140,7 @@
                                                 </button>
                                             </span>
                                             <span ng-switch-when="0">
-                                                <button class="badge badge-success">
+                                                <button class="btn btn-success btn-sm">
                                                     <span class="spinner-border text-light spinner-border-sm admin_loader_{{ admin.id }}" role="status" style="display: none;">
                                                         <span class="sr-only">...loading</span>
                                                       </span>
@@ -159,7 +159,7 @@
                                             ng-click="append_modal_info(admin)">
                                             <i class="mdi mdi-delete-forever mr-1"></i> Delete
                                         </button> -->
-                                        <button class="badge badge-info form_inverse_{{ admin.id }}"
+                                        <button class="btn btn-sm btn-info form_inverse_{{ admin.id }}"
                                             ng-click="toggle_form( admin.id )">
                                             <span class="spinner-border text-light spinner-border-sm admin_privilege_loader_{{ admin.id }}" role="status" style="display: none;">
                                                 <span class="sr-only">...loading</span>

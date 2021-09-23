@@ -114,7 +114,7 @@
                     <span ng-switch="user.status" class="mr-1" data-toggle="modal" data-target=".disable-modal"
                       ng-click="append_modal_info(user)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-warning ">
+                        <button class="btn btn-sm btn-warning ">
                           <span class="spinner-border text-light spinner-border-sm user_loader_{{ user.id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
@@ -122,7 +122,7 @@
                         </button>
                       </span>
                       <span ng-switch-when="0">
-                        <button class="badge badge-success ">
+                        <button class="btn btn-sm btn-success ">
                           <span class="spinner-border text-light spinner-border-sm user_loader_{{ user.id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
@@ -135,7 +135,7 @@
                     </span>
 
                     <!-- view user profile details -->
-                    <button href="#" class="badge badge-info mr-1"
+                    <button href="#" class="btn btn-sm btn-info"
                       ng-click="localStorage_save('userInfo',user,'profile')" style="cursor: pointer;">
                       <i class=" mdi mdi-eye-check mr-1"></i> View
                     </button>
@@ -143,7 +143,7 @@
                     <!-- delete user account control -->
                     <view ng-if="admin_data.privilege == ultra" ng-controller="adminController">
 
-                      <button class="badge badge-danger" data-toggle="modal" data-target=".delete-user-modal"
+                      <button class="btn btn-sm btn-danger" data-toggle="modal" data-target=".delete-user-modal"
                         ng-click="append_modal_info(user)">
                         <i class="mdi mdi-delete-forever mr-1"></i> Delete
                       </button>

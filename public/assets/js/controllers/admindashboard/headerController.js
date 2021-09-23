@@ -89,7 +89,7 @@ module.controller("headerController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $("#header_loader").hide(500);
+          $(".header_loader").hide(500);
           if (msg.status == "1") {
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info text-center");

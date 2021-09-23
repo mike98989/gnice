@@ -57,7 +57,7 @@ module.controller("adminController", [
     // };
 
     $scope.get_all_admins = function () {
-      $("#admin_loader").show();
+      $(".admin_loader").show();
       $(".result").hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_admins",
@@ -75,7 +75,7 @@ module.controller("adminController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $("#admin_loader").hide(500);
+          $(".admin_loader").hide(500);
           if (msg.status == "1") {
             $scope.all_admins = msg.data;
             $scope.$apply();
@@ -95,7 +95,7 @@ module.controller("adminController", [
     $scope.enable_or_disable_admin = function (code, admin, $index) {
       $(".admin_loader_"+ admin.id).show();
       $(".icon_"+ admin.id).hide();
-     
+    
       var formData = new FormData();
 
       formData.append("status", code);
@@ -174,9 +174,10 @@ module.controller("adminController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $("#admin_loader").show();
+          $(".admin_create_loader").hide(500);
+          $(".icon_create").show(100);
           if (msg.status == "1") {
-            $scope.all_admins = msg.data;
+            $scope.get_all_admins();
             $scope.$apply();
             $(".result_create").html(msg.message);
             $(".result_create").addClass("alert alert-info");

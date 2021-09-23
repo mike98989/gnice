@@ -20,7 +20,7 @@ module.controller("homeController", [
     $sessionStorage
   ) {
     $scope.fieldcounter = 1;
-    //$('.loader').show();
+   
     var url = window.location.href;
     if (url.indexOf("#") > 1) {
       var page = window.location.href.split("#");
@@ -72,7 +72,7 @@ module.controller("homeController", [
           $('#home_loader').hide(500);
 
           if (msg.status == "1") {
-            // $scope.loader_control('#home_loader');
+    
             $scope.statistics = msg.data;
             $scope.notification = msg.msg;
             $scope.status == msg.status;
@@ -94,7 +94,7 @@ module.controller("homeController", [
 
     $scope.get_all_products = function () {
 
-      $('#listing_loader').show(500);
+      $('#listing_loader').show(100);
       
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_products",
@@ -131,108 +131,18 @@ module.controller("homeController", [
         },
       });
     };
-    $("body").delegate(".cbtn", "click", function (event) {
-      event.preventDefault();
-      var cid1 = $(this).attr("data-cid1");
-      var cid2 = $(this).attr("data-cid2");
-      $("#update").modal("show");
-      $("#id").val(cid1);
-      $("#titles").val(cid2);
-    });
+    // $("body").delegate(".cbtn", "click", function (event) {
+    //   event.preventDefault();
+    //   var cids1 = $(this).attr("data-cids1");
+    //   var cids2 = $(this).attr("data-cids2");
+    //   var cids3 = $(this).attr("data-cids3");
+    //   $("#update").modal("show");
+    //   $("#id").val(cids1);
+    //   $("#titles").val(cids3);
+    //   $("#parent_id").val(cids2);
+    // });
 
-    $("body").delegate(".cbtn", "click", function (event) {
-      event.preventDefault();
-      var cids1 = $(this).attr("data-cids1");
-      var cids2 = $(this).attr("data-cids2");
-      var cids3 = $(this).attr("data-cids3");
-      $("#update").modal("show");
-      $("#id").val(cids1);
-      $("#titles").val(cids3);
-      $("#parent_id").val(cids2);
-    });
 
-    $scope.AddBanner = function () {
-      $(".loader").show();
-      $(".result").hide();
-      var formData = new FormData($("#AddBanner")[0]);
-      $.ajax({
-        url: $scope.dirlocation + "api/AddBanner",
-        type: "POST",
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        data: formData,
-        async: true,
-        cache: false,
-        contentType: false,
-        enctype: "multipart/form-data",
-        headers: { "gnice-authenticate": "gnice-web" },
-        crossDomain: true,
-        processData: false,
-        success: function (answer) {
-          //alert(answer);
-          var response = JSON.stringify(answer);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
-          //alert(msg);
-          console.log(msg);
-          $(".loader").hide();
-          if (msg.status == "1") {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").show();
-            alert(msg.message);
-          } else {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            alert(msg.message);
-            $(".result").show();
 
-            //$('.signup_loader').hide();
-            //$('.alert').html(answer);
-          }
-        },
-      });
-    };
-
-    $scope.add_category = function () {
-      $(".loader").show();
-
-      var formData = new FormData($("#add_category")[0]);
-      $.ajax({
-        url: $scope.dirlocation + "api/add_category",
-        type: "POST",
-        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
-        data: formData,
-        async: true,
-        cache: false,
-        contentType: false,
-        enctype: "multipart/form-data",
-        headers: { "gnice-authenticate": "gnice-web" },
-        crossDomain: true,
-        processData: false,
-        success: function (answer) {
-          //alert(answer);
-          var response = JSON.stringify(answer);
-          var parsed = JSON.parse(response);
-          var msg = angular.fromJson(response);
-          //alert(msg);
-          console.log(msg);
-          $(".loader").hide();
-          if (msg.status == "1") {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            $(".result").show();
-            alert(msg.message);
-          } else {
-            $(".loader").hide();
-            $(".result").html(msg.message);
-            alert(msg.message);
-            $(".result").show();
-
-            //$('.signup_loader').hide();
-            //$('.alert').html(answer);
-          }
-        },
-      });
-    };
   },
 ]);
