@@ -131,20 +131,20 @@
                   <div class="mx-1">
 
                     <label for="value" class="mb-0"> <small >Price (number)</small></label>
-                    <input type="number" class="form-control" value="{{ package.value}}" name="value">
+                    <input type="number" class="form-control" value="{{ package.value }}" name="value">
                   </div>
 
                 </div>
                 <div class=" d-flex m-2">
                   <div class="mx-1">
                     <label for="product_count" class="mb-0"> <small >Maximum number of ads (number)</small></label>
-                    <input type="number" class="form-control" value="{{ package.product_count}}" name="product_count">
+                    <input type="number" class="form-control" value="{{ package.product_count }}" name="product_count">
                   </div>
 
                   <div class="mx-1">
 
                     <label for="duration_in_days" class="mb-0"> <small >Duration in days (number)</small></label>
-                    <input type="number" class="form-control" value="{{ package.duration_in_days}}"
+                    <input type="number" class="form-control" value="{{ package.duration_in_days }}"
                       name="duration_in_days">
                   </div>
                 </div>
@@ -158,7 +158,8 @@
 
           <ul class="list-group list-group-flush">
             <li class="list-group-item" ng-repeat="item in package.package_contents">
-              <span ng-switch="item.status" class="mr-1 form_inverse_{{ item.content_id }} p-0">
+              <span ng-switch="item.status" class="mr-1 p-0 form_inverse_{{ item.content_id }}">
+                <!-- form_inverse_{{ item.content_id }} -->
                 <span ng-switch-when="1">
                   <i class="mdi mdi-lock-open text-success"></i>
                 </span>

@@ -100,7 +100,7 @@ module.controller("packagesController", [
 
     $scope.edit_package_content = function (id, index) {
       $(".content_loader_"+ id).show(500);
-      $(".icon_content_"+ id).hide();
+      $(".icon_content_"+ id).hide(500);
 
       var formData = new FormData($("#edit_package_content_" + id)[0]);
       $.ajax({
@@ -124,16 +124,13 @@ module.controller("packagesController", [
             
             $(".result").addClass("alert alert-info");
             $(".result").show();
+            $scope.get_all_account_packages()
            
-            $scope.all_packages[index] = msg.data;
-            $scope.$apply();
            
             setTimeout(() => {
-              // $(".result").html(msg.message);
 
               $(".result").hide("500");
             }, 3000);
-            $("#edit_package_content" + id)[0].reset();
           } else {
             $(".result").addClass("alert-success");
             $(".result").html(msg.message);
