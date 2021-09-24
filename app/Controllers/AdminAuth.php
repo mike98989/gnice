@@ -1,7 +1,7 @@
 <?php
 
 // header('Content-type: application/json');
-class AdminAuth extends Controller
+class Adminauth extends Controller
 {
     // public function __construct()
     // {
@@ -33,6 +33,7 @@ class AdminAuth extends Controller
     public function create_new_admin_admin()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             // print_r($_POST);
@@ -48,6 +49,7 @@ class AdminAuth extends Controller
     public function change_admin_password()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             // die;
             $result = $this->model('AdminTasks')->changeAdminPassword($_POST);

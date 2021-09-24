@@ -14,6 +14,7 @@ class View
 
     public function render($name, $noInclude, $message)
     {
+        
         if ($noInclude == true) {
             $js = null;
             $external_js = null;
@@ -25,9 +26,9 @@ class View
             }
 
             extract($this->data);
-            require('./app/views/inc/header_type1.php');
+            require('./app/Views/inc/header_type1.php');
             require "./app/Views/" . $name . ".html";
-            require('./app/views/inc/footer1.php');
+            require('./app/Views/inc/footer1.php');
             //include_once "./views/index/404.html";
             //require('./views/inc/footerref.php');
         } else {
@@ -50,11 +51,11 @@ class View
                     $external_js = $this->external_js;
                 }
 
-                require('./app/Views/Admin/inc/headerref.php');
-                require('./app/Views/Admin/inc/header.php');
-                require('./app/Views/Admin/inc/sidenav.php');
+                require('./app/Views/Admin/Inc/headerref.php');
+                require('./app/Views/Admin/Inc/header.php');
+                require('./app/Views/Admin/Inc/sidenav.php');
                 require_once './app/Views/' . $name . '.html';
-                require('./app/Views/Admin/inc/footerref.php');
+                require('./app/Views/Admin/Inc/footerref.php');
             }
 
             ////ELSE IF THE USER IS FULLY INTEGRATED
@@ -69,10 +70,10 @@ class View
                     $external_js = $this->external_js;
                 }
 
-                require('./app/views/User/inc/headerref.php');
-                require './app/views/User/inc/header.php';
-                require './app/views/' . $name . '.html';
-                require './app/views/User/inc/footer.php';
+                require('./app/Views/User/Inc/headerref.php');
+                require './app/Views/User/Inc/header.php';
+                require './app/Views/' . $name . '.html';
+                require './app/Views/User/Inc/footer.php';
             }
 
 
@@ -87,12 +88,12 @@ class View
                 if (!empty($this->external_js)) {
                     $external_js = $this->external_js;
                 }
-                require('./app/views/inc/header_type1.php');
-                //require('./app/views/inc/header.php');
-                require('./app/views/inc/navbar.php');
+                require('./app/Views/inc/header_type1.php');
+                //require('./app/Views/inc/header.php');
+                require('./app/Views/inc/navbar.php');
                 require "./app/Views/" . $name . ".html";
-                require('./app/views/inc/footer.php');
-                require('./app/views/inc/footer1.php');
+                require('./app/Views/inc/footer.php');
+                require('./app/Views/inc/footer1.php');
             }
         }
     }

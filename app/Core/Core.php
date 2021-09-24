@@ -13,7 +13,7 @@ class Core
     $url = $this->getUrl();
 
     // Look in controllers for first value
-    if (file_exists('./app/controllers/' . ucwords($url[0]) . '.php')) {
+    if (file_exists('./app/Controllers/' . ucwords($url[0]) . '.php')) {
       // If exists, set as controller
       $this->currentController = ucwords($url[0]);
       // Unset 0 Index
@@ -24,7 +24,7 @@ class Core
     }
 
     // Require the controller
-    require_once './app/controllers/' . $this->currentController . '.php';
+    require_once './app/Controllers/' . $this->currentController . '.php';
 
     // Instantiate controller class
     $this->currentController = new $this->currentController;

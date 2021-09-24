@@ -549,6 +549,7 @@ module.controller("homeController", [
         headers: { "gnice-authenticate": "gnice-web" },
         processData: false,
         success: function (result2) {
+          alert(result2);
           var response2 = JSON.stringify(result2);
           var parsed2 = JSON.parse(response2);
           var msg2 = angular.fromJson(parsed2);

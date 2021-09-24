@@ -574,6 +574,7 @@ class Category extends Model
 
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             // the value is sanitize to an interger
             $this->db->query('SELECT * from Category

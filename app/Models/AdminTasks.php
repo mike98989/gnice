@@ -1,6 +1,6 @@
 <?PHP
 
-class AdminTasks extends Model
+class Admintasks extends Model
 {
 
     public function verifyToken($token)
@@ -75,6 +75,7 @@ class AdminTasks extends Model
     public function homeStatistics()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -150,6 +151,7 @@ class AdminTasks extends Model
     public function getAllProducts()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -184,6 +186,7 @@ class AdminTasks extends Model
     {
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -217,6 +220,7 @@ class AdminTasks extends Model
     public function disableEnableUser()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -251,6 +255,7 @@ class AdminTasks extends Model
     public function disableEnableCategory()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -286,6 +291,7 @@ class AdminTasks extends Model
     public function disableEnableBanner()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -323,6 +329,7 @@ class AdminTasks extends Model
     public function disableEnableAdmin()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -358,6 +365,7 @@ class AdminTasks extends Model
     public function updateAdminPrivilege()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -394,6 +402,7 @@ class AdminTasks extends Model
     public function togglePackageStatus()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -432,6 +441,7 @@ class AdminTasks extends Model
     public function togglePackageContentStatus()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -469,6 +479,7 @@ class AdminTasks extends Model
     public function disableEnableAds()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -513,6 +524,7 @@ class AdminTasks extends Model
     public function disableEnableSubCategory()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -549,6 +561,7 @@ class AdminTasks extends Model
     public function getAllAdminAccounts()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -588,6 +601,7 @@ class AdminTasks extends Model
     {
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -628,6 +642,7 @@ class AdminTasks extends Model
         // FIXME: add deleting previous image
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -697,6 +712,7 @@ class AdminTasks extends Model
     public function updateBanner()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -765,6 +781,7 @@ class AdminTasks extends Model
     public function addSubCategory()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -798,6 +815,7 @@ class AdminTasks extends Model
     public function updateSubCategory()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -888,6 +906,7 @@ class AdminTasks extends Model
     public function getAllProductOfASeller($seller_id)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -895,6 +914,7 @@ class AdminTasks extends Model
 
             if ($this->verifyToken($token) == true) {
                 $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
                 $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
                 $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id ORDER BY date_added DESC");
                 $this->db->bind(':seller_id', $seller_id);
@@ -934,6 +954,7 @@ class AdminTasks extends Model
     {
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -965,6 +986,7 @@ class AdminTasks extends Model
     public function getAccountPackages()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -996,6 +1018,7 @@ class AdminTasks extends Model
     public function deleteUserAccount()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1032,6 +1055,7 @@ class AdminTasks extends Model
     public function updatePackageContents()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1072,6 +1096,7 @@ class AdminTasks extends Model
     public function updatePackage()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1119,6 +1144,7 @@ class AdminTasks extends Model
     public function changeAdminPassword()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -1160,6 +1186,7 @@ class AdminTasks extends Model
     public function createAdminAccount()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1229,6 +1256,7 @@ class AdminTasks extends Model
     public function fetchBannerTypes()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
                 $this->db->query("SELECT * FROM banner_types WHERE status='1'");
                 $row = $this->db->resultSet();
@@ -1246,6 +1274,7 @@ class AdminTasks extends Model
     {
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -1279,6 +1308,7 @@ class AdminTasks extends Model
     {
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];

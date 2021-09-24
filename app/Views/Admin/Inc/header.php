@@ -9,11 +9,11 @@
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
             <a class="navbar-brand brand-logo" href="index.html"><img
-                    src="{{dirlocation}}/public/assets/images/gnicelogo.jpeg" alt="gnice logo"></a>
+                    src="{{dirlocation}}/public/assets/images/gnice_logo.png" style="width:50px;height:50px;" alt="gnice logo"></a>
             <!-- <a class="navbar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo" /></a> -->
             <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a> -->
             <a class="navbar-brand brand-logo-mini" href="index.html"><img
-                    src="{{dirlocation}}/public/assets/images/gnicelogo.jpeg"></a>
+                    src="{{dirlocation}}/public/assets/images/gnice_logo.png"></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -25,8 +25,7 @@
                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                         aria-expanded="false">
                         <div class="nav-profile-img">
-                            <img src="{{dirlocation}}/public/assets/images/uploads/profile/{{user_data.image}}"
-                                alt="{{user_data.fullname}}">
+                            <img src="{{dirlocation}}/public/assets/images/uploads/profile/default.png">
                             <span class="availability-status online"></span>
                         </div>
                         <div class="nav-profile-text">
@@ -80,14 +79,15 @@
                                     <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
                                 </div>
                                 <figure class="d-flex justify-content-center align-items-center">
-                                    <img src="{{dirlocation}}public/assets/images/uploads/profile/{{info.image}}"
-                                        class="card-img-top w-25 " alt="{{ info.fullname }}" loading="lazy">
+                                    <img src="{{dirlocation}}/public/assets/images/uploads/profile/default.png"
+                                        class="card-img-top w-25 " loading="lazy">
                                 </figure>
+                                <h4 class="card-title" style="text-align: center;">{{ info.fullname | uppercase }}</h4>
                                 <p class="result" style="display:none;"></p>
                                 <div class="password_form_inverse">
                                     <div class=" px-3 d-flex flex-row justify-content-start">
                                         <div class="pr-5">
-                                            <h4 class="card-title">{{ info.fullname | uppercase }}</h4>
+                                            
                                             <p class="card-text"><span>Email: </span> <span>{{ info.email }}</span>
                                             </p>
                                             <p class="card-text"><span>Phone: </span> <span>{{ info.phone}}</span></p>

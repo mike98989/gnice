@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/user-assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/user-assets/css/app.css">
     <link rel="shortcut icon" href="<?php echo APP_URL; ?>/public/assets/images/gnice_logo.png" type="image/x-icon">
+
 </head>
 <body ng-app="gnice">
 <base href="<?php echo APP_URL.'/'.$url[1];?>/"> 
