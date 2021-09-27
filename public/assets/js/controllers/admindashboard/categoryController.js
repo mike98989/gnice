@@ -84,14 +84,14 @@ module.controller("categoryController", [
             $(".result").hide();
           } else {
             $(".result").html(msg.message);
-            $(".result").show();
+            $(".result").show(500);
           }
         },
       });
     };
 
     $scope.add_new_category = function () {
-      $("#add_cat_loader").show();
+      $("#add_cat_loader").show(500);
       var formData = new FormData($("#addCategory")[0]);
       $.ajax({
         url: $scope.dirlocation + "adminapi/add_category",
@@ -109,13 +109,12 @@ module.controller("categoryController", [
           var msg = angular.fromJson(parsed);
           $("#add_cat_loader").hide(500);
           if (msg.status == "1") {
-            $scope.get_all_cat_and_sub_cat();
-            $(".loader").hide();
+          
             $(".result").html(msg.message);
             $(".result").show();
+            $scope.get_all_cat_and_sub_cat();
             $("#addCategory")[0].reset();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").show();
           }
@@ -123,7 +122,7 @@ module.controller("categoryController", [
       });
     };
     $scope.update_category = function (id) {
-      $(".edit_"+ id).show();
+      $(".edit_"+ id).show(500);
       $(".icon_"+ id).hide();
       var formData = new FormData($("#updateCategory")[0]);
       $.ajax({
@@ -144,11 +143,12 @@ module.controller("categoryController", [
           $(".icon_"+ id).show();
          
           if (msg.status == "1") {
+           
+            $(".result").html(msg.message);
+            $(".result").show(500);
             $scope.get_all_cat_and_sub_cat();
             $scope.$apply();
            
-            $(".result").html(msg.message);
-            $(".result").show();
             $("#updateCategory")[0].reset();
           } else {
             $(".result").html(msg.message);
@@ -158,7 +158,7 @@ module.controller("categoryController", [
       });
     };
     $scope.update_sub_category = function (id, index) {
-      $(".sub_edit_loader_"+ id).show();
+      $(".sub_edit_loader_"+ id).show(500);
       $(".icon_"+ id).hide();
       var formData = new FormData($("#update_sub_category_" + id)[0]);
       $.ajax({
@@ -176,7 +176,7 @@ module.controller("categoryController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".sub_edit_loader_"+ id).hide(500);
-          $(".icon_"+ id).show();
+          $(".icon_"+ id).show(100);
           if (msg.status == "1") {
            
             $(".result").html(msg.message);
@@ -202,7 +202,7 @@ module.controller("categoryController", [
       });
     };
     $scope.add_new_sub_category = function () {
-      $(".add_sub_cat_loader").show();
+      $(".add_sub_cat_loader").show(500);
       var formData = new FormData($("#addSubCategory")[0]);
 
       $.ajax({
@@ -221,17 +221,17 @@ module.controller("categoryController", [
           var msg = angular.fromJson(parsed);
           $(".add_sub_cat_loader").hide(500);
           if (msg.status == "1") {
-            $scope.get_all_cat_and_sub_cat();
-            $scope.$apply();
             $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
-
+            
             setTimeout(() => {
               $(".result").hide("500");
               $(".result").removeClass("alert alert-info");
             }, 3000);
+            $scope.get_all_cat_and_sub_cat();
+            $scope.$apply();
             $("#addSubCategory")[0].reset();
           } else {
             $(".loader").hide();
@@ -272,12 +272,12 @@ module.controller("categoryController", [
           $('.sub_loader_'+ sub.sub_id).hide(500);
           $('.icon_'+ sub.sub_id).show();
           if (msg.status == "1") {
-            sub.status = code;
-            $scope.$apply();
+            
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
-
+            sub.status = code;
+            $scope.$apply();
             setTimeout(() => {
               $(".result").hide("500");
               $(".result").removeClass("alert alert-info");
@@ -323,11 +323,13 @@ module.controller("categoryController", [
           $(".cat_loader_"+ cat.id).hide(500);
           $(".icon_"+ cat.id).show(100);
           if (msg.status == "1") {
-            cat.status = code;
-            $scope.$apply();
+            
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
+
+            cat.status = code;
+            $scope.$apply();
 
             setTimeout(() => {
               $(".result").hide("500");

@@ -185,8 +185,8 @@ module.controller("bannerController", [
 
 
     $scope.enable_or_disable_banner = function (code, banner, $index) {
-      $(".banner_loader_"+ banner.id).show(500);
-      $(".icon_"+ banner.id).hide(100);
+      $(".banner_loader_"+ banner.banner_id).show(500);
+      $(".icon_"+ banner.banner_id).hide(100);
       alert('here');
       var formData = new FormData();
 
@@ -256,28 +256,25 @@ module.controller("bannerController", [
           $(".banner_edit_loader_"+ id).hide(500);
           $(".icon_edit_"+ id).show();
           if (msg.status == "1") {
-            $scope.fetch_all_banners();
-            $scope.$apply();
-          
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
+            $(".result-edit").html(msg.message);
+            $(".result-edit").addClass("alert alert-info");
+            $(".result-edit").show(500);
             $scope.fetch_all_banners();
             $scope.$apply();
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              $(".result-edit").hide("500");
+              $(".result-edit").removeClass("alert alert-info");
             }, 3000);
             $("#update_banner")[0].reset();
           } else {
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
+            $(".result-edit").html(msg.message);
+            $(".result-edit").addClass("alert alert-info");
+            $(".result-edit").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              $(".result-edit").hide("500");
+              $(".result-edit").removeClass("alert alert-info");
             }, 3000);
           }
         },

@@ -106,19 +106,19 @@
                     <span ng-switch="banner.status" class="mr-1 " data-toggle="modal"
                       data-target=".disable-banner-modal" ng-click="append_modal_info(banner)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-warning">
-                          <span class="spinner-border text-light spinner-border-sm banner_loader_{{ banner.id }}" role="status" style="display: none;">
+                        <button class="btn btn-sm btn-warning">
+                          <span class="spinner-border text-light spinner-border-sm banner_loader_{{ banner.banner_id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ banner.id }}"></i> Disable
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ banner.banner_id }}"></i> Disable
                         </button>
                       </span>
                       <span ng-switch-when="0">
-                        <button class="badge badge-success">
-                          <span class="spinner-border text-light spinner-border-sm banner_loader_{{ banner.id }}" role="status" style="display: none;">
+                        <button class="btn btn-sm btn-success">
+                          <span class="spinner-border text-light spinner-border-sm banner_loader_{{ banner.banner_id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ banner.id }}"></i> Enable
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ banner.banner_id }}"></i> Enable
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -131,12 +131,12 @@
                       ng-click="append_modal_info(banner)">
                       <i class="mdi mdi-delete-forever mr-1"></i> Delete
                     </button> -->
-                    <button class="badge badge-info mr-1" data-toggle="modal" data-target=".edit-modal"
+                    <button class="btn btn-sm btn-info mr-1" data-toggle="modal" data-target=".edit-modal"
                       ng-click="append_modal_info(banner)">
-                      <span class="spinner-border text-light spinner-border-sm banner_edit_loader_{{ banner.id }}" role="status" style="display: none;">
+                      <span class="spinner-border text-light spinner-border-sm banner_edit_loader_{{ banner.banner_id }}" role="status" style="display: none;">
                         <span class="sr-only">...loading</span>
                       </span>
-                      <i class="mdi  mdi-pencil-lock mr-1 icon_edit_{{ banner.id }}"></i> Edit
+                      <i class="mdi  mdi-pencil-lock mr-1 icon_edit_{{ banner.Banner_id }}"></i> Edit
                     </button>
                   </td>
                 </tr>
@@ -312,11 +312,11 @@
               loading="lazy" class=" d-block w-50 mx-auto" />
             <div class="card p-3">
               <aside class="d-flex justify-content-end">
-                <p class="result text-center" style="display: none"></p>
+                <p class="result-edit text-center" style="display: none"></p>
               </aside>
-              <form ng-submit="update_banner(info.id)" id="update_banner">
+              <form ng-submit="update_banner(info.banner_id)" id="update_banner">
                 <div class="col-12">
-                  <input type="text" name="id" hidden value="{{ info.id }}" required />
+                  <input type="text" name="id" hidden value="{{ info.banner_id }}" required />
                   <div class="form-group">
                     <label for="title"> Title</label>
                     <input type="text" class="form-control" name="title" id="title" placeholder="banner title"
@@ -330,6 +330,9 @@
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-info btn-sm">
+                    <span class="spinner-border text-light spinner-border-sm banner_edit_loader_{{ info.banner_id }}" role="status" style="display: none;">
+                      <span class="sr-only">...loading</span>
+                    </span>
                     Update
                   </button>
                   <button type="button" class="btn btn-light btn-sm ml-auto" data-dismiss="modal">

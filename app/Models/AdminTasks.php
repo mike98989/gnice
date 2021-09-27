@@ -294,7 +294,7 @@ class Admintasks extends Model
             $id = $_POST['banner_id'];
             //$type = $_POST['banner_type'];
             if ($this->verifyToken($token) == true) {
-                $this->db->query("UPDATE banners SET status = :status WHERE id = :id");
+                $this->db->query("UPDATE banners SET status = :status WHERE banner_id = :id");
                 $this->db->bind(':id', $id);
                 $this->db->bind(':status', $status);
                 if ($this->db->execute()) {
@@ -717,7 +717,7 @@ class Admintasks extends Model
                 $description = trim($_POST['description']);
                 $id = trim($_POST['id']);
 
-                $this->db->query('UPDATE banners SET title = :title, description = :description WHERE id = :id');
+                $this->db->query('UPDATE banners SET title = :title, description = :description WHERE banner_id = :id');
                 $this->db->bind(':id', $id);
                 $this->db->bind(':title', $title);
                 $this->db->bind(':description', $description);
