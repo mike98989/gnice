@@ -431,7 +431,7 @@ function resizer($size, $max_resolution, $location)
                         $new_width = $original_width * $ratio;
                     }
                     $target_image = imagecreatetruecolor($new_width, $new_height);
-                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height,);
+                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height);
                     imagejpeg($target_image, $folder . $fileName);
 
                     $result['success'] = $file['name'];
@@ -456,7 +456,7 @@ function resizer($size, $max_resolution, $location)
                         $new_width = $original_width * $ratio;
                     }
                     $target_image = imagecreatetruecolor($new_width, $new_height);
-                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height,);
+                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height);
                     imagegif($target_image, $folder . $fileName);
                     imagedestroy($target_image);
 
@@ -479,7 +479,7 @@ function resizer($size, $max_resolution, $location)
                         $new_width = $original_width * $ratio;
                     }
                     $target_image = imagecreatetruecolor($new_width, $new_height);
-                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height,);
+                    imagecopyresampled($target_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height);
                     imagepng($target_image, $folder . $fileName);
                     imagedestroy($target_image);
 

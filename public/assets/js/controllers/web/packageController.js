@@ -26,7 +26,7 @@ module.controller("packageController", [
     $scope.pageSize = 30;
     $scope.user_data = $localStorage.user_data;
     $scope.user_token = $localStorage.user_token;
-
+    
     $scope.init = function(){
       //alert(JSON.stringify($routeParams));
       if(($routeParams.reference)&&($routeParams.reference!='')){
@@ -142,17 +142,18 @@ module.controller("packageController", [
               }
             );
 
-                alert('success. transaction ref is ' + $scope.paystackResponse);
-            },
-            onClose: function(){
-                alert('window closed');
-            }
-          });
-          handler.openIframe();
-        }else{
-            $scope.update_user_account_package('');
-        }
+            alert("success. transaction ref is " + $scope.paystackResponse);
+          },
+          onClose: function () {
+            alert("window closed");
+          },
+        });
+        handler.openIframe();
+      } else {
+        $scope.update_user_account_package();
       }
+
+    }
   
 
 

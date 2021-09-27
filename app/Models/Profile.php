@@ -7,6 +7,7 @@ class Profile extends Model
     {
 
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -111,6 +112,7 @@ class Profile extends Model
     public function updateUserProfile()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $email = trim($_POST['email']);
         $seller_id = trim($_POST['seller_id']);
@@ -169,6 +171,7 @@ class Profile extends Model
     public function deleteImage()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
         }
     }

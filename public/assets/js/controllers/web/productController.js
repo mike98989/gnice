@@ -525,9 +525,6 @@ module.controller("productController", [
       });
     };
 
-
-    
-
     $scope.localStorage_get = function(key){
       $scope[key] = $localStorage[key];
       $scope.$apply();

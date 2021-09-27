@@ -7,6 +7,7 @@ class Product extends Model
     {
         //edited the end
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db
                 ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
@@ -34,6 +35,7 @@ class Product extends Model
     {
         //echo $user_id;exit;
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             // $this->db
             //     ->query("SELECT saved_products.*,products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
@@ -63,6 +65,7 @@ class Product extends Model
     public function getSingleProduct($id)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             // the value is sanitize to an interger
             $product_code = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
@@ -99,6 +102,7 @@ class Product extends Model
     public function addProduct()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $uploader = uploadMultiple('pro', 'products', 2);
             //Filter sanitize all input as string to remove all unwanted scripts and tags
@@ -154,6 +158,7 @@ class Product extends Model
     public function deleteProduct($product_id, $seller_id)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             //$data = filter_var_array($_POST);
             $seller_id = filter_var($seller_id);
@@ -180,6 +185,7 @@ class Product extends Model
     public function saveProductReview()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $_POST['date'] = date('Y-m-d');
@@ -225,6 +231,7 @@ class Product extends Model
     public function reportAbuse()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $_POST['date'] = date('Y-m-d');
@@ -269,6 +276,7 @@ class Product extends Model
     public function pinProduct($user_id)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
 
@@ -304,6 +312,7 @@ class Product extends Model
     public function mostViewedProduct()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db
                 ->query("SELECT name, brand, price, seller_id, product_code, image,
@@ -331,6 +340,7 @@ class Product extends Model
     public function getProductRating()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db->query("SELECT name, price,
                         sub_category.title as productSubCategory,
@@ -357,6 +367,7 @@ class Product extends Model
     {
         $product_id = filter_var($_GET['id']);
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db->query("SELECT P.*,U.fullname,U.image FROM product_reviews P INNER JOIN users U ON P.user_id=U.id WHERE P.product_id = :product_id AND P.status=1 ORDER BY review_id DESC");
             $this->db->bind(':product_id', $product_id);
@@ -374,6 +385,7 @@ class Product extends Model
     public function getAllRelatedProducts()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $sub_category_id = filter_var($_GET['sub_cat_id']);
             $brand = filter_var($_GET['brand']);
@@ -408,6 +420,7 @@ class Product extends Model
     public function getAllTopRatedProducts()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db->query("SELECT SUM(P1.rating) as rate, P1.*, P2.* FROM product_reviews P1 INNER JOIN products P2 ON P1.product_id=P2.id GROUP BY P1.product_id ORDER BY rate DESC");
            $row = $this->db->resultSet();
@@ -421,6 +434,7 @@ class Product extends Model
     public function wishLists()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db->query("SELECT name, price,brand,
                         sub_category.title as productSubCategory,
@@ -447,6 +461,7 @@ class Product extends Model
     public function addProductToCart()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $product_code = trim($_POST['product_code']);
@@ -474,6 +489,7 @@ class Product extends Model
     public function getAllProductOfaCategory($category_id)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db->query("SELECT products.*,
                         category.title as productCategory
@@ -500,6 +516,7 @@ class Product extends Model
     {
         
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db
                 ->query("SELECT products.*,
@@ -553,6 +570,7 @@ class Product extends Model
     public function searchForProduct()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
             $searchTerm = trim($_GET['query']);
@@ -618,6 +636,7 @@ class Product extends Model
     public function getAllProductOfASeller($seller_id)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
         $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1 ORDER BY id DESC");
         $this->db->bind(':seller_id', $seller_id);
@@ -635,6 +654,7 @@ class Product extends Model
     public function messageProductSeller()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $sender_name = trim($_POST['sender_name']);
         $sender_tel = trim($_POST['sender_phone']);
@@ -685,6 +705,7 @@ class Product extends Model
     public function getAllMessagesToSeller($seller_id)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
         if (isset($header['gnice-authenticate'])) {
 
@@ -705,6 +726,7 @@ class Product extends Model
     public function getAllMessages()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $this->db->query("SELECT * FROM messages ORDER BY date DESC");
@@ -724,6 +746,7 @@ class Product extends Model
     public function updateProduct()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

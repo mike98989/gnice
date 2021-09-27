@@ -2,31 +2,31 @@
 module.config(function($routeProvider,$locationProvider){
     $routeProvider
         .when('/home',{
-            templateUrl:"../app/views/user/views/home.html",
+            templateUrl:"../app/Views/User/Views/home.html",
             controller:"homeController",
         })
         .when('/add_product',{
-            templateUrl:"../app/views/user/views/add_product.html",
+            templateUrl:"../app/Views/User/Views/add_product.html",
             controller:"productController",
         })
         .when('/edit_product',{
-            templateUrl:"../app/views/user/views/edit_product.html",
+            templateUrl:"../app/Views/User/Views/edit_product.html",
             controller:"productController",
         })
         .when('/my_products',{
-            templateUrl:"../app/views/user/views/user_products.html",
+            templateUrl:"../app/Views/User/Views/user_products.html",
             controller:"productController",
         })
         .when('/messages',{
-            templateUrl:"../app/views/user/views/messages.html",
+            templateUrl:"../app/Views/User/Views/messages.html",
             controller:"messageController",
         })
         .when('/profile',{
-            templateUrl:"../app/views/user/views/my_profile.html",
+            templateUrl:"../app/Views/User/Views/my_profile.html",
             controller:"profileController",
         })
         .when('/edit_profile',{
-            templateUrl:"../app/views/user/views/edit_profile.html",
+            templateUrl:"../app/Views/User/Views/edit_profile.html",
             controller:"profileController",
         })
         .when('/update_password',{
@@ -34,7 +34,7 @@ module.config(function($routeProvider,$locationProvider){
             controller:"profileController",
         })
         .when('/account_packages',{
-            templateUrl:"../app/views/user/views/packages.html",
+            templateUrl:"../app/Views/User/Views/packages.html",
             controller:"packageController",
         })
         .otherwise({

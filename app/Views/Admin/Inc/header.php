@@ -80,11 +80,12 @@
                                 <figure class="d-flex justify-content-center align-items-center">
                                     <img src="{{dirlocation}}public/assets/images/uploads/profile/{{info.image}}" class="card-img-top w-25 " alt="{{ info.fullname }}" loading="lazy">
                                 </figure>
+                                <h4 class="card-title" style="text-align: center;">{{ info.fullname | uppercase }}</h4>
                                 <p class="result" style="display:none;"></p>
                                 <div class="password_form_inverse">
                                     <div class=" px-3 d-flex flex-row justify-content-start">
                                         <div class="pr-5">
-                                            <h4 class="card-title">{{ info.fullname | uppercase }}</h4>
+                                            
                                             <p class="card-text"><span>Email: </span> <span>{{ info.email }}</span>
                                             </p>
                                             <p class="card-text"><span>Phone: </span> <span>{{ info.phone}}</span></p>

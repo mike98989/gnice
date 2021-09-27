@@ -7,6 +7,7 @@ class Authenticate extends Model
     public function login($username, $password)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $email = filter_var($username, FILTER_VALIDATE_EMAIL);
             $password = filter_var($password);
@@ -58,6 +59,7 @@ class Authenticate extends Model
     public function user_login_from_facebook()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             
             $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
@@ -137,6 +139,7 @@ class Authenticate extends Model
     public function updateUserAccountType()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
             $verifyToken = $this->verifyToken($token, 'users');
@@ -186,6 +189,7 @@ class Authenticate extends Model
     public function updateUserData()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
             $data = filter_var_array($_POST);
@@ -223,6 +227,7 @@ class Authenticate extends Model
     public function generate_paystack_checkout()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
             $verifyToken = $this->verifyToken($token, 'users');
@@ -272,6 +277,7 @@ class Authenticate extends Model
     public function fetch_transaction_by_reference()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_GET);
             $token = filter_var($header['gnice-authenticate']);
@@ -361,6 +367,7 @@ class Authenticate extends Model
     public function signup()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
             $email = filter_var(strtolower($data['email']), FILTER_VALIDATE_EMAIL);
@@ -480,6 +487,7 @@ class Authenticate extends Model
     public function password_recovery()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $email = strtolower($_POST['email']);
             $email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -554,6 +562,7 @@ class Authenticate extends Model
     public function confirm_password_recovery_code()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
             $token = filter_var($header['gnice-authenticate']);
@@ -592,6 +601,7 @@ class Authenticate extends Model
     public function change_password()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
             $token = filter_var($header['gnice-authenticate']);
@@ -628,6 +638,7 @@ class Authenticate extends Model
     public function confirm_user_signup($email, $confirm_code)
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $email = filter_var(strtolower($email), FILTER_VALIDATE_EMAIL);
             if ($email == true) {
@@ -704,6 +715,7 @@ class Authenticate extends Model
     public function updateUserProfile()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
             $verifyToken = $this->verifyToken($token, 'users');
@@ -785,6 +797,7 @@ class Authenticate extends Model
     public function uploadProfileImage()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $token = filter_var($header['gnice-authenticate']);
             $verifyToken = $this->verifyToken($token, 'users');
@@ -830,6 +843,7 @@ class Authenticate extends Model
     public function loginAdmin()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $email = strtolower(trim($_POST['email']));
             $password = trim($_POST['password']);
@@ -890,6 +904,7 @@ class Authenticate extends Model
     public function registerAdmin()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             // if ($_SESSION['privilege'] == 3) {
             $data = filter_var_array($_POST);
@@ -970,6 +985,7 @@ class Authenticate extends Model
     public function changeAdminPassword()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $data = filter_var_array($_POST);
 
@@ -1146,6 +1162,7 @@ class Authenticate extends Model
     public function adminLogout()
     {
         $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             session_destroy();
             // redirect('users/login');

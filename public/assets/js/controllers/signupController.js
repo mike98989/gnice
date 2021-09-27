@@ -73,8 +73,8 @@ module.controller("signupController", [
             $('.result').show(); 
             }
             $localStorage.$reset();
-          },
-    
+    },
+        
 
     $scope.localStorage_get = function (key) {
       $scope[key] = $localStorage[key];

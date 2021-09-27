@@ -79,9 +79,10 @@ module.controller("packagesController", [
         },
         processData: false,
         success: function (result) {
+          //alert(JSON.stringify(result));
+
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
-          // alert(JSON.stringify(result));
           var msg = angular.fromJson(parsed);
           $("#account_loader").hide(500);
           $(".result").show();
@@ -155,7 +156,8 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          console.log(answer);
+          //console.log(answer);
+          //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -164,8 +166,7 @@ module.controller("packagesController", [
           $(".icon_loader_"+ package.package_id).show(500);
 
           if (msg.status == "1") {
-            // $scope.get_all_account_packages();
-            // $scope.$apply();
+            //alert(JSON.stringify(msg.data));
             
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
