@@ -6,6 +6,12 @@
       </span>
       Account Types
     </h3>
+    
+  </div>
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <div class="spinner-border text-info spinner-border-sm" role="status" id="account_loader" style="display: none;">
+      <span class="sr-only">...loading</span>
+    </div>
   </div>
   <aside class="d-flex justify-content-end">
     <p class="result text-center" style="display: none"></p>
@@ -35,7 +41,11 @@
               </p>
               <div class=" m-2">
                 <button class="btn btn-sm btn-gradient-info mr-3 price_inverse_{{ package.package_id }}"
-                  ng-click="toggle_form( package.package_id )"><i class="mdi mdi-pen-plus"></i>
+                  ng-click="toggle_form( package.package_id )">
+                  <span class="spinner-border text-light spinner-border-sm account_loader_{{ package.package_id }}" role="status" style="display: none;">
+                    <span class="sr-only">...loading</span>
+                  </span>
+                  <i class="mdi mdi-pen-plus icon_{{ package.package_id }}"></i>
                 </button>
                 <!-- </view> -->
                 <!-- modal -->
@@ -43,12 +53,18 @@
                   ng-click="append_modal_info(package)" class="price_inverse_{{ package.package_id }}">
                   <span ng-switch-when="1">
                     <button class="btn btn-sm btn-gradient-warning">
-                      <i class="mdi mdi-toggle-switch-off"></i>
+                      <span class="spinner-border text-light spinner-border-sm account_status_loader_{{ package.package_id }}" role="status" style="display: none;">
+                        <span class="sr-only">...loading</span>
+                      </span>
+                      <i class="mdi mdi-toggle-switch-off icon_status_{{ package.package_id }}"></i>
                     </button>
                   </span>
                   <span ng-switch-when="0">
-                    <button class="btn btn-sm btn-secondary">
-                      <i class="mdi mdi-toggle-switch"></i>
+                    <span class="spinner-border text-light spinner-border-sm account_status_loader_{{ package.package_id }}" role="status" style="display: none;">
+                      <span class="sr-only">...loading</span>
+                    </span>
+                    <button class="btn btn-sm btn-gradient-success">
+                      <i class="mdi mdi-toggle-switch icon_status_{{ package.package_id }}"></i>
                     </button>
                   </span>
                   <span ng-switch-default>
@@ -114,22 +130,22 @@
 
                   <div class="mx-1">
 
-                    <label for="value" class="mb-0"> <small >Price (number)</small></label>
-                    <input type="number" class="form-control" value="{{ package.value}}" name="value">
+                    <label for="value" class="mb-0"> <small >Price <sup class="text-danger">(*digits only)</sup></small></label>
+                    <input type="tel" class="form-control" value="{{ package.value }}" name="value" pattern="[0-9]+">
                   </div>
 
                 </div>
                 <div class=" d-flex m-2">
                   <div class="mx-1">
-                    <label for="product_count" class="mb-0"> <small >Maximum number of ads (number)</small></label>
-                    <input type="number" class="form-control" value="{{ package.product_count}}" name="product_count">
+                    <label for="product_count" class="mb-0"> <small >Maximum number of ads <sup class="text-danger">(*digits only)</sup></small></label>
+                    <input type="tel" class="form-control" value="{{ package.product_count}}" name="product_count" pattern="[0-9]+">
                   </div>
 
                   <div class="mx-1">
 
-                    <label for="duration_in_days" class="mb-0"> <small >Duration in days (number)</small></label>
-                    <input type="number" class="form-control" value="{{ package.duration_in_days}}"
-                      name="duration_in_days">
+                    <label for="duration_in_days" class="mb-0"> <small >Duration in days <sup class="text-danger">(*digits only)</sup></small></label>
+                    <input type="tel" class="form-control" value="{{ package.duration_in_days }}"
+                      name="duration_in_days" pattern="[0-9]+">
                   </div>
                 </div>
                 <button type="submit" class="btn btn-sm btn-gradient-success mx-3"
@@ -142,7 +158,8 @@
 
           <ul class="list-group list-group-flush">
             <li class="list-group-item" ng-repeat="item in package.package_contents">
-              <span ng-switch="item.status" class="mr-1 form_inverse_{{ item.content_id }} p-0">
+              <span ng-switch="item.status" class="mr-1 p-0 form_inverse_{{ item.content_id }}">
+                <!-- form_inverse_{{ item.content_id }} -->
                 <span ng-switch-when="1">
                   <i class="mdi mdi-lock-open text-success"></i>
                 </span>
@@ -174,7 +191,11 @@
               </div>
               <article class="d-flex justify-content-between mt-2">
                 <button class="btn btn-sm btn-gradient-info  mr-2 form_inverse_{{item.content_id}}"
-                  ng-click="show_textinput(item.content_id)" type="button"><i class="mdi mdi-pen-plus"></i>
+                  ng-click="show_textinput(item.content_id)" type="button">
+                  <span class="spinner-border text-light spinner-border-sm content_loader_{{ item.content_id }}" role="status" style="display: none;">
+                    <span class="sr-only">...loading</span>
+                  </span>
+                  <i class="mdi mdi-pen-plus icon_content_{{ item.content_id }}"></i>
                 </button>
 
                 <div ng-switch="item.status" data-toggle="modal" data-target=".disable-content-modal"
@@ -182,12 +203,18 @@
 
                   <span ng-switch-when="1">
                     <button class="btn btn-sm btn-warning" type="button">
-                      <i class="mdi mdi-toggle-switch-off"></i>
+                      <span class="spinner-border text-light spinner-border-sm content_status_loader_{{ item.content_id }}" role="status" style="display: none;">
+                        <span class="sr-only">...loading</span>
+                      </span>
+                      <i class="mdi mdi-toggle-switch-off icon_content_status_{{ item.content_id }}"></i>
                     </button>
                   </span>
                   <span ng-switch-when="0">
                     <button class="btn btn-sm btn-success" type="button">
-                      <i class="mdi mdi-toggle-switch"></i>
+                      <span class="spinner-border text-light spinner-border-sm content_status_loader_{{ item.content_id }}" role="status" style="display: none;">
+                        <span class="sr-only">...loading</span>
+                      </span>
+                      <i class="mdi mdi-toggle-switch  icon_content_status_{{ item.content_id }}"></i>
                     </button>
                   </span>
                   <span ng-switch-default>
@@ -267,7 +294,6 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="card">
-
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -288,7 +314,7 @@
                 </span>
               </span>
               <span class="text-info">
-                {{ info.title | uppercase}}
+                {{ info.content_title | uppercase}}
               </span>
             </p>
           </div>

@@ -98,37 +98,31 @@ class Admintasks extends Model
                     $row['failed_transactions'] = $this->db->resultSet();
                 }
 
-                $this->db->query("SELECT COUNT(users.seller_id) A");
-                
 
-                $this->db->query("SELECT COUNT(DISTINCT products.product_code) AS total_ads, COUNT(DISTINCT users.seller_id) AS total_sellers FROM products INNER JOIN users WHERE users.seller_id = products.seller_id ");
+                $this->db->query("SELECT S.title, COUNT(U.seller_id) AS number_of_sellers FROM users AS U LEFT JOIN seller_account_packages AS S ON U.account_type = S.package_id GROUP BY title  HAVING COUNT(U.seller_id) > 0");
+                if ($this->db->resultSet()) {
+                    $row['packages_and_sellers'] = $this->db->resultSet();
+                }
+                // $this->db->query("SELECT R*, P.image,P.brand,U.fullname FROM abuse_report AS R LEFT JOIN products AS P LEFT JOIN users AS U WHERE R.product_code = P.product_code ");
+                // if ($this->db->resultSet()) {
+                //     $row['abuse'] = $this->db->resultSet();
+                // }
+
+                $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers_with_ads FROM products AS P LEFT JOIN users AS U ON P.seller_id = U.seller_id");
                 if ($this->db->resultSet()) {
                     $row['ads'] = $this->db->resultSet();
                 }
+
                 $this->db->query("SELECT COUNT(DISTINCT users.seller_id) AS total_sellers, COUNT(DISTINCT users.email) AS total_users FROM users WHERE users.account_type > 0");
                 if ($this->db->resultSet()) {
                     $row['sellers'] = $this->db->resultSet();
                 }
+                
                 $this->db->query("SELECT COUNT(DISTINCT users.email) AS total_sellers FROM users WHERE users.account_type > 0");
                 if ($this->db->resultSet()) {
                     $row['users'] = $this->db->resultSet();
                 }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_one'] = $this->db->resultSet();
-                // }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 2 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_two'] = $this->db->resultSet();
-                // }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 3 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_three'] = $this->db->resultSet();
-                // }
-                // $this->db->query("SELECT COUNT(P.product_code) AS total_ads, COUNT(DISTINCT U.seller_id) AS total_sellers, U.fullname,U.seller_id FROM products AS P INNER JOIN users AS U WHERE P.seller_id = U.seller_id AND U.account_type = 4 ORDER BY P.date_added DESC");
-                // if ($this->db->resultSet()) {
-                //     $row['package_four'] = $this->db->resultSet();
-                // }
+                
                 if ($this->db->resultSet()) {
                     $result['message'] = 'fetch successful';
                     $result['data'] = $row;
@@ -645,42 +639,39 @@ class Admintasks extends Model
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
+            // print_r($_POST);
+            // die();
+
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
             if ($this->verifyToken($token) == true) {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $title = trim($_POST['title']);
-                $id = $_POST['id'];
-                $image = $_FILES['file']['name'];
-                // echo ($image);
-                // die;
-                $deleteimage = $_POST['previous_image'];
-                if ($image != "") {
-                    $path = 'assets/images/uploads/category/' . $_FILES['file']['name'];
-                    if (move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
 
-                        //delete previous_image
-                        $pathDelete = "public/assets/images/uploads/category/" . $deleteimage;
-                        if (is_file($pathDelete)) {
-                            unlink($pathDelete);
-                        }
+               
+               
+                if (!empty($_FILES['files']['name'][0])) {
+                     $uploader = uploadMultiple('cat', 'category', 1);
+                     $image = $uploader['imageUrl'];
+   
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                    $title = trim($_POST['title']);
+                    $id = $_POST['id'];
+                    $deleteimage = $_POST['previous_image'];
+                    
+                    deleteFile($deleteimage, 'category');
                         $this->db->query('UPDATE category SET title = :title,image = :image WHERE id = :id');
                         $this->db->bind(':id', $id);
                         $this->db->bind(':title', $title);
                         $this->db->bind(':image', $image);
-                        if ($this->db->execute()) {
-                            $result['rowCount'] = $this->db->rowCount();
-                            $result['message'] = 'Category Updated';
-                            $result['status'] = 1;
-                        } else {
-                            $result['message'] = 'Category failed';
-                            $result['status'] = 0;
-                            // return false;
-                        }
-                    } else {
-                        $result['message'] = 'upload failed';
-                        $result['status'] = 0;
-                    }
+                            if ($this->db->execute()) {
+                                $result['rowCount'] = $this->db->rowCount();
+                                $result['message'] = 'Category update successful';
+                                $result['status'] = 1;
+                            } else {
+                                $result['message'] = 'Category failed';
+                                $result['status'] = 0;
+                                $result['errors'] = $uploader['image_error'];
+                            }
+                    
                 } else {
                     $this->db->query('UPDATE category SET title = :title WHERE id = :id');
                     $this->db->bind(':title', $title);
@@ -692,7 +683,7 @@ class Admintasks extends Model
                     } else {
                         $result['message'] = 'Category failed';
                         $result['status'] = 0;
-                        // return false;
+                       
                     }
                 }
             } else {
@@ -723,7 +714,7 @@ class Admintasks extends Model
                 $description = trim($_POST['description']);
                 $id = trim($_POST['id']);
 
-                $this->db->query('UPDATE banners SET title = :title, description = :description WHERE id = :id');
+                $this->db->query('UPDATE banners SET title = :title, description = :description WHERE banner_id = :id');
                 $this->db->bind(':id', $id);
                 $this->db->bind(':title', $title);
                 $this->db->bind(':description', $description);
@@ -786,15 +777,18 @@ class Admintasks extends Model
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
             if ($this->verifyToken($token) == true) {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $image = '';
+                $uploader = uploadMultiple('cat', 'category', 1);
+                $image = $uploader['imageUrl'];
                 $data = array_map('trim', array_filter($_POST));
                 $status = 1;
                 $this->db->query(
-                    'INSERT INTO sub_category (title, parent_id, status) VALUES (:title, :parent_id, :status)'
+                    'INSERT INTO sub_category (title, parent_id, status, image) VALUES (:title, :parent_id, :status, :image)'
                 );
                 $this->db->bind(':title', $data['title']);
                 $this->db->bind(':parent_id', $data['parent_id']);
                 $this->db->bind(':status', $status);
+                $this->db->bind(':image', $image);
                 if ($this->db->execute()) {
                     $result['message'] = 'sub category creation successfully';
                     $result['status'] = '1';
@@ -919,7 +913,7 @@ class Admintasks extends Model
                 $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id ORDER BY date_added DESC");
                 $this->db->bind(':seller_id', $seller_id);
                 $row = $this->db->resultSet();
-                if ($this->db->rowCount() > 0) {
+                if ($this->db->execute()) {
                     $result['rowCounts'] = $this->db->rowCount();
                     $result['data'] = $row;
                     $result['message'] = 'all ads fetched successfully';

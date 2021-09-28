@@ -6,43 +6,45 @@
         <i class="mdi mdi-home"></i>
       </span> Dashboard
     </h3>
-    <p class="alert alert-info" style="display: none;"></p>
-    <!-- <nav aria-label="breadcrumb">
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">
-          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-        </li>
-      </ul>
-    </nav> -->
 
+    
+      <p class="alert alert-info" style="display: none;"></p>
+    
+  </div>
 
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <div class="spinner-border text-info spinner-border-sm" role="status" id="home_loader" style="display: none;">
+      <span class="sr-only">...loading</span>
+    </div>
   </div>
-  <div class="loader text-center">
-    <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 20px" />
-  </div>
+  
   <div class="row" ng-init="home_stats()">
-    <div class="col-md-4 stretch-card grid-margin" ng-repeat="ad in statistics.ads ">
+    <div class="col-md-4 stretch-card grid-margin" ng-repeat="ads in statistics.ads ">
       <div class="card bg-gradient-danger card-img-holder text-white">
         <div class="card-body">
           <img src="{{dirlocation}}/public/admin-assets/images/dashboard/circle.png" class="card-img-absolute"
             alt="circle-image" />
           <h4 class="font-weight-normal mb-3">Total Ads <i class="mdi mdi-presentation-play mdi-24px float-right"></i>
           </h4>
-          <h2 class="mb-5">{{ ad.total_ads }}</h2>
-          <h6 class="card-text">by {{ ad.total_sellers }} sellers</h6>
+          <h2 class="mb-5">{{ ads.total_ads }}</h2>
+          <h6 class="card-text">Placed by : <strong>{{ ads.total_sellers_with_ads }}</strong> sellers </h6>
         </div>
       </div>
     </div>
-    <div class="col-md-4 stretch-card grid-margin" ng-repeat="seller in statistics.sellers">
+    <div class="col-md-4 stretch-card grid-margin" >
       <div class="card bg-gradient-info card-img-holder text-white">
         <div class="card-body">
           <img src="{{dirlocation}}/public/admin-assets/images/dashboard/circle.png" class="card-img-absolute"
             alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Total Sellers <i
+          <h4 class="font-weight-normal mb-5">Packages with number of users <i
               class="mdi mdi-account-multiple-outline  mdi-24px float-right"></i>
           </h4>
-          <h2 class="mb-5">{{ seller.total_sellers }}</h2>
-          <h6 class="card-text"></h6>
+          <div class="d-flex justify-content-between align-content-end" ng-repeat="package_seller in statistics.packages_and_sellers">
+
+            <h6 ng-if="package_seller.title != null ">{{ package_seller.title }}</h6>
+           
+            <h4 ng-if="package_seller.title != null ">{{ package_seller.number_of_sellers }}</h4>
+          </div>
         </div>
       </div>
     </div>
@@ -74,8 +76,11 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">All listings</h4>
-          <div class="loader" style="text-align: center">
-            <img src="{{dirlocation}}public/assets/images/spinner.gif" style="width: 30px" />
+
+          <div class="d-flex justify-content-center align-items-center mb-2">
+            <div class="spinner-border text-info spinner-border-sm" role="status" id="listing_loader" style="display: none;">
+              <span class="sr-only">...loading</span>
+            </div>
           </div>
 
           <div class="search-field d-none d-md-block my-3">
@@ -143,13 +148,20 @@
                     <span ng-switch="listing.status" class="mr-1" data-toggle="modal"
                       data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-warning">
-                          <i class="mdi mdi-toggle-switch-off mr-1"></i>Disable
+                        <button class="btn btn-warning btn-sm">
+                          <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ listing.id }}" ></i>Disable
                         </button>
                       </span>
                       <span ng-switch-when="0">
-                        <button class="badge badge-success">
-                          <i class="mdi mdi-toggle-switch mr-1"></i>Enable
+
+                        <button class="btn btn-success btn-sm">
+                          <span class="spinner-border  text-light spinner-border-sm " role="status" id="loader_{{ listing.id }}" style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ listing.id }}"></i>Enable
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -159,14 +171,14 @@
 
                     <!-- view user profile details -->
 
-                    <button href="#" class="badge badge-info mr-1"
+                    <button href="#" class="btn btn-info btn-sm"
                       ng-click="localStorage_save('adsInfo',listing,'single_listing')" ng-controller="usersController">
                       <i class=" mdi mdi-eye-check mr-1"></i> View
                     </button>
 
                     <!-- delete user account control -->
                     <view ng-if="admin_data.privilege == ultra" ng-controller="adminController">
-                      <button class="badge badge-danger" data-toggle="modal" data-target=".delete-user-modal"
+                      <button class="btn btn-sm btn-danger" data-toggle="modal" data-target=".delete-user-modal"
                         ng-click="append_modal_info(listing)">
                         <i class="mdi mdi-delete-forever mr-1"></i> Delete
                       </button>

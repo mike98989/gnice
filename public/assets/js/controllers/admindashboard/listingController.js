@@ -49,9 +49,13 @@ module.controller("listingController", [
 
     //! Starts
 
+    // $scope.loader_control = function(e){
+    //   $(e).hide(500);
+    // };
+
     $scope.get_all_products = function () {
-      $(".loader").show();
       $(".result").hide();
+      $('#listing_loader').show(500);
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_products",
         type: "GET",
@@ -68,15 +72,17 @@ module.controller("listingController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
 
-          $(".loader").hide();
-          console.table(JSON.stringify(msg));
+          $('#listing_loader').hide(500);
+          // console.table(JSON.stringify(msg));
           if (msg.status == "1") {
+            // $scope.loader_control('#listing_loader');
             $scope.all_listings = msg.data;
             $scope.notification = msg.msg;
             $scope.status == msg.status;
             $scope.$apply();
             $(".result").show();
           } else {
+            // $scope.loader_control('#' + listing.id);
             $(".result").html(msg.message);
             $(".result").show();
           }
@@ -85,11 +91,12 @@ module.controller("listingController", [
     };
 
     $scope.enable_or_disable_listing = function (code, listing, index) {
-      $(".loader2_" + listing.name).show();
       var formData = new FormData();
 
       formData.append("status", code);
       formData.append("product_code", listing.product_code);
+      $('#loader_'+listing.id).show();
+      $('.icon_'+listing.id).hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/disable_enable_ads",
         data: formData,
@@ -103,11 +110,13 @@ module.controller("listingController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader2_" + listing.id).hide();
+
+          $('#loader_'+listing.id).hide(500);
+          $('.icon_'+listing.id).show();
           if (msg.status == "1") {
+            
             listing.status = code;
             $scope.$apply();
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -117,7 +126,6 @@ module.controller("listingController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);

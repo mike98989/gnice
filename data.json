@@ -1,44 +1,59 @@
 {
-    "message": "fetch successful",
-    "data": {
-      "transactions": [
-        {
-          "total_amount": "187500000",
-          "total_records": "75",
-          "$$hashKey": "object:16"
-        }
-      ],
-      "success_transactions": [
-        {
-          "total_success_amount": "175800000",
-          "total_success_records": "54"
-        }
-      ],
-      "failed_transactions": [
-        {
-          "total_failed_amount": "11700000",
-          "total_failed_records": "21"
-        }
-      ],
-      "ads": [
-        {
-          "total_ads": "20",
-          "total_sellers": "5",
-          "$$hashKey": "object:12"
-        }
-      ],
-      "sellers": [
-        {
-          "total_sellers": "9",
-          "total_users": "10",
-          "$$hashKey": "object:14"
-        }
-      ],
-      "users": [
-        {
-          "total_sellers": "10"
-        }
-      ]
-    },
-    "status": "1"
-  }
+  "message": "fetch successful",
+  "data": {
+    "transactions": [
+      {
+        "total_amount": "187500000",
+        "total_records": "75"
+      }
+    ],
+    "success_transactions": [
+      {
+        "total_success_amount": "175800000",
+        "total_success_records": "54"
+      }
+    ],
+    "failed_transactions": [
+      {
+        "total_failed_amount": "11700000",
+        "total_failed_records": "21"
+      }
+    ],
+    "packages_and_sellers": [
+      {
+        "title": "Advance",
+        "number_of_sellers": "1"
+      },
+      {
+        "title": "Basic",
+        "number_of_sellers": "3"
+      },
+      {
+        "title": "Free",
+        "number_of_sellers": "5"
+      },
+      {
+        "title": "Super",
+        "number_of_sellers": "2"
+      }
+    ],
+    "ads": [
+      {
+        "total_ads": "31",
+        "total_sellers_with_ads": "5"
+      }
+    ],
+    "sellers": [
+      {
+        "total_sellers": "10",
+        "total_users": "10"
+      }
+    ],
+    "users": [
+      {
+        "total_sellers": "10"
+      }
+    ]
+  },
+  "status": "1"
+}

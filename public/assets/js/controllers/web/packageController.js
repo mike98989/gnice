@@ -152,7 +152,9 @@ module.controller("packageController", [
       } else {
         $scope.update_user_account_package();
       }
-    };
+
+    }
+  
 
 
     $scope.update_user_account_package = function(successRedirectionUrl){
@@ -196,5 +198,5 @@ module.controller("packageController", [
         },
       });
     };
-  },
+  }
 ]);

@@ -71,7 +71,7 @@ module.controller("headerController", [
 
     //* start
     $scope.change_admin_password = function () {
-      $(".loader").show();
+      $(".header_loader").show();
 
       var formData = new FormData($("#change_password")[0]);
       $.ajax({
@@ -84,34 +84,33 @@ module.controller("headerController", [
         headers: { "gnice-authenticate": $scope.user_token },
         processData: false,
         success: function (answer) {
-          console.log(answer);
-          // return;
+          
+         
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".header_loader").hide(500);
           if (msg.status == "1") {
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info text-center");
             // $scope.$apply();
-            $(".result").show(700);
+            $(".result").show(500);
             setTimeout(() => {
               $(".result").hide("500");
               $("#create_new_admin_form")[0].reset();
             }, 4000);
             $scope.toggle_password_form();
-            // window.location.href = $scope.dirlocation + "logout";
+           
             $scope.$apply();
-
-            console.log(window.location.href);
           } else {
-            $(".loader").hide();
+           
             $(".result").addClass("alert alert-info text-center");
             $(".result").html(msg.message);
             $scope.$apply();
             $(".result").show(500);
             setTimeout(() => {
               $(".result").hide("500");
+              $(".result").removeClass("alert alert-info text-center");
             }, 3000);
           }
         },

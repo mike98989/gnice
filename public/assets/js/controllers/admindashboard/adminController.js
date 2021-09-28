@@ -57,7 +57,7 @@ module.controller("adminController", [
     // };
 
     $scope.get_all_admins = function () {
-      $(".loader").show();
+      $(".admin_loader").show();
       $(".result").hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_admins",
@@ -71,25 +71,31 @@ module.controller("adminController", [
         },
         processData: false,
         success: function (result) {
-          // console.log(result);
+      
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".admin_loader").hide(500);
           if (msg.status == "1") {
             $scope.all_admins = msg.data;
             $scope.$apply();
-            $(".result").html(msg.message);
-            $(".result").show();
+            
           } else {
             $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
             $(".result").show();
+            setTimeout(() => {
+              $(".result").removeClass("alert alert-info");
+              $(".result").hide("500");
+            }, 3000);
           }
         },
       });
     };
     $scope.enable_or_disable_admin = function (code, admin, $index) {
-      $(".loader" + admin.fullname).show();
+      $(".admin_loader_"+ admin.id).show();
+      $(".icon_"+ admin.id).hide();
+    
       var formData = new FormData();
 
       formData.append("status", code);
@@ -110,11 +116,12 @@ module.controller("adminController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader2_" + admin.id).hide();
+          $(".admin_loader_"+ admin.id).hide(500);
+          $(".icon_"+ admin.id).show(500);
           if (msg.status == "1") {
             admin.status = code;
             $scope.$apply();
-            $(".loader").hide();
+           
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -124,7 +131,7 @@ module.controller("adminController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           } else {
-            $(".loader").hide();
+           
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -149,7 +156,9 @@ module.controller("adminController", [
 
     $scope.create_new_admin = function () {
       var formData = new FormData($("#create_new_admin_form")[0]);
-
+      $(".admin_create_loader").show();
+      $(".icon_create").hide();
+    
       $.ajax({
         url: $scope.dirlocation + "adminauth/create_new_admin_admin",
         type: "POST",
@@ -165,12 +174,11 @@ module.controller("adminController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".admin_create_loader").hide(500);
+          $(".icon_create").show(100);
           if (msg.status == "1") {
-            $scope.all_admins = msg.data;
+            $scope.get_all_admins();
             $scope.$apply();
-
-            $(".loader").hide();
             $(".result_create").html(msg.message);
             $(".result_create").addClass("alert alert-info");
             $(".result_create").show(500);
@@ -195,7 +203,9 @@ module.controller("adminController", [
       });
     };
     $scope.update_admin_privilege = function (admin) {
-      $(".loader").show();
+      $(".admin_privilege_loader_"+ admin.id).show();
+      $(".icon_privilege_"+ admin.id).hide();
+    
       id = admin.id;
       var formData = new FormData($("#update_admin_privilege_form_" + id)[0]);
       $.ajax({
@@ -212,11 +222,12 @@ module.controller("adminController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".admin_privilege_loader_"+ admin.id).hide(500);
+          $(".icon_privilege_"+ admin.id).show(500);
           if (msg.status == "1") {
             $scope.get_all_admins();
             $scope.$apply();
-            $(".loader").hide();
+           
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -227,7 +238,6 @@ module.controller("adminController", [
             }, 3000);
             $("#update_admin_privilege_form_" + id)[0].reset();
           } else {
-            $(".loader").hide();
             $(".result").html(msg.message);
             $(".result").addClass("alert alert-info");
             $(".result").show(500);
@@ -240,47 +250,7 @@ module.controller("adminController", [
         },
       });
     };
-    // $scope.change_admin_password = function () {
-    //   var formData = new FormData($("#change_password")[0]);
-    //   $.ajax({
-    //     url: $scope.dirlocation + "adminauth/change_admin_password",
-    //     type: "POST",
-    //     data: formData,
-    //     async: true,
-    //     cache: false,
-    //     contentType: false,
-    //     headers: { "gnice-authenticate": $scope.admin_token },
-    //     processData: false,
-    //     success: function (answer) {
-    //       console.log(answer);
-    //       // return;
-    //       var response = JSON.stringify(answer);
-    //       var parsed = JSON.parse(response);
-    //       var msg = angular.fromJson(parsed);
-    //       $(".loader").hide();
-    //       if (msg.status == "1") {
-    //         $(".result").addClass("alert-success");
-    //         $(".result").html(msg.message);
-    //         $scope.$apply();
-    //         $(".result").show(500);
-    //         setTimeout(() => {
-    //           $(".result").hide("500");
-    //         }, 3000);
-    //         $scope.toggle_password_form();
-    //         $("#create_new_admin_form")[0].reset();
-    //       } else {
-    //         $(".loader").hide();
-    //         $(".result").addClass("alert-danger");
-    //         $(".result").html(msg.message);
-    //         $scope.$apply();
-    //         $(".result").show(500);
-    //         setTimeout(() => {
-    //           $(".result").hide("500");
-    //         }, 3000);
-    //       }
-    //     },
-    //   });
-    // };
+   
     $scope.clear_storage = function () {
       $localStorage["fullname_checked"] = false;
       window.location.reload();

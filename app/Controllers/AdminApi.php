@@ -295,7 +295,7 @@ class Adminapi extends Controller
     // public function add_category()
     // {
     //     $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+      //  $header = array_change_key_case($header,CASE_LOWER);
     //     if (isset($header['gnice-authenticate'])) {
     //         $result = $this->model('category')->addCategory();
     //         header('Content-Type: application/json');
