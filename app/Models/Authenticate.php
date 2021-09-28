@@ -525,8 +525,13 @@ class Authenticate extends Model
                     </div>";
                     $send_mail = $this->send_mail($email, $check_email->fullname, $subject, $html_message);
                     if ($send_mail['messageId'] != '') {
+                        if(!$check_email->token){
+                            $token = $this->updateUserToken($check_email->id, 'users');   
+                        }else{
+                            $token = $check_email->token;
+                        }
                         $msg['msg'] =  "A message was sent to your email address";
-                        $msg['token'] = $check_email->token;
+                        $msg['token'] = $token;
                         $msg['status'] = '1';
                     } else {
                         $msg['msg'] =  "There was a problem with the internet connection. Please try again";
