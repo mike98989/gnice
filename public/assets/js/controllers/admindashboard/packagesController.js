@@ -79,6 +79,8 @@ module.controller("packagesController", [
         },
         processData: false,
         success: function (result) {
+          console.log(result);
+
           //alert(JSON.stringify(result));
 
           var response = JSON.stringify(result);
@@ -114,6 +116,8 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
+          console.log(answer);
+
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -156,7 +160,7 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          //console.log(answer);
+          console.log(answer);
           //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
@@ -211,6 +215,7 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          console.log(result);
       
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
@@ -262,6 +267,7 @@ module.controller("packagesController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          console.log(result);
          
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);

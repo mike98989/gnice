@@ -116,8 +116,11 @@
                   current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
                   <td>
+                    <span ng-if="listing.image.length >0">
+                      
                     <img ng-init=" img = listing.image.split(',')"
                       src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" class="mr-2" />
+                    </span>
                   </td>
                   <td>
                     {{listing.name}}

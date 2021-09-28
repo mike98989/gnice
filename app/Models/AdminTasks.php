@@ -646,15 +646,16 @@ class Admintasks extends Model
             $token = $splitHeader[0];
             if ($this->verifyToken($token) == true) {
 
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $title = trim($_POST['title']);
+                $id = $_POST['id'];
                
                
                 if (!empty($_FILES['files']['name'][0])) {
                      $uploader = uploadMultiple('cat', 'category', 1);
                      $image = $uploader['imageUrl'];
-   
-                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                    $title = trim($_POST['title']);
-                    $id = $_POST['id'];
+
+                  
                     $deleteimage = $_POST['previous_image'];
                     
                     deleteFile($deleteimage, 'category');
@@ -671,7 +672,6 @@ class Admintasks extends Model
                                 $result['status'] = 0;
                                 $result['errors'] = $uploader['image_error'];
                             }
-                    
                 } else {
                     $this->db->query('UPDATE category SET title = :title WHERE id = :id');
                     $this->db->bind(':title', $title);
@@ -1203,7 +1203,8 @@ class Admintasks extends Model
 
                         if ($password === $cpassword) {
                             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
+                            // print_r('got her');
+                            // die;
                             $this->db->query("INSERT INTO admin (fullname, email, password, activated, status,image, phone) VALUES (:fullname, :email, :password, :activated, :status, :image, :phone)");
                             $this->db->bind(":fullname", $name);
                             $this->db->bind(":email", $email);
@@ -1212,9 +1213,8 @@ class Admintasks extends Model
                             $this->db->bind(":status", $status);
                             $this->db->bind(":image", $image);
                             $this->db->bind(":phone", $phone);
-                            $row = $this->db->resultSet();
-                            if ($this->db->rowCount() > 0) {
-                                $result['data'] = $row;
+                            // $this->db->execute();   
+                            if ($this->db->execute()) {
                                 $result['message'] = 'new Admin created successfully';
                                 $result['status'] = '1';
                             } else {
@@ -1239,7 +1239,7 @@ class Admintasks extends Model
                 $result['status'] = '0';
             }
         } else {
-            $result['message'] = 'invalid request';
+            $result['message'] = 'invalid token';
             $result['status'] = '0';
         }
         return $result;

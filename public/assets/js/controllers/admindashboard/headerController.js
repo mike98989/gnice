@@ -84,6 +84,7 @@ module.controller("headerController", [
         headers: { "gnice-authenticate": $scope.user_token },
         processData: false,
         success: function (answer) {
+          console.log(result);
           
          
           var response = JSON.stringify(answer);

@@ -50,6 +50,19 @@ class Adminapi extends Controller
             exit;
         }
     }
+    public function create_new_admin()
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->createAdminAccount($_POST);
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit;
+        }
+    }
     
     public function create_new_banner()
     {
@@ -284,7 +297,7 @@ class Adminapi extends Controller
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('AdminTasks')->getAllProductOfASeller($_GET['seller_id']);
+            $result = $this->model('Admintasks')->getAllProductOfASeller($_GET['seller_id']);
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -314,7 +327,7 @@ class Adminapi extends Controller
         if (isset($header['gnice-authenticate'])) {
             // print_r($_POST);
             // die();
-            $result = $this->model('AdminTasks')->updateSubCategory();
+            $result = $this->model('Admintasks')->updateSubCategory();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -327,7 +340,7 @@ class Adminapi extends Controller
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('AdminTasks')->updatePackageContents();
+            $result = $this->model('Admintasks')->updatePackageContents();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -340,7 +353,7 @@ class Adminapi extends Controller
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('AdminTasks')->updateAdminPrivilege();
+            $result = $this->model('Admintasks')->updateAdminPrivilege();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -356,7 +369,7 @@ class Adminapi extends Controller
 
             // print_r(json_encode("got"));
             // die();
-            $result = $this->model('AdminTasks')->updatePackage($_POST);
+            $result = $this->model('Admintasks')->updatePackage($_POST);
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -386,7 +399,7 @@ class Adminapi extends Controller
         if (isset($header['gnice-authenticate'])) {
             $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
-            $result = $this->model('AdminTasks')->getAccountPackages();
+            $result = $this->model('Admintasks')->getAccountPackages();
             print_r(json_encode($result));
         } else {
             echo 'invalid request';
@@ -398,7 +411,7 @@ class Adminapi extends Controller
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('AdminTasks')->getAllTransactions();
+            $result = $this->model('Admintasks')->getAllTransactions();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {
@@ -412,7 +425,7 @@ class Adminapi extends Controller
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('AdminTasks')->deleteUserAccount();
+            $result = $this->model('Admintasks')->deleteUserAccount();
             header('Content-Type: application/json');
             print_r(json_encode($result));
         } else {

@@ -170,7 +170,9 @@ module.controller("loginController", [
     };
 
     $scope.admin_login = function () {
-      $(".loader").show();
+      // $(".loader").show();
+      $(".spinner").show(500);
+      $(".text").hide(300);
       $(".result").hide();
       var username = $("#username").val();
       var pwrd = $("#password").val();
@@ -192,7 +194,9 @@ module.controller("loginController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".loader").hide();
+          $(".spinner").hide(500);
+          $(".text").show(300);
+         
           if (msg.status == "1") {
             //alert(msg.token)
             $localStorage["user_data"] = msg.data;

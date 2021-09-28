@@ -68,6 +68,8 @@ module.controller("listingController", [
         },
         processData: false,
         success: function (result) {
+          console.log(result);
+
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -107,6 +109,8 @@ module.controller("listingController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          console.log(result);
+          
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

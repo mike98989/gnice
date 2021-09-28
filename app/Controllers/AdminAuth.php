@@ -30,22 +30,22 @@ class Adminauth extends Controller
     //     $result = $this->model('Authenticate')->registerAdmin();
     //     print_r(json_encode($_SESSION));
     // }
-    public function create_new_admin_admin()
-    {
-        $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
-        if (isset($header['gnice-authenticate'])) {
+    // public function create_new_admin_admin()
+    // {
+    //     $header = apache_request_headers();
+    //     $header = array_change_key_case($header,CASE_LOWER);
+    //     if (isset($header['gnice-authenticate'])) {
 
-            // print_r($_POST);
-            // die();
-            $result = $this->model('AdminTasks')->createAdminAccount($_POST);
-            header('Content-Type: application/json');
-            print_r(json_encode($result));
-        } else {
-            echo 'invalid response';
-            exit;
-        }
-    }
+    //         // print_r($_POST);
+    //         // die();
+    //         $result = $this->model('AdminTasks')->createAdminAccount($_POST);
+    //         header('Content-Type: application/json');
+    //         print_r(json_encode($result));
+    //     } else {
+    //         echo 'invalid response';
+    //         exit;
+    //     }
+    // }
     public function change_admin_password()
     {
         $header = apache_request_headers();
