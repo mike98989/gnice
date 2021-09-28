@@ -57,7 +57,7 @@ module.controller("signupController", [
               $('.loader').hide();    
               $('.result').html(msg.msg);  
               $('.result').show();
-              window.location.href=datagrab.completeUrlLocation+'Confirm';
+              window.location.href=datagrab.completeUrlLocation+'confirm';
               return;
               }else{
               $('.loader').hide();    
@@ -166,7 +166,7 @@ $scope.resend_confirmation_code = function(){
               $('.result').show();
               setTimeout(function(){ 
                 //alert('got here');
-                window.location.href=datagrab.completeUrlLocation+'dashboard/welcome'
+                window.location.href=datagrab.completeUrlLocation+'login'
                 
                }, 5000);
               
@@ -214,7 +214,7 @@ $scope.resend_confirmation_code = function(){
             $(".result").html(msg.msg);
             $(".result").show();
             alert(msg.msg);
-            window.location.href = datagrab.completeUrlLocation + "Welcome";
+            window.location.href = datagrab.completeUrlLocation + "login";
           } else {
             $(".loader").hide();
             $(".result").html(msg.msg);
