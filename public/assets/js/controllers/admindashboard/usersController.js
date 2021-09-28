@@ -67,6 +67,8 @@ module.controller("usersController", [
         processData: false,
         success: function (result) {
           // alert(JSON.stringify(result));
+          console.log(result);
+
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -106,6 +108,8 @@ module.controller("usersController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          console.log(result);
+
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -168,6 +172,8 @@ module.controller("usersController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          console.log(result);
+
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -204,6 +210,8 @@ module.controller("usersController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          console.log(result);
+          
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

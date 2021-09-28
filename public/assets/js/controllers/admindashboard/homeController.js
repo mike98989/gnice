@@ -51,7 +51,7 @@ module.controller("homeController", [
     // };
     $scope.home_stats = function () {
       $(".result").hide();
-
+        alert('got here');
       $('#home_loader').show();
       $.ajax({
         url: $scope.dirlocation + "adminapi/home_statistics",
@@ -64,7 +64,7 @@ module.controller("homeController", [
         },
         processData: false,
         success: function (result) {
-         
+         console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -96,7 +96,7 @@ module.controller("homeController", [
     $scope.get_all_products = function () {
 
       $('#listing_loader').show(100);
-      
+      alert('got here get 2');
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_products",
         type: "GET",
@@ -109,6 +109,7 @@ module.controller("homeController", [
         },
         processData: false,
         success: function (result) {
+           console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

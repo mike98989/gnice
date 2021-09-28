@@ -113,9 +113,11 @@ module.controller("adminController", [
         },
         processData: false,
         success: function (result) {
+          console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
+          alert(response);
           $(".admin_loader_"+ admin.id).hide(500);
           $(".icon_"+ admin.id).show(500);
           if (msg.status == "1") {
@@ -160,7 +162,7 @@ module.controller("adminController", [
       $(".icon_create").hide();
     
       $.ajax({
-        url: $scope.dirlocation + "adminauth/create_new_admin_admin",
+        url: $scope.dirlocation + "adminapi/create_new_admin",
         type: "POST",
         data: formData,
         async: true,
@@ -169,16 +171,17 @@ module.controller("adminController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          // console.log(answer);
-          // // return;
+
+           console.log(answer);
+          
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".admin_create_loader").hide(500);
           $(".icon_create").show(100);
+          alert(response);
           if (msg.status == "1") {
-            $scope.get_all_admins();
-            $scope.$apply();
+           
             $(".result_create").html(msg.message);
             $(".result_create").addClass("alert alert-info");
             $(".result_create").show(500);
@@ -187,6 +190,7 @@ module.controller("adminController", [
               $(".result_create").hide("500");
               $(".result_create").removeClass("alert alert-info");
             }, 3000);
+            $scope.get_all_admins();
             $("#create_new_admin_form")[0].reset();
           } else {
             $(".loader").hide();
@@ -218,12 +222,14 @@ module.controller("adminController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          // console.log(answer);
+          console.log(answer);
+
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
           $(".admin_privilege_loader_"+ admin.id).hide(500);
           $(".icon_privilege_"+ admin.id).show(500);
+          alert(response);
           if (msg.status == "1") {
             $scope.get_all_admins();
             $scope.$apply();

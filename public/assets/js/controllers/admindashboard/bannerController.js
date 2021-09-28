@@ -76,6 +76,7 @@ module.controller("bannerController", [
         processData: false,
         success: function (result) {
           //alert(result);
+          console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -203,6 +204,8 @@ module.controller("bannerController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (result) {
+          console.log(result);
+          
           alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
