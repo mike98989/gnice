@@ -124,6 +124,7 @@ module.controller("categoryController", [
     $scope.update_category = function (id) {
       $(".edit_"+ id).show(500);
       $(".icon_"+ id).hide();
+      
       var formData = new FormData($("#updateCategory")[0]);
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_category",
@@ -144,15 +145,15 @@ module.controller("categoryController", [
          
           if (msg.status == "1") {
            
-            $(".result").html(msg.message);
-            $(".result").show(500);
+            $(".result-c").html(msg.message);
+            $(".result-c").show(500);
             $scope.get_all_cat_and_sub_cat();
             $scope.$apply();
            
             $("#updateCategory")[0].reset();
           } else {
-            $(".result").html(msg.message);
-            $(".result").show();
+            $(".result-c").html(msg.message);
+            $(".result-c").show();
           }
         },
       });

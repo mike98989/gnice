@@ -639,42 +639,39 @@ class Admintasks extends Model
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
+            // print_r($_POST);
+            // die();
+
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
             if ($this->verifyToken($token) == true) {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $title = trim($_POST['title']);
-                $id = $_POST['id'];
-                $image = $_FILES['file']['name'];
-                // echo ($image);
-                // die;
-                $deleteimage = $_POST['previous_image'];
-                if ($image != "") {
-                    $path = 'assets/images/uploads/category/' . $_FILES['file']['name'];
-                    if (move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
 
-                        //delete previous_image
-                        $pathDelete = "public/assets/images/uploads/category/" . $deleteimage;
-                        if (is_file($pathDelete)) {
-                            unlink($pathDelete);
-                        }
+               
+               
+                if (!empty($_FILES['files']['name'][0])) {
+                     $uploader = uploadMultiple('cat', 'category', 1);
+                     $image = $uploader['imageUrl'];
+   
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                    $title = trim($_POST['title']);
+                    $id = $_POST['id'];
+                    $deleteimage = $_POST['previous_image'];
+                    
+                    deleteFile($deleteimage, 'category');
                         $this->db->query('UPDATE category SET title = :title,image = :image WHERE id = :id');
                         $this->db->bind(':id', $id);
                         $this->db->bind(':title', $title);
                         $this->db->bind(':image', $image);
-                        if ($this->db->execute()) {
-                            $result['rowCount'] = $this->db->rowCount();
-                            $result['message'] = 'Category Updated';
-                            $result['status'] = 1;
-                        } else {
-                            $result['message'] = 'Category failed';
-                            $result['status'] = 0;
-                            // return false;
-                        }
-                    } else {
-                        $result['message'] = 'upload failed';
-                        $result['status'] = 0;
-                    }
+                            if ($this->db->execute()) {
+                                $result['rowCount'] = $this->db->rowCount();
+                                $result['message'] = 'Category update successful';
+                                $result['status'] = 1;
+                            } else {
+                                $result['message'] = 'Category failed';
+                                $result['status'] = 0;
+                                $result['errors'] = $uploader['image_error'];
+                            }
+                    
                 } else {
                     $this->db->query('UPDATE category SET title = :title WHERE id = :id');
                     $this->db->bind(':title', $title);
@@ -686,7 +683,7 @@ class Admintasks extends Model
                     } else {
                         $result['message'] = 'Category failed';
                         $result['status'] = 0;
-                        // return false;
+                       
                     }
                 }
             } else {
@@ -780,15 +777,18 @@ class Admintasks extends Model
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
             if ($this->verifyToken($token) == true) {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $image = '';
+                $uploader = uploadMultiple('cat', 'category', 1);
+                $image = $uploader['imageUrl'];
                 $data = array_map('trim', array_filter($_POST));
                 $status = 1;
                 $this->db->query(
-                    'INSERT INTO sub_category (title, parent_id, status) VALUES (:title, :parent_id, :status)'
+                    'INSERT INTO sub_category (title, parent_id, status, image) VALUES (:title, :parent_id, :status, :image)'
                 );
                 $this->db->bind(':title', $data['title']);
                 $this->db->bind(':parent_id', $data['parent_id']);
                 $this->db->bind(':status', $status);
+                $this->db->bind(':image', $image);
                 if ($this->db->execute()) {
                     $result['message'] = 'sub category creation successfully';
                     $result['status'] = '1';
