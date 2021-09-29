@@ -77,10 +77,10 @@
                                     <td>
                                         <span ng-switch="subCat.status">
                                             <span ng-switch-when="1">
-                                                <i class="mdi mdi-lock-open text-success"></i>
+                                                <i class="mdi mdi-check-circle text-success"></i>
                                             </span>
                                             <span ng-switch-when="0">
-                                                <i class="mdi mdi mdi-lock text-warning"></i>
+                                                <i class="mdi mdi-close-circle text-danger"></i>
                                             </span>
                                             <span ng-switch-default>
                                             </span>
@@ -92,23 +92,23 @@
                                             data-toggle="modal" data-target=".disable-sub-modal"
                                             ng-click="append_modal_info(subCat)">
                                             <span ng-switch-when="1">
-                                                <button class="badge badge-warning">
+                                                <button class="btn btn-sm btn-secondary">
                                                     <span
                                                         class="spinner-border text-light spinner-border-sm sub_loader_{{ subCat.sub_id }}"
                                                         role="status" style="display: none;">
                                                         <span class="sr-only">...loading</span>
                                                     </span>
-                                                    <i class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i> Disable
+                                                    <i class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i> Hide
                                                 </button>
                                             </span>
                                             <span ng-switch-when="0">
-                                                <button class="badge badge-success">
+                                                <button class="btn btn-sm btn-success">
                                                     <span
                                                         class="spinner-border text-light spinner-border-sm sub_loader_{{ subCat.sub_id }}"
                                                         role="status" style="display: none;">
                                                         <span class="sr-only">...loading</span>
                                                     </span>
-                                                    <i class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i> Enable
+                                                    <i class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i> Show
                                                 </button>
                                             </span>
                                             <span ng-switch-default>
@@ -120,7 +120,7 @@
                                             ng-click="localStorage_save('subInfo',subCat,'edit_sub')">
                                             <i class="mdi mdi-pen-plus mr-1"></i> Edit
                                         </button> -->
-                                        <button class="badge badge-info mr-1 btn_{{ subCat.sub_id }}"
+                                        <button class="btn btn-sm btn-info mr-1 btn_{{ subCat.sub_id }}"
                                             ng-click="toggle_form( subCat.sub_id )">
                                             <span
                                                         class="spinner-border text-light spinner-border-sm sub_edit_loader_{{ subCat.sub_id }}"
@@ -223,10 +223,10 @@
                             You are about to
                             <span ng-switch="info.status">
                                 <span ng-switch-when="1">
-                                    <span> disable </span>
+                                    <span> hide </span>
                                 </span>
                                 <span ng-switch-when="0">
-                                    <span> enable </span>
+                                    <span> show </span>
                                 </span>
                                 <span ng-switch-default>
                                 </span>
@@ -241,15 +241,15 @@
                         <!-- call disable_enable() -->
                         <span ng-switch="info.status" class="mr-1">
                             <span ng-switch-when="1">
-                                <button ng-click="enable_disable_sub(0,info)" class="btn btn-warning btn-sm"
+                                <button ng-click="enable_disable_sub(0,info)" class="btn btn-secondary btn-sm"
                                     data-dismiss="modal">
-                                    Disable
+                                    Hide
                                 </button>
                             </span>
                             <span ng-switch-when="0">
                                 <button ng-click="enable_disable_sub(1,info)" class="btn btn-success btn-sm"
                                     data-dismiss="modal">
-                                    Enable
+                                    Show
                                 </button>
                             </span>
                             <span ng-switch-default>

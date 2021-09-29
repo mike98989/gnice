@@ -51,7 +51,6 @@ module.controller("homeController", [
     // };
     $scope.home_stats = function () {
       $(".result").hide();
-        alert('got here');
       $('#home_loader').show();
       $.ajax({
         url: $scope.dirlocation + "adminapi/home_statistics",

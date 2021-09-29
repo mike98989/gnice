@@ -31,16 +31,16 @@
 
               <p ng-switch="package.status" class="display-4 p-0 m-0">
                 <span ng-switch-when="1">
-                  <i class="mdi mdi-lock-open text-success"></i>
+                  <i class="mdi mdi-check-circle text-success"></i>
                 </span>
                 <span ng-switch-when="0">
-                  <i class="mdi mdi-lock text-secondary"></i>
+                  <i class="mdi mdi-close-circle text-danger"></i>
                 </span>
                 <span ng-switch-default>
                 </span>
               </p>
               <div class=" m-2">
-                <button class="btn btn-sm btn-gradient-info mr-3 price_inverse_{{ package.package_id }}"
+                <button class="btn btn-sm btn-info mr-3 price_inverse_{{ package.package_id }}"
                   ng-click="toggle_form( package.package_id )">
                   <span class="spinner-border text-light spinner-border-sm account_loader_{{ package.package_id }}" role="status" style="display: none;">
                     <span class="sr-only">...loading</span>
@@ -52,7 +52,7 @@
                 <span ng-switch="package.status" data-toggle="modal" data-target=".disable-package-modal"
                   ng-click="append_modal_info(package)" class="price_inverse_{{ package.package_id }}">
                   <span ng-switch-when="1">
-                    <button class="btn btn-sm btn-gradient-warning">
+                    <button class="btn btn-sm btn-secondary">
                       <span class="spinner-border text-light spinner-border-sm account_status_loader_{{ package.package_id }}" role="status" style="display: none;">
                         <span class="sr-only">...loading</span>
                       </span>
@@ -63,7 +63,7 @@
                     <span class="spinner-border text-light spinner-border-sm account_status_loader_{{ package.package_id }}" role="status" style="display: none;">
                       <span class="sr-only">...loading</span>
                     </span>
-                    <button class="btn btn-sm btn-gradient-success">
+                    <button class="btn btn-sm btn-success">
                       <i class="mdi mdi-toggle-switch icon_status_{{ package.package_id }}"></i>
                     </button>
                   </span>
@@ -148,7 +148,7 @@
                       name="duration_in_days" pattern="[0-9]+">
                   </div>
                 </div>
-                <button type="submit" class="btn btn-sm btn-gradient-success mx-3"
+                <button type="submit" class="btn btn-sm btn-success mx-3"
                   ng-click="toggle_form( package.package_id )">
                   <i class=" mdi mdi-content-save-settings"></i>
                 </button>
@@ -161,10 +161,10 @@
               <span ng-switch="item.status" class="mr-1 p-0 form_inverse_{{ item.content_id }}">
                 <!-- form_inverse_{{ item.content_id }} -->
                 <span ng-switch-when="1">
-                  <i class="mdi mdi-lock-open text-success"></i>
+                  <i class="mdi mdi-check-circle text-success"></i>
                 </span>
                 <span ng-switch-when="0">
-                  <i class="mdi mdi-lock text-warning"></i>
+                  <i class="mdi mdi-close-circle text-danger"></i>
                 </span>
                 <span ng-switch-default>
                 </span>
@@ -182,7 +182,7 @@
                     <input type="text" class=" flex-grow-1 form-control" name="content_body"
                       value="{{ item.content_body}}" />
 
-                    <button type="submit" class="btn btn-sm btn-gradient-success ml-2" type="button"
+                    <button type="submit" class="btn btn-sm btn-success ml-2" type="button"
                       ng-click="show_textinput(item.content_id)">
                       <i class="mdi mdi-content-save-settings"></i>
                     </button>
@@ -190,7 +190,7 @@
                 </form>
               </div>
               <article class="d-flex justify-content-between mt-2">
-                <button class="btn btn-sm btn-gradient-info  mr-2 form_inverse_{{item.content_id}}"
+                <button class="btn btn-sm btn-info  mr-2 form_inverse_{{item.content_id}}"
                   ng-click="show_textinput(item.content_id)" type="button">
                   <span class="spinner-border text-light spinner-border-sm content_loader_{{ item.content_id }}" role="status" style="display: none;">
                     <span class="sr-only">...loading</span>
@@ -202,7 +202,7 @@
                   ng-click="append_modal_info(item)" class="form_inverse_{{item.content_id}}">
 
                   <span ng-switch-when="1">
-                    <button class="btn btn-sm btn-warning" type="button">
+                    <button class="btn btn-sm btn-secondary" type="button">
                       <span class="spinner-border text-light spinner-border-sm content_status_loader_{{ item.content_id }}" role="status" style="display: none;">
                         <span class="sr-only">...loading</span>
                       </span>
@@ -247,10 +247,10 @@
               You are about to
               <span ng-switch="info.status">
                 <span ng-switch-when="1">
-                  <span> disable </span>
+                  <span> hide </span>
                 </span>
                 <span ng-switch-when="0">
-                  <span> enable </span>
+                  <span> show </span>
                 </span>
                 <span ng-switch-default>
                 </span>
@@ -265,13 +265,13 @@
             <!-- call disable_enable() -->
             <span ng-switch="info.status" class="mr-1">
               <span ng-switch-when="1">
-                <button ng-click="toggle_package_status(0,info)" class="btn btn-warning btn-sm" data-dismiss="modal">
-                  Disable
+                <button ng-click="toggle_package_status(0,info)" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                  Hide
                 </button>
               </span>
               <span ng-switch-when="0">
                 <button ng-click="toggle_package_status(1,info)" class="btn btn-success btn-sm" data-dismiss="modal">
-                  Enable
+                  Show
                 </button>
               </span>
               <span ng-switch-default>
@@ -305,10 +305,10 @@
               You are about to
               <span ng-switch="info.status">
                 <span ng-switch-when="1">
-                  <span> disable </span>
+                  <span> hide </span>
                 </span>
                 <span ng-switch-when="0">
-                  <span> enable </span>
+                  <span> show </span>
                 </span>
                 <span ng-switch-default>
                 </span>
@@ -323,15 +323,15 @@
             <!-- call disable_enable() -->
             <span ng-switch="info.status" class="mr-1">
               <span ng-switch-when="1">
-                <button ng-click="toggle_package_content_status(0,info)" class="btn btn-warning btn-sm"
+                <button ng-click="toggle_package_content_status(0,info)" class="btn btn-secondary btn-sm"
                   data-dismiss="modal">
-                  Disable
+                  Hide
                 </button>
               </span>
               <span ng-switch-when="0">
                 <button ng-click="toggle_package_content_status(1,info)" class="btn btn-success btn-sm"
                   data-dismiss="modal">
-                  Enable
+                  Show
                 </button>
               </span>
               <span ng-switch-default>

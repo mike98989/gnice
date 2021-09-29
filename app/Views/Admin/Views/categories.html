@@ -33,10 +33,10 @@
               <div class=" card shadow" ng-click="model">
                 <p ng-switch="cat.status" class="display-4 p-0 m-0">
                   <span ng-switch-when="1">
-                    <i class="mdi mdi-lock-open text-success"></i>
+                    <i class="mdi mdi-check-circle text-success"></i>
                   </span>
                   <span ng-switch-when="0">
-                    <i class="mdi mdi-lock text-warning"></i>
+                    <i class="mdi mdi-close-circle text-danger"></i>
                   </span>
                   <span ng-switch-default>
                     none
@@ -73,12 +73,12 @@
                     <div ng-switch="cat.status" class="mt-2" data-toggle="modal" data-target=".disable-modal"
                       ng-click="append_modal_info(cat)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-warning p-2">
+                        <button class="badge badge-secondary p-2">
                           <span class="spinner-border text-light spinner-border-sm cat_loader_{{ cat.id }}"
                             role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ cat.id }}"></i> Disable
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ cat.id }}"></i> Hide
                         </button>
                       </span>
                       <span ng-switch-when="0">
@@ -87,7 +87,7 @@
                             role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ cat.id }}"></i> Enable
+                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ cat.id }}"></i> Show
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -284,10 +284,10 @@
               You are about to
               <span ng-switch="info.status">
                 <span ng-switch-when="1">
-                  <span> disable </span>
+                  <span> hide </span>
                 </span>
                 <span ng-switch-when="0">
-                  <span> enable </span>
+                  <span> show </span>
                 </span>
                 <span ng-switch-default>
                 </span>
@@ -302,13 +302,13 @@
             <!-- call disable_enable() -->
             <span ng-switch="info.status" class="mr-1">
               <span ng-switch-when="1">
-                <button ng-click="enable_or_disable_cat(0,info)" class="btn btn-warning btn-sm" data-dismiss="modal">
-                  Disable
+                <button ng-click="enable_or_disable_cat(0,info)" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                  Hide
                 </button>
               </span>
               <span ng-switch-when="0">
                 <button ng-click="enable_or_disable_cat(1,info)" class="btn btn-success btn-sm" data-dismiss="modal">
-                  Enable
+                  Show
                 </button>
               </span>
               <span ng-switch-default>

@@ -171,7 +171,6 @@ module.controller("adminController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-
            console.log(answer);
           
           var response = JSON.stringify(answer);
@@ -206,11 +205,10 @@ module.controller("adminController", [
         },
       });
     };
-    $scope.update_admin_privilege = function (admin) {
-      $(".admin_privilege_loader_"+ admin.id).show();
-      $(".icon_privilege_"+ admin.id).hide();
+    $scope.update_admin_privilege = function (id) {
+      $(".admin_privilege_loader_"+ id).show(500);
+      $(".icon_privilege_"+ id).hide(100);
     
-      id = admin.id;
       var formData = new FormData($("#update_admin_privilege_form_" + id)[0]);
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_admin_privilege",
@@ -227,9 +225,8 @@ module.controller("adminController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".admin_privilege_loader_"+ admin.id).hide(500);
-          $(".icon_privilege_"+ admin.id).show(500);
-          alert(response);
+          $(".admin_privilege_loader_"+ id).hide(500);
+          $(".icon_privilege_"+ id).show(100);
           if (msg.status == "1") {
             $scope.get_all_admins();
             $scope.$apply();
