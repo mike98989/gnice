@@ -41,7 +41,7 @@ module.controller("loginController", [
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          alert(answer);
+          //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -62,7 +62,7 @@ module.controller("loginController", [
     $scope.confirm_password_recovery_code = function () {
       $(".loader").show();
       $(".result").hide();
-      alert($localStorage.recovery_token);
+      //alert($localStorage.recovery_token);
       var password = $('#password').val();
       var confirm_password = $('#confirm_password').val();
       if(password!==confirm_password){
@@ -85,7 +85,7 @@ module.controller("loginController", [
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          alert(answer);
+          //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

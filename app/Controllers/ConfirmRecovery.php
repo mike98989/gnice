@@ -1,6 +1,6 @@
 <?php
 
-class ConfirmRecovery extends Controller{
+class Confirmrecovery extends Controller{
 
     
     function __construct() {
