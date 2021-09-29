@@ -117,7 +117,7 @@ module.controller("adminController", [
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          alert(response);
+        
           $(".admin_loader_"+ admin.id).hide(500);
           $(".icon_"+ admin.id).show(500);
           if (msg.status == "1") {
