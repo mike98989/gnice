@@ -89,18 +89,18 @@
                       data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
                       <span ng-switch-when="1">
                         <button class="btn btn-sm btn-secondary">
-                          <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                          <span class="spinner-border text-light spinner-border-sm loader_listing_{{ listing.id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ listing.id }}"></i>Hide
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_listing_{{ listing.id }}"></i>Hide
                         </button>
                       </span>
                       <span ng-switch-when="0">
                         <button class="btn btn-sm btn-success">
-                          <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                          <span class="spinner-border text-light spinner-border-sm loader_listing_{{ listing.id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ listing.id }}"></i>Show
+                          <i class="mdi mdi-toggle-switch mr-1 icon_listing_{{ listing.id }}"></i>Show
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -112,11 +112,11 @@
 
                     <button href="#" class="btn btn-sm btn-info"
                       ng-click="localStorage_save('adsInfo',listing,'single_listing')"">
-                       <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                       <span class="spinner-border text-light spinner-border-sm loader_listing_{{ listing.id }}" role="status" style="display: none;">
                         <span class="sr-only">...loading</span>
                       </span>
 
-                      <i class=" mdi mdi-eye-check mr-1 icon_{{ listing.id }}"></i> View
+                      <i class=" mdi mdi-eye-check mr-1 icon_listing_{{ listing.id }}"></i> View
                     </button>
 
                     <!-- delete user account control -->

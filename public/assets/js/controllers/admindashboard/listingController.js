@@ -97,8 +97,8 @@ module.controller("listingController", [
 
       formData.append("status", code);
       formData.append("product_code", listing.product_code);
-      $('#loader_'+listing.id).show();
-      $('.icon_'+listing.id).hide();
+      $('.loader_listing_'+listing.id).show();
+      $('.icon_listing_'+listing.id).hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/disable_enable_ads",
         data: formData,
@@ -115,8 +115,8 @@ module.controller("listingController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
 
-          $('#loader_'+listing.id).hide(500);
-          $('.icon_'+listing.id).show();
+          $('.loader_listing_'+listing.id).hide(500);
+          $('.icon_listing_'+listing.id).show();
           if (msg.status == "1") {
             
             listing.status = code;

@@ -7,12 +7,10 @@
             Profile | {{ userInfo.fullname | uppercase}} <small class="text-muted">({{ userInfo.seller_id}})</small>
         </h3>
     </div>
-    <aside class="d-flex justify-content-end">
-        <p class="result text-center" style="display: none"></p>
-    </aside>
+    
 
     <div class="row" ng-init="fetch_all_product_of_seller(userInfo.seller_id)">
-        <div class="col-12 grid-margin">
+        <div class="col-8 grid-margin">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -73,12 +71,12 @@
                                 </span>
                             </p>
                             <p>
-                                Number of Placed ads: <span class="badge badge-danger">{{ rowCount }}</span>
+                                Number of Placed ads: <span class="badge badge-primary">{{ rowCount }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 col-md-9">
                             <div class="row">
-                                <div class="col-sm-12 col-md-4">
+                                <div class="col-sm-12 col-md-6">
                                     <p ng-show="userInfo.fullname">
                                         Name: <br> <span><i class="mdi mdi-check-circle mr-1 text-success">
                                             </i>{{ userInfo.fullname }}</span>
@@ -93,7 +91,7 @@
                                     </p>
 
                                 </div>
-                                <div class="col-sm-12 col-md-4">
+                                <div class="col-sm-12 col-md-6">
 
                                     <p ng-show="userInfo.whatsapp">
                                         Whatsapp: <br> <span><i class="mdi mdi-check-circle mr-1 text-success">
@@ -115,14 +113,13 @@
                                         Last seen: <br> <span><i class="mdi mdi-check-circle mr-1 text-success">
                                             </i>{{ userInfo.last_login }}</span>
                                     </p>
-
-                                </div>
-                                <div class="col-sm-12 col-md-4">
                                     <p ng-show="userInfo.signup_date">
                                         Signup On: <br> <span><i class="mdi mdi-check-circle mr-1 text-success">
                                             </i>{{ userInfo.signup_date }}</span>
                                     </p>
+
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -132,7 +129,11 @@
 
         <div class="col-12 grid-margin">
             <div class="card">
+                
                 <div class="card-body">
+                    <aside class="d-flex justify-content-end">
+                        <p class="result text-center" style="display: none"></p>
+                    </aside>
                     <h4 class="card-title">All ads posted by {{ userInfo.fullname }} </h4>
                     <div style="text-align: center;" class="loader">
                         <img src="{{dirlocation}}public/assets/images/spinner4.gif"
@@ -159,10 +160,10 @@
                                 <p class="display-4" style="position:absolute;top:0px;left:0;">
                                     <span ng-switch="ads.status">
                                         <span ng-switch-when="1">
-                                            <i class="mdi mdi-lock-open text-success"></i>
+                                            <i class="mdi mdi-check-circle text-success"></i>
                                         </span>
                                         <span ng-switch-when="0">
-                                            <i class="mdi mdi-lock text-warning"></i>
+                                            <i class="mdi mdi-close-circle text-danger"></i>
                                         </span>
                                         <span ng-switch-default>
                                         </span>
@@ -172,30 +173,34 @@
                                 <div class="card-body p-3">
                                     <h5 class="card-title">{{ ads.name | limitTo: 20 }}{{ ads.name.length > 20 ? '...' :
                                         '' }}</h5>
-                                    <span class="badge badge-success mb-1">{{ ads.brand}}</span>
-                                    <span class="badge badge-warning">{{ ads.product_code }}</span>
-                                    <span class="badge badge-primary">{{ ads.state }}</span>
+                                    <small class="text-muted mr-auto" ng-if="ads.brand.length != ''">{{ ads.brand}}</small>
+                                    <small class="text-muted" ng-if="ads.state.length != ''"><i class=" mdi mdi-google-maps text-dark "></i>{{ ads.state }}</small>
 
                                     <div class="card-text ">
-                                        <p class="text-success">{{ ads.price | currency : "NGN" }}</p>
+                                        <p class="text-dark">{{ ads.price | currency : "NGN" }}</p>
                                         <p class="text-center">
-                                            <a type="button" class="btn btn-sm btn-info mr-2 mb-1 p-2"
-                                                ng-click="localStorage_save('adsInfo',ads,'single_listing')"
-                                                style="cursor: pointer; font-size: 14px;">
+                                            <button type="button" class="btn btn-sm btn-info m-1"
+                                                ng-click="localStorage_save('adsInfo',ads,'single_listing')">
                                                 <i class="mdi mdi-eye-check mr-2"></i>View
-                                            </a>
+                                        </button>
 
 
                                             <span ng-switch="ads.status" class="mr-1" data-toggle="modal"
                                                 data-target=".disable-listing-modal" ng-click="append_modal_info(ads)">
                                                 <span ng-switch-when="1">
-                                                    <button class="btn btn-sm btn-warning">
-                                                        <i class="mdi mdi-autorenew mr-1"></i>Disable
+                                                    <button class="btn btn-sm btn-secondary">
+                                                        <span class="spinner-border text-light spinner-border-sm loader_listing_{{ ads.id }} m-1" role="status"  style="display: none;">
+                                                            <span class="sr-only">...loading</span>
+                                                          </span>
+                                                        <i class="mdi mdi-toggle-switch-off icon_listing_{{ ads.id }} mr-1"></i>Hide
                                                     </button>
                                                 </span>
                                                 <span ng-switch-when="0">
                                                     <button class="btn btn-sm btn-success">
-                                                        <i class="mdi mdi-autorenew mr-1"></i>Enable
+                                                        <span class="spinner-border text-light spinner-border-sm loader_listing_{{ ads.id }} m-1" role="status" style="display: none;">
+                                                            <span class="sr-only">...loading</span>
+                                                          </span>
+                                                        <i class="mdi mdi-toggle-switch mr-1 icon_listing_{{ ads.id }}"></i>Show
                                                     </button>
                                                 </span>
                                                 <span ng-switch-default>
@@ -297,10 +302,10 @@
                                 You are about to
                                 <span ng-switch="info.status">
                                     <span ng-switch-when="1">
-                                        <span> disable </span>
+                                        <span> hide </span>
                                     </span>
                                     <span ng-switch-when="0">
-                                        <span> enable </span>
+                                        <span> show </span>
                                     </span>
                                     <span ng-switch-default>
                                     </span>
@@ -317,15 +322,20 @@
                                 <span ng-switch="info.status" class="mr-1">
                                     <span ng-switch-when="1">
                                         <button ng-click="enable_or_disable_listing(0,info, $index)"
-                                            class="btn btn-warning btn-sm" data-dismiss="modal"><i
-                                                class="mdi mdi-caps-lock"></i>
-                                            Disable
+                                            class="btn btn-secondary btn-sm" data-dismiss="modal">
+                                            <span class="spinner-border text-light spinner-border-sm loader_listing_{{ info.id }}" role="status" style="display: none;">
+                                                <span class="sr-only">...loading</span>
+                                              </span>
+                                            Hide
                                         </button>
                                     </span>
                                     <span ng-switch-when="0">
                                         <button ng-click="enable_or_disable_listing(1,info, $index)"
                                             class="btn btn-success btn-sm" data-dismiss="modal">
-                                            Enable
+                                            <span class="spinner-border text-light spinner-border-sm loader_listing_{{ info.id }}" role="status" style="display: none;">
+                                                <span class="sr-only">...loading</span>
+                                              </span>
+                                            Show
                                         </button>
                                     </span>
                                     <span ng-switch-default>

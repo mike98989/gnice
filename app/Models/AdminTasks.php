@@ -176,6 +176,28 @@ class Admintasks extends Model
         }
     }
 
+    public function getAllAbuseReports()
+    {
+        // $header = apache_request_headers();
+        // $header = array_change_key_case($header,CASE_LOWER);
+        // if (isset($header['gnice-authenticate'])) {
+        //     $splitHeader = explode(":", $header['gnice-authenticate']);
+        //     $token = $splitHeader[0];
+
+        //     if ($this->verifyToken($token) == true) {
+               
+                $this->db->query("SELECT * FROM abuse_report LEFT JOIN  users ON abuse_report.user_id = users.id  ORDER BY abuse_report.date ASC");
+               $row = $this->db->resultSet();
+                $result['data'] = $row;
+               
+            // } else {
+            //     $result['message'] = 'invalid session';
+            //     $result['status'] = '0';
+            // }
+            return $result;
+        // }
+    }
+
     public function getAllUsers()
     {
 
