@@ -20,6 +20,7 @@
             placeholder="Confirmation Code"
             
             required>
+            <input type="hidden" name="source" value="browser">
                 </div>
                 <div class="mt-3">
                    <button class="btn btn-block bg-primary text-white" type="submit">
@@ -27,6 +28,10 @@
                  Confirm</button>
                 </div>
                
+               <div class="text-center mt-4 font-weight-light">
+                  I have NOT received a verification code |<a href="{{dirlocation}}resendcode" class="text-success">Resend Code</a>
+                </div>
+
               </form>
             </div>
           </div>

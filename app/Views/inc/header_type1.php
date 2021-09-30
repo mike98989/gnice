@@ -23,7 +23,7 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="<?php echo APP_URL;?>/public/assets/images/icons/favicon.ico"
+      href="<?php echo APP_URL;?>/public/assets/images/gnice_logo.png"
     />
 
     <script type="text/javascript">

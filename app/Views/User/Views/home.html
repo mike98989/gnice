@@ -10,7 +10,8 @@
       <div style="text-align: center;" class="loader">
         <img src="{{dirlocation}}public/assets/images/spinner4.gif" style="width:80px">
         </div>
-      <div ng-show="slot_remaining_duration >= 0">
+        
+      <div ng-show="slot_remaining_duration > 0">
         <div class="row">
           <div class="col-lg-4">
           <span class="badge bg-secondary">{{user_data.seller_account_details.title | uppercase}}</span> ACCOUNT PACKAGE</div> 

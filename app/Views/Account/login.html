@@ -11,7 +11,7 @@
 
       <div class="container">
         <div class="row">
-          <div class="col-md-4 card" style="padding:0 35px;float:none;margin:0 auto">
+          <div class="col-md-5 card" style="padding:0 35px;float:none;margin:0 auto">
             <div class="heading">
               <h2 class="title">Welcome Back!</h2>
               <p>If you have an account with us, please log in.</p>
@@ -52,7 +52,12 @@
                 </div>
            
                 <div class="text-center mt-4 font-weight-light">
-                  Don't have an account? <a href="{{dirlocation}}signup" class="text-primary">Create</a>
+                  I DON'T have an account? <a href="{{dirlocation}}signup" class="text-primary">Create</a>
+                  <hr style="margin:5px;padding:0" />
+                  I have ALREADY received a verification code |<a href="{{dirlocation}}confirm" class="text-info">Enter Code</a>
+                  <hr style="margin:5px;padding:0" />
+                  I have NOT received a verification code |<a href="{{dirlocation}}resendcode" class="text-success">Resend Code</a>
+
                 </div>
               </form>
           </div><!-- End .col-md-6 -->
