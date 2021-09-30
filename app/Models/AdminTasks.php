@@ -630,6 +630,7 @@ class Admintasks extends Model
         }
         return $result;
     }
+
     public function updateCategory()
     {
 
@@ -688,6 +689,75 @@ class Admintasks extends Model
                 }
             } else {
                 $result['message'] = 'Category failed';
+                $result['status'] = 0;
+            }
+        } else {
+            $result['message'] = 'invalid request';
+            $result['status'] = '0';
+        }
+
+        return $result;
+    }
+
+
+    public function updateSubCategory()
+    {
+
+        // FIXME: add deleting previous image
+
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+
+            // print_r($_POST);
+            // die();
+
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
+            if ($this->verifyToken($token) == true) {
+
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $title = trim($_POST['title']);
+                $id = $_POST['id'];
+               
+               
+                if (!empty($_FILES['files']['name'][0])) {
+                     $uploader = uploadMultiple('sub', 'category', 1);
+                     $image = $uploader['imageUrl'];
+
+                  
+                    $deleteimage = $_POST['previous_image'];
+                    
+                    deleteFile($deleteimage, 'category');
+                        $this->db->query('UPDATE sub_category SET title = :title,image = :image WHERE sub_id = :id');
+                        $this->db->bind(':id', $id);
+                        $this->db->bind(':title', $title);
+                        $this->db->bind(':image', $image);
+                            if ($this->db->execute()) {
+                                $result['rowCount'] = $this->db->rowCount();
+                                $result['message'] = 'sub category update successful';
+                                $result['status'] = 1;
+                            } else {
+                                $result['message'] = 'sub category update failed';
+                                $result['status'] = 0;
+                                $result['errors'] = $uploader['image_error'];
+                            }
+                } else {
+                    $this->db->query('UPDATE sub_category SET title = :title WHERE sub_id = :id');
+                    $this->db->bind(':title', $title);
+                    $this->db->bind(':id', $id);
+                    if ($this->db->execute()) {
+                        $result['rowCount'] = $this->db->rowCount();
+                        $result['message'] = 'sub category update successful';
+                        $result['status'] = 1;
+                    } else {
+                        $result['message'] = 'sub category update failed';
+                        $result['status'] = 0;
+                       
+                    }
+                }
+            } else {
+                $result['message'] = 'sub category failed';
                 $result['status'] = 0;
             }
         } else {
@@ -806,39 +876,39 @@ class Admintasks extends Model
         }
         return $result;
     }
-    public function updateSubCategory()
-    {
-        $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
-        if (isset($header['gnice-authenticate'])) {
-            $splitHeader = explode(":", $header['gnice-authenticate']);
-            $token = $splitHeader[0];
-            if ($this->verifyToken($token) == true) {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $_POST = array_map('trim', array_filter($_POST));
-                $id = $_POST['id'];
-                $title = $_POST['title'];
-                $this->db->query("UPDATE sub_category SET title = :title WHERE sub_id = :id");
-                $this->db->bind(':title', $title);
-                $this->db->bind(':id', $id);
-                if ($this->db->execute()) {
-                    $result['data'] =  $title;
-                    $result['message'] = 'sub category updated successfully';
-                    $result['status'] = '1';
-                } else {
-                    $result['message'] = 'sub category update failed';
-                    $result['status'] = '0';
-                }
-            } else {
-                $result['message'] = 'invalid token';
-                $result['status'] = '0';
-            }
-        } else {
-            $result['message'] = 'invalid request';
-            $result['status'] = '0';
-        }
-        return $result;
-    }
+    // public function updateSubCategory()
+    // {
+    //     $header = apache_request_headers();
+    //     $header = array_change_key_case($header,CASE_LOWER);
+    //     if (isset($header['gnice-authenticate'])) {
+    //         $splitHeader = explode(":", $header['gnice-authenticate']);
+    //         $token = $splitHeader[0];
+    //         if ($this->verifyToken($token) == true) {
+    //             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    //             $_POST = array_map('trim', array_filter($_POST));
+    //             $id = $_POST['id'];
+    //             $title = $_POST['title'];
+    //             $this->db->query("UPDATE sub_category SET title = :title WHERE sub_id = :id");
+    //             $this->db->bind(':title', $title);
+    //             $this->db->bind(':id', $id);
+    //             if ($this->db->execute()) {
+    //                 $result['data'] =  $title;
+    //                 $result['message'] = 'sub category updated successfully';
+    //                 $result['status'] = '1';
+    //             } else {
+    //                 $result['message'] = 'sub category update failed';
+    //                 $result['status'] = '0';
+    //             }
+    //         } else {
+    //             $result['message'] = 'invalid token';
+    //             $result['status'] = '0';
+    //         }
+    //     } else {
+    //         $result['message'] = 'invalid request';
+    //         $result['status'] = '0';
+    //     }
+    //     return $result;
+    // }
 
     public function deleteSubCategory($id)
     {

@@ -59,6 +59,7 @@ module.controller("adminController", [
     $scope.get_all_admins = function () {
       $(".admin_loader").show();
       $(".result").hide();
+     
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_admins",
         type: "GET",

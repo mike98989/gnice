@@ -45,9 +45,8 @@
 
                 <div class="card-body p-3">
                   <div ng-if="cat.image.length > 0">
-                    <img
-                    src="{{dirlocation}}/public/assets/images/uploads/category/{{cat.image}}" alt="{{ cat.title }}"
-                    loading="lazy" class=" d-block w-25 mx-auto" />
+                    <img src="{{dirlocation}}/public/assets/images/uploads/category/{{cat.image}}" alt="{{ cat.title }}"
+                      loading="lazy" class=" d-block w-25 mx-auto" />
                   </div>
                   <p class="lead pl-2 text-center">
                     {{ cat.title | limitTo : 18 }}{{ cat.title.length > 18 ? "..." : '' }}
@@ -100,73 +99,74 @@
             </div>
             <!--  edit modal -->
 
-  <div class="modal fade edit-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="card">
+            <div class="modal fade edit-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="card">
 
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-           <div ng-if="info.image.length > 0">
-              <img src="{{dirlocation}}/public/assets/images/uploads/category/{{info.image}}" alt="{{ info.title }}"
-            loading="lazy" class=" d-block w-25 mx-auto" />
-          </div>
-          <div class="card p-3">
-            <aside class="d-flex justify-content-center">
-        <p class="alert alert-info result-c text-center" style="display: none"></p>
-      </aside>
-            <form id="updateCategory" ng-submit="update_category(info.id)">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-group mt-2">
-                    <label for="files[]">Replace Icon </label>
-                    <input type="file" name="files[]" multiple class="form-control file-upload-info"
-                      placeholder="replace category icon">
-                      <sup class="text-danger">*Only jpg and png are supported*</sup>
-                  </div>
-                  <div class="form-group">
-                    <label for="title"> Category name</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="category update name"
-                      value="{{ info.title }}" required />
-                    <input type="text" name="id" id="id" hidden value="{{ info.id }}" required />
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div ng-if="info.image.length > 0">
+                        <img src="{{dirlocation}}/public/assets/images/uploads/category/{{info.image}}"
+                          alt="{{ info.title }}" loading="lazy" class=" d-block w-25 mx-auto" />
+                      </div>
+                      <div class="card p-3">
+                        <aside class="d-flex justify-content-center">
+                          <p class="alert alert-info result-c text-center" style="display: none"></p>
+                        </aside>
+                        <form id="updateCategory" ng-submit="update_category(info.id)">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group mt-2">
+                                <label for="files[]">Replace Icon </label>
+                                <input type="file" name="files[]" multiple class="form-control file-upload-info"
+                                  placeholder="replace category icon">
+                                <sup class="text-danger">*Only jpg and png are supported*</sup>
+                              </div>
+                              <div class="form-group">
+                                <label for="title"> Category name</label>
+                                <input type="text" class="form-control" name="title" id="title"
+                                  placeholder="category update name" value="{{ info.title }}" required />
+                                <input type="text" name="id" id="id" hidden value="{{ info.id }}" required />
 
-                    <div ng-if="info.image.length > 0">
-                      
-                    <input type="text" name="previous_image" hidden id="previous_image" value="{{ info.image }}"
-                      required />
+                                <div ng-if="info.image.length > 0">
+
+                                  <input type="text" name="previous_image" hidden id="previous_image"
+                                    value="{{ info.image }}" required />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <span>
+
+                              <button type="submit" class="btn btn-info btn-sm">
+                                <span class="spinner-border text-light spinner-border-sm edit_{{ info.id }}"
+                                  role="status" style="display: none;">
+                                  <span class="sr-only">...loading</span>
+                                </span>
+                                <!-- <a data-dismiss="modal">
+                      Update</a> -->
+                                Update
+                              </button>
+                            </span>
+                            <button type="button" class="btn btn-light btn-sm ml-5" data-dismiss="modal">
+                              <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
-                <span>
+            </div>
 
-                  <button type="submit" class="btn btn-info btn-sm">
-                    <span class="spinner-border text-light spinner-border-sm edit_{{ info.id }}" role="status" style="display: none;">
-                      <span class="sr-only">...loading</span>
-                    </span>
-                    <!-- <a data-dismiss="modal">
-                      Update</a> -->
-                    Update
-                  </button>
-                </span>
-                <button type="button" class="btn btn-light btn-sm ml-5" data-dismiss="modal">
-                  <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-  <!-- end edit modal -->
+            <!-- end edit modal -->
 
           </div>
 
@@ -188,7 +188,7 @@
                   <label for="files[]">Category Image</label>
                   <input type="file" name="files[]" multiple class="form-control file-upload-info"
                     placeholder="Upload Image">
-                    <sup class="text-danger">*Only jpg and png are supported*</sup>
+                  <sup class="text-danger">*Only jpg and png are supported*</sup>
 
                 </div>
                 <div class="form-group">
@@ -241,11 +241,11 @@
                   <label for="files[]"> Sub Category Image</label>
                   <input type="file" name="files[]" multiple class="form-control file-upload-info"
                     placeholder="Upload Image">
-                    <sup class="text-danger">*Only jpg and png are supported*</sup>
+                  <sup class="text-danger">*Only jpg and png are supported*</sup>
 
                 </div>
               </div>
-          
+
               <div class="col-12">
                 <div class="form-group">
                   <label for="sub_category">Sub Category</label>

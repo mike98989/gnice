@@ -12,7 +12,7 @@
         <p class="result text-center" style="display: none"></p>
     </aside>
 
-   
+
     <div class="row">
         <div class="col-md-8 grid-margin">
             <div class="card">
@@ -48,11 +48,16 @@
                                     <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
 
                                     <td>
-                                        <span class="btn_{{ subCat.sub_id }}">
-                                            {{ subCat.title }}
-                                        </span>
+                                        <!-- <span class="btn_{{ subCat.sub_id }}"> -->
+                                            <span ng-if="subCat.image != ''">
+                                                <img src="{{dirlocation}}/public/assets/images/uploads/category/{{subCat.image}}"
+                                                    class="mr-2" loading="lazy" alt="{{ user.fullname }}" />
+                                            </span>
 
-                                        <article style="display: none;" class="form_{{ subCat.sub_id }}">
+                                            {{ subCat.title }}
+                                        <!-- </span> -->
+
+                                        <!-- <article style="display: none;" class="form_{{ subCat.sub_id }}">
                                             <form ng-submit="update_sub_category(subCat.sub_id, $index)"
                                                 id=" update_sub_category_{{ subCat.sub_id}}">
                                                 <input type="text" hidden class="form-control"
@@ -68,7 +73,7 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                        </article>
+                                        </article> -->
 
                                     </td>
                                     <td>
@@ -98,7 +103,9 @@
                                                         role="status" style="display: none;">
                                                         <span class="sr-only">...loading</span>
                                                     </span>
-                                                    <i class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i> Hide
+                                                    <i
+                                                        class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i>
+                                                    Hide
                                                 </button>
                                             </span>
                                             <span ng-switch-when="0">
@@ -108,7 +115,9 @@
                                                         role="status" style="display: none;">
                                                         <span class="sr-only">...loading</span>
                                                     </span>
-                                                    <i class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i> Show
+                                                    <i
+                                                        class="mdi mdi-account-convert mr-1 icon_{{ subCat.sub_id }}"></i>
+                                                    Show
                                                 </button>
                                             </span>
                                             <span ng-switch-default>
@@ -120,21 +129,37 @@
                                             ng-click="localStorage_save('subInfo',subCat,'edit_sub')">
                                             <i class="mdi mdi-pen-plus mr-1"></i> Edit
                                         </button> -->
-                                        <button class="btn btn-sm btn-info mr-1 btn_{{ subCat.sub_id }}"
+
+
+                                        <!-- <button class="btn btn-sm btn-info mr-1 btn_{{ subCat.sub_id }}"
                                             ng-click="toggle_form( subCat.sub_id )">
                                             <span
-                                                        class="spinner-border text-light spinner-border-sm sub_edit_loader_{{ subCat.sub_id }}"
-                                                        role="status" style="display: none;">
-                                                        <span class="sr-only">...loading</span>
-                                                    </span>
-                                            <i class="mdi mdi-pen-plus mr-1 icon_{{ subCat.sub_id }}"></i> Edit {{ subCat.id }}
-                                        </button>
+                                                class="spinner-border text-light spinner-border-sm sub_edit_loader_{{ subCat.sub_id }}"
+                                                role="status" style="display: none;">
+                                                <span class="sr-only">...loading</span>
+                                            </span>
+
+                                            <i class="mdi mdi-pen-plus mr-1 icon_{{ subCat.sub_id }}"></i> Edit {{
+                                            subCat.id }}
+                                        </button> -->
 
                                         <!-- delete subCat account control -->
                                         <!-- <button class="badge badge-danger" data-toggle="modal"
                                             data-target=".delete-subCat-modal" ng-click="append_modal_info(subCat)">
                                             <i class="mdi mdi-delete-forever mr-1"></i> Delete
                                         </button> -->
+
+                                        <!-- edit modal btn -->
+                                        <button href="#" class="btn btn-sm btn-info  mr-1" type="button"
+                                            data-toggle="modal" data-target=".edit-modal"
+                                            ng-click="append_modal_info(subCat)">
+                                            <span class="spinner-border text-light spinner-border-sm edit_sub_{{ subCat.sub_id }}"
+                                                role="status" style="display: none;">
+                                                <span class="sr-only">...loading</span>
+                                            </span>
+                                            <i class="mdi mdi-pen-plus icon_sub_{{ subCat.sub_id }}"></i>
+                                            Edit</button>
+                                        <!--END edit modal btn -->
                                     </td>
                                 </tr>
                             </tbody>
@@ -158,13 +183,13 @@
                                     value="{{ catInfo.id}}" hidden />
                             </div>
                             <div class="col-12">
-                <div class="form-group">
-                  <label for="files[]"> Sub Category Image</label>
-                  <input type="file" name="files[]" multiple class="form-control file-upload-info"
-                    placeholder="Upload Image">
-                    <sup class="text-danger">*Only jpg and png are supported*</sup>
-                </div>
-              </div>
+                                <div class="form-group">
+                                    <label for="files[]"> Sub Category Image</label>
+                                    <input type="file" name="files[]" multiple class="form-control file-upload-info"
+                                        placeholder="Upload Image">
+                                    <sup class="text-danger">*Only jpg and png are supported*</sup>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="sub_category">Sub Category</label>
@@ -174,11 +199,10 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-info mb-2 btn-sm">
-                            <span
-                                                        class="spinner-border text-light spinner-border-sm add_sub_cat_loader"
-                                                        role="status" style="display: none;">
-                                                        <span class="sr-only">...loading</span>
-                                                    </span>
+                            <span class="spinner-border text-light spinner-border-sm add_sub_cat_loader" role="status"
+                                style="display: none;">
+                                <span class="sr-only">...loading</span>
+                            </span>
                             Add
                         </button>
                     </form>
@@ -265,4 +289,75 @@
         </div>
     </div>
     <!-- end disable user modal -->
+
+    <!--  edit subCat modal -->
+
+  <div class="modal fade edit-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="card">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           <div ng-if="info.image.length > 0">
+              <img src="{{dirlocation}}/public/assets/images/uploads/category/{{info.image}}" alt="{{ info.title }}"
+            loading="lazy" class=" d-block w-25 mx-auto" />
+          </div>
+          <div class="card p-3">
+            <aside class="d-flex justify-content-center">
+        <p class="alert alert-info result-s text-center" style="display: none"></p>
+      </aside>
+            <form id="update_sub_category_{{ info.sub_id }}" ng-submit="update_sub_category(info.sub_id, $index)">
+              <div class="row">
+                <div class="col-12">
+                
+                  <div class="form-group mt-2">
+                    <label for="files[]">Replace Icon </label>
+                    <input type="file" name="files[]" multiple class="form-control file-upload-info"
+                      placeholder="replace category icon">
+                      <sup class="text-danger">*Only jpg and png are supported*</sup>
+                  </div>
+                  <div class="form-group">
+                    <label for="title"> sub category name</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="category update name"
+                      value="{{ info.title }}" required />
+                    <input type="text" name="id" id="id" hidden value="{{ info.sub_id }}" required />
+
+                    <div ng-if="info.image.length > 0">
+                      
+                    <input type="text" name="previous_image" hidden id="previous_image" value="{{ info.image }}"
+                      required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <span>
+
+                  <button type="submit" class="btn btn-info btn-sm">
+                    <span class="spinner-border text-light spinner-border-sm edit_sub_{{ info.sub_id }}" role="status" style="display: none;">
+                      <span class="sr-only">...loading</span>
+                    </span>
+                    <!-- <a data-dismiss="modal">
+                      Update</a> -->
+                    Update
+                  </button>
+                </span>
+                <button type="button" class="btn btn-light btn-sm ml-5" data-dismiss="modal">
+                  <i class="mdi mdi-cancel mr-1"></i>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- END edit subCat modal -->
 </div>

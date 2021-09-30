@@ -11,7 +11,7 @@ class AdminDashboard extends Controller
         //print_r($_SESSION);exit;
         if (!Session::get('loggedIn')) {
             Session::destroy();
-            header('location:./AdminAuth');
+            header('location:./Adminauth');
             exit;
         }
     }

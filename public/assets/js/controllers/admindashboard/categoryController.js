@@ -104,7 +104,7 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-         
+         console.log(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -139,7 +139,7 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          console.log(result);
+          console.log(answer);
 
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
@@ -163,10 +163,12 @@ module.controller("categoryController", [
         },
       });
     };
-    $scope.update_sub_category = function (id, index) {
-      $(".sub_edit_loader_"+ id).show(500);
-      $(".icon_"+ id).hide();
+    $scope.update_sub_category = function (id) {
+      $(".edit_sub_"+ id).show(200);
+      $(".icon_sub_"+ id).hide(100);
+     
       var formData = new FormData($("#update_sub_category_" + id)[0]);
+      $(".result-s"+ id).show();
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_sub_category",
         type: "POST",
@@ -181,27 +183,29 @@ module.controller("categoryController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".sub_edit_loader_"+ id).hide(500);
-          $(".icon_"+ id).show(100);
+          $(".edit_sub_"+ id).hide(500);
+          $(".icon_sub_"+ id).show(100);
           if (msg.status == "1") {
-           
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
+            $scope.all_cat_and_sub = msg.data;
+
+            $scope.$apply();
+            $(".result-s").html(msg.message);
+            $(".result-s").addClass("alert alert-info");
+            $(".result-s").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              $(".result-s").hide("500");
+              $(".result-s").removeClass("alert alert-info");
             }, 3000);
             $("#update_sub_category_" + id)[0].reset();
           } else {
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
+            $(".result-s").html(msg.message);
+            $(".result-s").addClass("alert alert-info");
+            $(".result-s").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              $(".result-s").hide("500");
+              $(".result-s").removeClass("alert alert-info");
             }, 3000);
           }
         },
@@ -357,5 +361,11 @@ module.controller("categoryController", [
         },
       });
     };
+
+    $scope.localStorage_get = function (key) {
+      $scope[key] = $localStorage[key];
+    };
+
   },
+  
 ]);
