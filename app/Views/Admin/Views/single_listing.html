@@ -10,483 +10,411 @@
         </h3>
     </div>
     <div class="row" ng-init="fetch_all_product_of_seller(userInfo.seller_id)">
-        <div class="col-6 grid-margin">
+        <div class="col-7 grid-margin">
             <div class="card">
                 <div class="card-body bg-light">
                     <div class="row">
                         <div class="col-12">
 
-                            <div class="card" ng-init=" img = adsInfo.image.split(',')">
-                                <!-- carousel -->
-                                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
-                                        </li>
-                                        <li ng-if="img[1]" data-target="#carouselExampleIndicators" data-slide-to="1">
-                                        </li>
-                                        <li ng-if="img[2]" data-target="#carouselExampleIndicators" data-slide-to="2">
-                                        </li>
-                                        <li ng-if="img[3]" data-target="#carouselExampleIndicators" data-slide-to="3">
-                                        </li>
-                                        <li ng-if="img[4]" data-target="#carouselExampleIndicators" data-slide-to="4">
-                                        </li>
-                                        <li ng-if="img[5]" data-target="#carouselExampleIndicators" data-slide-to="5">
-                                        </li>
-                                        <li ng-if="img[6]" data-target="#carouselExampleIndicators" data-slide-to="6">
-                                        </li>
-                                        <li ng-if="img[7]" data-target="#carouselExampleIndicators" data-slide-to="7">
-                                        </li>
-                                        <li ng-if="img[8]" data-target="#carouselExampleIndicators" data-slide-to="8">
-                                        </li>
-                                        <li ng-if="img[9]" data-target="#carouselExampleIndicators" data-slide-to="9">
-                                        </li>
-                                        <li ng-show="img[10]" data-target="#carouselExampleIndicators"
-                                            data-slide-to="10"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div ng-if="img[0]" class="carousel-item active">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[1]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[1]}}"
-                                                alt="S{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[2]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[2]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[3]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[3]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[4]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[4]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[5]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[5]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[6]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[6]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[7]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[7]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[8]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[8]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[9]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[9]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
-                                        <div ng-if="img[10]" class="carousel-item">
-                                            <img class="d-block w-100 rounded"
-                                                src="{{dirlocation}}/public/assets/images/uploads/products/{{img[10]}}"
-                                                alt="{{ adsInfo.name }}" height="400" loading="lazy">
-                                        </div>
+                    <!-- test -->
 
-                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                                            data-slide="prev" type="button">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-                                            data-slide="next" type="button">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>
+                    <div class="card" ng-init=" img = adsInfo.image.split(',')">
+                        <!-- carousel -->
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}"
+                                    ng-class={active: $index==0} ng-repeat="i in img">
+                                </li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div ng-class="{active: $index == 0}" ng-repeat="i in img" class="carousel-item w-100">
+                                    <img class="d-block  w-100 img-fluid rounded"
+                                        src="{{dirlocation}}/public/assets/images/uploads/products/{{i}}"
+                                        alt="{{ adsInfo.name }}" loading="lazy"  style="max-height: 500px; background: cover center/center;">
                                 </div>
-                                <!--end carousel -->
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                    data-slide="prev" type="button">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                    data-slide="next" type="button">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
                             </div>
+                            <!--end carousel -->
                         </div>
+                    </div>
 
-                        <div class="col-12">
-                            <div class="row mt-2">
+                    <div class="col-12">
+                        <div class="row mt-2">
 
 
-                                <!--  -->
+                            <!--  -->
 
-                                <div class="col-12">
-                                    <div class="card">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"> <i
-                                                    class="mdi mdi-check-circle mr-1 text-success">
-                                                </i> Status:
-                                                <span ng-switch="adsInfo.status">
-                                                    <span ng-switch-when="1"
-                                                        class="badge badge-success ml-2">SHOWN</span>
-                                                    <span ng-switch-when="0"
-                                                        class="badge badge-secondary ml-2">HIDDEN</span>
-                                                    <span ng-switch-default>
-                                                        <span>none</span>
-                                                    </span>
+                            <div class="col-12">
+                                <div class="card">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> <i class="mdi mdi-check-circle mr-1 text-success">
+                                            </i> Status:
+                                            <span ng-switch="adsInfo.status">
+                                                <span ng-switch-when="1" class="badge badge-success ml-2">SHOWN</span>
+                                                <span ng-switch-when="0"
+                                                    class="badge badge-secondary ml-2">HIDDEN</span>
+                                                <span ng-switch-default>
+                                                    <span>none</span>
                                                 </span>
-                                            </li>
-                                            <li class="list-group-item " ng-show="adsInfo.price">
-                                                <i class="mdi mdi-check-circle mr-1 text-success">
-                                                </i>
-                                                <span class="mr-2">Price:</span>
-                                                <span class="text-dark ">
-                                                    {{ adsInfo.price | currency: "NGN" }}
-                                                </span>
-                                            </li>
-                                            <!-- <li class="list-group-item"><i class="mdi mdi-check-circle mr-1 text-success">
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item " ng-show="adsInfo.price">
+                                            <i class="mdi mdi-check-circle mr-1 text-success">
+                                            </i>
+                                            <span class="mr-2">Price:</span>
+                                            <span class="text-dark ">
+                                                {{ adsInfo.price | currency: "NGN" }}
+                                            </span>
+                                        </li>
+                                        <!-- <li class="list-group-item"><i class="mdi mdi-check-circle mr-1 text-success">
                     </i>Title: <span class="ml-2">{{ adsInfo.name }}</span>
                 </li> -->
-                                            <li ng-show="adsInfo.seller_fullname" class="list-group-item bg-light"> <i
-                                                    class="mdi mdi-check-circle mr-1 text-success">
-                                                </i>Seller: <span class="ml-2">{{ adsInfo.seller_fullname | uppercase
-                                                    }}</span>
-                                            </li>
-                                            <li class="list-group-item"><i
-                                                    class="mdi mdi-check-circle mr-1 text-success"></i>Seller
-                                                ID:
-                                                <span class="ml-2">
-                                                    {{ adsInfo.seller_id
-                                                    }}</span>
-                                            </li>
-                                            <li class="list-group-item"><i
-                                                    class="mdi mdi-check-circle mr-1 text-success">
-                                                </i>Brand: <span class="ml-2">{{ adsInfo.name }}</span>
-                                            </li>
-                                            <li class="list-group-item " ng-show="adsInfo.negotiable">
-                                                <i class="mdi mdi-check-circle mr-1 text-success">
-                                                </i>
-                                                <span class="mr-2">Price Negotiable:</span>
-                                                <span ng-switch="adsInfo.negotiable">
-                                                    <span ng-switch-when="1">Yes</span>
-                                                    <span ng-switch-when="0">No</span>
-                                                    <span ng-switch-default></span>
-                                                </span>
-                                            </li>
-                                            <li class="list-group-item " ng-show="adsInfo.delivery_available">
-                                                <i class="mdi mdi-check-circle mr-1 text-success">
-                                                </i>
-                                                <span class="mr-2">Delivery Available:</span>
-                                                <span ng-switch="adsInfo.delivery_available">
-                                                    <span ng-switch-when="1">Yes</span>
-                                                    <span ng-switch-when="0">No</span>
-                                                    <span ng-switch-default></span>
-                                                </span>
-                                            </li>
-                                            <li class="list-group-item " ng-show="adsInfo.exchange_possible">
-                                                <i class="mdi mdi-check-circle mr-1 text-success">
-                                                </i>
-                                                <span class="mr-2">Exchange Possible:</span>
-                                                <span ng-switch="adsInfo.exchange_possible">
-                                                    <span ng-switch-when="1">Yes</span>
-                                                    <span ng-switch-when="0">No</span>
-                                                    <span ng-switch-default></span>
-                                                </span>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <!--  -->
-
-
-
-                                <div class="col-12">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item " ng-show="adsInfo.color">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">color:</span>
-                                            <span>
-                                                {{ adsInfo.color }}
-                                            </span>
+                                        <li ng-show="adsInfo.seller_fullname" class="list-group-item bg-light"> <i
+                                                class="mdi mdi-check-circle mr-1 text-success">
+                                            </i>Seller: <span class="ml-2">{{ adsInfo.seller_fullname | uppercase
+                                                }}</span>
                                         </li>
-
-                                        <li class="list-group-item " ng-show="adsInfo.date_added">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Date Created:</span>
-                                            <span>
-                                                {{ adsInfo.date_added }}
-                                            </span>
+                                        <li class="list-group-item"><i
+                                                class="mdi mdi-check-circle mr-1 text-success"></i>Seller
+                                            ID:
+                                            <span class="ml-2">
+                                                {{ adsInfo.seller_id
+                                                }}</span>
                                         </li>
-                                        <li class="list-group-item " ng-show="adsInfo.state">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">State:</span>
-                                            <span>
-                                                {{ adsInfo.state }}
-                                            </span>
-                                        </li>
-
-                                        <li class="list-group-item " ng-show="adsInfo.lga">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">LGA:</span>
-                                            <span>
-                                                {{ adsInfo.lga}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.land_mark">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">LandMark:</span>
-                                            <span>
-                                                {{ adsInfo.land_mark }}
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-12">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item " ng-show="adsInfo.model">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Model:</span>
-                                            <span>
-                                                {{ adsInfo.model }}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.condition_state">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">condition:</span>
-                                            <span>
-                                                {{ adsInfo.condition_state }}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.ram">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">RAM:</span>
-                                            <span>
-                                                {{ adsInfo.ram }}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.internal_storage">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Internal Storage:</span>
-                                            <span>
-                                                {{ adsInfo.internal_storage }}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.resolution">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Resolution:</span>
-                                            <span>
-                                                {{ adsInfo.resolution }}
-                                            </span>
-
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.sim">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Sim:</span>
-                                            <span>
-                                                {{ adsInfo.sim }}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.battery">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Battery:</span>
-                                            <span>
-                                                {{ adsInfo.battery }}
-                                            </span>
-                                        </li>
-
-                                        <li class="list-group-item " ng-show="adsInfo.main_camera">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Main Camera:</span>
-                                            <span>
-                                                {{ adsInfo.main_camera }}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.selfie_camera">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Selfie Camera:</span>
-                                            <span>
-                                                {{ adsInfo.selfie_camera }}
-                                            </span>
-                                        </li>
-
-
-                                    </ul>
-                                </div>
-                                <div class="col-12">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item " ng-show="adsInfo.second_condition">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Second Condition:</span>
-                                            <span>
-                                                {{ adsInfo.second_condition}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.transmission_type_vehicle">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Transmission type:</span>
-                                            <span>
-                                                {{ adsInfo.transmission_type_vehicle}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.mileage_vehicle">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Mileage:</span>
-                                            <span>
-                                                {{ adsInfo.mileage_vehicle}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.mileage_vehicle">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Mileage:</span>
-                                            <span>
-                                                {{ adsInfo.mileage_vehicle}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.registered_vehicle">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Register Vehicle:</span>
-                                            <span>
-                                                {{ adsInfo.registered_vehicle}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.vin_vehicle">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">VIN:</span>
-                                            <span>
-                                                {{ adsInfo.vin_vehicle}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.horse_power_vehicle">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Horse Power:</span>
-                                            <span>
-                                                {{ adsInfo.horse_power_vehicle}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.engine_size">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Engine Size:</span>
-                                            <span>
-                                                {{ adsInfo.engine_size}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.year_of_manufacture">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Year of Manufacture:</span>
-                                            <span>
-                                                {{ adsInfo.year_of_manufacture}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.operating_system">
-                                            <i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Operating System :</span>
-                                            <span>
-                                                {{ adsInfo.operating_system}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.   hard_drive_size">
-                                            <i class=" mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Hard Drive Size:</span>
-                                            <span>
-                                                {{ adsInfo.hard_drive_size}}
-                                            </span>
-                                        <li class="list-group-item " ng-show="adsInfo.fuel">
-                                            <i class=" mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Fuel :</span>
-                                            <span>
-                                                {{ adsInfo.fuel}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.seats_vehicle">
-                                            <i class=" mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">No of seats(Vehicle) :</span>
-                                            <span>
-                                                {{ adsInfo.seats_vehicle}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.property_size">
-                                            <i class=" mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Property Size:</span>
-                                            <span>
-                                                {{ adsInfo.property_size}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.number_of_bedrooms">
-                                            <i class=" mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Number of Bedrooms :</span>
-                                            <span>
-                                                {{ adsInfo.number_of_bedrooms}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.property_type">
-                                            <i class=" mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Property Type :</span>
-                                            <span>
-                                                {{ adsInfo.property_type}}
-                                            </span>
-                                        </li>
-                                        <li class="list-group-item " ng-show="adsInfo.number_of_bathrooms">
-                                            <i class=" mdi mdi-check-circle mr-1 text-success">
-                                            </i>
-                                            <span class="mr-2">Number of Bathrooms :</span>
-                                            <span>
-                                                {{ adsInfo.number_of_bathrooms}}
-                                            </span>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <ul class="list-group list-group-flush">
                                         <li class="list-group-item"><i class="mdi mdi-check-circle mr-1 text-success">
-                                            </i>Description: <br>
-                                            <p class="">{{
-                                                adsInfo.description}}</p>
+                                            </i>Brand: <span class="ml-2">{{ adsInfo.name }}</span>
                                         </li>
+                                        <li class="list-group-item " ng-show="adsInfo.negotiable">
+                                            <i class="mdi mdi-check-circle mr-1 text-success">
+                                            </i>
+                                            <span class="mr-2">Price Negotiable:</span>
+                                            <span ng-switch="adsInfo.negotiable">
+                                                <span ng-switch-when="1">Yes</span>
+                                                <span ng-switch-when="0">No</span>
+                                                <span ng-switch-default></span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item " ng-show="adsInfo.delivery_available">
+                                            <i class="mdi mdi-check-circle mr-1 text-success">
+                                            </i>
+                                            <span class="mr-2">Delivery Available:</span>
+                                            <span ng-switch="adsInfo.delivery_available">
+                                                <span ng-switch-when="1">Yes</span>
+                                                <span ng-switch-when="0">No</span>
+                                                <span ng-switch-default></span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item " ng-show="adsInfo.exchange_possible">
+                                            <i class="mdi mdi-check-circle mr-1 text-success">
+                                            </i>
+                                            <span class="mr-2">Exchange Possible:</span>
+                                            <span ng-switch="adsInfo.exchange_possible">
+                                                <span ng-switch-when="1">Yes</span>
+                                                <span ng-switch-when="0">No</span>
+                                                <span ng-switch-default></span>
+                                            </span>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
 
+                            <!--  -->
+
+
+
+                            <div class="col-12">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item " ng-show="adsInfo.color">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">color:</span>
+                                        <span>
+                                            {{ adsInfo.color }}
+                                        </span>
+                                    </li>
+
+                                    <li class="list-group-item " ng-show="adsInfo.date_added">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Date Created:</span>
+                                        <span>
+                                            {{ adsInfo.date_added }}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.state">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">State:</span>
+                                        <span>
+                                            {{ adsInfo.state }}
+                                        </span>
+                                    </li>
+
+                                    <li class="list-group-item " ng-show="adsInfo.lga">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">LGA:</span>
+                                        <span>
+                                            {{ adsInfo.lga}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.land_mark">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">LandMark:</span>
+                                        <span>
+                                            {{ adsInfo.land_mark }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-12">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item " ng-show="adsInfo.model">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Model:</span>
+                                        <span>
+                                            {{ adsInfo.model }}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.condition_state">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">condition:</span>
+                                        <span>
+                                            {{ adsInfo.condition_state }}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.ram">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">RAM:</span>
+                                        <span>
+                                            {{ adsInfo.ram }}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.internal_storage">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Internal Storage:</span>
+                                        <span>
+                                            {{ adsInfo.internal_storage }}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.resolution">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Resolution:</span>
+                                        <span>
+                                            {{ adsInfo.resolution }}
+                                        </span>
+
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.sim">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Sim:</span>
+                                        <span>
+                                            {{ adsInfo.sim }}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.battery">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Battery:</span>
+                                        <span>
+                                            {{ adsInfo.battery }}
+                                        </span>
+                                    </li>
+
+                                    <li class="list-group-item " ng-show="adsInfo.main_camera">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Main Camera:</span>
+                                        <span>
+                                            {{ adsInfo.main_camera }}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.selfie_camera">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Selfie Camera:</span>
+                                        <span>
+                                            {{ adsInfo.selfie_camera }}
+                                        </span>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                            <div class="col-12">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item " ng-show="adsInfo.second_condition">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Second Condition:</span>
+                                        <span>
+                                            {{ adsInfo.second_condition}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.transmission_type_vehicle">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Transmission type:</span>
+                                        <span>
+                                            {{ adsInfo.transmission_type_vehicle}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.mileage_vehicle">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Mileage:</span>
+                                        <span>
+                                            {{ adsInfo.mileage_vehicle}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.mileage_vehicle">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Mileage:</span>
+                                        <span>
+                                            {{ adsInfo.mileage_vehicle}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.registered_vehicle">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Register Vehicle:</span>
+                                        <span>
+                                            {{ adsInfo.registered_vehicle}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.vin_vehicle">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">VIN:</span>
+                                        <span>
+                                            {{ adsInfo.vin_vehicle}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.horse_power_vehicle">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Horse Power:</span>
+                                        <span>
+                                            {{ adsInfo.horse_power_vehicle}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.engine_size">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Engine Size:</span>
+                                        <span>
+                                            {{ adsInfo.engine_size}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.year_of_manufacture">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Year of Manufacture:</span>
+                                        <span>
+                                            {{ adsInfo.year_of_manufacture}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.operating_system">
+                                        <i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Operating System :</span>
+                                        <span>
+                                            {{ adsInfo.operating_system}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.   hard_drive_size">
+                                        <i class=" mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Hard Drive Size:</span>
+                                        <span>
+                                            {{ adsInfo.hard_drive_size}}
+                                        </span>
+                                    <li class="list-group-item " ng-show="adsInfo.fuel">
+                                        <i class=" mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Fuel :</span>
+                                        <span>
+                                            {{ adsInfo.fuel}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.seats_vehicle">
+                                        <i class=" mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">No of seats(Vehicle) :</span>
+                                        <span>
+                                            {{ adsInfo.seats_vehicle}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.property_size">
+                                        <i class=" mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Property Size:</span>
+                                        <span>
+                                            {{ adsInfo.property_size}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.number_of_bedrooms">
+                                        <i class=" mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Number of Bedrooms :</span>
+                                        <span>
+                                            {{ adsInfo.number_of_bedrooms}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.property_type">
+                                        <i class=" mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Property Type :</span>
+                                        <span>
+                                            {{ adsInfo.property_type}}
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item " ng-show="adsInfo.number_of_bathrooms">
+                                        <i class=" mdi mdi-check-circle mr-1 text-success">
+                                        </i>
+                                        <span class="mr-2">Number of Bathrooms :</span>
+                                        <span>
+                                            {{ adsInfo.number_of_bathrooms}}
+                                        </span>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="mdi mdi-check-circle mr-1 text-success">
+                                        </i>Description: <br>
+                                        <p class="">{{
+                                            adsInfo.description}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

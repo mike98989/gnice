@@ -147,5 +147,28 @@ module.controller("listingController", [
     $scope.append_modal_value = function (value) {
       $scope.listingValue = value;
     };
+    $scope.get_product_reviews = function(product_id){
+      //alert(product_id);
+      $.ajax({
+        url: $scope.dirlocation + "api/get_product_reviews?id="+product_id,
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers: { "gnice-authenticate": "gnice-web" },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          if(msg.status=='1'){
+            $scope.product_reviews= msg.data;
+            $scope.calculate_average_reviews(msg.data);
+            $scope.$apply();
+          }
+          //alert($localStorage.fb_data);return
+        },
+      });
+    }
   },
 ]);
