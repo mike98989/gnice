@@ -55,38 +55,38 @@
 
 
                   <div class="d-flex justify-content-between flex-wrap">
-                    <button href="#" class="badge badge-info  mt-2 p-2" type="button" data-toggle="modal"
+                    <button href="#" class="badge badge-info  mt-2 p-2 d-inline-block" type="button" data-toggle="modal"
                       data-target=".edit-modal" ng-click="append_modal_info(cat)">
                       <span class="spinner-border text-light spinner-border-sm edit_{{ cat.id }}" role="status"
                         style="display: none;">
                         <span class="sr-only">...loading</span>
                       </span>
-                      <i class="mdi mdi-pen-plus icon_{{ cat.id }}"></i>
+                      <i class="mdi mdi-pen-plus icon_edit_{{ cat.id }}"></i>
                       Edit</button>
 
 
-                    <a class="badge badge-primary mt-2 p-2" type="button"
+                    <a class="badge badge-primary mt-2 p-2  d-inline-block" type="button"
                       ng-click="localStorage_save('catInfo',cat,'sub_category')"><i class="mdi mdi-eye-circle"></i>
                       More</a>
 
                     <div ng-switch="cat.status" class="mt-2" data-toggle="modal" data-target=".disable-modal"
                       ng-click="append_modal_info(cat)">
                       <span ng-switch-when="1">
-                        <button class="badge badge-secondary p-2">
+                        <button class="badge badge-secondary p-2 d-block">
                           <span class="spinner-border text-light spinner-border-sm cat_loader_{{ cat.id }}"
                             role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ cat.id }}"></i> Hide
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_toggle_{{ cat.id }}"></i> Hide
                         </button>
                       </span>
                       <span ng-switch-when="0">
-                        <button class="badge badge-success p-2">
+                        <button class="badge badge-success p-2 d-block">
                           <span class="spinner-border text-light spinner-border-sm cat_loader_{{ cat.id }}"
                             role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ cat.id }}"></i> Show
+                          <i class="mdi mdi-toggle-switch mr-1 icon_toggle_{{ cat.id }}"></i> Show
                         </button>
                       </span>
                       <span ng-switch-default>

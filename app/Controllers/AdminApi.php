@@ -419,7 +419,6 @@ class Adminapi extends Controller
             exit();
         }
     }
-    /*** UNUSED */
     public function fetch_all_abuse_reports()
     {
         $header = apache_request_headers();
@@ -433,19 +432,7 @@ class Adminapi extends Controller
             exit();
         }
     }
-    public function fetch_top_rated_products()
-    {
-        $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
-        if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllTopRatedProducts();
-            print_r(json_encode($result));
-        } else {
-            echo "invalid request";
-            exit;
-        }
-    }
-    /*** END UNUSED */
+    
     
     public function delete_user_account_and_ads()
     {

@@ -1,104 +1,82 @@
 {
-  "data": [
-      {
-          "product_id": "45",
-          "product_name": "Hectares of Land For Sale",
-          "product_image": "pro6122d06520e5e000000001.jpg,pro6122d06521377000100000.jpg,pro6122d06521922100000000.jpg",
-          "product_status": "1",
-          "product_code": "40174810",
-          "seller_id": "AG-3195923",
-          "seller_name": "Jonny Doe",
-          "report_contents": [
-              {
-                  "report_title": "test 3 title",
-                  "report_id": "7",
-                  "report_content": "test 3 content",
-                  "date": "2021-09-24",
-                  "victim": "Jonny Doe"
-              }
-          ],
-          "report_counts": 1
-      },
-      {
-          "product_id": "58",
-          "product_name": "Security Doors",
-          "product_image": "pro61426a1e89374000000100.jpg",
-          "product_status": "1",
-          "product_code": "75832363",
-          "seller_id": "AG-874676",
-          "seller_name": "Sunday",
-          "report_contents": [
-              {
-                  "report_title": "The price is wrong",
-                  "report_id": "3",
-                  "report_content": "This is a spam message you get",
-                  "date": "2021-09-16",
-                  "victim": "Michael Akpobome4"
-              }
-          ],
-          "report_counts": 1
-      },
-      {
-          "product_id": "48",
-          "product_name": "CHEVROLET REGULAR CAB",
-          "product_image": "pro612567f0c8891001000000.jpg,pro612567f0c8c99000100000.jpg,pro612567f0c916a001000000.jpg",
-          "product_status": "0",
-          "product_code": "28584409",
-          "seller_id": "AG-3195923",
-          "seller_name": "Jonny Doe",
-          "report_contents": [
-              {
-                  "report_title": "test title",
-                  "report_id": "5",
-                  "report_content": "test body",
-                  "date": "2021-10-01",
-                  "victim": "Mike Doe"
-              },
-              {
-                  "report_title": "test 2 title",
-                  "report_id": "6",
-                  "report_content": "test 2 cotent",
-                  "date": "2021-10-01",
-                  "victim": null
-              },
-              {
-                  "report_title": "The Category is wrong",
-                  "report_id": "4",
-                  "report_content": "This category is very wrong",
-                  "date": "2021-09-18",
-                  "victim": "Michael Akpobome"
-              },
-              {
-                  "report_title": "this is not okay",
-                  "report_id": "1",
-                  "report_content": "crazy selller",
-                  "date": "2021-09-16",
-                  "victim": "Michael Akpobome"
-              }
-          ],
-          "report_counts": 4
-      },
-      {
-          "product_id": "51",
-          "product_name": "Brand New Shoe",
-          "product_image": "pro6137e75d0f354100000000.png",
-          "product_status": "1",
-          "product_code": "37742365",
-          "seller_id": "AG-3195923",
-          "seller_name": "Jonny Doe",
-          "report_contents": [
-              {
-                  "report_title": "The Ad is a spam",
-                  "report_id": "2",
-                  "report_content": "This ad is a spam",
-                  "date": "2021-09-16",
-                  "victim": "Michael Akpobome4"
-              }
-          ],
-          "report_counts": 1
-      }
-  ],
-  "counts_of_product_reported": 4,
-  "message": "abuse report fetching successful",
-  "status": "1"
+    "id": "16",
+    "title": "Toys, Babies and Kids",
+    "address": "",
+    "click-counts": "0",
+    "image": "toys-kids.png",
+    "status": "1",
+    "subcategory": [
+        {
+            "sub_id": "75",
+            "parent_id": "16",
+            "title": "Babies & Kids Accessories",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "76",
+            "parent_id": "16",
+            "title": "Baby & Child Care",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "77",
+            "parent_id": "16",
+            "title": "Children's Clothing",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "78",
+            "parent_id": "16",
+            "title": "Children's Furniture",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "79",
+            "parent_id": "16",
+            "title": "Children's Gear & Safety",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "80",
+            "parent_id": "16",
+            "title": "Children's Shoes",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "81",
+            "parent_id": "16",
+            "title": "Maternity & Pregnancy",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "82",
+            "parent_id": "16",
+            "title": "Prams & Strollers",
+            "address": "",
+            "image": "",
+            "status": "1"
+        },
+        {
+            "sub_id": "83",
+            "parent_id": "16",
+            "title": "Toys",
+            "address": "",
+            "image": "",
+            "status": "1"
+        }
+    ]
 }

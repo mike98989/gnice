@@ -797,6 +797,8 @@ class Admintasks extends Model
                     if ($this->db->execute()) {
                         $result['rowCount'] = $this->db->rowCount();
                         $result['message'] = 'sub category update successful';
+                        $result['title'] =  $title;
+                        $result['image'] =  $image;
                         $result['status'] = 1;
                     } else {
                         $result['message'] = 'sub category update failed';
@@ -809,7 +811,9 @@ class Admintasks extends Model
                     $this->db->bind(':id', $id);
                     if ($this->db->execute()) {
                         $result['rowCount'] = $this->db->rowCount();
-                        $result['message'] = 'sub category update successful';
+                        $result['message'] = $title;
+                        $result['title'] = $title;
+                        $result['image'] = '';
                         $result['status'] = 1;
                     } else {
                         $result['message'] = 'sub category update failed';
