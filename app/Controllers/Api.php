@@ -385,14 +385,14 @@ class Api extends Controller
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $token = filter_var($header['gnice-authenticate']);
-            $result = $this->model('Authenticate')->verifyToken($token,'users');
-            if($result){
+            //$token = filter_var($header['gnice-authenticate']);
+            //$result = $this->model('Authenticate')->verifyToken($token,'users');
+            //if($result){
                 $result = $this->model('Product')->getAllProductOfASeller($_GET['seller_id']);
-            }else{
-                $result['status']='0';
-                $result['msg']='Invalid token';
-            }
+            // }else{
+            //     $result['status']='0';
+            //     $result['msg']='Invalid token';
+            // }
             print_r(json_encode($result));
             
         } else {

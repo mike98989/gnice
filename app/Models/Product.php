@@ -638,7 +638,16 @@ class Product extends Model
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
-        $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1 ORDER BY id DESC");
+        //$this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1 ORDER BY id DESC");
+        $this->db
+                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id WHERE products.status='1' AND products.seller_id=:seller_id  ORDER BY products.id DESC");
+
         $this->db->bind(':seller_id', $seller_id);
         if ($this->db->resultSet()) {
             $result['rowCounts'] = $this->db->rowCount();

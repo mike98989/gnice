@@ -657,7 +657,20 @@ class Authenticate extends Model
                             $this->db->bind(':email', $email);
                             $this->db->bind(':activated', '1');
                             $this->db->execute();
-                            $msg['msg'] = "Successfully confirmed your account. Please use the login Link to signin to your account.";
+
+                             $updated_token = $this->updateUserToken($check_email->id, 'users');
+                            if ((isset($_POST['source'])) && ($_POST['source'] == 'browser')) {
+                                @session_start();
+                                Session::init();
+                                Session::set('loggedIn', true);
+                                Session::set('loggedType', 'user');
+                                Session::set('token', $updated_token);
+                                Session::set('data', $check_email);
+                                $msg['token'] = $updated_token;
+                                $msg['data'] = $check_email;
+                            }
+                            
+                            $msg['msg'] = "Successfully confirmed your account. You will be redirected to your account dashboard shortly.";
                             $msg['status'] = '1';
                         } else {
                             $msg['msg'] = "Invalid CONFIRMATION CODE";

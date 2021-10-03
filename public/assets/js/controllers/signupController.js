@@ -137,51 +137,50 @@ $scope.resend_confirmation_code = function(){
     }
 
 
-
-    $scope.confirm_user_signup = function(){
-    $('.loader').show();    
-         $('.result').hide(); 
-          var formData = new FormData($('#confirm_user_signup')[0]);
-          $.ajax({
-               url: $scope.dirlocation+'api/confirm_user_signup',
-               type: 'POST',
-               data: formData,
-               async: true,
-               cache: false,
-               contentType: false,
-               enctype: 'multipart/form-data',
-               headers:{'gnice-authenticate':'gnice-web'},
-               crossDomain: true,
-               processData: false,
-               success: function (answer) {
-                //alert(answer);
-               var response=JSON.stringify(answer);
-               var parsed = JSON.parse(response);
-               var msg=angular.fromJson(parsed);
-               //alert(msg.msg);
-               $('.loader').hide();  
-              if(msg.status == '1'){
-              $('.loader').hide();    
-              $('.result').html(msg.msg);  
-              $('.result').show();
-              setTimeout(function(){ 
-                //alert('got here');
-                window.location.href=datagrab.completeUrlLocation+'login'
+    // $scope.confirm_user_signup = function(){
+    // $('.loader').show();    
+    //      $('.result').hide(); 
+    //       var formData = new FormData($('#confirm_user_signup')[0]);
+    //       $.ajax({
+    //            url: $scope.dirlocation+'api/confirm_user_signup',
+    //            type: 'POST',
+    //            data: formData,
+    //            async: true,
+    //            cache: false,
+    //            contentType: false,
+    //            enctype: 'multipart/form-data',
+    //            headers:{'gnice-authenticate':'gnice-web'},
+    //            crossDomain: true,
+    //            processData: false,
+    //            success: function (answer) {
+    //             //alert(answer);
+    //            var response=JSON.stringify(answer);
+    //            var parsed = JSON.parse(response);
+    //            var msg=angular.fromJson(parsed);
+    //            //alert(msg.msg);
+    //            $('.loader').hide();  
+    //           if(msg.status == '1'){
+    //           $('.loader').hide();    
+    //           $('.result').html(msg.msg);  
+    //           $('.result').show();
+    //           setTimeout(function(){ 
+    //             //alert('got here');
+    //             window.location.href=datagrab.completeUrlLocation+'login'
                 
-               }, 5000);
+    //            }, 5000);
               
-              }else{
-              $('.loader').hide();    
-              $('.result').html(msg.msg);  
-              $('.result').show();
+    //           }else{
+    //           $('.loader').hide();    
+    //           $('.result').html(msg.msg);  
+    //           $('.result').show();
             
-              //$('.signup_loader').hide();
-              //$('.alert').html(answer);
-              }
+    //           //$('.signup_loader').hide();
+    //           //$('.alert').html(answer);
+    //           }
               
-               }
-             });
-    }
+    //            }
+    //          });
+    // }
 
     $scope.confirm_user_signup = function () {
       $(".loader").show();
@@ -203,19 +202,24 @@ $scope.resend_confirmation_code = function(){
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          alert(answer);
+          //alert(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          alert(msg.msg);
+          //alert(msg.msg);
           $(".loader").hide();
           if (msg.status == "1") {
             $(".loader").hide();
             $(".result").html(msg.msg);
             $(".result").show();
-            alert(msg.msg);
-            window.location.href = datagrab.completeUrlLocation + "login";
-          } else {
+            //alert(msg.msg);
+            setTimeout(function(){ 
+            $localStorage["user_data"] = msg.data;
+            $localStorage["user_token"] = msg.token;
+            window.location.href = datagrab.completeUrlLocation+'dashboard/account_packages';
+            }, 5000);
+
+            } else {
             $(".loader").hide();
             $(".result").html(msg.msg);
             $(".result").show();

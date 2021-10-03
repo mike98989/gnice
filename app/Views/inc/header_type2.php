@@ -12,12 +12,12 @@
 
 	<title>Gnice Market Place</title>
 
-	<meta name="keywords" content="HTML5 Template" />
-	<meta name="description" content="Porto - Bootstrap eCommerce Template">
-	<meta name="author" content="SW-THEMES">
+	<meta name="keywords" content="Market place" />
+	<meta name="description" content="Gnice Market Place">
+	
 		
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="<?php echo APP_URL;?>/assets/images/icons/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="<?php echo APP_URL;?>/assets/images/gnice_logo.png">
 	
 	
 	<script type="text/javascript">
