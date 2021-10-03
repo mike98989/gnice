@@ -13,6 +13,10 @@ module.config(function ($routeProvider, $locationProvider) {
       templateUrl: "../app/Views/Admin/Views/sub_category.html",
       controller: "categoryController",
     })
+    .when("/complaints", {
+      templateUrl: "../app/Views/Admin/Views/complaints.html",
+      controller: "homeController",
+    })
     // .when("/edit_sub", {
     //   templateUrl: "../app/views/Admin/views/edit_sub_category.html",
     //   controller: "categoryController",

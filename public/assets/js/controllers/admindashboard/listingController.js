@@ -93,6 +93,7 @@ module.controller("listingController", [
     };
 
     $scope.enable_or_disable_listing = function (code, listing, index) {
+      alert('got here');
       var formData = new FormData();
 
       formData.append("status", code);

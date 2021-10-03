@@ -1,59 +1,108 @@
 {
-  "message": "fetch successful",
   "data": {
-    "transactions": [
-      {
-        "total_amount": "187500000",
-        "total_records": "75"
-      }
-    ],
-    "success_transactions": [
-      {
-        "total_success_amount": "175800000",
-        "total_success_records": "54"
-      }
-    ],
-    "failed_transactions": [
-      {
-        "total_failed_amount": "11700000",
-        "total_failed_records": "21"
-      }
-    ],
-    "packages_and_sellers": [
-      {
-        "title": "Advance",
-        "number_of_sellers": "1"
-      },
-      {
-        "title": "Basic",
-        "number_of_sellers": "3"
-      },
-      {
-        "title": "Free",
-        "number_of_sellers": "5"
-      },
-      {
-        "title": "Super",
-        "number_of_sellers": "2"
-      }
-    ],
-    "ads": [
-      {
-        "total_ads": "31",
-        "total_sellers_with_ads": "5"
-      }
-    ],
-    "sellers": [
-      {
-        "total_sellers": "10",
-        "total_users": "10"
-      }
-    ],
-    "users": [
-      {
-        "total_sellers": "10"
-      }
-    ]
-  },
-  "status": "1"
+    "0": {
+      "product_id": "58",
+      "product_name": "Security Doors",
+      "product_image": "pro61426a1e89374000000100.jpg",
+      "seller_id": "AG-874676",
+      "seller_name": "Sunday",
+      "report_contents": [
+        {
+          "report_title": "The price is wrong",
+          "report_id": "3",
+          "report_content": "This is a spam message you get",
+          "victim": "Michael Akpobome4",
+          "reports": {
+            "counted_abuse": "1"
+          }
+        }
+      ],
+      "report_counts": 1
+    },
+    "1": {
+      "product_id": "48",
+      "product_name": "CHEVROLET REGULAR CAB",
+      "product_image": "pro612567f0c8891001000000.jpg,pro612567f0c8c99000100000.jpg,pro612567f0c916a001000000.jpg",
+      "seller_id": "AG-3195923",
+      "seller_name": "Jonny Doe",
+      "report_contents": [
+        {
+          "report_title": "this is not okay",
+          "report_id": "1",
+          "report_content": "crazy selller",
+          "victim": "Michael Akpobome",
+          "reports": {
+            "counted_abuse": "1"
+          }
+        },
+        {
+          "report_title": "The Category is wrong",
+          "report_id": "4",
+          "report_content": "This category is very wrong",
+          "victim": "Michael Akpobome",
+          "reports": {
+            "counted_abuse": "1"
+          }
+        },
+        {
+          "report_title": "test title",
+          "report_id": "5",
+          "report_content": "test body",
+          "victim": "Mike Doe",
+          "reports": {
+            "counted_abuse": "1"
+          }
+        },
+        {
+          "report_title": "test 2 title",
+          "report_id": "6",
+          "report_content": "test 2 cotent",
+          "victim": null,
+          "reports": {
+            "counted_abuse": "1"
+          }
+        }
+      ],
+      "report_counts": 4
+    },
+    "2": {
+      "product_id": "51",
+      "product_name": "Brand New Shoe",
+      "product_image": "pro6137e75d0f354100000000.png",
+      "seller_id": "AG-3195923",
+      "seller_name": "Jonny Doe",
+      "report_contents": [
+        {
+          "report_title": "The Ad is a spam",
+          "report_id": "2",
+          "report_content": "This ad is a spam",
+          "victim": "Michael Akpobome4",
+          "reports": {
+            "counted_abuse": "1"
+          }
+        }
+      ],
+      "report_counts": 1
+    },
+    "3": {
+      "product_id": "45",
+      "product_name": "Hectares of Land For Sale",
+      "product_image": "pro6122d06520e5e000000001.jpg,pro6122d06521377000100000.jpg,pro6122d06521922100000000.jpg",
+      "seller_id": "AG-3195923",
+      "seller_name": "Jonny Doe",
+      "report_contents": [
+        {
+          "report_title": "test 3 title",
+          "report_id": "7",
+          "report_content": "test 3 content",
+          "victim": "Jonny Doe",
+          "reports": {
+            "counted_abuse": "1"
+          }
+        }
+      ],
+      "report_counts": 1
+    },
+    "counts": 4
+  }
 }

@@ -75,7 +75,7 @@ class Admintasks extends Model
     public function homeStatistics()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -117,12 +117,12 @@ class Admintasks extends Model
                 if ($this->db->resultSet()) {
                     $row['sellers'] = $this->db->resultSet();
                 }
-                
+
                 $this->db->query("SELECT COUNT(DISTINCT users.email) AS total_sellers FROM users WHERE users.account_type > 0");
                 if ($this->db->resultSet()) {
                     $row['users'] = $this->db->resultSet();
                 }
-                
+
                 if ($this->db->resultSet()) {
                     $result['message'] = 'fetch successful';
                     $result['data'] = $row;
@@ -145,7 +145,7 @@ class Admintasks extends Model
     public function getAllProducts()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -178,31 +178,71 @@ class Admintasks extends Model
 
     public function getAllAbuseReports()
     {
-        // $header = apache_request_headers();
-        // $header = array_change_key_case($header,CASE_LOWER);
-        // if (isset($header['gnice-authenticate'])) {
-        //     $splitHeader = explode(":", $header['gnice-authenticate']);
-        //     $token = $splitHeader[0];
+        $header = apache_request_headers();
+        $header = array_change_key_case($header, CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $splitHeader = explode(":", $header['gnice-authenticate']);
+            $token = $splitHeader[0];
 
-        //     if ($this->verifyToken($token) == true) {
-               
-                $this->db->query("SELECT * FROM abuse_report LEFT JOIN  users ON abuse_report.user_id = users.id  ORDER BY abuse_report.date ASC");
-               $row = $this->db->resultSet();
-                $result['data'] = $row;
-               
-            // } else {
-            //     $result['message'] = 'invalid session';
-            //     $result['status'] = '0';
-            // }
-            return $result;
-        // }
+            if ($this->verifyToken($token) == true) {
+                // $this->db->query("SELECT SUM(P1.rating) as rate, P1.*, P2.* FROM product_reviews P1 INNER JOIN products P2 ON P1.product_id=P2.id GROUP BY P1.product_id ORDER BY rate DESC");
+
+                $this->db->query("SELECT DISTINCT A.product_id, P.name AS product_name, P.image as product_image, P.status AS product_status, P.product_code AS product_code,  P.seller_id AS seller_id, U.fullname AS seller_name FROM abuse_report A INNER JOIN products P ON A.product_id= P.id  INNER JOIN users U ON P.seller_id = U.seller_id WHERE A.status != '0' ORDER BY A.date DESC");
+                $global_reports = $this->db->resultSet();
+                $global_count = $this->db->rowCount();
+                // $global_reports['products_reported_counts'] = $global_count;
+
+                for($i = 0; $i < $global_count; $i++) {
+                    $this->db->query("SELECT report_title, report_id, report_content,date, U.fullname AS victim FROM abuse_report LEFT JOIN users U ON abuse_report.user_id = U.id WHERE abuse_report.product_id = :id ORDER BY abuse_report.date DESC");
+                    $this->db->bind(':id', $global_reports[$i]->product_id);
+                    //$reports_content =  $this->db->resultSet();
+                    $report_counts = $this->db->rowCount();
+                    $global_reports[$i]->report_contents = $this->db->resultSet();
+                    $global_reports[$i]->report_counts = $this->db->rowCount();
+
+                    for ($a = 0; $a < $report_counts; $a++) {
+                        $this->db->query("SELECT COUNT(*) AS counted_abuse FROM abuse_report WHERE report_id = :id");
+
+                        $this->db->bind(':id', $global_reports[$i]->report_contents[$a]->report_id);
+                        $global_reports[$i]->report_contents[$a]->reports = $this->db->singleResult();
+                    }
+                    
+                }
+                $result['data'] = $global_reports;
+                $result['counts_of_product_reported'] = $global_count;
+                $result['message'] = 'abuse report fetching successful';
+                $result['status'] = '1';
+            }else{
+                $result['message'] = 'invalid token login';
+                $result['status'] = '0';
+            }
+        }else{
+            $result['message'] = 'invalid header';
+            $result['status'] = '0';
+        }
+        return $result;
     }
+
+    public function getAllTopRatedProducts()
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header, CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $this->db->query("SELECT SUM(P1.rating) as rate, P1.*, P2.* FROM product_reviews P1 INNER JOIN products P2 ON P1.product_id=P2.id GROUP BY P1.product_id ORDER BY rate DESC");
+            $row = $this->db->resultSet();
+            $result['data'] = $row;
+            $result['status'] = '1';
+            return $result;
+        }
+    }
+
+
 
     public function getAllUsers()
     {
 
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -236,7 +276,7 @@ class Admintasks extends Model
     public function disableEnableUser()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -271,7 +311,7 @@ class Admintasks extends Model
     public function disableEnableCategory()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -307,7 +347,7 @@ class Admintasks extends Model
     public function disableEnableBanner()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -345,7 +385,7 @@ class Admintasks extends Model
     public function disableEnableAdmin()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -381,7 +421,7 @@ class Admintasks extends Model
     public function updateAdminPrivilege()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -418,7 +458,7 @@ class Admintasks extends Model
     public function togglePackageStatus()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -457,7 +497,7 @@ class Admintasks extends Model
     public function togglePackageContentStatus()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -495,7 +535,7 @@ class Admintasks extends Model
     public function disableEnableAds()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -540,7 +580,7 @@ class Admintasks extends Model
     public function disableEnableSubCategory()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -577,7 +617,7 @@ class Admintasks extends Model
     public function getAllAdminAccounts()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -617,7 +657,7 @@ class Admintasks extends Model
     {
 
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -659,7 +699,7 @@ class Admintasks extends Model
         // FIXME: add deleting previous image
 
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             // print_r($_POST);
@@ -672,29 +712,29 @@ class Admintasks extends Model
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $title = trim($_POST['title']);
                 $id = $_POST['id'];
-               
-               
-                if (!empty($_FILES['files']['name'][0])) {
-                     $uploader = uploadMultiple('cat', 'category', 1);
-                     $image = $uploader['imageUrl'];
 
-                  
+
+                if (!empty($_FILES['files']['name'][0])) {
+                    $uploader = uploadMultiple('cat', 'category', 1);
+                    $image = $uploader['imageUrl'];
+
+
                     $deleteimage = $_POST['previous_image'];
-                    
+
                     deleteFile($deleteimage, 'category');
-                        $this->db->query('UPDATE category SET title = :title,image = :image WHERE id = :id');
-                        $this->db->bind(':id', $id);
-                        $this->db->bind(':title', $title);
-                        $this->db->bind(':image', $image);
-                            if ($this->db->execute()) {
-                                $result['rowCount'] = $this->db->rowCount();
-                                $result['message'] = 'Category update successful';
-                                $result['status'] = 1;
-                            } else {
-                                $result['message'] = 'Category failed';
-                                $result['status'] = 0;
-                                $result['errors'] = $uploader['image_error'];
-                            }
+                    $this->db->query('UPDATE category SET title = :title,image = :image WHERE id = :id');
+                    $this->db->bind(':id', $id);
+                    $this->db->bind(':title', $title);
+                    $this->db->bind(':image', $image);
+                    if ($this->db->execute()) {
+                        $result['rowCount'] = $this->db->rowCount();
+                        $result['message'] = 'Category update successful';
+                        $result['status'] = 1;
+                    } else {
+                        $result['message'] = 'Category failed';
+                        $result['status'] = 0;
+                        $result['errors'] = $uploader['image_error'];
+                    }
                 } else {
                     $this->db->query('UPDATE category SET title = :title WHERE id = :id');
                     $this->db->bind(':title', $title);
@@ -706,7 +746,6 @@ class Admintasks extends Model
                     } else {
                         $result['message'] = 'Category failed';
                         $result['status'] = 0;
-                       
                     }
                 }
             } else {
@@ -728,7 +767,7 @@ class Admintasks extends Model
         // FIXME: add deleting previous image
 
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             // print_r($_POST);
@@ -741,29 +780,29 @@ class Admintasks extends Model
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $title = trim($_POST['title']);
                 $id = $_POST['id'];
-               
-               
-                if (!empty($_FILES['files']['name'][0])) {
-                     $uploader = uploadMultiple('sub', 'category', 1);
-                     $image = $uploader['imageUrl'];
 
-                  
+
+                if (!empty($_FILES['files']['name'][0])) {
+                    $uploader = uploadMultiple('sub', 'category', 1);
+                    $image = $uploader['imageUrl'];
+
+
                     $deleteimage = $_POST['previous_image'];
-                    
+
                     deleteFile($deleteimage, 'category');
-                        $this->db->query('UPDATE sub_category SET title = :title,image = :image WHERE sub_id = :id');
-                        $this->db->bind(':id', $id);
-                        $this->db->bind(':title', $title);
-                        $this->db->bind(':image', $image);
-                            if ($this->db->execute()) {
-                                $result['rowCount'] = $this->db->rowCount();
-                                $result['message'] = 'sub category update successful';
-                                $result['status'] = 1;
-                            } else {
-                                $result['message'] = 'sub category update failed';
-                                $result['status'] = 0;
-                                $result['errors'] = $uploader['image_error'];
-                            }
+                    $this->db->query('UPDATE sub_category SET title = :title,image = :image WHERE sub_id = :id');
+                    $this->db->bind(':id', $id);
+                    $this->db->bind(':title', $title);
+                    $this->db->bind(':image', $image);
+                    if ($this->db->execute()) {
+                        $result['rowCount'] = $this->db->rowCount();
+                        $result['message'] = 'sub category update successful';
+                        $result['status'] = 1;
+                    } else {
+                        $result['message'] = 'sub category update failed';
+                        $result['status'] = 0;
+                        $result['errors'] = $uploader['image_error'];
+                    }
                 } else {
                     $this->db->query('UPDATE sub_category SET title = :title WHERE sub_id = :id');
                     $this->db->bind(':title', $title);
@@ -775,7 +814,6 @@ class Admintasks extends Model
                     } else {
                         $result['message'] = 'sub category update failed';
                         $result['status'] = 0;
-                       
                     }
                 }
             } else {
@@ -795,7 +833,7 @@ class Admintasks extends Model
     public function updateBanner()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -864,7 +902,7 @@ class Admintasks extends Model
     public function addSubCategory()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -992,7 +1030,7 @@ class Admintasks extends Model
     public function getAllProductOfASeller($seller_id)
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1000,7 +1038,7 @@ class Admintasks extends Model
 
             if ($this->verifyToken($token) == true) {
                 $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+                $header = array_change_key_case($header, CASE_LOWER);
                 $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
                 $this->db->query("SELECT * FROM products WHERE seller_id = :seller_id ORDER BY date_added DESC");
                 $this->db->bind(':seller_id', $seller_id);
@@ -1040,7 +1078,7 @@ class Admintasks extends Model
     {
 
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1072,7 +1110,7 @@ class Admintasks extends Model
     public function getAccountPackages()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1104,7 +1142,7 @@ class Admintasks extends Model
     public function deleteUserAccount()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1141,7 +1179,7 @@ class Admintasks extends Model
     public function updatePackageContents()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1182,7 +1220,7 @@ class Admintasks extends Model
     public function updatePackage()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1230,7 +1268,7 @@ class Admintasks extends Model
     public function changeAdminPassword()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -1272,7 +1310,7 @@ class Admintasks extends Model
     public function createAdminAccount()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
 
             $splitHeader = explode(":", $header['gnice-authenticate']);
@@ -1337,17 +1375,17 @@ class Admintasks extends Model
         return $result;
     }
 
-    
+
 
     public function fetchBannerTypes()
     {
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-                $this->db->query("SELECT * FROM banner_types WHERE status='1'");
-                $row = $this->db->resultSet();
-                $result['data'] = $row;
-                $result['status'] = '1';
+            $this->db->query("SELECT * FROM banner_types WHERE status='1'");
+            $row = $this->db->resultSet();
+            $result['data'] = $row;
+            $result['status'] = '1';
         } else {
             $result['message'] = 'invalid request';
             $result['status'] = '0';
@@ -1360,7 +1398,7 @@ class Admintasks extends Model
     {
 
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -1394,7 +1432,7 @@ class Admintasks extends Model
     {
 
         $header = apache_request_headers();
-        $header = array_change_key_case($header,CASE_LOWER);
+        $header = array_change_key_case($header, CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $splitHeader = explode(":", $header['gnice-authenticate']);
             $token = $splitHeader[0];
@@ -1410,53 +1448,50 @@ class Admintasks extends Model
                 $max_resolution = null;
 
                 if (isset($_FILES['files'])) {
-                $original_image = getimagesize($_FILES['files']["tmp_name"][0]);
-                $image_width = $original_image[0];
-                $image_height = $original_image[1];
-                
-                if($recommended_width==$image_width){
-                    if($recommended_height==$image_height){
-                    $uploadImage = uploadMultiple('banner_','banners',4);
-                    $image = $uploadImage['imageUrl'];
-                     //print_r($_POST);exit;
-                     if($uploadImage['imageUrl']){
-                    $this->db->query("INSERT INTO banners (title, description, image, type, status) VALUES (:title, :description, :image,:type,:status)");
-                    $this->db->bind(':title', $title);
-                    $this->db->bind(':description', $description);
-                    $this->db->bind(':image', $image);
-                    $this->db->bind(':type', $banner_type);
-                    $this->db->bind(':status', $status);
+                    $original_image = getimagesize($_FILES['files']["tmp_name"][0]);
+                    $image_width = $original_image[0];
+                    $image_height = $original_image[1];
 
-                    if ($this->db->execute()) {
-                        $result['message'] = 'New Banner image uploaded successfully';
-                        $result['status'] = '1';
+                    if ($recommended_width == $image_width) {
+                        if ($recommended_height == $image_height) {
+                            $uploadImage = uploadMultiple('banner_', 'banners', 4);
+                            $image = $uploadImage['imageUrl'];
+                            //print_r($_POST);exit;
+                            if ($uploadImage['imageUrl']) {
+                                $this->db->query("INSERT INTO banners (title, description, image, type, status) VALUES (:title, :description, :image,:type,:status)");
+                                $this->db->bind(':title', $title);
+                                $this->db->bind(':description', $description);
+                                $this->db->bind(':image', $image);
+                                $this->db->bind(':type', $banner_type);
+                                $this->db->bind(':status', $status);
+
+                                if ($this->db->execute()) {
+                                    $result['message'] = 'New Banner image uploaded successfully';
+                                    $result['status'] = '1';
+                                } else {
+                                    $result['message'] = 'Banner creation failed';
+                                    $result['errors'] = $uploadImage['image_error'];
+                                    $result['status'] = '0';
+                                }
+                            } else {
+                                $result['message'] = 'Something went wrong!';
+                                $result['status'] = '0';
+                            }
                         } else {
-                            $result['message'] = 'Banner creation failed';
-                            $result['errors'] = $uploadImage['image_error'];
+                            $result['message'] = 'Image height does not match with recommended height';
                             $result['status'] = '0';
+                        }
+                    } else {
+                        $result['message'] = 'Image width does not match with recommended width';
+                        $result['status'] = '0';
                     }
-                     }else{
-                    $result['message'] = 'Something went wrong!';
-                    $result['status'] = '0';
-                     }
-                    
-                    }else{
-                    $result['message'] = 'Image height does not match with recommended height';
-                    $result['status'] = '0';
-                    }
-                }else{
-                    $result['message'] = 'Image width does not match with recommended width';
-                    $result['status'] = '0';
-                }
-                //print_r($original_image);
-                }else{
+                    //print_r($original_image);
+                } else {
                     $result['message'] = 'Please attach an image file';
                     $result['status'] = '0';
                 }
                 return $result;
                 exit;
-
-                
             } else {
                 $result['message'] = 'invalid token';
                 $result['status'] = '0';
