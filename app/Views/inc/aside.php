@@ -15,7 +15,7 @@
                                 </ul>
                 </li>
                
-                <li><a href="https://1.envato.market/DdLk5" target="_blank"><i class="sicon-star"></i>Buy Gnice!<span class="tip tip-hot">Hot</span></a></li>
+                <li><a href="#" target="_blank"><i class="sicon-star"></i>Buy Gnice!<span class="tip tip-hot">Hot</span></a></li>
 
             </ul>
         </nav>
@@ -161,40 +161,21 @@
                                 </ul>
                     </li>
                
-                    <li>
-                        <a href="#">Pages<span class="tip tip-hot">Hot!</span></a>
+                   
+                    <!-- <li><a href="blog.html">Blog</a>
                         <ul>
-                            <li><a href="cart.html">Shopping Cart</a></li>
-                            <li>
-                                <a href="#">Checkout</a>
-                                <ul>
-                                    <li><a href="checkout-shipping.html">Checkout Shipping</a></li>
-                                    <li><a href="checkout-shipping-2.html">Checkout Shipping 2</a></li>
-                                    <li><a href="checkout-review.html">Checkout Review</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="#" class="login-link">Login</a></li>
-                            <li><a href="forgot-password.html">Forgot Password</a></li>
+                            <li><a href="{{dirlocation}}contact">Blog Post</a></li>
                         </ul>
-                    </li>
-                    <li><a href="blog.html">Blog</a>
-                        <ul>
-                            <li><a href="single.html">Blog Post</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="#">Special Offer!<span class="tip tip-hot">Hot!</span></a></li>
-                    <li><a href="https://1.envato.market/DdLk5" target="_blank">Buy Porto!</a></li>
+                    </li> -->
+                   
+                    <!-- <li><a href="#">Special Offer!<span class="tip tip-hot">Hot!</span></a></li>
+                    <li><a href="https://1.envato.market/DdLk5" target="_blank">Buy Porto!</a></li> -->
                 </ul>
 
                 <ul class="mobile-menu">
-                    <li><a href="my-account.html">Track Order </a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="category.html">Our Stores</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="#">Help &amp; FAQs</a></li>
+                    <li><a href="{{dirlocation}}#">Blog</a></li>
+                    <li><a href="{{dirlocation}}contact">Contact Us</a></li>
+                    <li><a href="{{dirlocation}}about">About</a></li>
                 </ul>
             </nav><!-- End .mobile-nav -->
 

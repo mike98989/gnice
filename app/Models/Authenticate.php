@@ -47,7 +47,7 @@ class Authenticate extends Model
                 }
             } else {
                 $msg['status'] = '0';
-                $msg['msg'] = 'Email Address not found!';
+                $msg['msg'] = 'Email Address and passwords do not match. Please try again!';
             }
         } else {
             $msg['msg'] =  "invalid request";
@@ -313,6 +313,7 @@ class Authenticate extends Model
 
         $curl = curl_init();
         $reference = $_GET['reference'];
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . $reference,
             CURLOPT_RETURNTRANSFER => true,
@@ -347,15 +348,16 @@ class Authenticate extends Model
                     $this->db->bind(':email', $email);
                     $this->db->bind(':trans_date', $result['data']['transaction_date']);
                     $this->db->bind(':status', $result['data']['status']);
-                    if ($this->db->execute()) {
-                        //$update = $this->updateUserAccountType($email,'2');
-                    }
+                    $this->db->execute();
+                    // if ($this->db->execute()) {
+                    //     $update = $this->updateUserAccountType($email,'2');
+                    // }
 
-                    if ((isset($_GET['source'])) && ($_GET['source'] == 'browser')) {
+                    //if ((isset($_GET['source'])) && ($_GET['source'] == 'browser')) {
                         print_r(json_encode($result));
                         return;
-                    }
-                    header('location:https://gnice.com.ng/dashboard/transactionstatus?ref=' . $result['data']['reference']);
+                    //}
+                    //eader('location:https://gnice.com.ng/dashboard/transactionstatus?ref=' . $result['data']['reference']);
                 }
             //}
             //header('Location:http://localhost/gnice/transactionstatus');
@@ -388,7 +390,7 @@ class Authenticate extends Model
                         $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
                      <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
                      <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
-                     <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
+                     <img src='" . APP_URL . "/public/assets/images/gnice_logo.png' style='height:70%'>
 
                      </div>
                      <div style='background:#fff;padding:10px'>
@@ -504,7 +506,7 @@ class Authenticate extends Model
                     $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
                     <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
                     <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
-                    <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
+                    <img src='" . APP_URL . "/public/assets/images/gnice_logo.png' style='height:70%'>
 
                     </div>
                     <div style='background:#fff;padding:10px'>
@@ -745,17 +747,17 @@ class Authenticate extends Model
                 $fullname = trim($_POST['fullname']);
                 $phone = trim($_POST['phone']);
                 $state = trim($_POST['state']);
-                $uploader = uploadMultiple('pro', 'products', 2);
+                //$uploader = uploadMultiple('pro', 'products', UPLOAD_SIZE_PROFILE_IMG);
                 //Filter sanitize all input as string to remove all unwanted scripts and tags
 
                 if (!(empty($email) || empty($seller_id) || empty($fullname) || empty($phone) || empty($state))) {
                     $is_email_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
                     if ($is_email_valid == true) {
                         //get renamed pictures from helper functions
-                        $image = $uploader['imageUrl'];
+                        //$image = $uploader['imageUrl'];
 
                         // $product_code = rand(1000000, 100000000);
-                        $_POST['image'] = $image;
+                        //$_POST['image'] = $image;
                         // $_POST['product_code'] = rand(1000000, 100000000);
                         $data = filter_var_array($_POST);
                         $data = array_map('trim', array_filter($data));
@@ -820,9 +822,10 @@ class Authenticate extends Model
             $token = filter_var($header['gnice-authenticate']);
             $verifyToken = $this->verifyToken($token, 'users');
             if ($verifyToken) {
-                $uploader = uploadMultiple('profile', 'profile', 2);
-                $image = $uploader['imageUrl'];
-                if (isset($image) && strlen($image) > 0) {
+                $uploader = uploadMultiple('profile', 'profile', UPLOAD_SIZE_PROFILE_IMG);
+                if((isset($uploader['imageUrl']))&&($uploader['imageUrl']!='')){
+                //if (isset($image) && strlen($image) > 0) {
+                    $image = $uploader['imageUrl'];
                     $this->db->query("UPDATE users SET image = :image WHERE email = :email AND status = 1");
                     $this->db->bind(':image', $image);
                     $this->db->bind(':email', $verifyToken->email);
@@ -830,19 +833,20 @@ class Authenticate extends Model
                         $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
                         $this->db->bind(':email', $verifyToken->email);
                         if ($this->db->execute()) {
-                            $this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
-                            $this->db->bind(':email', $verifyToken->email);
+                            //$this->db->query('SELECT * FROM users WHERE email= :email AND status=1');
+                            //$this->db->bind(':email', $verifyToken->email);
                             $row = $this->db->singleResult();
                             $row->seller_account_details = $this->getUserAccountType($row->account_type);
                             $result['data'] = $row;
                             $result['message'] = 'profile picture update successfully';
                             $result['status'] = '1';
                             $result['errors'] = $uploader['image_error'];
-                        } else {
-                            $result['message'] = 'profile picture update failed';
-                            $result['status'] = '0';
-                            $result['errors'] = $uploader['image_error'];
-                        }
+                        } 
+                        //else {
+                        //     $result['message'] = 'profile picture update failed';
+                        //     $result['status'] = '0';
+                        //     $result['errors'] = $uploader['image_error'];
+                        // }
                     } else {
                         $result['message'] = 'select a picture';
                         $result['status'] = '0';
@@ -944,7 +948,7 @@ class Authenticate extends Model
                     $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
                      <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
                      <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
-                     <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
+                     <img src='" . APP_URL . "/public/assets/images/gnice_logo.png' style='height:70%'>
 
                      </div>
                      <div style='background:#fff;padding:10px'>
@@ -1074,8 +1078,7 @@ class Authenticate extends Model
                 $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
                      <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
                      <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
-                     <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
-
+                     <img src='". APP_URL . "/public/assets/images/gnice_logo.png' style='height:70%'>
                      </div>
                      <div style='background:#fff;padding:10px'>
                      <div style='text-align:left;font-size:14px;padding:0 20px'>
@@ -1130,7 +1133,7 @@ class Authenticate extends Model
                 $html_message = "<div style='background:#C1E4FF;width:100%;padding:0;margin:0;padding:30px'>
                      <div style='margin:0 auto;width:40%;min-width:300px;float:none;'>
                      <div style='height:45px;background:#DEDEDE;padding:5px 25px; text-align:left'>
-                     <img src='" . APP_URL . "public/assets/images/gnice_logo.png' style='height:70%'>
+                     <img src='" . APP_URL . "/public/assets/images/gnice_logo.png' style='height:70%'>
 
                      </div>
                      <div style='background:#fff;padding:10px'>

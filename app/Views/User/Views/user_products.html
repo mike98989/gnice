@@ -34,14 +34,14 @@
                 src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
             </div>
           </div>
-          <div class="card-footer  d-flex justify-content-between">
+          <div class="card-footer" style="text-align: right">
             <span>See Details</span>
             <button class="btn btn-danger btn-sm" ng-click="delete_product(sellerProduct,$index)"><i
                 class="fa fa-times"></i></button>
-            <button class="btn btn-info btn-sm"
-              ng-click="localStorage_save('productDetails',sellerProduct,'edit_product')"><i
-                class="fa fa-edit"></i></button>
-            <button class="btn btn-warning btn-sm"><i class="fa fa-times"></i></button>
+            <button class="btn btn-info btn-sm" 
+              ng-click="localStorage_save('productDetails',sellerProduct,'edit_product')">
+              <i class="fa fa-edit"></i></button>
+            
           </div>
 
         </div>

@@ -45,8 +45,16 @@ module.controller("productController", [
     };
 
     $scope.add_product = function () {
+      if($scope.input_files_values.length==0){
+        alert("Please select an image file");
+        return;
+      }
+
       $(".loader").show();
       var formData = new FormData($("#add_product")[0]);
+      for(a=0;a<$scope.input_files_values.length;a++){
+        formData.append('files['+a+']', $scope.input_files_values[a]);
+      }
       $.ajax({
         url: $scope.dirlocation + "api/add_product",
         type: "POST",
@@ -59,7 +67,7 @@ module.controller("productController", [
         crossDomain: true,
         processData: false,
         success: function (answer) {
-          //alert(JSON.stringify(answer));
+          alert(JSON.stringify(answer));
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -320,6 +328,33 @@ module.controller("productController", [
         },
       });
     };
+
+
+    $scope.attach_image = function (input) {
+      for(var a=0;a<input.files.length;a++){
+        $scope.input_files_values.push(input.files[a]);
+        $scope.appendDataUrl(input.files[a],a);
+      }
+      //console.log($scope.input_files_values);
+    };
+
+    
+    $scope.delete_product_image = function(index){
+      $scope.input_array_values.splice(index,1);
+      $scope.input_files_values.splice(index,1);
+      console.log($scope.input_files_values);
+    }
+
+    $scope.appendDataUrl = function (filename,loopid){
+
+      let reader = new FileReader();
+      reader.readAsDataURL(filename);
+        reader.onload = function (e) {
+          $scope.input_array_values.push(e.target.result);
+          $scope.$apply();
+        };
+        
+    }
 
     $scope.onCategoryValueChange = function (value) {
       let objectval = JSON.parse(value);

@@ -88,7 +88,7 @@
 								<div class="col-6 col-sm-4 col-md-3" ng-repeat="product in products | limitTo:50:10 | filter : all ">
 									<div class="product-default inner-quickview inner-icon" style="background-color: #fff;border-radius:10px;">
 										<figure style="padding:0;">
-											<a href="#" ng-init="img = product.image.split(',')">
+											<a href="{{dirlocation}}product/{{product.name.split(' ').join('-')}}/{{product.product_code}}" ng-init="img = product.image.split(',')">
 												<div style="height:130px;overflow:hidden">
 												<img  style="width: 100%!important; border-top-right-radius: 10px; border-top-left-radius: 10px; " src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
 											</div>
@@ -205,7 +205,7 @@
 	
 						</div>
 						</div><!-- End .col-lg-9 -->
-					<?php require_once './app/views/Inc/aside.php';?>
+					<?php require_once './app/Views/inc/aside.php';?>
 					</div><!-- End .row -->
 				</div><!-- End .container -->
 			</main><!-- End .main -->

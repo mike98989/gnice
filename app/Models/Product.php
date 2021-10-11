@@ -10,7 +10,7 @@ class Product extends Model
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
             $this->db
-                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as registered_date,
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
@@ -49,7 +49,7 @@ class Product extends Model
             //             WHERE saved_products.user_id=:user_id AND saved_products.status='1'  ORDER BY products.id DESC");
 
             $this->db
-                ->query("SELECT saved_products.*, products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen FROM saved_products INNER JOIN products ON saved_products.product_id= products.id LEFT JOIN users ON users.seller_id = products.seller_id  WHERE saved_products.user_id=:user_id");
+                ->query("SELECT saved_products.*, products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as registered_date FROM saved_products INNER JOIN products ON saved_products.product_id= products.id LEFT JOIN users ON users.seller_id = products.seller_id  WHERE saved_products.user_id=:user_id");
             $this->db->bind(':user_id', $user_id);
             if ($this->db->resultSet()) {
                 $result['data'] = $this->db->resultSet();
@@ -104,16 +104,17 @@ class Product extends Model
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $uploader = uploadMultiple('pro', 'products', 2);
+            $uploader = uploadMultiple('pro', 'products', UPLOAD_SIZE_PRODUCT_IMG);
+            //print_r($uploader);exit;
+            if((isset($uploader['imageUrl']))&&($uploader['imageUrl']!='')){
             //Filter sanitize all input as string to remove all unwanted scripts and tags
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             //get renamed pictures from helper functions
             $image = $uploader['imageUrl'];
             // $product_code = rand(1000000, 100000000);
             $_POST['image'] = $image;
             $_POST['product_code'] = rand(1000000, 100000000);
-            $_POST['date_added'] = date('Y-m-d');
+            $_POST['date_added'] = date('Y-m-d H:i:s');
             $data = filter_var_array($_POST);
             $data = array_map('trim', array_filter($data));
             $excluded = ['files'];
@@ -143,14 +144,25 @@ class Product extends Model
             if ($this->db->execute()) {
                 $result['message'] = 'product added successfully';
                 $result['status'] = '1';
-                $result['errors'] = $uploader['image_error'];
+                if(isset($uploader['image_error'])){
+                $result['errors'] = $uploader['image_error'];    
+                }
+                
             } else {
                 $result['message'] = 'create product failed';
                 $result['status'] = '0';
-                $result['errors'] = $uploader['image_error'];
+                if(isset($uploader['image_error'])){
+                $result['errors'] = $uploader['image_error'];    
+                }
+                
                 //return false;
             }
-            return $result;
+            
+        }else{
+                $result['status'] = '0';
+                $result['message'] = "Error ".$uploader['image_error'];   
+        }
+        return $result;
         }
     }
 
@@ -391,7 +403,7 @@ class Product extends Model
             $brand = filter_var($_GET['brand']);
             $product_code = filter_var($_GET['product_code']);
             $this->db
-                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as registered_date,
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
@@ -640,7 +652,7 @@ class Product extends Model
         $seller_id = trim(filter_var($seller_id, FILTER_SANITIZE_STRING));
         //$this->db->query("SELECT * FROM products WHERE seller_id = :seller_id AND status=1 ORDER BY id DESC");
         $this->db
-                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,
+                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as registered_date,
                         category.title as productCategory,
                         sub_category.title as productSubCategory
                         FROM products
@@ -671,6 +683,7 @@ class Product extends Model
         $message = trim($_POST['message']);
         $date = date("Y-m-d H:i:s");
         $_POST['date'] = $date;
+        $_POST['status'] = '1';
         $product_code = $_POST['product_code'];
         $seller_id = $_POST['seller_id'];
 
@@ -700,11 +713,11 @@ class Product extends Model
                         $result['status'] = '0';
                     }
                 } else {
-                    $result['error_email'] = 'Please enter a  valid email';
+                    $result['message'] = 'Please enter a  valid email';
                     $result['status'] = '0';
                 }
             } else {
-                $result['error'] = 'All fields are required';
+                $result['message'] = 'All fields are required';
                 $result['status'] = '0';
             }
             return $result;
@@ -767,7 +780,7 @@ class Product extends Model
 
                 //get renamed pictures from helper functions
                 if (isset($_FILES['files'])) {
-                    $uploader = uploadMultiple('pro', 'products', 2);
+                    $uploader = uploadMultiple('pro', 'products', UPLOAD_SIZE_PRODUCT_IMG);
                     $image = $uploader['imageUrl'];
 
                     // $product_code = rand(1000000, 100000000);

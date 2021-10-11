@@ -1,7 +1,9 @@
 <?php
-
+// if($_SERVER['HTTPS']!='on') {
+// $redirect= 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+// header('Location:'.$redirect);
+// }
 //! require_once "./bootstrap.php";
-
 require_once './app/Config/Config.php';
 
 require_once "./app/helpers/functions.php";

@@ -13,9 +13,8 @@
 
     <title><?php echo APP_NAME;?></title>
 
-    <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto - Bootstrap eCommerce Template" />
-    <meta name="author" content="SW-THEMES" />
+    <meta name="keywords" content="<?php echo APP_KEYWORD;?>" />
+    <meta name="description" content="<?php echo APP_DESCRIPTION;?>" />
     <meta name="google-signin-client_id" content="115492595952-2hub4c8ls0p61v5t5nhfpb41tbhojbb3.apps.googleusercontent.com">
 
 
@@ -47,8 +46,8 @@
 
     <!-- Plugins CSS File -->
     <!--     Fonts and icons     -->
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
-   
+    <!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
+    -->
 
     <link
       rel="stylesheet"

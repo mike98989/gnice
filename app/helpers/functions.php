@@ -251,7 +251,7 @@ function uploadMultiple($prefix, $location, $size)
     // return implode(',',$uploaded);
     $result['image_error'] = implode(',', $failed);
     $result['imageUrl'] = implode(',', $uploaded);
-
+    
     // return $result;
     return $result;
 }
