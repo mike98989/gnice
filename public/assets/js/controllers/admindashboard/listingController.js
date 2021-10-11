@@ -93,12 +93,13 @@ module.controller("listingController", [
     };
 
     $scope.enable_or_disable_listing = function (code, listing, index) {
+      alert('got here');
       var formData = new FormData();
 
       formData.append("status", code);
       formData.append("product_code", listing.product_code);
-      $('#loader_'+listing.id).show();
-      $('.icon_'+listing.id).hide();
+      $('.loader_listing_'+listing.id).show();
+      $('.icon_listing_'+listing.id).hide();
       $.ajax({
         url: $scope.dirlocation + "adminapi/disable_enable_ads",
         data: formData,
@@ -115,8 +116,8 @@ module.controller("listingController", [
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
 
-          $('#loader_'+listing.id).hide(500);
-          $('.icon_'+listing.id).show();
+          $('.loader_listing_'+listing.id).hide(500);
+          $('.icon_listing_'+listing.id).show();
           if (msg.status == "1") {
             
             listing.status = code;
@@ -146,5 +147,28 @@ module.controller("listingController", [
     $scope.append_modal_value = function (value) {
       $scope.listingValue = value;
     };
+    $scope.get_product_reviews = function(product_id){
+      //alert(product_id);
+      $.ajax({
+        url: $scope.dirlocation + "api/get_product_reviews?id="+product_id,
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers: { "gnice-authenticate": "gnice-web" },
+        processData: false,
+        success: function (result) {
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+          if(msg.status=='1'){
+            $scope.product_reviews= msg.data;
+            $scope.calculate_average_reviews(msg.data);
+            $scope.$apply();
+          }
+          //alert($localStorage.fb_data);return
+        },
+      });
+    }
   },
 ]);

@@ -17,7 +17,7 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/admin-assets/css/style.css">
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="<?php echo APP_URL; ?>/public/assets/images/icons/favicon.ico" />
+  <link rel="shortcut icon" href="<?php echo APP_URL; ?>/public/assets/images/icons/gnice.ico" />
   <link href="<?php echo APP_URL;?>/public/assets/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
 </head>

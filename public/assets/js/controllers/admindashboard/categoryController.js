@@ -104,7 +104,7 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-         
+         console.log(answer);
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -126,7 +126,7 @@ module.controller("categoryController", [
     };
     $scope.update_category = function (id) {
       $(".edit_"+ id).show(500);
-      $(".icon_"+ id).hide();
+      $(".icon_edit_"+ id).hide();
       
       var formData = new FormData($("#updateCategory")[0]);
       $.ajax({
@@ -139,14 +139,14 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          console.log(result);
+          console.log(answer);
 
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
          
           $(".edit_"+ id).hide(500);
-          $(".icon_"+ id).show();
+          $(".icon_edit_"+ id).show();
          
           if (msg.status == "1") {
            
@@ -163,10 +163,18 @@ module.controller("categoryController", [
         },
       });
     };
-    $scope.update_sub_category = function (id, index) {
-      $(".sub_edit_loader_"+ id).show(500);
-      $(".icon_"+ id).hide();
+    $scope.localStorage_get = function (key) {
+      $scope[key] = $localStorage[key];
+    };
+    $scope.update_sub_category = function (subCat, $index) {
+      let id = subCat.sub_id;
+      console.log(subCat.sub_id);
+      console.log($index);
+      $(".edit_sub_"+ id).show(200);
+      $(".icon_sub_"+ id).hide(100);
+     
       var formData = new FormData($("#update_sub_category_" + id)[0]);
+      $(".result-s"+ id).show();
       $.ajax({
         url: $scope.dirlocation + "adminapi/update_sub_category",
         type: "POST",
@@ -181,27 +189,69 @@ module.controller("categoryController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          $(".sub_edit_loader_"+ id).hide(500);
-          $(".icon_"+ id).show(100);
+          $(".edit_sub_"+ id).hide(500);
+          $(".icon_sub_"+ id).show(100);
           if (msg.status == "1") {
-           
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
+         
+          let category = JSON.parse(localStorage.getItem('ngStorage-catInfo'));
+          
+          // category.filter((e)=>{
+          //   return e.sub_id == id
+          //   console.log(e);
+          // })
+          // for(let i = 0; i < category.subcategory.length; i++){
+            
+          //   if(element.sub_id == id){
+
+          //     category.subcategory.split(i, 1);
+          //     element.title = msg.title;
+  
+          //     if(msg.image != ''){
+          //       element.image = msg.image;
+          //     }
+  
+          //     console.log(category.subcategory);
+  
+          //     }
+          // }
+
+          category.subcategory.forEach(element => {
+
+
+            if(element.sub_id == id){
+
+             let index =  category.subcategory.indexOf(element);
+
+             element.title = msg.title;
+             
+             if(msg.image != ''){
+               element.image = msg.image;
+              }
+            category.subcategory.splice(index, 1, element);
+            }
+          });
+          
+          // localStorage.setItem('ngStorage-catInfo',JSON.stringify(category));
+          $localStorage["catInfo"] = category;
+          $scope.$apply();
+            $(".result-s").html(msg.message);
+            $(".result-s").addClass("alert alert-info");
+            $(".result-s").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              $(".result-s").hide("500");
+              $(".result-s").removeClass("alert alert-info");
             }, 3000);
             $("#update_sub_category_" + id)[0].reset();
+            location.reload(true);
           } else {
-            $(".result").html(msg.message);
-            $(".result").addClass("alert alert-info");
-            $(".result").show(500);
+            $(".result-s").html(msg.message);
+            $(".result-s").addClass("alert alert-info");
+            $(".result-s").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
-              $(".result").removeClass("alert alert-info");
+              $(".result-s").hide("500");
+              $(".result-s").removeClass("alert alert-info");
             }, 3000);
           }
         },
@@ -307,7 +357,7 @@ module.controller("categoryController", [
     };
     $scope.enable_or_disable_cat = function (code, cat) {
       $(".cat_loader_"+ cat.id).show(500);
-      $(".icon_"+ cat.id).hide(100);
+      $(".icon_toggle_"+ cat.id).hide(100);
       
       var formData = new FormData();
      
@@ -330,7 +380,7 @@ module.controller("categoryController", [
           var msg = angular.fromJson(parsed);
          
           $(".cat_loader_"+ cat.id).hide(500);
-          $(".icon_"+ cat.id).show(100);
+          $(".icon_toggle_"+ cat.id).show(100);
           if (msg.status == "1") {
             
             $(".result").html(msg.message);
@@ -357,5 +407,11 @@ module.controller("categoryController", [
         },
       });
     };
+
+    $scope.localStorage_get = function (key) {
+      $scope[key] = $localStorage[key];
+    };
+
   },
+  
 ]);

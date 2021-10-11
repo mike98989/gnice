@@ -12,8 +12,8 @@
     <p class="result text-center" style="display:none;"></p>
   </aside>
 
-  <div class="row" ng-init="get_all_products()">
-    <div class="col-12 grid-margin">
+  <div class="row" ng-init="get_all_products()" >
+    <div class="col-12 grid-margin rounded" >
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">All listings</h4>
@@ -27,7 +27,7 @@
             <form class="d-flex align-items-center h-100" action="#">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <i class="input-group-text border-0 mdi mdi-account-search"></i>
+                  <i class="input-group-text border-0 mdi mdi-file-find"></i>
                 </div>
                 <input type="text" class="form-control" placeholder="search ads "
                   ng-model="listingSearch">
@@ -63,10 +63,10 @@
                     {{listing.name}}
                     <span ng-switch="listing.status">
                       <span ng-switch-when="1">
-                        <i class="mdi mdi-lock-open text-success"></i>
+                        <i class="mdi mdi-check-circle text-success"></i>
                       </span>
                       <span ng-switch-when="0">
-                        <i class="mdi mdi-lock text-warning"></i>
+                        <i class="mdi mdi-close-circle text-danger"></i>
                       </span>
                       <span ng-switch-default>
                       </span>
@@ -88,19 +88,19 @@
                     <span ng-switch="listing.status" class="mr-1" data-toggle="modal"
                       data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
                       <span ng-switch-when="1">
-                        <button class="btn btn-sm btn-warning">
-                          <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                        <button class="btn btn-sm btn-secondary">
+                          <span class="spinner-border text-light spinner-border-sm loader_listing_{{ listing.id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ listing.id }}"></i>Disable
+                          <i class="mdi mdi-toggle-switch-off mr-1 icon_listing_{{ listing.id }}"></i>Hide
                         </button>
                       </span>
                       <span ng-switch-when="0">
                         <button class="btn btn-sm btn-success">
-                          <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                          <span class="spinner-border text-light spinner-border-sm loader_listing_{{ listing.id }}" role="status" style="display: none;">
                             <span class="sr-only">...loading</span>
                           </span>
-                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ listing.id }}"></i>Enable
+                          <i class="mdi mdi-toggle-switch mr-1 icon_listing_{{ listing.id }}"></i>Show
                         </button>
                       </span>
                       <span ng-switch-default>
@@ -112,11 +112,11 @@
 
                     <button href="#" class="btn btn-sm btn-info"
                       ng-click="localStorage_save('adsInfo',listing,'single_listing')"">
-                       <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
+                       <span class="spinner-border text-light spinner-border-sm loader_listing_{{ listing.id }}" role="status" style="display: none;">
                         <span class="sr-only">...loading</span>
                       </span>
 
-                      <i class=" mdi mdi-eye-check mr-1 icon_{{ listing.id }}"></i> View
+                      <i class=" mdi mdi-eye-check mr-1 icon_listing_{{ listing.id }}"></i> View
                     </button>
 
                     <!-- delete user account control -->
@@ -185,10 +185,10 @@
                           You are about to
                           <span ng-switch="info.status">
                             <span ng-switch-when="1">
-                              <span> disable </span>
+                              <span> hide </span>
                             </span>
                             <span ng-switch-when="0">
-                              <span> enable </span>
+                              <span> show </span>
                             </span>
                             <span ng-switch-default>
                             </span>
@@ -203,15 +203,15 @@
                         <!-- call disable_enable() -->
                         <span ng-switch="info.status" class="mr-1">
                           <span ng-switch-when="1">
-                            <button ng-click="enable_or_disable_listing(0,info, $index)" class="btn btn-warning btn-sm"
+                            <button ng-click="enable_or_disable_listing(0,info, $index)" class="btn btn-secondary btn-sm"
                               data-dismiss="modal">
-                              Disable
+                              Hide
                             </button>
                           </span>
                           <span ng-switch-when="0">
                             <button ng-click="enable_or_disable_listing(1,info, $index)" class="btn btn-success btn-sm"
                               data-dismiss="modal">
-                              Enable
+                              Show
                             </button>
                           </span>
                           <span ng-switch-default>

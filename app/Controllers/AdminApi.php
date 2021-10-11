@@ -419,7 +419,21 @@ class Adminapi extends Controller
             exit();
         }
     }
-
+    public function fetch_all_abuse_reports()
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Admintasks')->getAllAbuseReports();
+            header('Content-Type: application/json');
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
+    
+    
     public function delete_user_account_and_ads()
     {
         $header = apache_request_headers();

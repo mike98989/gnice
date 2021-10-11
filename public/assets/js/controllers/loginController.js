@@ -203,6 +203,9 @@ module.controller("loginController", [
             $localStorage["user_token"] = msg.token;
             window.location.href =
               datagrab.completeUrlLocation + "admindashboard";
+
+              alert(JSON.stringify($localStorage['user_data']));
+              alert(JSON.stringify($localStorage['user_token']));
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);

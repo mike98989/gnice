@@ -1,4 +1,4 @@
-<div class="content-wrapper" ng-controller="listingController">
+<div class="content-wrapper" >
 
   <div class="page-header">
     <h3 class="page-title">
@@ -7,9 +7,9 @@
       </span> Dashboard
     </h3>
 
-    
-      <p class="alert alert-info" style="display: none;"></p>
-    
+
+    <p class="alert alert-info" style="display: none;"></p>
+
   </div>
 
   <div class="d-flex justify-content-center align-items-center mb-2">
@@ -17,7 +17,7 @@
       <span class="sr-only">...loading</span>
     </div>
   </div>
-  
+
   <div class="row" ng-init="home_stats()">
     <div class="col-md-4 stretch-card grid-margin" ng-repeat="ads in statistics.ads ">
       <div class="card bg-gradient-danger card-img-holder text-white">
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 stretch-card grid-margin" >
+    <div class="col-md-4 stretch-card grid-margin">
       <div class="card bg-gradient-info card-img-holder text-white">
         <div class="card-body">
           <img src="{{dirlocation}}/public/admin-assets/images/dashboard/circle.png" class="card-img-absolute"
@@ -39,10 +39,11 @@
           <h4 class="font-weight-normal mb-5">Packages with number of users <i
               class="mdi mdi-account-multiple-outline  mdi-24px float-right"></i>
           </h4>
-          <div class="d-flex justify-content-between align-content-end" ng-repeat="package_seller in statistics.packages_and_sellers">
+          <div class="d-flex justify-content-between align-content-end"
+            ng-repeat="package_seller in statistics.packages_and_sellers">
 
             <h6 ng-if="package_seller.title != null ">{{ package_seller.title }}</h6>
-           
+
             <h4 ng-if="package_seller.title != null ">{{ package_seller.number_of_sellers }}</h4>
           </div>
         </div>
@@ -53,8 +54,7 @@
         <div class="card-body">
           <img src="{{dirlocation}}/public/admin-assets/images/dashboard/circle.png" class="card-img-absolute"
             alt="circle-image" />
-          <h5 class="font-weight-normal">Total Transactions<i
-              class="mdi mdi-cash-multiple mdi-24px float-right"></i>
+          <h5 class="font-weight-normal">Total Transactions<i class="mdi mdi-cash-multiple mdi-24px float-right"></i>
           </h5>
           <h3 class="mb-0"> {{ item.total_amount | currency :'NGN '}}</h3>
           <small class="card-text">Total number of transactions : {{ item.total_records }}</small>
@@ -63,34 +63,44 @@
 
           <div ng-repeat="success in statistics.success_transactions" class="mt-4">
             <h4 class="font-weight-normal"> Success Transactions
-          </h4>
+            </h4>
             <h5 class="mb-0"> {{ success.total_success_amount | currency :'NGN '}}</h5>
-            <small class="card-text">Total number of successful transactions : {{ success.total_success_records }}</small>
+            <small class="card-text">Total number of successful transactions : {{ success.total_success_records
+              }}</small>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row" ng-init="get_all_products()">
-    <div class="col-12 grid-margin">
+  <!-- abuse -->
+  <div class="row" ng-init="fetch_all_abuse_reports()">
+    <div class="col-10 grid-margin">
+      
       <div class="card">
+        
         <div class="card-body">
-          <h4 class="card-title">All listings</h4>
+          <h4 class="card-title">All Complaints</h4>
+
 
           <div class="d-flex justify-content-center align-items-center mb-2">
-            <div class="spinner-border text-info spinner-border-sm" role="status" id="listing_loader" style="display: none;">
+            <div class="spinner-border text-info spinner-border-sm" role="status" id="abuse_loader"
+              style="display: none;">
               <span class="sr-only">...loading</span>
             </div>
           </div>
 
+          <aside class="d-flex justify-content-end">
+            <p class="result text-center" style="display:none;"></p>
+          </aside>
+          
+          
           <div class="search-field d-none d-md-block my-3">
             <form class="d-flex align-items-center h-100" action="#">
               <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
-                  <i class="input-group-text border-0 mdi mdi-account-search"></i>
+                  <i class="input-group-text border-0 mdi mdi-file-find"></i>
                 </div>
-                <input type="text" class="form-control bg-transparent border-0" placeholder="search ads "
-                  ng-model="listingSearch">
+                <input type="text" class="form-control bg-transparent border-0" placeholder="search complaints " ng-model="abuseSearch">
               </div>
             </form>
           </div>
@@ -101,132 +111,79 @@
                   <th>#</th>
                   <th>Image</th>
                   <th>
-                    Name<br /><span class="text-muted" style="font-size: 12px">unique code</span>
+                    Ads Name <br>
+                    <small>status</small>
+                    
                   </th>
                   <th>
-                    Category <br /><span class="text-muted" style="font-size: 12px">subcategory</span>
+                    Seller
                   </th>
-                  <th>Created at</th>
-                  <th>Seller</th>
+                  <th> Complaints</th>
                   <th>Control</th>
                 </tr>
               </thead>
               <tbody>
-                <tr dir-paginate="listing in all_listings | filter:listingSearch | itemsPerPage: pageSize"
-                  current-page="currentPage" ng-cloak>
+                <tr dir-paginate="abuse in all_abuse | filter:abuseSearch | itemsPerPage: pageSize" current-page="currentPage" ng-cloak>
                   <td>{{($index +1) + (currentPage-1) * pageSize}}</td>
+
                   <td>
-                    <span ng-if="listing.image.length >0">
-                      
-                    <img ng-init=" img = listing.image.split(',')"
+                    <img ng-init=" img = abuse.product_image.split(',')"
                       src="{{dirlocation}}/public/assets/images/uploads/products/{{img[0]}}" class="mr-2" />
                     </span>
                   </td>
                   <td>
-                    {{listing.name}}
-                    <span ng-switch="listing.status">
+                    {{ abuse.product_name }}
+                    <span ng-switch="abuse.product_status">
                       <span ng-switch-when="1">
-                        <i class="mdi mdi-lock-open text-success"></i>
+                        <i class="mdi mdi-check-circle text-success"></i>
                       </span>
                       <span ng-switch-when="0">
-                        <i class="mdi mdi-lock text-warning"></i>
-                      </span>
-                      <span ng-switch-default>
-                      </span>
-                    </span>
-                    <br>
-                    <span class="text-muted" style="font-size: 12px">{{listing.product_code}}</span>
-                  </td>
-                  <td>
-                    {{listing.productCategory}}<br />
-                    <span style="font-size: 12px" class="text-muted">{{ listing.productSubCategory }}</span>
-                  </td>
-                  <td>{{listing.date_added }}</td>
-                  <td>
-                    {{listing.seller_fullname}} <br /><span class="text-muted" style="font-size: 12px">{{
-                      listing.seller_phone }}</span>
-                  </td>
-                  <td>
-                    <!-- toggle enable account buttons -->
-                    <span ng-switch="listing.status" class="mr-1" data-toggle="modal"
-                      data-target=".disable-listing-modal" ng-click="append_modal_info(listing)">
-                      <span ng-switch-when="1">
-                        <button class="btn btn-warning btn-sm">
-                          <span class="spinner-border text-light spinner-border-sm" role="status" id="loader_{{ listing.id }}" style="display: none;">
-                            <span class="sr-only">...loading</span>
-                          </span>
-                          <i class="mdi mdi-toggle-switch-off mr-1 icon_{{ listing.id }}" ></i>Disable
-                        </button>
-                      </span>
-                      <span ng-switch-when="0">
-
-                        <button class="btn btn-success btn-sm">
-                          <span class="spinner-border  text-light spinner-border-sm " role="status" id="loader_{{ listing.id }}" style="display: none;">
-                            <span class="sr-only">...loading</span>
-                          </span>
-                          <i class="mdi mdi-toggle-switch mr-1 icon_{{ listing.id }}"></i>Enable
-                        </button>
+                        <i class="mdi mdi-close-circle text-danger"></i>
                       </span>
                       <span ng-switch-default>
                         none
                       </span>
                     </span>
-
-                    <!-- view user profile details -->
-
+                  </td>
+                  <td>
+                    {{ abuse.seller_name }}
+                  </td>
+                  <td class="text-center">
+                    <span class="p-1 text-center text-white bg-danger rounded">
+                      {{ abuse.report_counts }}
+                    </span>
+                  </td>
+                  <td>
                     <button href="#" class="btn btn-info btn-sm"
-                      ng-click="localStorage_save('adsInfo',listing,'single_listing')" ng-controller="usersController">
+                      ng-click="localStorage_save('abuseInfo',abuse,'complaints')" ng-controller="usersController">
                       <i class=" mdi mdi-eye-check mr-1"></i> View
                     </button>
-
-                    <!-- delete user account control -->
-                    <view ng-if="admin_data.privilege == ultra" ng-controller="adminController">
-                      <button class="btn btn-sm btn-danger" data-toggle="modal" data-target=".delete-user-modal"
-                        ng-click="append_modal_info(listing)">
-                        <i class="mdi mdi-delete-forever mr-1"></i> Delete
+                    <span  ng-switch="abuse.product_status" data-toggle="modal"
+                      data-target=".disable-listing-modal" ng-click="append_modal_info(abuse)" class="mr-1">
+                      <span ng-switch-when="1">
+                      <button class="btn btn-secondary btn-sm">
+                        <span class="spinner-border text-light spinner-border-sm loader_abuse_{{ abuse.product_id }}" role="status"
+                          style="display: none;">
+                          <span class="sr-only">...loading</span>
+                        </span>
+                        <i class="mdi mdi-toggle-switch-off mr-1 icon_abuse_{{ abuse.product_id }}"></i> Hide
                       </button>
-                    </view>
+                      </span>
+                      <span ng-switch-when="0">
+                        <button class="btn btn-success btn-sm">
+                          <span class="spinner-border text-light spinner-border-sm loader_abuse_{{ abuse.product_id }}" role="status"
+                            style="display: none;">
+                            <span class="sr-only">...loading</span>
+                          </span>
+                          <i class="mdi mdi-toggle-switch mr-1 icon_abuse_{{ abuse.product_id }}"></i>Show
+                        </button>
+                        </span>
+                    </span>
                   </td>
+                  
                 </tr>
+
               </tbody>
-
-
-              <!-- delete ads modal -->
-              <div class="modal fade delete-user-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="card">
-
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p class=" text-center display-1 text-danger"><i class="mdi mdi-delete"></i></p>
-                        <p class="display-4 text-center">
-                          You are about to DETETE
-                          <span class="text-danger">
-                            {{ info.name | uppercase}}
-                          </span> FOREVER !
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-                        <!-- call delete function() -->
-                        <button ng-click="delete_user_account_and_ads(info.product_code)" class="btn btn-danger btn-sm"
-                          data-dismiss="modal">
-                          Delete ads !
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Cancel</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- end delete ads modal -->
-
               <!-- disable listing modal -->
               <div class="modal fade disable-listing-modal" id="exampleModalCenter" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -242,43 +199,45 @@
                       <div class="modal-body">
                         <p class=" text-center display-1 text-warning"><i class="mdi mdi-alert"></i></p>
                         <p class="display-4 text-center">
-                          You are about to
-                          <span ng-switch="info.status">
+                          You are about to 
+
+                          <span ng-switch="info.product_status">
                             <span ng-switch-when="1">
-                              <span> disable </span>
+                              <span> hide </span>
                             </span>
                             <span ng-switch-when="0">
-                              <span> enable </span>
+                              <span> show </span>
                             </span>
                             <span ng-switch-default>
                             </span>
                           </span>
+
                           <span class="text-info">
-                            {{ info.name | uppercase}}
+                            {{ info.product_name | uppercase}}
                           </span>
                         </p>
                       </div>
                       <div class="modal-footer">
 
-                        <!-- call disable_enable() -->
-                        <span ng-switch="info.status" class="mr-1">
+
+                        <span ng-switch="info.product_status" class="mr-1">
                           <span ng-switch-when="1">
-                            <button ng-click="enable_or_disable_listing(0,info, $index)" class="btn btn-warning btn-sm"
+                            <button ng-click="disable_abuse_listing(0,info, $index)" class="btn btn-secondary btn-sm"
                               data-dismiss="modal">
-                              Disable
+                              Hide
                             </button>
                           </span>
                           <span ng-switch-when="0">
-                            <button ng-click="enable_or_disable_listing(1,info, $index)" class="btn btn-success btn-sm"
+                            <button ng-click="disable_abuse_listing(1,info, $index)" class="btn btn-success btn-sm"
                               data-dismiss="modal">
-                              Enable
+                              Show
                             </button>
                           </span>
                           <span ng-switch-default>
                             none
                           </span>
                         </span>
-
+                        <!-- call disable_enable() -->
                         <button type="button" class="btn btn-light btn-sm " data-dismiss="modal"><i
                             class="mdi mdi-cancel mr-1"></i>Cancel</button>
                       </div>
@@ -295,8 +254,14 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- end abuse -->
 
 
 
-  <!-- content-wrapper ends -->
-  <!-- partial:partials/_footer.html -->
+
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->

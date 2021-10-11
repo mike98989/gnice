@@ -51,8 +51,9 @@ module.controller("homeController", [
     // };
     $scope.home_stats = function () {
       $(".result").hide();
-        alert('got here');
       $('#home_loader').show();
+      // alert('got here mobile');
+      // alert($scope.admin_token);
       $.ajax({
         url: $scope.dirlocation + "adminapi/home_statistics",
         type: "GET",
@@ -96,7 +97,7 @@ module.controller("homeController", [
     $scope.get_all_products = function () {
 
       $('#listing_loader').show(100);
-      alert('got here get 2');
+      // alert('got here get 2');
       $.ajax({
         url: $scope.dirlocation + "adminapi/get_all_products",
         type: "GET",
@@ -133,16 +134,98 @@ module.controller("homeController", [
         },
       });
     };
-    // $("body").delegate(".cbtn", "click", function (event) {
-    //   event.preventDefault();
-    //   var cids1 = $(this).attr("data-cids1");
-    //   var cids2 = $(this).attr("data-cids2");
-    //   var cids3 = $(this).attr("data-cids3");
-    //   $("#update").modal("show");
-    //   $("#id").val(cids1);
-    //   $("#titles").val(cids3);
-    //   $("#parent_id").val(cids2);
-    // });
+
+
+    $scope.fetch_all_abuse_reports = function () {
+
+      $('#abuse_loader').show(100);
+    
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/fetch_all_abuse_reports",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: {
+          "gnice-authenticate":
+            $scope.admin_token + ":email:" + $scope.admin_data.email,
+        },
+        processData: false,
+        success: function (result) {
+           console.log(result);
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+
+          $('#abuse_loader').hide(500);
+          if (msg.status == "1") {
+            $scope.all_abuse = msg.data;
+            $scope.notification = msg.msg;
+            $scope.status == msg.status;
+            $scope.$apply();
+          } else {
+            $(".loader").hide();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show();
+            setTimeout(() => {
+              $(".result").removeClass("alert alert-info");
+              $(".result").hide("500");
+            }, 3000);
+          }
+        },
+      });
+    };
+    $scope.disable_abuse_listing = function (code, abuse, index) {
+      alert('got here abuse 33');
+      var formData = new FormData();
+
+      formData.append("status", code);
+      formData.append("product_code", abuse.product_code);
+      $('.loader_abuse_'+ abuse.product_id).show();
+      $('.icon_abuse_'+abuse.product_id).hide();
+      $.ajax({
+        url: $scope.dirlocation + "adminapi/disable_enable_ads",
+        data: formData,
+        type: "POST",
+        async: true,
+        cache: false,
+        contentType: false,
+        headers: { "gnice-authenticate": $scope.admin_token },
+        processData: false,
+        success: function (result) {
+          console.log(result);
+          
+          var response = JSON.stringify(result);
+          var parsed = JSON.parse(response);
+          var msg = angular.fromJson(parsed);
+
+        $('.loader_abuse_'+ abuse.product_id).hide(500);
+       $('.icon_abuse_'+abuse.product_id).show(100);
+          if (msg.status == "1") {
+            abuse.product_status = code;
+            $scope.$apply();
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          } else {
+            $(".result").html(msg.message);
+            $(".result").addClass("alert alert-info");
+            $(".result").show(500);
+
+            setTimeout(() => {
+              $(".result").hide("500");
+              $(".result").removeClass("alert alert-info");
+            }, 3000);
+          }
+        },
+      });
+    };
 
 
 

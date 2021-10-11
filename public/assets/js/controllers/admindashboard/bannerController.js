@@ -188,7 +188,7 @@ module.controller("bannerController", [
     $scope.enable_or_disable_banner = function (code, banner, $index) {
       $(".banner_loader_"+ banner.banner_id).show(500);
       $(".icon_"+ banner.banner_id).hide(100);
-      alert('here');
+      
       var formData = new FormData();
 
       formData.append("status", code);
@@ -205,8 +205,6 @@ module.controller("bannerController", [
         processData: false,
         success: function (result) {
           console.log(result);
-          
-          alert(JSON.stringify(result));
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);

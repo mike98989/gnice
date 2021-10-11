@@ -43,7 +43,7 @@
 linear-gradient(
   rgba(0, 0, 250, 0.25), 
   rgba(125, 250, 250, 0.45)
-),
+);
 
 background-position: center;
 background-repeat: no-repeat;
