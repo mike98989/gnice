@@ -187,9 +187,15 @@
 
                   <label for="files[]">Category Image</label>
                   <input type="file" name="files[]" multiple class="form-control file-upload-info"
-                    placeholder="Upload Image">
+                    placeholder="Upload Image" id="files"
+                    onchange="angular.element(this).scope().show_image(event)">
                   <sup class="text-danger">*Only jpg and png are supported*</sup>
 
+                </div>    
+                <div class="form-group">
+                  <div class="preview d-flex flex-wrap flex-row justify-content-evenly">
+
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="title">Category</label>
