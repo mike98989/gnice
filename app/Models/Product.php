@@ -616,12 +616,12 @@ class Product extends Model
             //         }
 
             $this->db->query("SELECT *
-                        /* category.title AS productCategory, */
-                        /* sub_category.title AS productSubCategory */
-                        FROM products
-                        /* LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category */
-                        /* LEFT JOIN category ON category.id = products.category */
-                        WHERE status='1' AND ".$query." GROUP BY id");
+            /* category.title AS productCategory, */
+            /* sub_category.title AS productSubCategory */
+            FROM products
+            /* LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category */
+            /* LEFT JOIN category ON category.id = products.category */
+            WHERE status='1' AND ".$query." GROUP BY id");
             for ($b=0;$b<count($explode);$b++) {
             $this->db->bind(':search'.$b, '%'.$explode[$b].'%');
             $this->db->bind(':brand'.$b, '%'.$explode[$b].'%');

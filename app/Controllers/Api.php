@@ -652,6 +652,10 @@ class Api extends Controller
             exit;
         }
     }
+    
+    public function return_plain(){
+        return;
+    }
 
     public function message_product_seller()
     {

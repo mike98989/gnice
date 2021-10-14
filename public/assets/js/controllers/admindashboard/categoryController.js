@@ -108,11 +108,10 @@ module.controller("categoryController", [
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
-          console.log(result);
-
+          console.log(answer);
           $("#add_cat_loader").hide(500);
           if (msg.status == "1") {
-          
+            
             $(".result").html(msg.message);
             $(".result").show();
             $scope.get_all_cat_and_sub_cat();
