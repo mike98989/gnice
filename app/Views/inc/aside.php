@@ -1,5 +1,5 @@
 <div class="sidebar-overlay"></div>
-<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
+<!-- <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div> -->
 <aside class="sidebar-home col-lg-3 order-lg-first mobile-sidebar" ng-init="fetch_all_categories_and_sub_categories()">
     <div class="side-menu-wrapper text-uppercase mb-2 d-lg-block d-none" style="border-top:none;background-color: #fff;">
         <h2 class="side-menu-title bg-gray ls-n-25" style="padding-top:20px;margin-top:0">Browse Categories</h2>

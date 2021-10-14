@@ -99,18 +99,18 @@
               </div>
               <!-- End .header-search -->
 
-              <!-- <div class="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-3 ml-xl-5">
+              <div class="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-3 ml-xl-5">
                 
                 <i class="icon-email"></i>
-                <h6 class="pt-1 line-height-1">
-                  Call us now<a
-                    href="tel:#"
+                <h6 class="pt-3 line-height-1">
+              Email us now<a
+                    href="email"
                     class="d-block text-dark ls-10 pt-1"
-                    >+234 706 067 8275</a
+                    >gnice.market@gmail.com</a
                   >
                 </h6> 
               </div>
- -->
+ 
               
               <!-- End .header-contact -->
             <!-- End .header-right -->
