@@ -7,9 +7,7 @@
       Categories
     </h3>
   </div>
-  <aside class="d-flex justify-content-end">
-    <p class="alert alert-info result text-center" style="display: none"></p>
-  </aside>
+  
   <div class="d-flex justify-content-center align-items-center mb-2">
     <div class="spinner-border text-info spinner-border-sm" role="status" id="category_loader" style="display: none;">
       <span class="sr-only">...loading</span>
@@ -180,7 +178,7 @@
         <div class="card-body">
           <h4 class="card-title">Add new category</h4>
           <form id="addCategory" ng-submit="add_new_category()">
-
+            <div class="alert alert-info result" style="display: none;"></div>
             <div class="row">
               <div class="col-12">
                 <div class="form-group mt-2">

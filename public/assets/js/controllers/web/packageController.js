@@ -93,7 +93,13 @@ module.controller("packageController", [
       }
   
       $scope.choose_package = function(package){ 
+        if(package.package_id=='1'){
+          $scope.selectedOptionText="CONTINUE";
+        }else{
+          $scope.selectedOptionText="MAKE PAYMENT";
+        }
         $scope.selectedOption = package;  
+        window.scrollTo(0,document.body.scrollHeight+400);
         //alert($scope.selectedOption.package_id);
       }
 

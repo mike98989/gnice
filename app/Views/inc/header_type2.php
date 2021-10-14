@@ -12,8 +12,8 @@
 
 	<title>Gnice Market Place</title>
 
-	<meta name="keywords" content="Market place" />
-	<meta name="description" content="Gnice Market Place">
+	<meta name="keywords" content="<?php echo APP_KEYWORD;?>" />
+    <meta name="description" content="<?php echo APP_DESCRIPTION;?>" />
 	
 		
 	<!-- Favicon -->

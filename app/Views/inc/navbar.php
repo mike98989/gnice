@@ -5,15 +5,11 @@
         <div class="header-top bg-primary text-uppercase">
           <div class="container">
             <div class="header-left">
-
-            
-              <a href="index.html" class="logo">
+              <a href="<?php echo APP_URL;?>" class="logo">
                 <img src="<?php echo APP_URL;?>/public/assets/images/gnice_logo.png" style="width:40px;"/>
               </a>
               
               <span style="font-size:13px;display:none">GNICE MARKET PLACE </span>
-              
-           
               <!-- End .header-dropown -->
             </div>
             <!-- End .header-left -->
@@ -103,9 +99,9 @@
               </div>
               <!-- End .header-search -->
 
-              <div class="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-3 ml-xl-5">
+              <!-- <div class="header-contact d-none d-lg-flex align-items-center pr-xl-5 mr-3 ml-xl-5">
                 
-                <i class="icon-phone-2"></i>
+                <i class="icon-email"></i>
                 <h6 class="pt-1 line-height-1">
                   Call us now<a
                     href="tel:#"
@@ -114,7 +110,7 @@
                   >
                 </h6> 
               </div>
-
+ -->
               
               <!-- End .header-contact -->
             <!-- End .header-right -->

@@ -7,20 +7,20 @@
                 <div class="sidebar-menu">
                     <ul class="menu" style="padding-top:0;margin-top:0">
                         
-                        <li class="sidebar-item ">
+                        <li class="sidebar-item">
                             <a href="{{dirlocation}}" class='sidebar-link'>
                                 <i data-feather="home" width="20"></i>
                                 <span>Main Home</span>
                             </a>
                         </li>
-                        <li class="sidebar-item active ">
+                        <li class="sidebar-item" ng-class="{'active': menu_active == '1'}" ng-click="menu_active='1';hide_side_container()">
                             <a href="{{dirlocation}}dashboard/home" class='sidebar-link'>
                                 <i data-feather="home" width="20"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item" ng-class="{'active': menu_active == '2'}" ng-click="menu_active='2';hide_side_container()">
                             <a href="{{dirlocation}}dashboard/add_product" class='sidebar-link'>
                                 <i data-feather="layout" width="20"></i>
                                 <span>New Product</span>
@@ -28,14 +28,14 @@
 
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item" ng-class="{'active': menu_active == '3'}" ng-click="menu_active='3';hide_side_container()">
                             <a href="{{dirlocation}}dashboard/my_products" class='sidebar-link'>
                                 <i data-feather="layout" width="20"></i>
                                 <span>My Products</span>
                             </a>
 
                         </li>
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item" ng-class="{'active': menu_active == '4'}" ng-click="menu_active='4';hide_side_container()">
                             <a href="{{dirlocation}}dashboard/messages" class='sidebar-link'>
                                 <i data-feather="layout" width="20"></i>
                                 <span>Client's Response</span>
@@ -43,20 +43,18 @@
 
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item" ng-class="{'active': menu_active == '5'}" ng-click="menu_active='5';hide_side_container()">
                             <a href="{{dirlocation}}dashboard/profile" class='sidebar-link'>
                                 <i data-feather="layout" width="20"></i>
                                 <span>My Profile</span>
                             </a>
-
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item">
                             <a href="#" class='sidebar-link' ng-click="logout()">
                                 <i data-feather="layout" width="20"></i>
                                 <span>Logout</span>
                             </a>
-
                         </li>
 
 

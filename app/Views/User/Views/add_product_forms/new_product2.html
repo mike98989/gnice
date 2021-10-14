@@ -1,7 +1,8 @@
 <div class="form-group" ng-show="selected_subcategory.sub_id>43">
-    <select required="" ng-disabled="selected_subcategory.sub_id<44" class="form-control" name="property_type">
+    
       <label>Select Property Type</label>
-      <option selected="" value="">Property Type</option>
+      <select required="" ng-disabled="selected_subcategory.sub_id<44" class="form-control" name="property_type">
+      <option value="">Select Property Type</option>
       <option  ng-repeat="Property in  requiredProperty"  value="{{ Property.type }}"> {{ Property.type }} </option>
      </select>
     </div>

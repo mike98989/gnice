@@ -1,6 +1,6 @@
 <div class="form-group"  >
     <select required=""  class="form-control" ng-model="phone" name="brand" ng-show="selected_subcategory.sub_id!=10 && selected_subcategory.sub_id!=11" ng-disabled="selected_subcategory.sub_id==10 && selected_subcategory.sub_id==11">
-     <option selected="" value="">PHONE MAKE</option>
+     <option value="">SELECT PHONE MAKE</option>
     <option  ng-repeat="phones in requiredPhone"  value="{{phones.make}}"> {{phones.make}} </option>
    </select>
  </div>

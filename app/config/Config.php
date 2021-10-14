@@ -14,8 +14,13 @@ define('SENDINBLUE_API_KEY', 'xkeysib-04ab5a74c4621ead1155506e7059880aba705e8a1e
 //app Root
 define('APP_ROOT', dirname(dirname(__FILE__)));
 define('APP_NAME', 'GNICE Market Place');
+define('APP_DESCRIPTION', 'Gnice - Market place for every one. Your #1 online flexible shopping arena');
+define('APP_KEYWORD', 'Gnice, Market, Online Store, Shopping App Stor, Nigerian Mall, Shopping Mall, Online payment, Online Market, B2C, Seller Account');
+define('UPLOAD_SIZE_PROFILE_IMG', 4);
+define('UPLOAD_SIZE_PRODUCT_IMG', 5);
 //URL Root
 define("FOLDER", "gnice");
+//define('APP_URL', 'https://' . $_SERVER['HTTP_HOST']);
 define('APP_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/' . FOLDER);
 
 //site Name 
