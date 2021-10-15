@@ -120,10 +120,10 @@
   display: none;
 }
 </style>
-<div id="mobile_menu">
+<div id="mobile_menu" ng-controller="homeController">
 
 <nav class="nav">
-	<a href="#" class="nav--link">
+	<a href="<?php echo APP_URL;?>/home" class="nav--link">
 		<i class="material-icons nav--icon">home</i>
 		<span class="nav--text">Home</span>
 	</a>
@@ -131,15 +131,15 @@
 		<i class="material-icons nav--icon">person</i>
 		<span class="nav--text">Profile</span>
 	</a>
-	<a href="#" class="nav--link">
+	<!-- <a href="#" class="nav--link">
 		<i class="material-icons nav--icon">chat</i>
 		<span class="nav--text">Messages</span>
-	</a>
-	<a href="#" class="nav--link">
+	</a> -->
+	<a href="{{dirlocation}}privacypolicy" class="nav--link">
 		<i class="material-icons nav--icon">bookmark_border</i>
 		<span class="nav--text">Privacy</span>
 	</a>
-	<a href="#" class="nav--link">
+	<a href="<?php echo APP_URL;?>/dashboard" class="nav--link">
 		<i class="material-icons nav--icon">add_box</i>
 		<span class="nav--text">Sell</span>
 	</a>
