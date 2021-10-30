@@ -148,6 +148,25 @@ class Api extends Controller
         }
     }
 
+    public function disableEnableProduct()
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
+            if($result){
+                $result = $this->model('Product')->disableEnableProduct($_GET['product_id'],$_GET['seller_id'],$_GET['value']);
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
 
     public function updateCategory()
     {
@@ -354,12 +373,26 @@ class Api extends Controller
     }
 
     
-    public function fetch_all_product()
+    public function fetch_latest_product()
     {
         $header = apache_request_headers();
         $header = array_change_key_case($header,CASE_LOWER);
         if (isset($header['gnice-authenticate'])) {
-            $result = $this->model('Product')->getAllProducts();
+            $result = $this->model('Product')->getLatestProducts();
+            print_r(json_encode($result));
+        } else {
+            echo "invalid request";
+            exit;
+        }
+    }
+
+
+    public function fetch_trending_product()
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $result = $this->model('Product')->getTrendingProducts();
             print_r(json_encode($result));
         } else {
             echo "invalid request";
@@ -756,6 +789,26 @@ class Api extends Controller
         } else {
             echo "invalid request";
             exit;
+        }
+    }
+
+    public function deleteProductImage()
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
+            if($result){
+                $result = $this->model('Product')->deleteProductImage();
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
         }
     }
 

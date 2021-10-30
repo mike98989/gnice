@@ -38,7 +38,7 @@
                         <li class="sidebar-item" ng-class="{'active': menu_active == '4'}" ng-click="menu_active='4';hide_side_container()">
                             <a href="{{dirlocation}}dashboard/messages" class='sidebar-link'>
                                 <i data-feather="layout" width="20"></i>
-                                <span>Client's Response</span>
+                                <span>Messages</span>
                             </a>
 
                         </li>

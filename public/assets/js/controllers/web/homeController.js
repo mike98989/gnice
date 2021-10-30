@@ -38,6 +38,14 @@ module.controller("homeController", [
     //    }
 
     //  })
+    var url = window.location.href;
+    if (url.indexOf("home") > 1) {
+      menu_active='1';
+    }
+    else if (url.indexOf("privacypolicy") > 1) {
+      menu_active='2';
+    }
+
 
     $scope.fetch_all_banners = function(){
       $.ajax({
@@ -538,9 +546,9 @@ module.controller("homeController", [
       });
     };
 
-    $scope.fetch_all_product = function () {
+    $scope.fetch_latest_product = function () {
       $.ajax({
-        url: $scope.dirlocation + "api/fetch_all_product",
+        url: $scope.dirlocation + "api/fetch_latest_product",
         type: "GET",
         //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
         async: true,
@@ -557,8 +565,36 @@ module.controller("homeController", [
 
           $(".products_loader").hide();
           if (msg2.status == "1") {
-            $scope.products = msg2.data;
+            $scope.latest_products = msg2.data;
             //alert(JSON.stringify($scope.products));
+            $scope.$apply();
+
+            //alert(JSON.stringify($scope.categories));
+          }
+        },
+      });
+    };
+
+    $scope.fetch_trending_product = function () {
+      $.ajax({
+        url: $scope.dirlocation + "api/fetch_trending_product",
+        type: "GET",
+        //data: JSON.stringify({'user_email':'mike98989@gmail.com'}),
+        async: true,
+        cache: false,
+        contentType: "application/json",
+        headers: { "gnice-authenticate": "gnice-web" },
+        processData: false,
+        success: function (result2) {
+          //alert(result2);
+          var response2 = JSON.stringify(result2);
+          var parsed2 = JSON.parse(response2);
+          var msg2 = angular.fromJson(parsed2);
+         
+          //$(".products_loader").hide();
+          if (msg2.status == "1") {
+            $scope.trending_products = msg2.data;
+            //alert(JSON.stringify($scope.trending_products));
             $scope.$apply();
 
             //alert(JSON.stringify($scope.categories));

@@ -3,7 +3,7 @@
 
 class Product extends Model
 {
-    public function getAllProducts()
+    public function getLatestProducts()
     {
         //edited the end
         $header = apache_request_headers();
@@ -16,7 +16,7 @@ class Product extends Model
                         FROM products
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                        LEFT JOIN users ON users.seller_id = products.seller_id WHERE products.status='1'  ORDER BY products.id DESC");
+                        LEFT JOIN users ON users.seller_id = products.seller_id WHERE products.status='1'  ORDER BY products.id DESC LIMIT 50");
 
             if ($this->db->resultSet()) {
                 $result['rowCounts'] = $this->db->rowCount();
@@ -30,6 +30,32 @@ class Product extends Model
         }
     }
 
+    public function getTrendingProducts()
+    {
+        //edited the end
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $this->db
+                ->query("SELECT products.*,users.fullname as seller_fullname,users.email as seller_email,users.phone as seller_phone,users.image as seller_image,users.last_login as last_seen,users.signup_date as registered_date,
+                        category.title as productCategory,
+                        sub_category.title as productSubCategory
+                        FROM products
+                        LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
+                        LEFT JOIN category ON category.id = products.category
+                        LEFT JOIN users ON users.seller_id = products.seller_id WHERE products.status='1' AND products.hierarchy!='0'  ORDER BY products.hierarchy DESC");
+
+            if ($this->db->resultSet()) {
+                $result['rowCounts'] = $this->db->rowCount();
+                $result['data'] = $this->db->resultSet();
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+            }
+            return $result;
+        }
+    }
 
     public function getAllUserSavedProducts($user_id)
     {
@@ -166,6 +192,30 @@ class Product extends Model
         }
     }
 
+    public function deleteProductImage(){
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $product_id = filter_var($_GET['product_id']);
+            $index = filter_var($_GET['index']);
+            $select_first = $this->db->query("SELECT image FROM products WHERE id= :product_id");
+            $this->db->bind(':product_id', $product_id);
+            $row = $this->db->singleResult();
+            $split = explode(",",$row->image);
+            $delete_image = deleteFile($split[$index], 'products');
+            unset($split[$index]);
+            $implode  = implode(',', $split);
+            $this->db->query("UPDATE products SET image='".$implode."' WHERE id = :product_id");
+            $this->db->bind(':product_id', $product_id);
+            $this->db->execute();
+            $result['message'] = 'Product image deleted!';
+            $result['status'] = '1';
+        } else {
+            $result['message'] = 'Invalid request';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
 
     public function deleteProduct($product_id, $seller_id)
     {
@@ -186,6 +236,27 @@ class Product extends Model
             $this->db->bind(':seller_id', $seller_id);
             $this->db->execute();
             $result['message'] = 'Product details deleted!';
+            $result['status'] = '1';
+        } else {
+            $result['message'] = 'Invalid request';
+            $result['status'] = '0';
+        }
+        return $result;
+    }
+
+    public function disableEnableProduct($product_id, $seller_id,$value)
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            //$data = filter_var_array($_POST);
+            $seller_id = filter_var($seller_id);
+            $product_id = filter_var($product_id);
+            $this->db->query("UPDATE products SET status='".$value."' WHERE id = :product_id AND seller_id=:seller_id");
+            $this->db->bind(':product_id', $product_id);
+            $this->db->bind(':seller_id', $seller_id);
+            $this->db->execute();
+            $result['message'] = 'Product status updated!';
             $result['status'] = '1';
         } else {
             $result['message'] = 'Invalid request';
@@ -658,7 +729,7 @@ class Product extends Model
                         FROM products
                         LEFT JOIN sub_category ON sub_category.sub_id = products.sub_category
                         LEFT JOIN category ON category.id = products.category
-                        LEFT JOIN users ON users.seller_id = products.seller_id WHERE products.status='1' AND products.seller_id=:seller_id  ORDER BY products.id DESC");
+                        LEFT JOIN users ON users.seller_id = products.seller_id WHERE products.seller_id=:seller_id  ORDER BY products.id DESC");
 
         $this->db->bind(':seller_id', $seller_id);
         if ($this->db->resultSet()) {
@@ -774,6 +845,7 @@ class Product extends Model
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $id = $_POST['edit'];
             $product_code = $_POST['product_code'];
+            $image_to_be_added='';
             //Filter sanitize all input as string to remove all unwanted scripts and tags
 
             if (!(empty($id) || empty($product_code))) {
@@ -781,16 +853,21 @@ class Product extends Model
                 //get renamed pictures from helper functions
                 if (isset($_FILES['files'])) {
                     $uploader = uploadMultiple('pro', 'products', UPLOAD_SIZE_PRODUCT_IMG);
-                    $image = $uploader['imageUrl'];
-
-                    // $product_code = rand(1000000, 100000000);
-                    $_POST['image'] = $image;
+                    $image_to_be_added = $uploader['imageUrl'];
+                    $this->db->query("SELECT image FROM products WHERE id=:id");
+                    $this->db->bind(':id', $id);
+                    $row = $this->db->singleResult();
+                    if(!empty($row->image)){
+                    $_POST['image'] = $row->image.",".$image_to_be_added;
+                    }else{
+                    $_POST['image'] = $image_to_be_added;    
+                    }
                 }
                 // $_POST['product_code'] = rand(1000000, 100000000);
                 $data = filter_var_array($_POST);
                 $data = array_map('trim', array_filter($data));
                 $id = $data['edit'];
-                $excluded = ['files', 'edit', 'seller_id'];
+                $excluded = ['files', 'edit', 'seller_id','product_code'];
                 $updateString = "";
                 $params = [];
                 foreach (array_keys($data) as $key) {
@@ -800,16 +877,23 @@ class Product extends Model
                     }
                 }
                 $updateString = rtrim($updateString, ",");
-                $this->db->query(
-                    "UPDATE products SET $updateString WHERE id = :id AND product_code = :product_code"
-                );
+                $this->db->query("UPDATE products SET $updateString WHERE id = :id AND product_code = :product_code");
+                
                 foreach (array_keys($data) as $key) {
                     if (!in_array($key, $excluded)) {
                         $this->db->bind(':' . $key, $data[$key]);
                     }
                 }
                 $this->db->bind(':id', $id);
+                $this->db->bind(':product_code', $product_code);
                 if ($this->db->execute()) {
+                        ////////////UPDATE THE IMAGES
+                        // if(!empty($_POST['image'])){
+                        // $this->db->query("UPDATE products SET `image`= CONCAT(image, ',', $image) WHERE id = :id");
+                        // }
+                        // $this->db->bind(':id', $id);
+                        // $this->db->execute();
+
                     $result['message'] = 'product update successfully';
                     $result['status'] = '1';
                 } else {

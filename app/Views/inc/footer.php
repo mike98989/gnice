@@ -110,7 +110,7 @@
 }
 
 .nav--link--active{
-	color: #009578;
+	color: skyblue;
 }
 
 .nav--icon{
@@ -123,11 +123,11 @@
 <div id="mobile_menu" ng-controller="homeController">
 
 <nav class="nav">
-	<a href="<?php echo APP_URL;?>/home" class="nav--link">
+	<a href="<?php echo APP_URL;?>/home" class="nav--link" ng-class="{'nav--link--active': menu_active == '1'}" ng-click="menu_active='1';">
 		<i class="material-icons nav--icon">home</i>
 		<span class="nav--text">Home</span>
 	</a>
-	<a href="#" class="nav--link nav--link--active">
+	<a href="<?php echo APP_URL;?>/dashboard/profile" class="nav--link">
 		<i class="material-icons nav--icon">person</i>
 		<span class="nav--text">Profile</span>
 	</a>
@@ -135,11 +135,11 @@
 		<i class="material-icons nav--icon">chat</i>
 		<span class="nav--text">Messages</span>
 	</a> -->
-	<a href="{{dirlocation}}privacypolicy" class="nav--link">
+	<a href="{{dirlocation}}privacypolicy" class="nav--link" ng-class="{'nav--link--active': menu_active == '1'}" ng-click="menu_active='1';">
 		<i class="material-icons nav--icon">bookmark_border</i>
 		<span class="nav--text">Privacy</span>
 	</a>
-	<a href="<?php echo APP_URL;?>/dashboard" class="nav--link">
+	<a href="<?php echo APP_URL;?>/dashboard/add_product" class="nav--link">
 		<i class="material-icons nav--icon">add_box</i>
 		<span class="nav--text">Sell</span>
 	</a>

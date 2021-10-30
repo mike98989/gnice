@@ -38,6 +38,13 @@ module.controller("homeController", [
       pager = "1";
     }
 
+    if (url.indexOf("home") > 1) {
+      menu_active='1';
+    }
+    else if (url.indexOf("privacypolicy") > 1) {
+      menu_active='2';
+    }
+
     $scope.dirlocation = datagrab.completeUrlLocation;
     $scope.currentPage = pager;
     $scope.pageSize = 10;

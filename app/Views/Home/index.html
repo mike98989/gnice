@@ -85,7 +85,7 @@
 
 				<h2 class="section-title" style="padding-top:15px;margin-top:0;margin-bottom:0">Trending Ads</h2>
 
-				<div ng-init="fetch_all_product()">
+				<div ng-init="fetch_trending_product()">
 
 					<div class="products_loader" style="text-align:center">
 						<img src="{{dirlocation}}public/assets/images/spinner.gif"
@@ -95,7 +95,7 @@
 					<div class="row" ng-cloak>
 
 						<div class="col-6 col-sm-4 col-md-3"
-							ng-repeat="product in products | limitTo:50:10 | filter : all ">
+							ng-repeat="product in trending_products | filter : all | orderBy:id:false ">
 							<div class="product-default inner-quickview inner-icon"
 								style="background-color: #fff;border-radius:10px;">
 								<figure style="padding:0;">
@@ -154,14 +154,14 @@
 
 						</div><!-- End .col-md-4 -->
 
-						<div class="col-sm-6 col-md-4 pb-4 pb-md-0">
+						<div class="col-sm-6 col-md-4 pb-4 pb-md-0" ng-init="fetch_latest_product();">
 							<div class="product-column">
 								<h3 class="section-sub-title ls-n-20">Latest Products</h3>
 
 								<div class="widget" ng-cloak>
 									<div class="owl-carousel owl-theme">
 
-										<div class="banner" ng-repeat="product in products | limitTo:5:0"
+										<div class="banner" ng-repeat="product in latest_products | limitTo:5:0"
 											style="border:none;background-color:none">
 											<div class="product-default left-details product-widget mb-2"
 												style="background: #fff;border-radius:10px;overflow:hidden;">
@@ -187,7 +187,7 @@
 											</div>
 										</div><!-- End .banner -->
 
-										<div class="banner" ng-repeat="product in products | limitTo:5:5">
+										<div class="banner" ng-repeat="product in latest_products | limitTo:5:5">
 											<div class="product-default left-details product-widget mb-2"
 												style="background-color: #fff;border-radius:10px;overflow:hidden;">
 												<figure style="height:80px;width:150px;overflow:hidden;">
@@ -212,7 +212,7 @@
 											</div>
 										</div><!-- End .banner -->
 
-										<div class="banner" ng-repeat="product in products | limitTo:5:10">
+										<div class="banner" ng-repeat="product in latest_products | limitTo:5:10">
 											<div class="product-default left-details product-widget mb-2"
 												style="background-color: #fff;border-radius:10px;overflow:hidden;">
 												<figure style="height:80px;width:150px;overflow:hidden">
