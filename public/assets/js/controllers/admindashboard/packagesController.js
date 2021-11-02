@@ -79,7 +79,7 @@ module.controller("packagesController", [
         },
         processData: false,
         success: function (result) {
-          console.log(result);
+          // console.log(result);
 
           //alert(JSON.stringify(result));
 
@@ -256,7 +256,7 @@ module.controller("packagesController", [
       formData.append("status", code);
       formData.append("id", info.content_id);
 
-      console.table(code, info);
+      // console.table(code, info);
       $.ajax({
         url: $scope.dirlocation + "adminapi/toggle_package_content_status",
         data: formData,

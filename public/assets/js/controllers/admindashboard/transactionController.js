@@ -68,7 +68,7 @@ module.controller("transactionController", [
           $("#transaction_loader").hide(500);
           if (msg.status == "1") {
             $scope.all_transactions = msg.data;
-            console.table(JSON.stringify(msg.data));
+           
             $scope.notification = msg.msg;
             $scope.status == msg.status;
             $scope.$apply();

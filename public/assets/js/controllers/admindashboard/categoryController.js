@@ -76,7 +76,6 @@ module.controller("categoryController", [
      
       for( img of images){
 
-        console.log(img.lastModified);
         let reader = new FileReader();
         let figure = document.createElement("figure");
         let a = document.createElement("a");
@@ -149,7 +148,7 @@ module.controller("categoryController", [
         },
         processData: false,
         success: function (result) {
-          console.log(result);
+          // console.log(result);
           var response = JSON.stringify(result);
           var parsed = JSON.parse(response);
           var msg = angular.fromJson(parsed);
@@ -201,7 +200,7 @@ module.controller("categoryController", [
       });
     };
     $scope.show_images = function () {
-      alert("got here");
+     
     };
     $scope.update_category = function (id) {
       $(".edit_" + id).show(500);
@@ -334,6 +333,7 @@ module.controller("categoryController", [
       });
     };
     $scope.add_new_sub_category = function () {
+     
       $(".add_sub_cat_loader").show(500);
       var formData = new FormData($("#addSubCategory")[0]);
 
@@ -347,7 +347,7 @@ module.controller("categoryController", [
         headers: { "gnice-authenticate": $scope.admin_token },
         processData: false,
         success: function (answer) {
-          console.log(result);
+          // console.log(result);
 
           var response = JSON.stringify(answer);
           var parsed = JSON.parse(response);
@@ -360,10 +360,11 @@ module.controller("categoryController", [
             $(".result").show(500);
 
             setTimeout(() => {
-              $(".result").hide("500");
+              $(".result").hide(500);
               $(".result").removeClass("alert alert-info");
             }, 3000);
-            $scope.get_all_cat_and_sub_cat();
+            // $scope.get_all_cat_and_sub_cat();
+            $scope.all_cat_and_sub
             $scope.$apply();
             $("#addSubCategory")[0].reset();
           } else {
@@ -377,6 +378,7 @@ module.controller("categoryController", [
               $(".result").removeClass("alert alert-info");
             }, 3000);
           }
+         
         },
       });
     };
