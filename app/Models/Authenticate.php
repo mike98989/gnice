@@ -148,17 +148,17 @@ class Authenticate extends Model
             $selectedOption = filter_var($_POST['selectedOption']);
             $check_email = $this->findUserByEmail($email, 'users');
             if ($check_email !== false) {
+                $date = date('Y-m-d');
                 if ($check_email->seller_id == null) {
                     $seller_id = 'AG-' . rand(10000000, 100000000);
-                    $date = date('Y-m-d');
+                    
                     $this->db->query('UPDATE users SET account_type = :account_type,account_type_activation_date=:account_type_activation_date, seller_id=:seller_id WHERE id = :id ');
                     $this->db->bind(':seller_id', $seller_id);
-                    $this->db->bind(':account_type_activation_date', $date);
                 } else {
-                    $this->db->query('UPDATE users SET account_type = :account_type WHERE id = :id ');
+                    $this->db->query('UPDATE users SET account_type = :account_type,account_type_activation_date=:account_type_activation_date WHERE id = :id ');
                 }
                 $this->db->bind(':account_type', $selectedOption);
-
+                $this->db->bind(':account_type_activation_date', $date);
                     $this->db->bind(':id', $check_email->id);
                     if ($this->db->execute()) {
                         $check_email_again = $this->findUserByEmail($email, 'users');
@@ -341,9 +341,16 @@ class Authenticate extends Model
             //if ($result['data']['status'] == 'success') {
                 $check_email = $this->findUserByEmail($email, 'users');
                 if ($check_email != false) {
-                    $this->db->query("INSERT INTO transactions (trans_reference,amount,currency,user_email,trans_date,trans_status) VALUES (:reference,:amount,:currency,:email,:trans_date,:status)");
+                    $amount = substr($result['data']['amount'],0, -2);
+                    $this->db->query("SELECT package_id,value FROM seller_account_packages WHERE value=:amount AND status='1'");
+                    $this->db->bind(':amount', $amount);
+                    $this->db->execute();
+                    $row = $this->db->singleResult();
+                    //print_r($row);exit;
+                    $this->db->query("INSERT INTO transactions (package_id,trans_reference,amount,currency,user_email,trans_date,trans_status) VALUES (:package_id,:reference,:amount,:currency,:email,:trans_date,:status)");
+                    $this->db->bind(':package_id', $row->package_id);
                     $this->db->bind(':reference', $result['data']['reference']);
-                    $this->db->bind(':amount', $result['data']['amount']);
+                    $this->db->bind(':amount', $amount);
                     $this->db->bind(':currency', $result['data']['currency']);
                     $this->db->bind(':email', $email);
                     $this->db->bind(':trans_date', $result['data']['transaction_date']);
@@ -732,6 +739,40 @@ class Authenticate extends Model
     //     $_SESSION['token'] = $user->token;
     // }
 
+    public function getAllUserTransactions()
+    {
+        //echo $user_id;exit;
+        
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        $user_email = filter_var($_GET['user_email']);
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $verifyToken = $this->verifyToken($token, 'users');
+            //print_r($user_email);exit;
+            if ($verifyToken) {
+            $this->db->query("SELECT * FROM transactions T INNER JOIN seller_account_packages S ON T.package_id=S.package_id WHERE T.user_email=:email AND T.status=1 ORDER BY T.trans_id DESC");
+            $this->db->bind(':email', $user_email);
+            if ($this->db->execute()) {
+                $result['data'] = $this->db->resultSet();
+                $result['status'] = '1';
+            } else {
+                $result['data'] = [];
+                $result['status'] = '0';
+            }
+            
+        } else {
+            $result['status'] = '0';
+            $result['msg'] = 'Invalid token';
+        }
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+        
+        return $result;
+    }
+
     public function updateUserProfile()
     {
         $header = apache_request_headers();
@@ -788,11 +829,11 @@ class Authenticate extends Model
                         if ($this->db->execute()) {
                             $result['message'] = 'profile update successfully';
                             $result['status'] = '1';
-                            $result['errors'] = $uploader['image_error'];
+                            //$result['errors'] = $uploader['image_error'];
                         } else {
                             $result['message'] = 'profile update failed';
                             $result['status'] = '0';
-                            $result['errors'] = $uploader['image_error'];
+                            //$result['errors'] = $uploader['image_error'];
                             return false;
                         }
                     } else {

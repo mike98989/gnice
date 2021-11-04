@@ -578,8 +578,7 @@ class Product extends Model
                         category.title as productCategory
                         FROM products
                         INNER JOIN category ON category.id = products.category
-                        WHERE products.category = :category_id AND products.status = 1
-                            ");
+                        WHERE products.category = :category_id AND products.status = 1 ORDER BY products.id DESC");
             $this->db->bind(':category_id', $category_id);
 
             if ($this->db->resultSet()) {
@@ -606,8 +605,7 @@ class Product extends Model
                         sub_category.title as productSubCategory
                         FROM products
                         INNER JOIN sub_category ON sub_category.sub_id = products.sub_category
-                        WHERE products.sub_category = :sub_category_id AND products.status=1
-                        ");
+                        WHERE products.sub_category = :sub_category_id AND products.status=1 ORDER BY products.id DESC");
 
             $this->db->bind(':sub_category_id', $sub_category_id);
 

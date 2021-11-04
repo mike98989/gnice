@@ -434,6 +434,25 @@ class Api extends Controller
         }
     }
 
+    public function fetch_all_user_transactions()
+    {
+        $header = apache_request_headers();
+        $header = array_change_key_case($header,CASE_LOWER);
+        if (isset($header['gnice-authenticate'])) {
+            $token = filter_var($header['gnice-authenticate']);
+            $result = $this->model('Authenticate')->verifyToken($token,'users');
+            if($result){
+                $result = $this->model('Authenticate')->getAllUserTransactions();
+            }else{
+                $result['status']='0';
+                $result['msg']='Invalid token';
+            }
+            print_r(json_encode($result));
+        } else {
+            echo 'invalid request';
+            exit();
+        }
+    }
 
     public function fetch_all_user_saved_products()
     {

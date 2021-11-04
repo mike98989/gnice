@@ -89,12 +89,19 @@ module.controller("productController", [
     };
 
     $scope.update_product = function () {
+      //alert($scope.product_images.length);return;
+      {$scope.product_images.length==0 && $scope.input_array_values.length==0 ? (
+      alert("Please attach an image") 
+      ):
+      formData = new FormData($("#update_product")[0]);
+      for(a=0;a<$scope.input_files_values.length;a++){
+        formData.append('files['+a+']', $scope.input_files_values[a]);
+      }
       $(".loader").show();
-      var formData = new FormData($("#update_product")[0]);
       $.ajax({
         url: $scope.dirlocation + "api/update_product",
         type: "POST",
-        headers: { "gnice-authenticate": $scope.user_token },
+        headers: { "gnice-authenticate": $scope.user_token},
         data: formData,
         async: true,
         cache: false,
@@ -113,7 +120,11 @@ module.controller("productController", [
             $(".result").html(msg.message);
             $(".result").show();
             //alert(msg.message);
-            //window.location.assign('Advert');
+            setTimeout(function () {
+              window.location.assign('my_products');
+            }, 1500);
+
+            
           } else {
             $(".loader").hide();
             $(".result").html(msg.message);
@@ -122,6 +133,9 @@ module.controller("productController", [
           }
         },
       });
+      }
+      
+      
     };
 
     // FIXME: delete a profile
@@ -131,11 +145,11 @@ module.controller("productController", [
         "DO YOU WANT TO DELETE THIS AD '" + product.name + "'?"
       );
       if (conf) {
-        $(".loader2_" + product.id).show();
+        //$(".loader2_" + product.id).show();
         $.ajax({
           url:
             $scope.dirlocation +
-            "api/deleteProduct?product_id=" +
+            "api/deleteProductImage?product_id=" +
             product.id +
             "&&seller_id=" +
             $scope.user_data.seller_id,
@@ -160,6 +174,41 @@ module.controller("productController", [
       }
     };
 
+    $scope.delete_uploaded_product_image = function (product_id, $index) {
+      
+      var conf = confirm(
+        "DO YOU WANT TO DELETE THIS ALREADY UPLOADED IMAGE ?"
+      );
+      if (conf) {
+        $(".loader2_" + $index).show();
+        $.ajax({
+          url:
+            $scope.dirlocation +
+            "api/deleteProductImage?product_id=" +
+            product_id +
+            "&index=" +$index,
+          async: true,
+          cache: false,
+          contentType: false,
+          headers: { "gnice-authenticate": $scope.user_token},
+          processData: false,
+          success: function (result) {
+            //alert(result);
+            var response = JSON.stringify(result);
+            var parsed = JSON.parse(response);
+            var msg = angular.fromJson(parsed);
+            $(".loader2_" + $index).hide();
+            if (msg.status == "1") {
+              alert(msg.message);
+              $scope.product_images.splice($index, 1);
+              $scope.$apply();
+            }
+          },
+        });
+      }
+    };
+
+    
     $scope.fetch_all_product_of_seller = function () {
       $.ajax({
         url:

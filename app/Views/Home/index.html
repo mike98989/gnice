@@ -83,7 +83,7 @@
 						style="border-radius:15px;width:100%" />
 				</div>
 
-				<h2 class="section-title" style="padding-top:15px;margin-top:0;margin-bottom:0">Trending Ads</h2>
+				<h2 class="section-title" style="padding-top:15px;margin-top:0;margin-bottom:0">Trending Ads (Sponsored)</h2>
 
 				<div ng-init="fetch_trending_product()">
 
@@ -93,9 +93,9 @@
 					</div>
 
 					<div class="row" ng-cloak>
-
+						
 						<div class="col-6 col-sm-4 col-md-3"
-							ng-repeat="product in trending_products | filter : all | orderBy:id:false ">
+							ng-repeat="product in trending_products | filter : all | orderBy:id:false | limitTo:28:0 ">
 							<div class="product-default inner-quickview inner-icon"
 								style="background-color: #fff;border-radius:10px;">
 								<figure style="padding:0;">
