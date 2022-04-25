@@ -4,9 +4,14 @@
 class Home extends Controller{
    
 
+    function __construct() {
+        parent::__construct();
+		Session::init();
+	}
+    
     public function index(){
         $data = [];
-        $js = ['controllers/web/homeController.js'];
-        $this->view('Home/index',$include_header=true,$data,'_type2', $js);
+        $this->view->js = ['controllers/web/homeController.js'];
+        $this->view->render('Home/index',false,'');
     }
 }

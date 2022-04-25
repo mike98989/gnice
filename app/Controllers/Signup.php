@@ -1,10 +1,17 @@
 <?php
 
-class Signup extends Controller{
+class Signup extends Controller
+{
 
-     public function index(){
+    function __construct() {
+        parent::__construct();
+		Session::init();
+	}
+
+    public function index()
+    {
         $data = [];
-        $js=[];
-        $this->view('Account/signup',$include_header=true,$data,'_type1',$js);
+        $this->view->js = ['controllers/signupController.js', 'controllers/web/homeController.js'];
+        $this->view->render('Account/signup',false, '');
     }
 }

@@ -1,0 +1,65 @@
+<!-- End .header -->
+
+<main class="main"  ng-controller="loginController">
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{dirlocation}}home"><i class="icon-home"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Account Type</li>
+      </ol>
+    </div>
+    <!-- End .container -->
+  </nav>
+    <div class="container">
+    <div class="col-md-6 offset-md-3">
+      <div class="heading">
+        <h2 class="title">Account Type</h2>
+        <p>Welcome! Your are just a click away from a valuable world of possibilities</p>
+        <h4>Choose a seller Account Type</h4>
+      </div>
+      <!-- End .heading -->
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+           <form action="" id="update_user_account_type" ng-submit="update_user_account_type()"  method="POST">
+              <input name="selectedOption" type="type"   value="1">
+              <input type="text" name="" value="{{user_token}}">
+              <input type="" name="email"  value="{{usermail}}">
+              <input type="" name="" value="Free">
+               <button type="submit" class="btn btn-primary" id="">
+               Submit
+            </button>
+            </form>
+          </div>
+           <div class="col-md-4">
+           <form action="" id="user_account_type" ng-submit="user_account_type()"  method="POST">
+              <input name="selectedOption" id="selectedOption" type="type"  value="2">
+              <input type="text" name="" value="{{user_token}}">
+              <input type="" name="email"  value="{{usermail}}">
+              <input type="" name="amount" value="7000">
+               <button type="submit" class="btn btn-primary" id="">
+               Submit
+            </button>
+            </form>
+
+          </div>
+       
+
+
+        </div>
+        <a href="{{checkout}}">Checkout</a>
+      </div>
+    </div>
+  </div>
+  <!-- End .container -->
+
+ 
+
+  <div class="mb-5"></div>
+  <!-- margin -->
+</main>
+<!-- End .main -->

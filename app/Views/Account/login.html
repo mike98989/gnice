@@ -1,53 +1,137 @@
 
+  <main class="main" ng-controller="loginController">
+      <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{dirlocation}}"><i class="icon-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Login</li>
+          </ol>
+        </div><!-- End .container -->
+      </nav>
 
-<!-- End .header -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 card" style="padding:0 35px;float:none;margin:0 auto">
+            <div class="heading">
+              <h2 class="title">Welcome Back!</h2>
+              <p>If you have an account with us, please log in.</p>
+            </div><!-- End .heading -->
 
-<main class="main">
-  <nav aria-label="breadcrumb" class="breadcrumb-nav">
-    <div class="container">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html"><i class="icon-home"></i></a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Login</li>
-      </ol>
-    </div>
-    <!-- End .container -->
-  </nav>
+            <form class="pt-3 card-details"  ng-submit="user_login()" id="user_login">
+                <div class="alert alert-info result" style="display:none"></div>
+                <div class="form-group">
+                  <label for="exampleInputEmail">Username</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="fa fa-user text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg border-left-0" type="email" name="username" id="username" placeholder="Email Address">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword">Password</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="fa fa-key text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control form-control-lg border-left-0" name="password" id="password"  placeholder="Password">                        
+                  </div>
+                </div>
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                  
+                  <a href="{{dirlocation}}recovery" class="auth-link text-black">Forgot password?</a>
+                </div>
+                <div class="my-3">
+                  <input type="hidden" value="browser" name="source">
+                    <button class="btn bg-primary btn-md text-white" type="submit">
+                     <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="float:left;width:15px;margin-right:5px;display:none"> LOGIN</button>
+                </div>
+           
+                <div class="text-center mt-4 font-weight-light">
+                  I DON'T have an account? <a href="{{dirlocation}}signup" class="text-primary">Create</a>
+                  <hr style="margin:5px;padding:0" />
+                  I have ALREADY received a verification code |<a href="{{dirlocation}}confirm" class="text-info">Enter Code</a>
+                  <hr style="margin:5px;padding:0" />
+                  I have NOT received a verification code |<a href="{{dirlocation}}resendcode" class="text-success">Resend Code</a>
 
-  <div class="container">
-    <div class="col-md-6 offset-md-3">
-      <div class="heading">
-        <h2 class="title">Login</h2>
-        <p>If you have an account with us, please log in.</p>
-      </div>
-      <!-- End .heading -->
+                </div>
+              </form>
+          </div><!-- End .col-md-6 -->
 
-      <form action="#">
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Email Address"
-          required
-        />
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Password"
-          required
-        />
+          </div><!-- End .col-md-6 -->
+        </div><!-- End .row -->
+      </div><!-- End .container -->
 
-        <div class="form-footer">
-          <button type="submit" class="btn btn-primary">LOGIN</button>
-          <a href="#" class="forget-pass"> Forgot your password?</a>
+      <div class="mb-5"></div><!-- margin -->
+    </main><!-- End .main -->
+
+  <div class="container-scroller"  ng-controller="loginController" style="display:none">
+    <div class="container-fluid page-body-wrapper full-page-wrapper" >
+      <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+        <div class="row">
+          <div class="col-lg-6 d-flex align-items-center justify-content-center" style="float:none;margin:0 auto">
+            <div class="auth-form-transparent text-left p-3">
+              <div class="brand-logo">
+                <img  src="{{dirlocation}}public/assets/images/gnicelogo.jpeg" alt="logo">
+              </div>
+              <h4>Welcome back! </h4>
+              <h6 class="font-weight-light">Happy to see you again!</h6>
+              <form class="pt-3"  ng-submit="user_login()" id="user_login">
+                <div class="alert alert-info result" style="display:none"></div>
+                <div class="form-group">
+                  <label for="exampleInputEmail">Username</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="mdi mdi-account-outline text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg border-left-0" type="email" name="username" id="username" placeholder="Email Address">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword">Password</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="mdi mdi-lock-outline text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control form-control-lg border-left-0" name="password" id="password"  placeholder="Password">                        
+                  </div>
+                </div>
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                  
+                  <a href="{{dirlocation}}recovery" class="auth-link text-black">Forgot password?</a>
+                </div>
+                <div class="my-3">
+                  <input type="hidden" value="browser" name="source">
+                    <button class="btn btn-block btn-primary btn-lg font-weight-medium " type="submit">LOGIN</button>
+                </div>
+           
+                <div class="text-center mt-4 font-weight-light">
+                  Don't have an account? <a href="{{dirlocation}}signup" class="text-primary">Create</a>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-6 login-half-bg d-flex flex-row">
+            <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2021  All rights reserved.</p>
+          </div>
         </div>
-        <!-- End .form-footer -->
-      </form>
+      </div>
+      <!-- content-wrapper ends -->
     </div>
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- End .container -->
+  <!-- container-scroller -->
+  <!-- plugins:js -->
 
-  <div class="mb-5"></div>
-  <!-- margin -->
-</main>
-<!-- End .main -->
+  <!-- endinject -->
+</body>
+
+</html>

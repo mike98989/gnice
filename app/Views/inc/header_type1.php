@@ -8,18 +8,21 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
 
-    <title>Porto - signup-id</title>
+    <title><?php echo APP_NAME;?></title>
 
-    <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto - Bootstrap eCommerce Template" />
-    <meta name="author" content="SW-THEMES" />
+    <meta name="keywords" content="<?php echo APP_KEYWORD;?>" />
+    <meta name="description" content="<?php echo APP_DESCRIPTION;?>" />
+    <meta name="google-signin-client_id" content="115492595952-2hub4c8ls0p61v5t5nhfpb41tbhojbb3.apps.googleusercontent.com">
+
 
     <!-- Favicon -->
     <link
       rel="icon"
       type="image/x-icon"
-      href="<?php echo APP_URL;?>/assets/images/icons/favicon.ico"
+      href="<?php echo APP_URL;?>/public/assets/images/gnice_logo.png"
     />
 
     <script type="text/javascript">
@@ -35,30 +38,43 @@
       (function (d) {
         var wf = d.createElement("script"),
           s = d.scripts[0];
-        wf.src = "<?php echo APP_URL;?>/assets/js/webfont.js";
+        wf.src = "<?php echo APP_URL;?>/public/assets/js/webfont.js";
         wf.async = true;
         s.parentNode.insertBefore(wf, s);
       })(document);
     </script>
 
     <!-- Plugins CSS File -->
+    <!--     Fonts and icons     -->
+    <!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
+    -->
+
     <link
       rel="stylesheet"
-      href="<?php echo APP_URL;?>/assets/css/bootstrap.min.css"
+      href="<?php echo APP_URL;?>/public/assets/css/bootstrap.min.css"
     />
+      <link
+      rel="stylesheet"
+      href="<?php echo APP_URL;?>/public/assets/css/jquery-ui.css"
+    />
+     <link
+      rel="stylesheet"
+      href="<?php echo APP_URL;?>/public/assets/css/gsdk-bootstrap-wizard.css"
+    />
+  
 
     <!-- Main CSS File -->
     <link
       rel="stylesheet"
       type="text/css"
-      href="<?php echo APP_URL;?>/assets/css/style.min.css"
+      href="<?php echo APP_URL;?>/public/assets/css/style.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="<?php echo APP_URL;?>/assets/vendor/fontawesome-free/css/all.min.css"
+      href="<?php echo APP_URL;?>/public/assets/vendor/fontawesome-free/css/all.min.css"
     />
   </head>
   <body ng-app="gnice">
-  <div class="page-wrapper">
-  <?php require APP_ROOT .'/views/inc/navbar.php'; ?>
+ 
+ 

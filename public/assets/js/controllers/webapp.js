@@ -2,8 +2,40 @@
 module.config(function($routeProvider,$locationProvider){
     $routeProvider
         .when('/home',{
-            templateUrl:"../views/staff/views/home.php",
+            templateUrl:"../app/Views/User/Views/home.html",
             controller:"homeController",
+        })
+        .when('/add_product',{
+            templateUrl:"../app/Views/User/Views/add_product.html",
+            controller:"productController",
+        })
+        .when('/edit_product',{
+            templateUrl:"../app/Views/User/Views/edit_product.html",
+            controller:"productController",
+        })
+        .when('/my_products',{
+            templateUrl:"../app/Views/User/Views/user_products.html",
+            controller:"productController",
+        })
+        .when('/messages',{
+            templateUrl:"../app/Views/User/Views/messages.html",
+            controller:"messageController",
+        })
+        .when('/profile',{
+            templateUrl:"../app/Views/User/Views/my_profile.html",
+            controller:"profileController",
+        })
+        .when('/edit_profile',{
+            templateUrl:"../app/Views/User/Views/edit_profile.html",
+            controller:"profileController",
+        })
+        .when('/update_password',{
+            templateUrl:"../app/views/user/views/update_password.html",
+            controller:"profileController",
+        })
+        .when('/account_packages',{
+            templateUrl:"../app/Views/User/Views/packages.html",
+            controller:"packageController",
         })
         .otherwise({
             redirectTo:"/home"

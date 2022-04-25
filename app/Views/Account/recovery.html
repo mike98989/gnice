@@ -1,0 +1,38 @@
+
+
+  <div class="container-scroller"  ng-controller="loginController">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth lock-full-bg">
+        <div class="row w-100">
+          <div class="col-lg-4 card mx-auto">
+            <div class="auth-form-transparent text-white text-left p-5 text-center">
+              <h2 class="title">Account Recovery</h2>
+             
+              <p class="text-info">Please enter a valid email address.</p>
+              <div class="alert alert-info result" style="display:none"></div>
+                 <form ng-submit="password_recovery()" id="password_recovery">  
+     
+        
+                <div class="form-group">
+                  <label for="examplePassword1">Email</label>
+                  <input  type="email"
+            name="email"
+            id="email"
+            class="form-control"
+            placeholder="Email"
+            
+            required>
+                </div>
+                   <button class="btn btn-block bg-primary btn-sm text-white" type="submit">
+                    <img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="float:left;width:15px;margin-right:5px;display:none">Send</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->

@@ -1,0 +1,541 @@
+
+<main class="main" ng-controller="homeController" ng-init="fetch_single_product(); init_facebook_login()">
+
+	<div class="container" ng-if="product" ng-init="get_product_reviews(product.id)">
+		<nav aria-label="breadcrumb" class="breadcrumb-nav">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="{{dirlocation}}"><i class="icon-home"></i></a></li>
+				<li class="breadcrumb-item"><a href="{{dirlocation}}category?id={{product.category}}&cat={{product.productCategory}}" class="sf-with-ul cabtn">{{product.productCategory}}</a></li>
+				<li class="breadcrumb-item"><a href="{{dirlocation}}category/sub_category?id={{product.sub_category}}&cat={{product.productCategory}}&sub={{sub.title}}">{{product.productSubCategory}}</a></li>
+				
+				<li class="breadcrumb-item">
+					<a href=""><i class="breadcrumb-item active"></i>{{product.name}}</a>
+				</li>
+			</ol>
+		</nav>
+		<div class="product-single-container product-single-default">
+			<div class="row">
+				<div class="col-md-7 product-single-gallery">
+					<div class="card" style="padding-top:0;padding-bottom:0">
+						<div class="card-body" style="padding:0;">
+							<div id="custCarousel" class="carousel slide" data-ride="carousel">
+								<!-- slides -->
+								<div class="carousel-inner">
+									<div class="carousel-item" ng-class="{'active' : $index=='0'}" ng-if="product_image.length>1" ng-repeat="image in product_image">
+									<img ng-click="open_image_modal($index)" src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" style="width:100%;cursor:pointer"> 
+									</div>
+									<div class="carousel-item active" ng-if="product_image.length==1" ng-repeat="image in product_image">
+										<img ng-click="open_image_modal($index)" src="{{dirlocation}}public/assets/images/uploads/products/{{product_image[0]}}" style="width:100%;cursor:pointer"> 
+									</div>
+									
+								</div> <!-- Left right -->
+								<a class="carousel-control-prev" href="#custCarousel" data-slide="prev" style="margin-top: 25%;"> <span class="carousel-control-prev-icon"></span> </a> <a class="carousel-control-next" href="#custCarousel" data-slide="next"  style="margin-top: 25%;"> <span class="carousel-control-next-icon"></span> </a> <!-- Thumbnails -->
+								<ol class="carousel-indicators list-inline">
+									<li class="list-inline-item" ng-class="{'active' : $index=='0n'}" ng-repeat="image in product_image" style="height:70px;background:transparent;overflow: hidden;">
+									<a id="carousel-selector-{{$index}}" ng-class="{'selected' : $index=='1'}" data-slide-to="{{$index}}" data-target="#custCarousel"> 
+									<img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" class="img-fluid"></a> 
+									</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+
+				</div><!-- End .product-single-gallery -->
+
+
+				<!-- The Modal -->
+
+<div class="modal fade" id="productImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background:transparent;border:none">
+	<div class="modal-dialog" role="document" style="background:transparent;border:none">
+	  <div class="modal-content" style="background:transparent;border:none">
+		<div class="modal-header">
+		  
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true" style="font-size:26px">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body" style="padding:0;background: transparent;border:none">
+			
+			<div id="productCarousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner" style="height: 100%">
+					<div class="carousel-item" ng-repeat="image in product_image" ng-class="{'active' : $index=='0'}" ng-if="product_image.length>1">
+					<img src="{{dirlocation}}public/assets/images/uploads/products/{{image}}" style="width:100%;cursor:pointer"> 
+					</div>
+					<div class="carousel-item active" ng-if="product_image.length==1" ng-repeat="image in product_image">
+						<img src="{{dirlocation}}public/assets/images/uploads/products/{{product_image[0]}}" style="width:100%;cursor:pointer"> 
+					</div>
+				</div> <!-- Left right -->
+				<a class="carousel-control-prev" href="#productCarousel" data-slide="prev" style="margin-top: 0;"> <span class="carousel-control-prev-icon"></span> </a> <a class="carousel-control-next" href="#productCarousel" data-slide="next"  style="margin-top: 0;"> <span class="carousel-control-next-icon"></span> </a> <!-- Thumbnails -->
+			</div>
+		</div>
+		
+	  </div>
+	</div>
+  </div>
+			<div class="col-md-5 product-single-details" style="margin-top:0;padding-top:0">
+					<div class="card">
+						<div class="card-body">
+					<h1 class="product-title" style="padding-top: 0;margin-top: 0;">{{product.name}}</h1>
+					<div class="ratings-container">
+						<div class="product-ratings" ng-show="product_reviews.length">
+							<span class="ratings" style="width: {{average_review_rate*20}}%"></span><!-- End .ratings -->
+						</div><!-- End .product-ratings -->
+
+						<a href="#" class="rating-link" ng-show="product_reviews.length">( {{product_reviews.length}} Review(s) )</a>
+					</div><!-- End .ratings-container -->
+
+					<hr class="short-divider">
+
+					<div class="price-box">
+						<span class="product-price">{{product.price|currency:'NGN ' }}</span>
+					</div><!-- End .price-box -->
+
+					<div class="product-desc" style="padding-bottom:0;margin-bottom:0">
+						<p style="font-size: 14px;">
+							{{product.description | limitTo:300}}{{product.description.length > 300 ? '...' : ''}}
+							<a href="#" ng-show="product.description.length>300">(Read more)</a>
+						</p>
+					</div><!-- End .product-desc -->
+					<hr class="divider" ng-show="product.seller_fullname">
+					<div class="product-desc" ng-show="product.seller_fullname" style="padding-bottom:0;margin-bottom:0">
+						<table>
+							<tr>
+							<td><img style="width:60px;height:60px;border-radius: 50%"src="{{dirlocation}}public/assets/images/uploads/profile/{{product.seller_image}}"></td>
+							<td><b style="font-size: 15px;line-height: 0">{{product.seller_fullname}}</b><br/>{{product.seller_email}}</td>
+							<td style="padding-left:10px"><button type="button" class="btn btn-info btn-sm" ng-click="showContact=true"><span ng-if="!showContact">Show Contact</span> <span ng-if="showContact" style='font-size:15px;font-weight: bold'>{{product.seller_phone}}</span></button></td>
+							<tr/>
+							
+						</table>
+					</div><!-- End .product-desc -->
+					<hr class="divider">
+					
+					<h4>Safety Tip</h4>
+					<ul>
+						<li> <i class="fa fa-check-circle"></i> <span>Do not Pay in advance even for the delivery</span>
+						</li>
+						<li> <i class="fa fa-check-circle"></i><span> Try to meet at a safe, public location</span></li>
+						<li> <i class="fa fa-check-circle"></i><span> Check the item Before you buy it</span></li>
+						<li> <i class="fa fa-check-circle"></i><span> pay only after collecting the item</span></li>
+					</ul>
+
+					
+					<div class="product-action">
+						<button class="btn btn-danger btn-bg-dark btn-sm" ng-click="reportAbuse=true"  data-toggle="modal" data-target="#reportAbuseModal">Report Abuse</button>
+						<button ng-click="localStorage_save('ads_category',product.category,'dashboard/add_product')" class="btn btn-success btn-sm">Post ad like this</button>
+						<button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">Leave Feedback</button>
+					</div>
+					<hr class="divider mb-1">
+					<div class="product-single-share">
+						<label class="sr-only">Share:</label>
+						<div class="social-icons mr-2">
+							<a href="#" class="social-icon social-facebook icon-facebook" target="_blank"
+								title="Facebook"></a>
+							<a href="#" class="social-icon social-twitter icon-twitter" target="_blank"
+								title="Twitter"></a>
+							<a href="#" class="social-icon social-linkedin fab fa-linkedin-in" target="_blank"
+								title="Linkedin"></a>
+							<a href="#" class="social-icon social-gplus fab fa-google-plus-g" target="_blank"
+								title="Google +"></a>
+							<a href="#" class="social-icon social-mail icon-mail-alt" target="_blank" title="Mail"></a>
+						</div><!-- End .social-icons -->
+
+
+					</div><!-- End .product single-share -->
+				</div><!-- End .product-single-details -->
+				</div>
+			</div>
+		</div><!-- End .row -->
+	</div><!-- End .product-single-container -->
+
+		<div class="product-single-tabs">
+					<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content"
+							role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="product-tab-tags" data-toggle="tab" href="#product-tags-content" role="tab"
+							aria-controls="product-tags-content" aria-selected="false">Message Seller</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content"
+							role="tab" aria-controls="product-reviews-content" aria-selected="false">
+							Reviews<span ng-show="product_reviews">({{product_reviews.length}})</span><span  ng-show="!product_reviews">(0)</span></a>
+					</li>
+				</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
+					aria-labelledby="product-tab-desc">
+					<div class="product-desc-content">
+
+						<ul>
+							<li ng-show="product.brand">
+								<i class="fa fa-check-circle"></i><span>Make: </span> {{ product.brand }}
+							</li>
+
+							<li ng-show="product.model">
+								<i class="fa fa-check-circle"></i><span>Model: </span>{{ product.model }}
+							</li>
+							<li ng-show="product.year_of_manufacture">
+								<i class="fa fa-check-circle"></i><span>Year of Manufacture:</span>{{
+								product.year_of_manufacture }}
+							</li>
+							<li ng-show="product.color">
+								<i class="fa fa-check-circle"></i><span>Color: </span> {{ product.color }}
+							</li>
+							<li ng-show="product.mileage">
+								<i class="fa fa-check-circle"></i><span>Mileage: </span>{{ product.mileage}}Km
+							</li>
+							<li ng-show="product.condition_state">
+								<i class="fa fa-check-circle"></i><span>Condition: </span>{{ product.condition_state }}
+							</li>
+							<li ng-show="product.ram">
+								<i class="fa fa-check-circle"></i><span>Ram: </span>{{ product.ram }}
+							</li>
+							<li ng-show="product.internal_storage">
+								<i class="fa fa-check-circle"></i><span>Internal Storage:</span>{{
+								product.internal_storage}}
+							</li>
+							<li ng-show="product.sim">
+								<i class="fa fa-check-circle"></i><span>Sim slot: </span>{{ product.sim }}
+							</li>
+							<li ng-show="product.resolution">
+								<i class="fa fa-check-circle"></i><span>Resolution: </span>{{ product.resolution }}
+							</li>
+							<li ng-show="product.batter">
+								<i class="fa fa-check-circle"></i><span>Battery: </span>{{ product.battery }}
+							</li>
+							<li ng-show="product.main_camera">
+								<i class="fa fa-check-circle"></i><span>Main Camera: </span>{{ product.main_camera }}
+							</li>
+							<li ng-show="product.selfie_camera">
+								<i class="fa fa-check-circle"></i><span>Selfie Camera: </span>{{ product.selfie_camera
+								}}
+							</li>
+							<li ng-show="product.operating_system">
+								<i class="fa fa-check-circle"></i><span>Operating System: </span>{{
+								product.operating_system }}
+							</li>
+							<li ng-show="product.hard_drive_size">
+								<i class="fa fa-check-circle"></i><span>Hard Drive Size: </span>{{
+								product.hard_drive_size }}
+							</li>
+							<li ng-show="product.property_size">
+								<i class="fa fa-check-circle"></i><span>Property Size: </span>{{ product.property_size
+								}}
+							</li>
+							<li ng-show="product.number_of_bedrooms">
+								<i class="fa fa-check-circle"></i><span>Number of Bedrooms: </span>{{
+								product.number_of_bedrooms}}
+							</li>
+							<li ng-show="product.number_of_bathrooms">
+								<i class="fa fa-check-circle"></i><span>Number of Bathrooms: </span>{{
+								product.number_of_bathrooms}}
+							</li>
+							<li ng-show="product.property_type">
+								<i class="fa fa-check-circle"></i><span>Property Type: </span>{{ product.property_type
+								}}
+							</li>
+						</ul>
+
+					</div>
+
+				</div>
+				<!-- End .tab-pane -->
+
+				<div class="tab-pane fade" id="product-tags-content" role="tabpanel" aria-labelledby="product-tab-tags">
+
+					<div class="product-reviews-content">
+						<div class="row">
+
+							<div class="col-xl-12">
+								<div class="add-product-review">
+									<form class="comment-form m-0" ng-submit="message_product_seller()"
+										id="message_product_seller">
+										<div class="alert alert-info result" style="display: none;"></div>
+										<h3 class="review-title">Message Seller</h3>
+										<input type="hidden" name="seller_id" value="{{product.seller_id}}">
+										<input type="hidden" name="product_code" value="{{product.product_code}}">
+										<div class="row">
+											<div class="col-md-6 col-xl-12">
+												<div class="form-group">
+													<label>Your Name</label>
+													<input type="text" name="sender_name"
+														class="form-control form-control-sm" required />
+												</div>
+												<!-- End .form-group -->
+											</div>
+
+											<div class="col-md-6 col-xl-12">
+												<div class="form-group">
+													<label>Your E-mail</label>
+													<input type="text" name="sender_email"
+														class="form-control form-control-sm" required />
+												</div>
+												<!-- End .form-group -->
+											</div>
+											<div class="col-md-6 col-xl-12">
+												<div class="form-group">
+													<label>Your Phone Number</label>
+													<input type="text" name="sender_phone"
+														class="form-control form-control-sm" required />
+												</div>
+												<!-- End .form-group -->
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label>Your Message</label>
+											<textarea name="message" cols="5" rows="6"
+												class="form-control form-control-sm"></textarea>
+										</div>
+										<div class="alert alert-info result" style="display: none;"></div>
+										<!-- End .form-group -->
+										<button type="submit" class="btn bg-info btn-md text-white" value="Submit">
+											<img src="{{dirlocation}}public/assets/images/spinner2.gif"
+												style="width:25px;float:left;margin-top:-5px;margin-right:3px;display:none"
+												class="loader">
+											SUBMIT
+										</button>
+									</form>
+								</div>
+								<!-- End .add-product-review -->
+							</div>
+						</div>
+					</div>
+					<!-- End .product-reviews-content -->
+
+				</div>
+				<!-- End .tab-pane -->
+
+				<div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
+					aria-labelledby="product-tab-reviews" ng-if="product">
+					<div class="product-reviews-content">
+						<div class="row">
+							<div class="col-xl-7">
+								<h2 class="reviews-title" ng-show="product_reviews">
+									{{product_reviews.length}} Reviews for {{product.name}}
+								</h2>
+								
+								<ol class="comment-list">
+									<li class="comment-container" ng-repeat="review in product_reviews">
+										
+											<img src="{{dirlocation}}public/assets/images/uploads/profile/{{review.image}}" style="width:65px;height:65px;float:left;margin-right:7px" alt="avatar" />
+										
+										<!-- End .comment-avatar-->
+										
+										<div class="comment-box">
+											<div class="ratings-container">
+												<div class="product-ratings">
+													<span class="ratings" style="width: {{review.rating*20}}%"></span>
+													<!-- End .ratings -->
+												</div>
+												<!-- End .product-ratings -->
+											</div>
+											<!-- End .ratings-container -->
+
+											<div class="comment-info">
+												<h4 class="avatar-name">{{review.fullname}}</h4>
+												-
+												<span class="comment-date" style="font-size:10px">{{review.date}}</span>
+											</div>
+											<!-- End .comment-info -->
+
+											<div class="comment-text">
+												
+												<p style="width:100%">
+												{{review.review}}
+												</p>
+											</div>
+											<!-- End .comment-text -->
+										</div>
+										<!-- End .comment-box -->
+									</li>
+									
+									<!-- comment-container -->
+								</ol>
+								<!-- End .comment-list -->
+							</div>
+
+							<div class="col-xl-5">
+								<div class="add-product-review">
+									<button ng-if="!user_data" class="btn btn-flat bg-primary btn-md text-white">Leave Feedback/Rating</button>
+									<form ng-if="user_data" ng-submit="save_product_review()" id="save_product_review" ng-init="rating='0'">
+										<h3 class="review-title">Add a Review</h3>
+										<div class="alert alert-info result" style="display:none"></div>
+										<div class="rating-form">
+											<label for="rating">Your Rating</label>
+											<span class="rating-stars">
+												<a class="star-1" ng-click="rating='1'" href="#">1</a>
+												<a class="star-2" ng-click="rating='2'" href="#">2</a>
+												<a class="star-3" ng-click="rating='3'" href="#">3</a>
+												<a class="star-4" ng-click="rating='4'" href="#">4</a>
+												<a class="star-5" ng-click="rating='5'" href="#">5</a>
+											</span>
+										</div>
+										<!-- End .form-group -->
+										<div class="row">
+											<div class="col-md-6 col-xl-12">
+												<div class="form-group">
+													<label>Your Name</label>
+													<input type="text" disabled value="<?php print_r($_SESSION['data']->fullname);?>" class="form-control form-control-sm" required />
+												</div>
+												<!-- End .form-group -->
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label>Your Review</label>
+											<textarea cols="5" name="review" required rows="6" class="form-control form-control-sm"></textarea>
+										</div>
+										<div class="alert alert-info result" style="display:none"></div>
+										<input type="text" style="display: none;" ng-model="rating" class="rating" name="rating">
+										<input type="hidden" name="product_id" value="{{product.id}}">
+										<input type="hidden" name="user_id" value="<?php print_r($_SESSION['data']->id);?>">
+										<button type="submit" class="btn btn-md bg-primary btn-md text-white">Submit</button>
+									</form>
+									
+								</div>
+								<!-- End .add-product-review -->
+							</div>
+						</div>
+					</div>
+					<!-- End .product-reviews-content -->
+				</div>
+				<!-- End .tab-pane -->
+			</div>
+			<!-- End .tab-content -->
+		</div>
+
+		<div class="products-section pt-0">
+			<h2 class="section-title">Related Products</h2>
+
+			<div class="col-lg-10">
+				<div class="row">
+					<div class="col-6 col-sm-4 col-md-3" dir-paginate="relatedProduct in relatedProducts | itemsPerPage : 8">
+						<div class="product-default inner-quickview inner-icon" style="background-color: #fff;border-radius:10px;">
+							<figure style="padding:0;">
+								<a
+									href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">
+									<div style="height:130px;overflow:hidden" ng-init="img = relatedProduct.image.split(',')"> <img
+											style="width: 100%!important; border-top-right-radius: 10px; border-top-left-radius: 10px; "
+											src="{{dirlocation}}public/assets/images/uploads/products/{{img[0]}}">
+									</div>
+
+								</a>
+							</figure>
+							<div style="padding:7px">
+
+								<h3 class="product-title" style="padding-top:0;margin-top:0">
+									<a
+										href="{{dirlocation}}product/{{relatedProduct.name.split(' ').join('-')}}/{{relatedProduct.product_code}}">{{
+										relatedProduct.name }}</a>
+								</h3>
+								<span style="font-size:10px"><i class="fa fa-map-marker"></i> {{relatedProduct.land_mark}}</span>
+								<!-- End .ratings-container -->
+								<div class="price-box">
+									<span class="product-price">{{ relatedProduct.price | currency:"NGN " }}</span>
+								</div>
+								<!-- End .price-box -->
+							</div>
+							<!-- End .product-details -->
+						</div>
+
+					</div>
+
+				</div>
+				<dir-pagination-controls></dir-pagination-controls>
+
+			</div>
+			<!-- End .product-details -->
+		</div>
+	</div><!-- End .container -->
+
+	<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<h5>Signup Using</h5>
+			  <!-- <button class="btn btn-sm btn-primary" ng-click="checkLoginState()">
+				<img class="loader_fb_check" src="{{dirlocation}}public/assets/images/spinner.gif" style="float:left;width:10px;margin-top:5px;margin-right:4px;display:none">Facebook</button> -->
+				<button class="btn btn-sm btn-primary" ng-click="get_email_existence('Collins Greg','mike98989@gmail.com','989899884844')" style="float:none;margin: auto">
+					<img class="loader_fb_check" src="{{dirlocation}}public/assets/images/spinner.gif" style="float:left;width:10px;margin-top:5px;margin-right:4px;display:none">Facebook</button> 
+				
+
+			  <!-- <fb:login-button 
+	  scope="public_profile,email"
+	  onlogin="checkLoginState();">
+	</fb:login-button> -->
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+			  <a href="{{dirlocation}}signup" class="btn btn-sm btn-warning">Email</a>
+			</div>
+			
+		  </div>
+		</div>
+	  </div>
+
+
+	  <div class="modal fade bd-example-modal-sm" id="reportAbuseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h3 class="modal-title" id="exampleModalLabel">Report Abuse</h3>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body" ng-init="fetch_report_reasons()" style="padding:0 25px;text-align: center;">
+			<h4>Report Abuse for</h4>
+			<h5>{{product.name}}</h5>
+			<form ng-submit="report_abuse()" id="report_abuse">
+			<div class="alert alert-info result" style="display:none"></div>		
+			<select required="" name="report_title" class="form-control">
+           <option value="">REPORT REASON</option>
+           <option value="{{reason.reason}}" ng-repeat="reason in report_reasons">{{reason.reason}}</option>
+            </select> 	
+			<div class="form-group">
+			<textarea rows="4" name="report_content" class="form-control form-control-sm" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-block bg-info btn-md text-white">
+			<img src="{{dirlocation}}public/assets/images/spinner2.gif" class="loader" style="float:left;width:20px;">Submit
+			</button>
+			<input type="hidden" name="product_id" value="{{product.id}}">
+			<input type="hidden" name="user_id" value="{{user_data.id}}">
+			<input type="hidden" name="date" value="<?php echo date('Y-m-d');?>">
+			</form>
+			</div>
+			
+		  </div>
+		</div> 
+	  </div>
+
+</main><!-- End .main -->
+
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+  
+<script>
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  $scope.update_google_data();
+}
+ </script>
+
+ <style>
+
+.modal-backdrop{
+   opacity:0.8 !important;
+}
+ </style>
